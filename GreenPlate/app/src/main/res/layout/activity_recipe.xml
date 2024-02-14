@@ -16,7 +16,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
-            android:text="Home Page"
+            android:text="Recipe\nScreen"
+            android:textAlignment="center"
             android:textColor="@color/aero"
             android:textSize="50dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -37,19 +38,19 @@
         android:backgroundTint="@color/dimGray">
 
         <ImageButton
+            android:id="@+id/btn_home"
+            android:layout_width="30dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_home_foreground"
+            android:layout_margin="4dp"/>
+
+        <ImageButton
             android:id="@+id/btn_meal"
             android:layout_width="30dp"
             android:layout_height="100dp"
             android:layout_weight="1"
             android:src="@drawable/ic_meal_foreground"
-            android:layout_margin="4dp"/>
-
-        <ImageButton
-            android:id="@+id/btn_recipe"
-            android:layout_width="30dp"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_recipe_foreground"
             android:layout_margin="4dp"/>
 
         <ImageButton

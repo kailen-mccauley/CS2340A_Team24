@@ -18,7 +18,7 @@
             android:fontFamily="sans-serif-black"
             android:text="Ingredients Screen"
             android:textAlignment="center"
-            android:textColor="@color/ecru"
+            android:textColor="@color/mintCream"
             android:textSize="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

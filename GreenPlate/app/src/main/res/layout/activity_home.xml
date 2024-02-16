@@ -18,7 +18,7 @@
             android:fontFamily="sans-serif-black"
             android:text="Home Page"
             android:textColor="@color/aero"
-            android:textSize="50dp"
+            android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

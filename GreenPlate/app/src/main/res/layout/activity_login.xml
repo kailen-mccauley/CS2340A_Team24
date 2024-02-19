@@ -7,7 +7,6 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/teal2">
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -16,11 +15,13 @@
         android:textColor="@color/lightGray"
         android:textSize="50sp" />
     <EditText
+        android:id="@+id/usernameEditText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Enter Username"
         android:textColorHint="@color/lightGray"/>
     <EditText
+        android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Enter Password"

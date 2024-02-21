@@ -19,13 +19,15 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Enter Username"
-        android:textColorHint="@color/lightGray"/>
+        android:textColorHint="@color/lightGray"
+        android:textColor="@color/lightGray"/>
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Enter Password"
-        android:textColorHint="@color/lightGray"/>
+        android:textColorHint="@color/lightGray"
+        android:textColor="@color/lightGray"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

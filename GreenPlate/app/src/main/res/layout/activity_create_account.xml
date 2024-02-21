@@ -16,11 +16,13 @@
         android:textColor="@color/teal2"
         android:textSize="50sp" />
     <EditText
+        android:id="@+id/newUsernameEditText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="New Username"
         android:textColorHint="@color/teal2"/>
     <EditText
+        android:id="@+id/newPasswordEditText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="New Password"

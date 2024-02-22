@@ -7,6 +7,8 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private LoginViewModel viewModel;
     private EditText usernameEditText;
     private EditText passwordEditText;
 
@@ -36,8 +38,13 @@ public class LoginActivity extends AppCompatActivity {
         toCreateAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
-                startActivity(intent);
+                if(checkUsernameAndPassword(usernameEditText, passwordEditText)) {
+                    Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
+                    startActivity(intent);
+                } else {
+                    // not sure what to do here
+                }
+
             }
         });
         toCloseApplication.setOnClickListener(new View.OnClickListener() {
@@ -46,5 +53,10 @@ public class LoginActivity extends AppCompatActivity {
                 finishAffinity();
             }
         });
+    }
+    public boolean checkUsernameAndPassword(EditText usernameEditText, EditText passwordEditText) {
+        String username = usernameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        return viewModel.isValidUsernameOrPassword(username, password);
     }
 }

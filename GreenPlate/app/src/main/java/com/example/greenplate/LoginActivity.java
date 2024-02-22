@@ -16,6 +16,7 @@ public class LoginActivity extends AppCompatActivity {
         // DO NOT MODIFY
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        viewModel = LoginViewModel.getInstance();
         usernameEditText = findViewById(R.id.usernameEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         Button toHomeButton = findViewById(R.id.btn_login);
@@ -30,21 +31,21 @@ public class LoginActivity extends AppCompatActivity {
         toHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(intent);
+                if (checkUsernameAndPassword(usernameEditText, passwordEditText)) {
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                } else {
+                    // not sure what to do here
+                }
+
             }
         });
 
         toCreateAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkUsernameAndPassword(usernameEditText, passwordEditText)) {
-                    Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
-                    startActivity(intent);
-                } else {
-                    // not sure what to do here
-                }
-
+                Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
+                startActivity(intent);
             }
         });
         toCloseApplication.setOnClickListener(new View.OnClickListener() {

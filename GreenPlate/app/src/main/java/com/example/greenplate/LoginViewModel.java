@@ -10,7 +10,7 @@ public class LoginViewModel {
     }
 
     public boolean isValidUsernameOrPassword(String username, String password) {
-        return (username != null && !username.contains(" ") && !username.isEmpty())
-                && (password != null && !password.contains(" ") && !password.isEmpty());
+        return username != null && !username.contains(" ") && !username.isEmpty()
+                && password != null && !password.contains(" ") && !password.isEmpty();
     }
 }

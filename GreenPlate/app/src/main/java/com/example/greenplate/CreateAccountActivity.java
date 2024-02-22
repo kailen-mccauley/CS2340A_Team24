@@ -17,6 +17,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         // DO NOT MODIFY
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+        viewModel = CreateAccountViewModel.getInstance();
         newUsernameEditText = findViewById(R.id.newUsernameEditText);
         newPasswordEditText = findViewById(R.id.newPasswordEditText);
         Button toLoginButton = findViewById(R.id.btn_login);

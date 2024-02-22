@@ -19,6 +19,7 @@ public class LoginActivity extends AppCompatActivity{
         passwordEditText = findViewById(R.id.passwordEditText);
         Button toHomeButton = findViewById(R.id.btn_login);
         Button toCreateAccountButton = findViewById(R.id.btn_sign_up);
+        Button toCloseApplication = findViewById(R.id.btn_close_app);
 
 
         // TODO:
@@ -38,6 +39,12 @@ public class LoginActivity extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
                 startActivity(intent);
+            }
+        });
+        toCloseApplication.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishAffinity();
             }
         });
     }

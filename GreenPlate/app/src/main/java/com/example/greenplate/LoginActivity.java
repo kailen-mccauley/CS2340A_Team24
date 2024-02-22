@@ -5,9 +5,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends AppCompatActivity {
+
+    private LoginViewModel viewModel;
     private EditText usernameEditText;
     private EditText passwordEditText;
 
@@ -15,10 +16,12 @@ public class LoginActivity extends AppCompatActivity{
         // DO NOT MODIFY
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        viewModel = LoginViewModel.getInstance();
         usernameEditText = findViewById(R.id.usernameEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         Button toHomeButton = findViewById(R.id.btn_login);
         Button toCreateAccountButton = findViewById(R.id.btn_sign_up);
+        Button toCloseApplication = findViewById(R.id.btn_close_app);
 
 
         // TODO:
@@ -28,8 +31,13 @@ public class LoginActivity extends AppCompatActivity{
         toHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(intent);
+                if (checkUsernameAndPassword(usernameEditText, passwordEditText)) {
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                } else {
+                    // not sure what to do here
+                }
+
             }
         });
 
@@ -40,5 +48,16 @@ public class LoginActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+        toCloseApplication.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishAffinity();
+            }
+        });
+    }
+    public boolean checkUsernameAndPassword(EditText usernameEditText, EditText passwordEditText) {
+        String username = usernameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        return viewModel.isValidUsernameOrPassword(username, password);
     }
 }

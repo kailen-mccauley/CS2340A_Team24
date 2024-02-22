@@ -13,21 +13,29 @@
         android:text="Welcome Back"
         android:textAlignment="center"
         android:textColor="@color/lightGray"
-        android:textSize="50sp" />
+        android:textSize="50sp"
+        android:layout_marginBottom="5dp"
+        />
     <EditText
         android:id="@+id/usernameEditText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Enter Username"
-        android:textColorHint="@color/lightGray"
-        android:textColor="@color/lightGray"/>
+        android:textColorHint="@color/darkMint"
+        android:textColor="@color/darkMint"
+        android:drawableLeft="@drawable/person_foreground"
+        android:background="@color/champagne"
+        android:layout_marginBottom="5dp"/>
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Enter Password"
-        android:textColorHint="@color/lightGray"
-        android:textColor="@color/lightGray"/>
+        android:textColorHint="@color/darkMint"
+        android:textColor="@color/darkMint"
+        android:drawableLeft="@drawable/lock_foreground"
+        android:background="@color/champagne"
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

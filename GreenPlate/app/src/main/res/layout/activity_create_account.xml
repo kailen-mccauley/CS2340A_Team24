@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/lightGray">
+    android:background="@color/champagne">
 
     <TextView
         android:layout_width="match_parent"
@@ -20,13 +20,21 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="New Username"
-        android:textColorHint="@color/teal2"/>
+        android:textColorHint="@color/mint"
+        android:textColor="@color/mint"
+        android:drawableLeft="@drawable/person_foreground"
+        android:background="@color/lightGray"
+        android:layout_marginBottom="5dp"/>
     <EditText
         android:id="@+id/newPasswordEditText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="New Password"
-        android:textColorHint="@color/teal2"/>
+        android:textColorHint="@color/mint"
+        android:textColor="@color/mint"
+        android:drawableLeft="@drawable/person_foreground"
+        android:background="@color/lightGray"
+        android:layout_marginBottom="5dp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

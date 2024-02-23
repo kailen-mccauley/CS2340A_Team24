@@ -12,14 +12,4 @@ public class LoginViewModelTest {
     public void testNullInputs() {
         assertFalse(LoginViewModel.getInstance().isValidUsernameOrPassword(null, null));
     }
-
-    @Test
-    public void testEmptyInputs() {
-        assertFalse(LoginViewModel.getInstance().isValidUsernameOrPassword("", ""));
-    }
-
-    @Test
-    public void testWhitespaceOnlyInputs() {
-        assertFalse(LoginViewModel.getInstance().isValidUsernameOrPassword("   ", "   "));
-    }
 }

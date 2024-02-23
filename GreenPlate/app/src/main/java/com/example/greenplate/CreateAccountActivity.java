@@ -20,13 +20,14 @@ public class CreateAccountActivity extends AppCompatActivity {
         viewModel = CreateAccountViewModel.getInstance();
         newUsernameEditText = findViewById(R.id.newUsernameEditText);
         newPasswordEditText = findViewById(R.id.newPasswordEditText);
+        Button createAccount = findViewById(R.id.btn_create_account);
         Button toLoginButton = findViewById(R.id.btn_login);
 
 
         // TODO:
         //  when create account is clicked, the account needs to be added to firebase before
         //  the screen swithces from account back to login
-        toLoginButton.setOnClickListener(new View.OnClickListener() {
+        createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(checkUsernameAndPassword(newUsernameEditText, newPasswordEditText)) {
@@ -37,6 +38,14 @@ public class CreateAccountActivity extends AppCompatActivity {
                 }
             }
         });
+        toLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
     public boolean checkUsernameAndPassword(EditText newUsernameEditText, EditText newPasswordEditText) {
         String username = newUsernameEditText.getText().toString();

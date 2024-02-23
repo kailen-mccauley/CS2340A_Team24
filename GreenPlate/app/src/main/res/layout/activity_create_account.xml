@@ -19,7 +19,7 @@
         android:id="@+id/newUsernameEditText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="New Username"
+        android:hint="Email"
         android:textColorHint="@color/mint"
         android:textColor="@color/mint"
         android:drawableLeft="@drawable/person_foreground"
@@ -29,10 +29,10 @@
         android:id="@+id/newPasswordEditText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="New Password"
+        android:hint="Password"
         android:textColorHint="@color/mint"
         android:textColor="@color/mint"
-        android:drawableLeft="@drawable/person_foreground"
+        android:drawableLeft="@drawable/lock_foreground"
         android:background="@color/lightGray"
         android:layout_marginBottom="5dp"/>
 

@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
-                if (!email.isEmpty() && !password.isEmpty() && checkUsernameAndPassword(usernameEditText, passwordEditText)) {
+                if (checkUsernameAndPassword(usernameEditText, passwordEditText)) {
                     if (LoginViewModel.getInstance().login(email,password, mAuth, LoginActivity.this)) {
                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(intent);

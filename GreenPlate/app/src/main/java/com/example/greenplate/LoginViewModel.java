@@ -2,7 +2,6 @@ package com.example.greenplate;
 
 import static android.content.ContentValues.TAG;
 
-import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 

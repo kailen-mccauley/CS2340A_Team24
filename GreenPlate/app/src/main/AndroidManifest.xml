@@ -13,7 +13,7 @@
         android:theme="@style/Theme.GreenPlate"
         tools:targetApi="31">
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".views.WelcomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,31 +21,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".views.LoginActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".CreateAccountActivity"
+            android:name=".views.CreateAccountActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name=".views.HomeActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".IngredientsActivity"
+            android:name=".views.IngredientsActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".MealActivity"
+            android:name=".views.MealActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".RecipeActivity"
+            android:name=".views.RecipeActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".ShoppingActivity"
+            android:name=".views.ShoppingActivity"
             android:exported="true">
         </activity>
     </application>

@@ -3,6 +3,8 @@ package com.example.greenplate;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.example.greenplate.viewmodels.CreateAccountViewModel;
+
 import org.junit.Test;
 
 /**

@@ -48,26 +48,10 @@ public class LoginActivity extends AppCompatActivity {
                 String email = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 if (!email.isEmpty() && !password.isEmpty() && checkUsernameAndPassword(usernameEditText, passwordEditText)) {
-                    Task<AuthResult> authResultTask = mAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        // Sign in success, update UI with the signed-in user's information
-                                        Log.d(TAG, "signInWithEmail:success");
-                                        FirebaseUser user = mAuth.getCurrentUser();
-                                        //updateUI(user);
-                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                        startActivity(intent);
-                                    } else {
-                                        // If sign in fails, display a message to the user.
-                                        Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                        Toast.makeText(LoginActivity.this, "Authentication failed." + task.getException().getMessage(),
-                                                Toast.LENGTH_SHORT).show();
-                                        //updateUI(null);
-                                    }
-                                }
-                            });
+                    if (LoginViewModel.getInstance().login(email,password, mAuth, LoginActivity.this)) {
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                    }
                 } else {
                     // Show a message indicating that email or password is empty
                     Toast.makeText(LoginActivity.this, "Please enter email and password.", Toast.LENGTH_SHORT).show();

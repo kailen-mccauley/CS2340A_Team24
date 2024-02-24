@@ -53,28 +53,10 @@ public class CreateAccountActivity extends AppCompatActivity {
                 String email = newUsernameEditText.getText().toString();
                 String password = newPasswordEditText.getText().toString();
                 if(checkUsernameAndPassword(newUsernameEditText, newPasswordEditText)) {
-                    // if userName and password pass check, we must create an account before going to login
-                    Task<AuthResult> authResultTask = mAuth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(CreateAccountActivity.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        // Sign up success, update UI with the signed-in user's information
-                                        Log.d(TAG, "createUserWithEmail:success");
-                                        FirebaseUser user = mAuth.getCurrentUser();
-                                        //updateUI(user);
-                                        // Proceed to login screen
-                                        Intent intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
-                                        startActivity(intent);
-                                    } else {
-                                        // If sign up fails, display a message to the user.
-                                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                        Toast.makeText(CreateAccountActivity.this, "Authentication failed."+ task.getException().getMessage(),
-                                                Toast.LENGTH_SHORT).show();
-                                        //updateUI(null);
-                                    }
-                                }
-                            });
+                    if (CreateAccountViewModel.getInstance().createAccount(email, password, mAuth, CreateAccountActivity.this)) {
+                        Intent intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
                 } else {
                     // Handle invalid username or password
                     // For example, show an error message

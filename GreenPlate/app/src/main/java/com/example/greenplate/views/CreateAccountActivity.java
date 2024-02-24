@@ -1,23 +1,17 @@
-package com.example.greenplate;
-import static android.content.ContentValues.TAG;
+package com.example.greenplate.views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.Task;
+import com.example.greenplate.R;
+import com.example.greenplate.viewmodels.CreateAccountViewModel;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.*;
-import com.google.firebase.*;
-import com.google.android.gms.tasks.OnCompleteListener;
-
 
 
 public class CreateAccountActivity extends AppCompatActivity {

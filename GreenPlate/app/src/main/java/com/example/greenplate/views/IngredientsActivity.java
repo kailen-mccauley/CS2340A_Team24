@@ -1,4 +1,4 @@
-package com.example.greenplate;
+package com.example.greenplate.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -6,22 +6,24 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class RecipeActivity extends AppCompatActivity {
+import com.example.greenplate.R;
+
+public class IngredientsActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // DO NOT MODIFY
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe);
+        setContentView(R.layout.activity_ingredients);
         ImageButton toHomeButton = findViewById(R.id.btn_home);
         ImageButton toMealButton = findViewById(R.id.btn_meal);
-        ImageButton toIngredientsButton = findViewById(R.id.btn_ingredients);
+        ImageButton toRecipeButton = findViewById(R.id.btn_recipe);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
 
         toHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecipeActivity.this, HomeActivity.class);
+                Intent intent = new Intent(IngredientsActivity.this, HomeActivity.class); //CREATING INTENT
                 startActivity(intent);
             }
         });
@@ -29,15 +31,15 @@ public class RecipeActivity extends AppCompatActivity {
         toMealButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecipeActivity.this, MealActivity.class);
+                Intent intent = new Intent(IngredientsActivity.this, MealActivity.class); //CREATING INTENT
                 startActivity(intent);
             }
         });
 
-        toIngredientsButton.setOnClickListener(new View.OnClickListener() {
+        toRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecipeActivity.this, IngredientsActivity.class);
+                Intent intent = new Intent(IngredientsActivity.this, RecipeActivity.class); //CREATING INTENT
                 startActivity(intent);
             }
         });
@@ -45,7 +47,7 @@ public class RecipeActivity extends AppCompatActivity {
         toShoppingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecipeActivity.this, ShoppingActivity.class);
+                Intent intent = new Intent(IngredientsActivity.this, ShoppingActivity.class); //CREATING INTENT
                 startActivity(intent);
             }
         });

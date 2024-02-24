@@ -1,4 +1,4 @@
-package com.example.greenplate;
+package com.example.greenplate.viewmodels;
 
 public class HomeViewModel {
     private static HomeViewModel instance;

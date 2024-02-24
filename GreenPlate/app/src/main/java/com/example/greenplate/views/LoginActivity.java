@@ -1,22 +1,17 @@
-package com.example.greenplate;
-import static android.content.ContentValues.TAG;
+package com.example.greenplate.views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.greenplate.viewmodels.LoginViewModel;
+import com.example.greenplate.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -47,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
-                if (!email.isEmpty() && !password.isEmpty() && checkUsernameAndPassword(usernameEditText, passwordEditText)) {
+                if (checkUsernameAndPassword(usernameEditText, passwordEditText)) {
                     if (LoginViewModel.getInstance().login(email,password, mAuth, LoginActivity.this)) {
                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(intent);

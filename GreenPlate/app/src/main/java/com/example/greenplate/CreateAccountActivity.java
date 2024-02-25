@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,6 +41,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        CreateAccountViewModel CreateAccountViewModeL = CreateAccountViewModel.getInstance();
 
 
 
@@ -53,10 +55,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 String email = newUsernameEditText.getText().toString();
                 String password = newPasswordEditText.getText().toString();
                 if(checkUsernameAndPassword(newUsernameEditText, newPasswordEditText)) {
-                    if (CreateAccountViewModel.getInstance().createAccount(email, password, mAuth, CreateAccountActivity.this)) {
-                        Intent intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                    }
+                    CreateAccountViewModeL.createAccount(email, password, mAuth, CreateAccountActivity.this);
                 } else {
                     // Handle invalid username or password
                     // For example, show an error message
@@ -69,6 +68,22 @@ public class CreateAccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        CreateAccountViewModeL.getCreeateSuccess().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean loginSuccess) {
+                if (loginSuccess) {
+                    // Login successful, navigate to HomeActivity
+                    Toast.makeText(CreateAccountActivity.this, "Login successful.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish(); // Close LoginActivity
+                } else {
+                    // Login failed, show error message
+                    Toast.makeText(CreateAccountActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

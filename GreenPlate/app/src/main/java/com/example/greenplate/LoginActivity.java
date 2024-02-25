@@ -18,6 +18,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel viewModel;
@@ -36,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         Button toCreateAccountButton = findViewById(R.id.btn_sign_up);
         Button toCloseApplication = findViewById(R.id.btn_close_app);
         mAuth = FirebaseAuth.getInstance();
+        LoginViewModel LoginViewModeL = LoginViewModel.getInstance();
 
 
         // TODO:
@@ -48,10 +52,8 @@ public class LoginActivity extends AppCompatActivity {
                 String email = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 if (!email.isEmpty() && !password.isEmpty() && checkUsernameAndPassword(usernameEditText, passwordEditText)) {
-                    if (LoginViewModel.getInstance().login(email,password, mAuth, LoginActivity.this)) {
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(intent);
-                    }
+
+                    LoginViewModeL.login(email,password, mAuth, LoginActivity.this);
                 } else {
                     // Show a message indicating that email or password is empty
                     Toast.makeText(LoginActivity.this, "Please enter email and password.", Toast.LENGTH_SHORT).show();
@@ -71,6 +73,22 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finishAffinity();
+            }
+        });
+
+        LoginViewModeL.getLoginSuccess().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean loginSuccess) {
+                if (loginSuccess) {
+                    // Login successful, navigate to HomeActivity
+                    Toast.makeText(LoginActivity.this, "Login successful.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish(); // Close LoginActivity
+                } else {
+                    // Login failed, show error message
+                    Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

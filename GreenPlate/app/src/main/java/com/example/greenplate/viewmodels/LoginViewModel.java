@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import com.example.greenplate.views.LoginActivity;
 
 public class LoginViewModel {
     private static LoginViewModel instance;

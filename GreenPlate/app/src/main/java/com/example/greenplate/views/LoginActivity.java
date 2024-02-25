@@ -14,7 +14,6 @@ import com.example.greenplate.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -34,23 +33,21 @@ public class LoginActivity extends AppCompatActivity {
         Button toCreateAccountButton = findViewById(R.id.btn_sign_up);
         Button toCloseApplication = findViewById(R.id.btn_close_app);
         mAuth = FirebaseAuth.getInstance();
-        LoginViewModel LoginViewModeL = LoginViewModel.getInstance();
+        LoginViewModel loginViewModeL = LoginViewModel.getInstance();
 
 
-        // TODO:
-        //  when a user clicks login (toHomeButton) there account information should be
-        //  verified. If it does not match an account in firebase, they should be told that
-        //  there login info is wrong
+
         toHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 if (checkUsernameAndPassword(usernameEditText, passwordEditText)) {
-                    LoginViewModeL.login(email,password, mAuth, LoginActivity.this);
+                    loginViewModeL.login(email, password, mAuth, LoginActivity.this);
                 } else {
                     // Show a message indicating that email or password is empty
-                    Toast.makeText(LoginActivity.this, "invalid email or password.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "invalid email or password.",
+                            Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -70,12 +67,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        LoginViewModeL.getLoginSuccess().observe(this, new Observer<Boolean>() {
+        loginViewModeL.getLoginSuccess().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean loginSuccess) {
                 if (loginSuccess) {
                     // Login successful, navigate to HomeActivity
-                    Toast.makeText(LoginActivity.this, "Login successful.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Login successful.",
+                            Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish(); // Close LoginActivity

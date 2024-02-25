@@ -35,43 +35,46 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-        CreateAccountViewModel CreateAccountViewModeL = CreateAccountViewModel.getInstance();
+        CreateAccountViewModel createAccountViewModeL = CreateAccountViewModel.getInstance();
 
 
 
 
-        // TODO:
-        //  when create account is clicked, the account needs to be added to firebase before
-        //  the screen swithces from account back to login
+
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = newUsernameEditText.getText().toString();
                 String password = newPasswordEditText.getText().toString();
-                if(checkUsernameAndPassword(newUsernameEditText, newPasswordEditText)) {
-                    CreateAccountViewModeL.createAccount(email, password, mAuth, CreateAccountActivity.this);
+                if (checkUsernameAndPassword(newUsernameEditText, newPasswordEditText)) {
+                    createAccountViewModeL.createAccount(email, password, mAuth,
+                            CreateAccountActivity.this);
                 } else {
                     // Handle invalid username or password
                     // For example, show an error message
-                    Toast.makeText(CreateAccountActivity.this, "Invalid username or password.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateAccountActivity.this, "Invalid username or password.",
+                            Toast.LENGTH_SHORT).show();
                 }
                 }
         });
         toLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
+                Intent intent = new Intent(CreateAccountActivity.this,
+                        LoginActivity.class);
                 startActivity(intent);
             }
         });
 
-        CreateAccountViewModeL.getCreeateSuccess().observe(this, new Observer<Boolean>() {
+        createAccountViewModeL.getCreeateSuccess().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean loginSuccess) {
                 if (loginSuccess) {
                     // Login successful, navigate to HomeActivity
-                    Toast.makeText(CreateAccountActivity.this, "Login successful.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
+                    Toast.makeText(CreateAccountActivity.this, "Login successful.",
+                            Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(CreateAccountActivity.this,
+                            LoginActivity.class);
                     startActivity(intent);
                     finish(); // Close LoginActivity
                 }
@@ -79,7 +82,8 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
 
     }
-    public boolean checkUsernameAndPassword(EditText newUsernameEditText, EditText newPasswordEditText) {
+    public boolean checkUsernameAndPassword(EditText newUsernameEditText,
+                                            EditText newPasswordEditText) {
         String username = newUsernameEditText.getText().toString();
         String password = newPasswordEditText.getText().toString();
         return viewModel.isValidUsernameOrPassword(username, password);

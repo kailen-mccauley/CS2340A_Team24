@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.R;
 
-public class IngredientsActivity extends AppCompatActivity{
+public class IngredientsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,8 @@ public class IngredientsActivity extends AppCompatActivity{
         toHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this, HomeActivity.class); //CREATING INTENT
+                Intent intent = new Intent(IngredientsActivity.this,
+                        HomeActivity.class); //CREATING INTENT
                 startActivity(intent);
             }
         });
@@ -31,7 +32,8 @@ public class IngredientsActivity extends AppCompatActivity{
         toMealButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this, MealActivity.class); //CREATING INTENT
+                Intent intent = new Intent(IngredientsActivity.this,
+                        MealActivity.class); //CREATING INTENT
                 startActivity(intent);
             }
         });
@@ -39,7 +41,8 @@ public class IngredientsActivity extends AppCompatActivity{
         toRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this, RecipeActivity.class); //CREATING INTENT
+                Intent intent = new Intent(IngredientsActivity.this,
+                        RecipeActivity.class); //CREATING INTENT
                 startActivity(intent);
             }
         });
@@ -47,7 +50,8 @@ public class IngredientsActivity extends AppCompatActivity{
         toShoppingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this, ShoppingActivity.class); //CREATING INTENT
+                Intent intent = new Intent(IngredientsActivity.this,
+                        ShoppingActivity.class); //CREATING INTENT
                 startActivity(intent);
             }
         });

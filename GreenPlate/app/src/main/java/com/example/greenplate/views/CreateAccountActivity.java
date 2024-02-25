@@ -74,9 +74,6 @@ public class CreateAccountActivity extends AppCompatActivity {
                     Intent intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish(); // Close LoginActivity
-                } else {
-                    // Login failed, show error message
-                    Toast.makeText(CreateAccountActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

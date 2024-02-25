@@ -47,11 +47,10 @@ public class LoginActivity extends AppCompatActivity {
                 String email = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 if (checkUsernameAndPassword(usernameEditText, passwordEditText)) {
-
                     LoginViewModeL.login(email,password, mAuth, LoginActivity.this);
                 } else {
                     // Show a message indicating that email or password is empty
-                    Toast.makeText(LoginActivity.this, "Please enter email and password.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "invalid email or password.", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -80,9 +79,6 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish(); // Close LoginActivity
-                } else {
-                    // Login failed, show error message
-                    Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

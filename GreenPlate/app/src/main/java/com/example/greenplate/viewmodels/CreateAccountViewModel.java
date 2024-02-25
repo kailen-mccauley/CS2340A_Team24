@@ -79,7 +79,6 @@ public class CreateAccountViewModel {
                             // If sign up fails, display a message to the user.
                             setCreateSuccess(false);
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(CreateAccountActivity, "lOggin WOrked asklnfkf", Toast.LENGTH_SHORT).show();
                             Toast.makeText(CreateAccountActivity, "Authentication failed."+ task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                             //updateUI(null);

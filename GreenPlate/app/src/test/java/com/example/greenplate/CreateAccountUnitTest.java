@@ -17,5 +17,13 @@ public class CreateAccountUnitTest {
     public void testNullInputs() {
         assertTrue(CreateAccountViewModel.getInstance().isValidUsernameOrPassword(null, null));
     }
-}
+    @Test
+    public void testEmptyInputs() {
+        assertTrue(CreateAccountViewModel.getInstance().isValidUsernameOrPassword("",""));
+    }
 
+    @Test
+    public void testWhitespaceInputs() {
+        assertTrue(CreateAccountViewModel.getInstance().isValidUsernameOrPassword("   ","   "));
+    }
+}

@@ -40,9 +40,10 @@ public class LoginViewModel {
                 && password != null && !password.contains(" ") && !password.isEmpty();
     }
 
-    public void login(String email, String password, FirebaseAuth mAuth, LoginActivity LoginActivity) {
+    public void login(String email, String password, FirebaseAuth mAuth,
+                      LoginActivity loginActivity) {
         Task<AuthResult> authResultTask = mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(LoginActivity, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(loginActivity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -56,7 +57,8 @@ public class LoginViewModel {
                             setLoginSuccess(false);
 
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity, "Authentication failed." + task.getException().getMessage(),
+                            Toast.makeText(loginActivity,
+                                    "Authentication failed." + task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                             //updateUI(null);
                         }

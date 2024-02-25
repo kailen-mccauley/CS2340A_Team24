@@ -15,15 +15,15 @@ import org.junit.Test;
 public class CreateAccountUnitTest {
     @Test
     public void testNullInputs() {
-        assertTrue(CreateAccountViewModel.getInstance().isValidUsernameOrPassword(null, null));
+        assertEquals(false, CreateAccountViewModel.getInstance().isValidUsernameOrPassword(null, null));
     }
     @Test
     public void testEmptyInputs() {
-        assertTrue(CreateAccountViewModel.getInstance().isValidUsernameOrPassword("",""));
+        assertEquals(false, CreateAccountViewModel.getInstance().isValidUsernameOrPassword("",""));
     }
 
     @Test
     public void testWhitespaceInputs() {
-        assertTrue(CreateAccountViewModel.getInstance().isValidUsernameOrPassword("   ","   "));
+        assertEquals(false, CreateAccountViewModel.getInstance().isValidUsernameOrPassword("   ","   "));
     }
 }

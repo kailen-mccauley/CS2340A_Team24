@@ -19,7 +19,7 @@
             android:text="Recipe\nScreen"
             android:textAlignment="center"
             android:textColor="@color/mintCream"
-            android:textSize="50dp"
+            android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,39 +35,118 @@
         android:background="@android:color/darker_gray"
         android:orientation="horizontal"
         android:padding="10dp"
-        android:backgroundTint="@color/dimGray">
+        android:backgroundTint="@color/dimGray"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <ImageButton
-            android:id="@+id/btn_home"
-            android:layout_width="30dp"
-            android:layout_height="100dp"
+        <!-- Column 1 -->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/ic_home_foreground"
-            android:layout_margin="4dp"/>
+            android:gravity="center"
+            android:padding="8dp">
 
-        <ImageButton
-            android:id="@+id/btn_meal"
-            android:layout_width="30dp"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_meal_foreground"
-            android:layout_margin="4dp"/>
+            <ImageButton
+                android:id="@+id/btn_home"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_home_foreground"
+                android:layout_centerHorizontal="true"
+                android:background="@color/mintCream"/>
 
-        <ImageButton
-            android:id="@+id/btn_ingredients"
-            android:layout_width="30dp"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_ingredient_foreground"
-            android:layout_margin="4dp"/>
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_home"
+                android:layout_centerHorizontal="true"
+                android:text="HOME"
+                android:textColor="@color/mintCream"
+                android:textSize="16sp" />
+        </RelativeLayout>
 
-        <ImageButton
-            android:id="@+id/btn_shopping"
-            android:layout_width="30dp"
-            android:layout_height="100dp"
+        <!-- Column 2 -->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/ic_shopping_foreground"
-            android:layout_margin="4dp"/>
+            android:gravity="center"
+            android:padding="8dp">
+
+            <ImageButton
+                android:id="@+id/btn_meal"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_meal_foreground"
+                android:layout_centerHorizontal="true"
+                android:background="@color/mintCream"/>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_meal"
+                android:layout_centerHorizontal="true"
+                android:text="MEALS"
+                android:textColor="@color/mintCream"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <!-- Column 3 -->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="8dp">
+
+            <ImageButton
+                android:id="@+id/btn_ingredients"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_ingredient_foreground"
+                android:layout_centerHorizontal="true"
+                android:background="@color/mintCream"/>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_ingredients"
+                android:layout_centerHorizontal="true"
+                android:text="ITEMS"
+                android:textColor="@color/mintCream"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <!-- Column 4 -->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="8dp">
+
+            <ImageButton
+                android:id="@+id/btn_shopping"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_shopping_foreground"
+                android:layout_centerHorizontal="true"
+                android:background="@color/mintCream"/>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_shopping"
+                android:layout_centerHorizontal="true"
+                android:text="SHOPPING"
+                android:textColor="@color/mintCream"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+
 
     </LinearLayout>
 

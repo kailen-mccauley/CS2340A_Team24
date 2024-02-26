@@ -1,7 +1,7 @@
 package com.example.greenplate;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import com.example.greenplate.viewmodels.CreateAccountViewModel;
 
@@ -15,15 +15,20 @@ import org.junit.Test;
 public class CreateAccountUnitTest {
     @Test
     public void testNullInputs() {
-        assertEquals(false, CreateAccountViewModel.getInstance().isValidUsernameOrPassword(null, null));
+        assertFalse(CreateAccountViewModel.getInstance().isValidUsernameOrPassword(null, null));
     }
     @Test
     public void testEmptyInputs() {
-        assertEquals(false, CreateAccountViewModel.getInstance().isValidUsernameOrPassword("",""));
+        assertFalse(CreateAccountViewModel.getInstance().isValidUsernameOrPassword("",""));
     }
 
     @Test
     public void testWhitespaceInputs() {
-        assertEquals(false, CreateAccountViewModel.getInstance().isValidUsernameOrPassword("   ","   "));
+        assertFalse(CreateAccountViewModel.getInstance().isValidUsernameOrPassword("   ","   "));
+    }
+
+    @Test
+    public void testValidInputs() {
+        assertTrue(CreateAccountViewModel.getInstance().isValidUsernameOrPassword("newUser","newPassword"));
     }
 }

@@ -31,7 +31,7 @@ public class CreateAccountViewModel {
         return instance;
     }
 
-    public LiveData<Boolean> getCreeateSuccess() {
+    public LiveData<Boolean> getCreateSuccess() {
         return createSuccess;
     }
 
@@ -57,8 +57,6 @@ public class CreateAccountViewModel {
                             FirebaseUser user = mAuth.getCurrentUser();
                             setCreateSuccess(true);
 
-                            Toast.makeText(createAccountActivity,
-                                    "lOggin WOrked asklnfkf", Toast.LENGTH_SHORT).show();
                         } else {
                             // If sign up fails, display a message to the user.
                             setCreateSuccess(false);

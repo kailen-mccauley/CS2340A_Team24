@@ -66,12 +66,12 @@ public class CreateAccountActivity extends AppCompatActivity {
             }
         });
 
-        createAccountViewModeL.getCreeateSuccess().observe(this, new Observer<Boolean>() {
+        createAccountViewModeL.getCreateSuccess().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean loginSuccess) {
                 if (loginSuccess) {
                     // Login successful, navigate to HomeActivity
-                    Toast.makeText(CreateAccountActivity.this, "Login successful.",
+                    Toast.makeText(CreateAccountActivity.this, "Account creation successful.",
                             Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(CreateAccountActivity.this,
                             LoginActivity.class);

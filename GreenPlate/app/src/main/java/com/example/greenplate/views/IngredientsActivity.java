@@ -19,6 +19,7 @@ public class IngredientsActivity extends AppCompatActivity {
         ImageButton toMealButton = findViewById(R.id.btn_meal);
         ImageButton toRecipeButton = findViewById(R.id.btn_recipe);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
+        ImageButton toPersonalButton = findViewById(R.id.btn_personal);
 
         toHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +53,13 @@ public class IngredientsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(IngredientsActivity.this,
                         ShoppingActivity.class); //CREATING INTENT
+                startActivity(intent);
+            }
+        });
+        toPersonalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(IngredientsActivity.this, PersonalActivity.class);
                 startActivity(intent);
             }
         });

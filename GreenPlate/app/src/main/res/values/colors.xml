@@ -23,5 +23,8 @@
     <color name="teal2">#006d77</color>
     <color name="mint">#83c5be</color>
     <color name="darkMint">#3EA99E</color>
+    <color name="darkPowderBlue">#FF3E55A9</color>
+    <color name="dustBunny">#FF929998</color>
+    <color name="orangeSorbet">#C97267</color>
 
 </resources>

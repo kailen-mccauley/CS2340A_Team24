@@ -43,8 +43,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:padding="8dp">
+            android:gravity="center">
 
             <ImageButton
                 android:id="@+id/btn_home"
@@ -52,17 +51,17 @@
                 android:layout_height="100dp"
                 android:src="@drawable/ic_home_foreground"
                 android:layout_centerHorizontal="true"
-                android:background="@color/thistle"/>
+                android:backgroundTint="@color/frenchGray"/>
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/textView0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btn_home"
                 android:layout_centerHorizontal="true"
                 android:text="HOME"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textColor="@color/mintCream"
+                android:textSize="14sp" />
         </RelativeLayout>
 
         <!-- Column 2 -->
@@ -70,8 +69,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:padding="8dp">
+            android:gravity="center">
 
             <ImageButton
                 android:id="@+id/btn_meal"
@@ -79,17 +77,17 @@
                 android:layout_height="100dp"
                 android:src="@drawable/ic_meal_foreground"
                 android:layout_centerHorizontal="true"
-                android:background="@color/thistle"/>
+                android:backgroundTint="@color/frenchGray"/>
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btn_meal"
                 android:layout_centerHorizontal="true"
                 android:text="MEALS"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textColor="@color/mintCream"
+                android:textSize="14sp" />
         </RelativeLayout>
 
         <!-- Column 3 -->
@@ -97,8 +95,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:padding="8dp">
+            android:gravity="center">
 
             <ImageButton
                 android:id="@+id/btn_recipe"
@@ -106,17 +103,17 @@
                 android:layout_height="100dp"
                 android:src="@drawable/ic_recipe_foreground"
                 android:layout_centerHorizontal="true"
-                android:background="@color/thistle"/>
+                android:backgroundTint="@color/frenchGray"/>
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btn_recipe"
                 android:layout_centerHorizontal="true"
                 android:text="RECIPES"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textColor="@color/mintCream"
+                android:textSize="14sp" />
         </RelativeLayout>
 
         <!-- Column 4 -->
@@ -124,8 +121,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:padding="8dp">
+            android:gravity="center">
 
             <ImageButton
                 android:id="@+id/btn_ingredients"
@@ -133,17 +129,42 @@
                 android:layout_height="100dp"
                 android:src="@drawable/ic_ingredient_foreground"
                 android:layout_centerHorizontal="true"
-                android:background="@color/thistle"/>
+                android:backgroundTint="@color/frenchGray"/>
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btn_ingredients"
                 android:layout_centerHorizontal="true"
                 android:text="ITEMS"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textColor="@color/mintCream"
+                android:textSize="14sp" />
+        </RelativeLayout>
+        <!-- Column 5 -->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/btn_main"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/personal_info_foreground"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/frenchGray"/>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_main"
+                android:layout_centerHorizontal="true"
+                android:text="PERSONAL"
+                android:textColor="@color/mintCream"
+                android:textSize="14sp" />
         </RelativeLayout>
 
     </LinearLayout>

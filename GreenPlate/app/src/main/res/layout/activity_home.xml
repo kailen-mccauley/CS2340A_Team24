@@ -145,7 +145,7 @@ android:background="@color/alabaster">
         android:gravity="center">
 
         <ImageButton
-            android:id="@+id/btn_main"
+            android:id="@+id/btn_personal"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/personal_info_foreground"
@@ -155,7 +155,7 @@ android:background="@color/alabaster">
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/btn_main"
+            android:layout_below="@id/btn_personal"
             android:layout_centerHorizontal="true"
             android:text="PERSONAL"
             android:textColor="@color/mintCream"

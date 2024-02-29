@@ -7,13 +7,13 @@
 
     <!-- Header layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_content"
+        android:id="@+id/header_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/inputMealTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
@@ -25,42 +25,71 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5">
-
-            <EditText
-                android:id="@+id/mealNameEditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:hint="Meal Name"
-                android:textColor="@color/pennBlue"
-                android:layout_marginHorizontal="5dp"/>
-            <EditText
-                android:id="@+id/caloriesEditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:hint="Calories"
-                android:textColor="@color/pennBlue"
-                android:layout_marginHorizontal="5dp"/>
-            <Button
-                android:id="@+id/btn_submit_meal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:text="Submit"
-                android:layout_marginHorizontal="5dp"
-                android:backgroundTint="@color/melon"/>
-        </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <LinearLayout
+        android:id="@+id/inputMealBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_below="@id/header_title"
+        android:layout_centerInParent="true">
+
+        <EditText
+            android:id="@+id/mealNameEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:hint="Meal Name"
+            android:textColor="@color/pennBlue"
+            android:layout_marginHorizontal="5dp"/>
+        <EditText
+            android:id="@+id/caloriesEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:hint="Calories"
+            android:textColor="@color/pennBlue"
+            android:layout_marginHorizontal="5dp"/>
+        <Button
+            android:id="@+id/btn_submit_meal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:text="Submit"
+            android:layout_marginHorizontal="5dp"
+            android:backgroundTint="@color/melon"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/choseVisualizationBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_above="@id/bottom_navigation"
+        android:layout_centerInParent="true">
+
+        <Button
+            android:id="@+id/btn_daily_calorie_intake"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:text="Calorie Intake"
+            android:layout_marginHorizontal="5dp"
+            android:backgroundTint="@color/pennBlue"/>
+        <Button
+            android:id="@+id/btn_daily_goal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:text="Daily Goal"
+            android:layout_marginHorizontal="5dp"
+            android:backgroundTint="@color/pennBlue"/>
+    </LinearLayout>
 
 
     <!-- Bottom navigation bar -->

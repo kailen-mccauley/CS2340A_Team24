@@ -47,8 +47,8 @@ android:background="@color/alabaster">
 
         <ImageButton
             android:id="@+id/btn_meal"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:src="@drawable/ic_meal_foreground"
             android:layout_centerHorizontal="true" />
 
@@ -72,8 +72,8 @@ android:background="@color/alabaster">
 
         <ImageButton
             android:id="@+id/btn_recipe"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:src="@drawable/ic_recipe_foreground"
             android:layout_centerHorizontal="true" />
 
@@ -97,8 +97,8 @@ android:background="@color/alabaster">
 
         <ImageButton
             android:id="@+id/btn_ingredients"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:src="@drawable/ic_ingredient_foreground"
             android:layout_centerHorizontal="true" />
 
@@ -122,8 +122,8 @@ android:background="@color/alabaster">
 
         <ImageButton
             android:id="@+id/btn_shopping"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:src="@drawable/ic_shopping_foreground"
             android:layout_centerHorizontal="true" />
 
@@ -146,8 +146,8 @@ android:background="@color/alabaster">
 
         <ImageButton
             android:id="@+id/btn_personal"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:src="@drawable/personal_info_foreground"
             android:layout_centerHorizontal="true" />
 

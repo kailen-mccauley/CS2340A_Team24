@@ -94,7 +94,7 @@
                 android:id="@+id/height"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColorHint="pennBlue"
+                android:textColorHint="@color/pennBlue"
                 android:layout_marginHorizontal="5dp"
                 android:background="@color/melon"
                 android:paddingLeft="10dp"

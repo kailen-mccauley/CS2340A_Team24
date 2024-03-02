@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkPowderBlue">
+    android:background="@color/lightBrown">
 
     <!-- Header layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +19,7 @@
             android:fontFamily="sans-serif-black"
             android:text="Personal Info\nScreen"
             android:textAlignment="center"
-            android:textColor="@color/mintCream"
+            android:textColor="@color/white"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,8 +38,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:hint="Height"
-                android:textColorHint="@color/orangeSorbet"
-                android:textColor="@color/mintCream"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
                 android:layout_marginHorizontal="5dp"/>
             <EditText
                 android:id="@+id/weightEditText"
@@ -47,8 +47,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:hint="Weight"
-                android:textColorHint="@color/orangeSorbet"
-                android:textColor="@color/mintCream"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
                 android:layout_marginHorizontal="5dp"/>
             <EditText
                 android:id="@+id/genderEditText"
@@ -56,8 +56,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:hint="Gender"
-                android:textColorHint="@color/orangeSorbet"
-                android:textColor="@color/mintCream"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
                 android:layout_marginHorizontal="5dp"/>
             <Button
                 android:id="@+id/btn_submit_personal_info"
@@ -66,12 +66,14 @@
                 android:textSize="20sp"
                 android:text="Submit"
                 android:layout_marginHorizontal="5dp"
-                android:backgroundTint="@color/orangeSorbet"/>
+                android:backgroundTint="@color/tanBrown"/>
         </LinearLayout>
 
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     <!-- Bottom navigation bar -->
     <LinearLayout
@@ -82,7 +84,7 @@
         android:background="@android:color/darker_gray"
         android:orientation="horizontal"
         android:padding="10dp"
-        android:backgroundTint="@color/orangeSorbet"
+        android:backgroundTint="@color/tanBrown"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <!-- Column 1 -->
@@ -98,7 +100,7 @@
                 android:layout_height="80dp"
                 android:src="@drawable/ic_home_foreground"
                 android:layout_centerHorizontal="true"
-                android:backgroundTint="@color/mintCream"/>
+                android:backgroundTint="@color/white"/>
 
             <TextView
                 android:id="@+id/textView0"
@@ -107,7 +109,7 @@
                 android:layout_below="@id/btn_home"
                 android:layout_centerHorizontal="true"
                 android:text="HOME"
-                android:textColor="@color/mintCream"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
         </RelativeLayout>
 
@@ -124,7 +126,7 @@
                 android:layout_height="80dp"
                 android:src="@drawable/ic_meal_foreground"
                 android:layout_centerHorizontal="true"
-                android:backgroundTint="@color/mintCream"/>
+                android:backgroundTint="@color/white"/>
 
             <TextView
                 android:id="@+id/textView1"
@@ -133,7 +135,7 @@
                 android:layout_below="@id/btn_meal"
                 android:layout_centerHorizontal="true"
                 android:text="MEALS"
-                android:textColor="@color/mintCream"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
         </RelativeLayout>
 
@@ -150,7 +152,7 @@
                 android:layout_height="80dp"
                 android:src="@drawable/ic_ingredient_foreground"
                 android:layout_centerHorizontal="true"
-                android:backgroundTint="@color/mintCream"/>
+                android:backgroundTint="@color/white"/>
 
             <TextView
                 android:id="@+id/textView2"
@@ -159,7 +161,7 @@
                 android:layout_below="@id/btn_ingredients"
                 android:layout_centerHorizontal="true"
                 android:text="ITEMS"
-                android:textColor="@color/mintCream"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
         </RelativeLayout>
 
@@ -176,7 +178,7 @@
                 android:layout_height="80dp"
                 android:src="@drawable/ic_shopping_foreground"
                 android:layout_centerHorizontal="true"
-                android:backgroundTint="@color/mintCream"/>
+                android:backgroundTint="@color/white"/>
 
             <TextView
                 android:id="@+id/textView3"
@@ -185,7 +187,7 @@
                 android:layout_below="@id/btn_shopping"
                 android:layout_centerHorizontal="true"
                 android:text="SHOPPING"
-                android:textColor="@color/mintCream"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
         </RelativeLayout>
         <!-- Column 5 -->
@@ -201,7 +203,7 @@
                 android:layout_height="80dp"
                 android:src="@drawable/ic_recipe_foreground"
                 android:layout_centerHorizontal="true"
-                android:backgroundTint="@color/mintCream"/>
+                android:backgroundTint="@color/white"/>
 
             <TextView
                 android:id="@+id/textView4"
@@ -210,7 +212,7 @@
                 android:layout_below="@id/btn_recipe"
                 android:layout_centerHorizontal="true"
                 android:text="RECIPES"
-                android:textColor="@color/mintCream"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
         </RelativeLayout>
 

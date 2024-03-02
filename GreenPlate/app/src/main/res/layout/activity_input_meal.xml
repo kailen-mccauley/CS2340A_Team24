@@ -44,6 +44,7 @@
             android:textSize="22sp"
             android:hint="Meal Name"
             android:textColor="@color/pennBlue"
+            android:textColorHint="pennBlue"
             android:layout_marginHorizontal="5dp"/>
         <EditText
             android:id="@+id/caloriesEditText"
@@ -52,6 +53,7 @@
             android:textSize="22sp"
             android:hint="Calories"
             android:textColor="@color/pennBlue"
+            android:textColorHint="pennBlue"
             android:layout_marginHorizontal="5dp"/>
         <Button
             android:id="@+id/btn_submit_meal"
@@ -61,6 +63,121 @@
             android:text="Submit"
             android:layout_marginHorizontal="5dp"
             android:backgroundTint="@color/melon"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/heightShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+        android:id="@+id/firstLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/heightText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_home"
+                android:layout_centerHorizontal="true"
+                android:text="User Height:"
+                android:textColor="@color/pennBlue"
+                android:textSize="22sp"
+                android:layout_marginBottom="25dp"/>
+
+            <EditText
+                android:id="@+id/height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColorHint="pennBlue"
+                android:layout_marginHorizontal="5dp"
+                android:background="@color/melon"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp"
+                android:hint="Height"
+                android:textColor="@color/pennBlue"
+                android:textSize="22sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+        android:id="@+id/secondLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/weightText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_home"
+                android:layout_centerHorizontal="true"
+                android:text="User Weight:"
+                android:textColor="@color/pennBlue"
+                android:textSize="22sp"
+                android:layout_marginBottom="25dp"/>
+
+            <EditText
+                android:id="@+id/weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:background="@color/melon"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp"
+                android:hint="Weight"
+                android:textColor="@color/pennBlue"
+                android:textColorHint="pennBlue"
+                android:textSize="22sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/thirdLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/genderText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_home"
+                android:layout_centerHorizontal="true"
+                android:text="User Gender:"
+                android:textColor="@color/pennBlue"
+                android:textSize="22sp"
+                android:layout_marginBottom="25dp"/>/>
+
+            <EditText
+                android:id="@+id/gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:background="@color/melon"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp"
+                android:hint="Gender"
+                android:textColor="@color/pennBlue"
+                android:textColorHint="pennBlue"
+                android:textSize="22sp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout

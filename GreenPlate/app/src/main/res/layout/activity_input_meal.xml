@@ -43,8 +43,7 @@
             android:layout_height="wrap_content"
             android:textSize="22sp"
             android:hint="Meal Name"
-            android:textColor="@color/pennBlue"
-            android:textColorHint="pennBlue"
+            android:textColorHint="@color/pennBlue"
             android:layout_marginHorizontal="5dp"/>
         <EditText
             android:id="@+id/caloriesEditText"
@@ -52,8 +51,7 @@
             android:layout_height="wrap_content"
             android:textSize="22sp"
             android:hint="Calories"
-            android:textColor="@color/pennBlue"
-            android:textColorHint="pennBlue"
+            android:textColorHint="@color/pennBlue"
             android:layout_marginHorizontal="5dp"/>
         <Button
             android:id="@+id/btn_submit_meal"
@@ -96,14 +94,13 @@
                 android:id="@+id/height"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColorHint="pennBlue"
+                android:textColorHint="@color/pennBlue"
                 android:layout_marginHorizontal="5dp"
                 android:background="@color/melon"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="5dp"
                 android:hint="Height"
-                android:textColor="@color/pennBlue"
                 android:textSize="22sp" />
 
         </LinearLayout>
@@ -137,8 +134,7 @@
                 android:paddingRight="10dp"
                 android:paddingBottom="5dp"
                 android:hint="Weight"
-                android:textColor="@color/pennBlue"
-                android:textColorHint="pennBlue"
+                android:textColorHint="@color/pennBlue"
                 android:textSize="22sp" />
 
         </LinearLayout>
@@ -172,8 +168,7 @@
                 android:paddingRight="10dp"
                 android:paddingBottom="5dp"
                 android:hint="Gender"
-                android:textColor="@color/pennBlue"
-                android:textColorHint="pennBlue"
+                android:textColorHint="@color/pennBlue"
                 android:textSize="22sp" />
 
         </LinearLayout>

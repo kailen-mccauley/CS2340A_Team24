@@ -21,6 +21,7 @@ public class MealActivity extends AppCompatActivity {
     private EditText mealNameEditText;
     private EditText caloriesEditText;
     private Button btn_submit_meal;
+    private Button btn_daily_calorie_intake;
 
 
     @Override
@@ -40,6 +41,7 @@ public class MealActivity extends AppCompatActivity {
         mealNameEditText = findViewById(R.id.mealNameEditText);
         caloriesEditText = findViewById(R.id.caloriesEditText);
         btn_submit_meal = findViewById(R.id.btn_submit_meal);
+        btn_daily_calorie_intake = findViewById(R.id.btn_daily_calorie_intake);
 
         toHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +94,14 @@ public class MealActivity extends AppCompatActivity {
                 viewModel.storeMeal(mealName, calories);
 
                 // Optional: You can also add validation here before calling the function
+            }
+        });
+
+        btn_daily_calorie_intake.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MealActivity.this, DataVisOne.class);
+                startActivity(intent);
             }
         });
 

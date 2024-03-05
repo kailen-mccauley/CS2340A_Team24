@@ -39,15 +39,6 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         LinearLayout parentLayout = findViewById(R.id.activity_create_account);
 
-        // Set touch listener to hide keyboard when touched outside EditText
-        parentLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Hide keyboard
-                hideKeyboard();
-                return false;
-            }
-        });
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -94,6 +85,16 @@ public class CreateAccountActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish(); // Close LoginActivity
                 }
+            }
+        });
+
+        // Set touch listener to hide keyboard when touched outside EditText
+        parentLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Hide keyboard
+                hideKeyboard();
+                return false;
             }
         });
 

@@ -1,10 +1,15 @@
 package com.example.greenplate.views;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,6 +47,9 @@ public class MealActivity extends AppCompatActivity {
         caloriesEditText = findViewById(R.id.caloriesEditText);
         btn_submit_meal = findViewById(R.id.btn_submit_meal);
         btn_daily_calorie_intake = findViewById(R.id.btn_daily_calorie_intake);
+
+        RelativeLayout parentLayout = findViewById(R.id.activity_input_meal);
+
 
         toHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +112,22 @@ public class MealActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        parentLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Hide keyboard
+                hideKeyboard();
+                return false;
+            }
+        });
 
+    }
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

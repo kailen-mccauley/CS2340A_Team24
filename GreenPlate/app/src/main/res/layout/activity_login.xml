@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/teal2">
+    android:background="@color/teal2"
+    android:id="@+id/activity_login">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="70dp"

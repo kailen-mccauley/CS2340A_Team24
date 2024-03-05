@@ -1,10 +1,15 @@
 package com.example.greenplate.views;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,6 +47,8 @@ public class PersonalActivity extends AppCompatActivity {
         heightEditText = findViewById(R.id.heightEditText);
         genderEditText = findViewById(R.id.genderEditText);
         submitButton = findViewById(R.id.btn_submit_personal_info);
+
+        RelativeLayout parentLayout = findViewById(R.id.activity_personal_info);
 
         toHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +105,23 @@ public class PersonalActivity extends AppCompatActivity {
             }
         });
 
+        parentLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Hide keyboard
+                hideKeyboard();
+                return false;
+            }
+        });
 
+    }
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
 }

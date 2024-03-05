@@ -1,10 +1,14 @@
 package com.example.greenplate.views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         LoginViewModel loginViewModeL = LoginViewModel.getInstance();
 
-
+        LinearLayout parentLayout = findViewById(R.id.activity_login);
 
         toHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,10 +84,27 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        parentLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Hide keyboard
+                hideKeyboard();
+                return false;
+            }
+        });
     }
     public boolean checkUsernameAndPassword(EditText usernameEditText, EditText passwordEditText) {
         String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
         return viewModel.isValidUsernameOrPassword(username, password);
+    }
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

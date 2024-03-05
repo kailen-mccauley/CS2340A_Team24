@@ -103,6 +103,17 @@
                 android:hint="Height"
                 android:textSize="22sp" />
 
+            <TextView
+                android:id="@+id/cmText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_home"
+                android:layout_centerHorizontal="true"
+                android:text="cm."
+                android:textColor="@color/pennBlue"
+                android:textSize="22sp"
+                android:layout_marginBottom="25dp"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -136,6 +147,17 @@
                 android:hint="Weight"
                 android:textColorHint="@color/pennBlue"
                 android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/lbsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_home"
+                android:layout_centerHorizontal="true"
+                android:text="lbs."
+                android:textColor="@color/pennBlue"
+                android:textSize="22sp"
+                android:layout_marginBottom="25dp"/>
 
         </LinearLayout>
 

@@ -16,6 +16,10 @@ public class MealActivityViewModel {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
+//    public interface MealDataCallback {
+//        void onMealDataReceived(int day, int calories);
+//    }
+
     private MealActivityViewModel() {
         // Initialize Firebase components
         mAuth = FirebaseAuth.getInstance();

@@ -100,7 +100,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="5dp"
-                android:hint="Height"
+                android:hint="N/A"
                 android:textSize="22sp" />
 
             <TextView
@@ -144,7 +144,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="5dp"
-                android:hint="Weight"
+                android:hint="N/A"
                 android:textColorHint="@color/pennBlue"
                 android:textSize="22sp" />
 
@@ -189,7 +189,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="5dp"
-                android:hint="Gender"
+                android:hint="N/A"
                 android:textColorHint="@color/pennBlue"
                 android:textSize="22sp" />
 

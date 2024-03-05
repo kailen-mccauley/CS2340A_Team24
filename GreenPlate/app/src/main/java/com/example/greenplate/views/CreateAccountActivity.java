@@ -1,11 +1,15 @@
 package com.example.greenplate.views;
 
+import android.content.Context;
 import android.content.Intent;
+import android.view.MotionEvent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -32,6 +36,18 @@ public class CreateAccountActivity extends AppCompatActivity {
         newPasswordEditText = findViewById(R.id.newPasswordEditText);
         Button createAccount = findViewById(R.id.btn_create_account);
         Button toLoginButton = findViewById(R.id.btn_login);
+
+        LinearLayout parentLayout = findViewById(R.id.activity_create_account);
+
+        // Set touch listener to hide keyboard when touched outside EditText
+        parentLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Hide keyboard
+                hideKeyboard();
+                return false;
+            }
+        });
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -87,5 +103,14 @@ public class CreateAccountActivity extends AppCompatActivity {
         String username = newUsernameEditText.getText().toString();
         String password = newPasswordEditText.getText().toString();
         return viewModel.isValidUsernameOrPassword(username, password);
+    }
+
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

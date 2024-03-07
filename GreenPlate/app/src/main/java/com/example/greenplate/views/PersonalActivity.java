@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
 import com.example.greenplate.viewmodels.LoginViewModel;
 import com.example.greenplate.viewmodels.PersonalActivityViewModel;
@@ -98,35 +99,38 @@ public class PersonalActivity extends AppCompatActivity {
                 String weight = weightEditText.getText().toString();
                 String height = heightEditText.getText().toString();
                 String gender = genderEditText.getText().toString();
+                if (InputValidator.isValidInput(weight)
+                        && InputValidator.isValidInput(height)
+                        && InputValidator.isValidInput(gender)) {
+                    try {
+                        int heightValue = Integer.parseInt(height);
+                    } catch (NumberFormatException nfe) {
+                        Toast.makeText(PersonalActivity.this, "Please enter a valid integer value for height (in cm)", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
+                    try {
+                        int weightValue = Integer.parseInt(weight);
+                    } catch (NumberFormatException nfe) {
+                        Toast.makeText(PersonalActivity.this, "Please enter a valid integer value for weight (in kg)", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
+                    if (!gender.equals("M") && !gender.equals("F")) {
+                        Toast.makeText(PersonalActivity.this, "Please enter 'M' for male or 'F' for female", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    // Call storeUserInformation function from viewModel
+                    viewModel.storePersonalInfo(height, weight, gender);
 
-                // Optional: You can also add validation here before calling the function
-                try {
-                    int weightValue = Integer.parseInt(weight);
-                } catch (NumberFormatException nfe) {
-                    Toast.makeText(PersonalActivity.this, "Please enter a valid integer value for weight (in cm)", Toast.LENGTH_SHORT).show();
-                    return;
+                    Toast.makeText(PersonalActivity.this, "Submitted Successfully!", Toast.LENGTH_SHORT).show();
+                    weightEditText.setText("");
+                    heightEditText.setText("");
+                    genderEditText.setText("");
+                    hideKeyboard();
+                } else {
+                    Toast.makeText(PersonalActivity.this, "Field is filled out incorrectly!", Toast.LENGTH_SHORT).show();
                 }
-
-                try {
-                    int heightValue = Integer.parseInt(height);
-                } catch (NumberFormatException nfe) {
-                    Toast.makeText(PersonalActivity.this, "Please enter a valid integer value for height (in cm)", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (!gender.equalsIgnoreCase("M") && !gender.equalsIgnoreCase("F")) {
-                    Toast.makeText(PersonalActivity.this, "Please enter 'M' for male or 'F' for female", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                // Call storeUserInformation function from viewModel
-                viewModel.storePersonalInfo(height, weight, gender);
-
-                Toast.makeText(PersonalActivity.this, "Submitted Successfully!", Toast.LENGTH_SHORT).show();
-                weightEditText.setText("");
-                heightEditText.setText("");
-                genderEditText.setText("");
             }
         });
 

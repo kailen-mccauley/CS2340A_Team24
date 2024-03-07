@@ -28,7 +28,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView">
@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:hint="Height"
+                android:hint="Height (cm)"
                 android:textColorHint="@color/white"
                 android:textColor="@color/white"
                 android:layout_marginHorizontal="5dp"/>
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:hint="Weight"
+                android:hint="Weight (kg)"
                 android:textColorHint="@color/white"
                 android:textColor="@color/white"
                 android:layout_marginHorizontal="5dp"/>
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:hint="Gender"
+                android:hint="Gender (M/F)"
                 android:textColorHint="@color/white"
                 android:textColor="@color/white"
                 android:layout_marginHorizontal="5dp"/>

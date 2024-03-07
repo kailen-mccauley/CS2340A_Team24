@@ -63,6 +63,7 @@ public class PersonalActivityViewModel {
     }
 
 
+
     public class User {
 
         private String userGender;

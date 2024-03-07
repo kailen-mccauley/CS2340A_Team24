@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.greenplate.InputValidator;
 import com.example.greenplate.viewmodels.LoginViewModel;
 import com.example.greenplate.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
-                if (checkUsernameAndPassword(usernameEditText, passwordEditText)) {
+                if (InputValidator.isValidInput(email) && InputValidator.isValidInput(password)) {
                     loginViewModeL.login(email, password, mAuth, LoginActivity.this);
                 } else {
                     // Show a message indicating that email or password is empty
@@ -93,11 +94,6 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
-    }
-    public boolean checkUsernameAndPassword(EditText usernameEditText, EditText passwordEditText) {
-        String username = usernameEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
-        return viewModel.isValidUsernameOrPassword(username, password);
     }
     private void hideKeyboard() {
         View view = this.getCurrentFocus();

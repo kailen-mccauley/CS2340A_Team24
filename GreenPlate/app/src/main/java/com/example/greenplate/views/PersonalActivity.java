@@ -124,6 +124,7 @@ public class PersonalActivity extends AppCompatActivity {
                     weightEditText.setText("");
                     heightEditText.setText("");
                     genderEditText.setText("");
+                    hideKeyboard();
                 } else {
                     Toast.makeText(PersonalActivity.this, "Field is filled out incorrectly!", Toast.LENGTH_SHORT).show();
                 }

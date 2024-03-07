@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
 import com.example.greenplate.viewmodels.LoginViewModel;
 import com.example.greenplate.viewmodels.PersonalActivityViewModel;
@@ -98,7 +99,9 @@ public class PersonalActivity extends AppCompatActivity {
                 String weight = weightEditText.getText().toString();
                 String height = heightEditText.getText().toString();
                 String gender = genderEditText.getText().toString();
-                if (viewModel.isValidHeightWeightGender(weight, height, gender)) {
+                if (InputValidator.isValidInput(weight)
+                        && InputValidator.isValidInput(height)
+                        && InputValidator.isValidInput(gender)) {
                     try {
                         int heightValue = Integer.parseInt(height);
                     } catch (NumberFormatException nfe) {

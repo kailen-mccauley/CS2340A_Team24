@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
+import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
 import com.example.greenplate.viewmodels.CreateAccountViewModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,7 +54,7 @@ public class CreateAccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = newUsernameEditText.getText().toString();
                 String password = newPasswordEditText.getText().toString();
-                if (checkUsernameAndPassword(newUsernameEditText, newPasswordEditText)) {
+                if (InputValidator.isValidInput(email) && InputValidator.isValidInput(password)) {
                     createAccountViewModeL.createAccount(email, password, mAuth,
                             CreateAccountActivity.this);
                 } else {
@@ -99,13 +100,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
 
     }
-    public boolean checkUsernameAndPassword(EditText newUsernameEditText,
-                                            EditText newPasswordEditText) {
-        String username = newUsernameEditText.getText().toString();
-        String password = newPasswordEditText.getText().toString();
-        return viewModel.isValidUsernameOrPassword(username, password);
-    }
-
     private void hideKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {

@@ -35,11 +35,6 @@ public class LoginViewModel {
         loginSuccess.setValue(success);
     }
 
-    public boolean isValidUsernameOrPassword(String username, String password) {
-        return username != null && !username.contains(" ") && !username.isEmpty()
-                && password != null && !password.contains(" ") && !password.isEmpty();
-    }
-
     public void login(String email, String password, FirebaseAuth mAuth,
                       LoginActivity loginActivity) {
         Task<AuthResult> authResultTask = mAuth.signInWithEmailAndPassword(email, password)

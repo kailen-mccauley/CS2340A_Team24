@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
 import com.example.greenplate.viewmodels.MealActivityViewModel;
 import com.example.greenplate.viewmodels.PersonalActivityViewModel;
@@ -95,31 +96,31 @@ public class MealActivity extends AppCompatActivity {
         btn_submit_meal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Retrieve values from input fields
                 String mealName = mealNameEditText.getText().toString();
                 String calories = caloriesEditText.getText().toString();
 
-                // Optional: You can also add validation here before calling the function
-                try {
-                    int calorieValue = Integer.parseInt(calories);
-                } catch (NumberFormatException nfe) {
-                    Toast.makeText(MealActivity.this, "Please enter a valid integer value for calories", Toast.LENGTH_SHORT).show();
-                    return;
+                if (InputValidator.isValidInput(mealName)
+                        && InputValidator.isValidInput(calories)) {
+                    try {
+                        int calorieValue = Integer.parseInt(calories);
+                    } catch (NumberFormatException nfe) {
+                        Toast.makeText(MealActivity.this, "Please enter a valid integer value for calories", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    if (mealName.isEmpty()) {
+                        Toast.makeText(MealActivity.this, "Please enter a value for mealName", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    // Call storeUserInformation function from viewModel
+                    viewModel.storeMeal(mealName, calories);
+
+                    Toast.makeText(MealActivity.this, "Submitted Successfully!", Toast.LENGTH_SHORT).show();
+                    mealNameEditText.setText("");
+                    caloriesEditText.setText("");
+                } else {
+                    Toast.makeText(MealActivity.this, "A field you entered is invalid!", Toast.LENGTH_SHORT).show();
                 }
-
-                if (mealName.isEmpty()) {
-                    Toast.makeText(MealActivity.this, "Please enter a value for mealName", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-
-
-                // Call storeUserInformation function from viewModel
-                viewModel.storeMeal(mealName, calories);
-
-                Toast.makeText(MealActivity.this, "Submitted Successfully!", Toast.LENGTH_SHORT).show();
-                mealNameEditText.setText("");
-                caloriesEditText.setText("");
             }
         });
 

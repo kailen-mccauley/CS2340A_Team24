@@ -118,6 +118,7 @@ public class MealActivity extends AppCompatActivity {
                     Toast.makeText(MealActivity.this, "Submitted Successfully!", Toast.LENGTH_SHORT).show();
                     mealNameEditText.setText("");
                     caloriesEditText.setText("");
+                    hideKeyboard();
                 } else {
                     Toast.makeText(MealActivity.this, "A field you entered is invalid!", Toast.LENGTH_SHORT).show();
                 }

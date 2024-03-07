@@ -99,13 +99,10 @@ public class PersonalActivity extends AppCompatActivity {
                 String height = heightEditText.getText().toString();
                 String gender = genderEditText.getText().toString();
 
-
-
-                // Optional: You can also add validation here before calling the function
                 try {
                     int weightValue = Integer.parseInt(weight);
                 } catch (NumberFormatException nfe) {
-                    Toast.makeText(PersonalActivity.this, "Please enter a valid integer value for weight (in cm)", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PersonalActivity.this, "Please enter a valid integer value for weight (in kg)", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -116,7 +113,7 @@ public class PersonalActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (!gender.equalsIgnoreCase("M") && !gender.equalsIgnoreCase("F")) {
+                if (!gender.equals("M") && !gender.equals("F")) {
                     Toast.makeText(PersonalActivity.this, "Please enter 'M' for male or 'F' for female", Toast.LENGTH_SHORT).show();
                     return;
                 }

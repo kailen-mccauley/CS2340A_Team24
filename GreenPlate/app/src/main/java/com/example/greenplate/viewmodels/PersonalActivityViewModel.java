@@ -62,6 +62,12 @@ public class PersonalActivityViewModel {
         }
     }
 
+    public boolean isValidHeightWeightGender(String height, String weight, String gender) {
+        return height != null && !height.contains(" ") && !height.isEmpty()
+                && weight != null && !weight.contains(" ") && !weight.isEmpty()
+                && gender != null && !gender.contains(" ") && !gender.isEmpty();
+    }
+
 
     public class User {
 

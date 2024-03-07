@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -98,10 +99,34 @@ public class PersonalActivity extends AppCompatActivity {
                 String height = heightEditText.getText().toString();
                 String gender = genderEditText.getText().toString();
 
+
+
+                // Optional: You can also add validation here before calling the function
+                try {
+                    int weightValue = Integer.parseInt(weight);
+                } catch (NumberFormatException nfe) {
+                    Toast.makeText(PersonalActivity.this, "Please enter a valid integer value for weight (in cm)", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                try {
+                    int heightValue = Integer.parseInt(height);
+                } catch (NumberFormatException nfe) {
+                    Toast.makeText(PersonalActivity.this, "Please enter a valid integer value for height (in cm)", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!gender.equalsIgnoreCase("M") && !gender.equalsIgnoreCase("F")) {
+                    Toast.makeText(PersonalActivity.this, "Please enter 'M' for male or 'F' for female", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 // Call storeUserInformation function from viewModel
                 viewModel.storePersonalInfo(height, weight, gender);
 
-                // Optional: You can also add validation here before calling the function
+                Toast.makeText(PersonalActivity.this, "Submitted Successfully!", Toast.LENGTH_SHORT).show();
+                weightEditText.setText("");
+                heightEditText.setText("");
+                genderEditText.setText("");
             }
         });
 

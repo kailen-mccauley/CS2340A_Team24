@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -98,10 +99,27 @@ public class MealActivity extends AppCompatActivity {
                 String mealName = mealNameEditText.getText().toString();
                 String calories = caloriesEditText.getText().toString();
 
+                // Optional: You can also add validation here before calling the function
+                try {
+                    int calorieValue = Integer.parseInt(calories);
+                } catch (NumberFormatException nfe) {
+                    Toast.makeText(MealActivity.this, "Please enter a valid integer value for calories", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (mealName.isEmpty()) {
+                    Toast.makeText(MealActivity.this, "Please enter a value for mealName", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
+
                 // Call storeUserInformation function from viewModel
                 viewModel.storeMeal(mealName, calories);
 
-                // Optional: You can also add validation here before calling the function
+                Toast.makeText(MealActivity.this, "Submitted Successfully!", Toast.LENGTH_SHORT).show();
+                mealNameEditText.setText("");
+                caloriesEditText.setText("");
             }
         });
 

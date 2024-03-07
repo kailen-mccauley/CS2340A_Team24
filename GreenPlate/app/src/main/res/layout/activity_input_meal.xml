@@ -91,8 +91,8 @@
                 android:textSize="22sp"
                 android:layout_marginBottom="25dp"/>
 
-            <EditText
-                android:id="@+id/height"
+            <TextView
+                android:id="@+id/heightTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/pennBlue"
@@ -136,8 +136,8 @@
                 android:textSize="22sp"
                 android:layout_marginBottom="25dp"/>
 
-            <EditText
-                android:id="@+id/weight"
+            <TextView
+                android:id="@+id/weightTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
@@ -181,8 +181,8 @@
                 android:textSize="22sp"
                 android:layout_marginBottom="25dp"/>/>
 
-            <EditText
-                android:id="@+id/gender"
+            <TextView
+                android:id="@+id/genderTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"

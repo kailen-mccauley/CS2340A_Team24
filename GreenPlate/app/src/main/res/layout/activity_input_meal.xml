@@ -251,7 +251,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="5dp"
-                android:text="N/A"
+                android:text="0"
                 android:textColorHint="@color/pennBlue"
                 android:textSize="22sp" />
 
@@ -273,7 +273,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="5dp"
-                android:text="N/A"
+                android:text="0"
                 android:textColorHint="@color/pennBlue"
                 android:textSize="22sp" />
         </LinearLayout>

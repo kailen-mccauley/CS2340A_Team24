@@ -187,26 +187,27 @@
         android:id="@+id/choseVisualizationBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_above="@id/bottom_navigation"
-        android:layout_centerInParent="true">
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_daily_calorie_intake"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:text="Calorie Intake"
             android:layout_marginHorizontal="5dp"
-            android:backgroundTint="@color/pennBlue"/>
+            android:backgroundTint="@color/pennBlue"
+            android:text="Calorie Intake"
+            android:textSize="22sp" />
+
         <Button
             android:id="@+id/btn_daily_goal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:text="Daily Goal"
             android:layout_marginHorizontal="5dp"
-            android:backgroundTint="@color/pennBlue"/>
+            android:backgroundTint="@color/pennBlue"
+            android:text="Daily Goal"
+            android:textSize="22sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -214,8 +215,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/choseVisualizationBar"
-        android:layout_centerInParent="true"
-        android:orientation="vertical">
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:paddingBottom="5dp">
 
         <TextView
             android:id="@+id/calorieMetricsText"

@@ -32,36 +32,37 @@
         android:id="@+id/inputMealBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_below="@id/header_title"
-        android:layout_centerInParent="true">
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/mealNameEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
+            android:layout_marginHorizontal="5dp"
             android:hint="Meal Name"
             android:textColorHint="@color/pennBlue"
-            android:layout_marginHorizontal="5dp"/>
+            android:textSize="22sp" />
+
         <EditText
             android:id="@+id/caloriesEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
+            android:layout_marginHorizontal="5dp"
             android:hint="Calories"
             android:textColorHint="@color/pennBlue"
-            android:layout_marginHorizontal="5dp"/>
+            android:textSize="22sp" />
+
         <Button
             android:id="@+id/btn_submit_meal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:text="Submit"
             android:layout_marginHorizontal="5dp"
-            android:backgroundTint="@color/melon"/>
+            android:backgroundTint="@color/melon"
+            android:text="Submit"
+            android:textSize="22sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -69,30 +70,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_below="@id/inputMealBar">
 
         <LinearLayout
         android:id="@+id/firstLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/heightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btn_home"
-                android:layout_centerHorizontal="true"
                 android:text="User Height:"
                 android:textColor="@color/pennBlue"
                 android:textSize="22sp"
                 android:layout_marginBottom="25dp"/>
 
-            <EditText
-                android:id="@+id/height"
+            <TextView
+                android:id="@+id/heightTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/pennBlue"
@@ -108,8 +105,6 @@
                 android:id="@+id/cmText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btn_home"
-                android:layout_centerHorizontal="true"
                 android:text="cm."
                 android:textColor="@color/pennBlue"
                 android:textSize="22sp"
@@ -121,23 +116,19 @@
         android:id="@+id/secondLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/weightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btn_home"
-                android:layout_centerHorizontal="true"
                 android:text="User Weight:"
                 android:textColor="@color/pennBlue"
                 android:textSize="22sp"
                 android:layout_marginBottom="25dp"/>
 
-            <EditText
-                android:id="@+id/weight"
+            <TextView
+                android:id="@+id/weightTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
@@ -153,8 +144,6 @@
                 android:id="@+id/lbsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btn_home"
-                android:layout_centerHorizontal="true"
                 android:text="lbs."
                 android:textColor="@color/pennBlue"
                 android:textSize="22sp"
@@ -166,23 +155,19 @@
             android:id="@+id/thirdLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/genderText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btn_home"
-                android:layout_centerHorizontal="true"
                 android:text="User Gender:"
                 android:textColor="@color/pennBlue"
                 android:textSize="22sp"
-                android:layout_marginBottom="25dp"/>/>
+                android:layout_marginBottom="25dp"/>
 
-            <EditText
-                android:id="@+id/gender"
+            <TextView
+                android:id="@+id/genderTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
@@ -203,8 +188,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_above="@id/bottom_navigation"
         android:layout_centerInParent="true">
 
@@ -226,6 +209,73 @@
             android:backgroundTint="@color/pennBlue"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/calorieMetricsBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/choseVisualizationBar"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/calorieMetricsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="25dp"
+            android:text="Calorie Metrics:"
+            android:textColor="@color/pennBlue"
+            android:textSize="22sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/goalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:text="Goal:"
+                android:textColor="@color/pennBlue"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/goalTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:background="@color/melon"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp"
+                android:text="N/A"
+                android:textColorHint="@color/pennBlue"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/intakeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:text="Intake:"
+                android:textColor="@color/pennBlue"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/intakeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:background="@color/melon"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp"
+                android:text="N/A"
+                android:textColorHint="@color/pennBlue"
+                android:textSize="22sp" />
+        </LinearLayout>
+    </LinearLayout>
 
     <!-- Bottom navigation bar -->
     <LinearLayout

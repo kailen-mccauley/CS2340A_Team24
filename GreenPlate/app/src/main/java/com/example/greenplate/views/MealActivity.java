@@ -99,7 +99,7 @@ public class MealActivity extends AppCompatActivity {
                 String mealName = mealNameEditText.getText().toString();
                 String calories = caloriesEditText.getText().toString();
 
-                if (InputValidator.isValidInput(mealName)
+                if (InputValidator.isValidInputWithSpacesBetween(mealName)
                         && InputValidator.isValidInput(calories)) {
                     try {
                         int calorieValue = Integer.parseInt(calories);
@@ -108,16 +108,12 @@ public class MealActivity extends AppCompatActivity {
                         return;
                     }
 
-                    if (mealName.isEmpty()) {
-                        Toast.makeText(MealActivity.this, "Please enter a value for mealName", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    // Call storeUserInformation function from viewModel
                     viewModel.storeMeal(mealName, calories);
 
                     Toast.makeText(MealActivity.this, "Submitted Successfully!", Toast.LENGTH_SHORT).show();
                     mealNameEditText.setText("");
                     caloriesEditText.setText("");
+                    hideKeyboard();
                 } else {
                     Toast.makeText(MealActivity.this, "A field you entered is invalid!", Toast.LENGTH_SHORT).show();
                 }

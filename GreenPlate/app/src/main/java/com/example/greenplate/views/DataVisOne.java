@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataVisOne extends AppCompatActivity {
-
-//    private MealActivityViewModel viewModel;
     private Button toReturnButton;
 
     @Override
@@ -37,9 +35,7 @@ public class DataVisOne extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
 
-        toReturnButton = findViewById(R.id.btn_datavisback);
-
-//        viewModel = MealActivityViewModel.getInstance();
+        toReturnButton = findViewById(R.id.btn_datavisoneback);
 
         AnyChartView anyChartView = findViewById(R.id.any_chart_view);
         anyChartView.setProgressBar(findViewById(R.id.progress_bar));
@@ -47,18 +43,6 @@ public class DataVisOne extends AppCompatActivity {
         Cartesian cartesian = AnyChart.column();
 
         List<DataEntry> data = new ArrayList<>();
-
-//        for (int day = 1; day <= 30; day++) {
-//            final int currentDay = day;
-//
-//            //viewModel.queryUserMeals(currentDay, new MealActivityViewModel.MealDataCallback() {
-//            viewModel.queryUserMeals() {
-//                @Override
-//                public void onMealDataReceived(int day, int calories) {
-//                    data.add(new ValueDataEntry("Day " + day, calories));
-//                }
-//            });
-//        }
 
         data.add(new ValueDataEntry("Rouge", 1220));
         data.add(new ValueDataEntry("Foundation", 4000));

@@ -16,6 +16,8 @@ public class MealActivityViewModel {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
+    private int calculatedCalorieGoal;
+
 //    public interface MealDataCallback {
 //        void onMealDataReceived(int day, int calories);
 //    }
@@ -67,7 +69,6 @@ public class MealActivityViewModel {
                     });
         }
     }
-
 
 
     public class Meal {

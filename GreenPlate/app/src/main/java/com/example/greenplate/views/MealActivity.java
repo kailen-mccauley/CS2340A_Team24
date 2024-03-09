@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -147,6 +148,14 @@ public class MealActivity extends AppCompatActivity {
             }
         });
 
+//        viewModel.calculateCalorieGoal(new MealActivityViewModel.CalorieGoalCallback() {
+//            @Override
+//            public void onCalorieGoalReceived(int calorieGoal) {
+//                TextView goalTextView = findViewById(R.id.goalTextView);
+//                goalTextView.setText(String.valueOf(calorieGoal));
+//            }
+//        });
+
     }
     private void hideKeyboard() {
         View view = this.getCurrentFocus();
@@ -156,4 +165,5 @@ public class MealActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
 }

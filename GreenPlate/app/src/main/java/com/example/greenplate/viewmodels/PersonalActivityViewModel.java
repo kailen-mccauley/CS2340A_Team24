@@ -1,7 +1,10 @@
 package com.example.greenplate.viewmodels;
 
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
+import com.example.greenplate.views.PersonalActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -17,6 +20,10 @@ public class PersonalActivityViewModel {
     private static PersonalActivityViewModel instance;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+
+    public interface UserInfoCallback {
+        void onUserInfoReceived(User user);
+    }
 
     private PersonalActivityViewModel() {
         // Initialize Firebase components
@@ -49,25 +56,40 @@ public class PersonalActivityViewModel {
             mDatabase.child("users").child(uid).setValue(user);
         }
     }
-    public void getUserInfo() {
+    public void getUserInfo(UserInfoCallback callback) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String uid = currentUser.getUid();
             mDatabase.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    User user = dataSnapshot.getValue(User.class);
-                    if (user != null) {
-                        String height = user.getUserHeight();
-                        String weight = user.getUserWeight();
-                        String gender = user.getUserGender();
-                        int calorieGoal = user.getCalorieGoal();
+                    if (dataSnapshot.exists()) {
+                        String height = dataSnapshot.child("userHeight").getValue(String.class);
+                        String weight = dataSnapshot.child("userWeight").getValue(String.class);
+                        String gender = dataSnapshot.child("userGender").getValue(String.class);
+                        int calorieGoal = dataSnapshot.child("calorieGoal").getValue(Integer.class);
+
+                        // Create a User object
+                        User user = new User(height, weight, gender, calorieGoal);
+
+                        // Pass the user object to the callback
+                        callback.onUserInfoReceived(user);
+                    } else {
+                        // Handle case where user data doesn't exist
+                        callback.onUserInfoReceived(null);
                     }
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
+                    // Handle database error
+                    // For example:
+                    callback.onUserInfoReceived(null);
                 }
             });
+        } else {
+            // Handle null current user
+            // For example:
+            callback.onUserInfoReceived(null);
         }
     }
 

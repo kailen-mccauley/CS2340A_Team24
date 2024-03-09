@@ -23,6 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MealActivity extends AppCompatActivity {
     private MealActivityViewModel viewModel;
+    private PersonalActivityViewModel personalViewModel; // Declare personalViewModel variable
+
 
     private FirebaseAuth mAuth;
 
@@ -54,6 +56,22 @@ public class MealActivity extends AppCompatActivity {
         btn_daily_goal = findViewById(R.id.btn_daily_goal);
 
         RelativeLayout parentLayout = findViewById(R.id.activity_input_meal);
+
+        viewModel = MealActivityViewModel.getInstance();
+        personalViewModel = PersonalActivityViewModel.getInstance();
+
+        // Call getUserInfo to retrieve user information
+        personalViewModel.getUserInfo(new PersonalActivityViewModel.UserInfoCallback() {
+            @Override
+            public void onUserInfoReceived(PersonalActivityViewModel.User user) {
+                if (user != null) {
+                    int calorieGoal = user.getCalorieGoal();
+                    Toast.makeText(MealActivity.this, "Calorie Goal: " + calorieGoal, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MealActivity.this, "User information not available", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 
         toHomeButton.setOnClickListener(new View.OnClickListener() {

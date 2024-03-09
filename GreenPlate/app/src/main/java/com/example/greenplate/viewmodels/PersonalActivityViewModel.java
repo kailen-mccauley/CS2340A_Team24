@@ -36,7 +36,16 @@ public class PersonalActivityViewModel {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String uid = currentUser.getUid();
-            User user = new User(height, weight, gender);
+            int calGoal;
+            int weightCalc = Integer.parseInt(weight);
+            int heightCalc = Integer.parseInt(height);
+            if (gender.equals("m")) {
+                calGoal = 10*weightCalc + 6*heightCalc + 5;
+            } else {
+                calGoal = 10*weightCalc + 6*heightCalc - 141;
+            }
+
+            User user = new User(height, weight, gender, calGoal );
             mDatabase.child("users").child(uid).setValue(user);
         }
     }
@@ -52,7 +61,7 @@ public class PersonalActivityViewModel {
                         String height = user.getUserHeight();
                         String weight = user.getUserWeight();
                         String gender = user.getUserGender();
-                        // Update UI with user information
+                        int calorieGoal = user.getCalorieGoal();
                     }
                 }
                 @Override
@@ -63,20 +72,20 @@ public class PersonalActivityViewModel {
     }
 
 
-
     public class User {
 
         private String userGender;
         private String userWeight;
         private String userHeight;
+        private int calorieGoal;
 
         public User() {}
 
-        public User(String userHeight, String userWeight, String userGender) {
+        public User(String userHeight, String userWeight, String userGender, int calorieGoal) {
             this.setUserGender(userGender);
             this.setUserWeight(userWeight);
             this.setUserHeight(userHeight);
-
+            this.setCalorieGoal(calorieGoal);
         }
 
 
@@ -102,6 +111,14 @@ public class PersonalActivityViewModel {
 
         public void setUserHeight(String userHeight) {
             this.userHeight = userHeight;
+        }
+
+        public int getCalorieGoal() {
+            return calorieGoal;
+        }
+
+        public void setCalorieGoal(int calorieGoal) {
+            this.calorieGoal = calorieGoal;
         }
     }
 

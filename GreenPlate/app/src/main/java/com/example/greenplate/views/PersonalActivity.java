@@ -120,7 +120,6 @@ public class PersonalActivity extends AppCompatActivity {
                         Toast.makeText(PersonalActivity.this, "Please enter 'M' for male or 'F' for female", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    // Call storeUserInformation function from viewModel
                     viewModel.storePersonalInfo(height, weight, gender);
 
                     Toast.makeText(PersonalActivity.this, "Submitted Successfully!", Toast.LENGTH_SHORT).show();

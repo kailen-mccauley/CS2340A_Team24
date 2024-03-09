@@ -29,6 +29,7 @@ public class MealActivity extends AppCompatActivity {
     private EditText caloriesEditText;
     private Button btn_submit_meal;
     private Button btn_daily_calorie_intake;
+    private Button btn_daily_goal;
 
 
     @Override
@@ -49,6 +50,7 @@ public class MealActivity extends AppCompatActivity {
         caloriesEditText = findViewById(R.id.caloriesEditText);
         btn_submit_meal = findViewById(R.id.btn_submit_meal);
         btn_daily_calorie_intake = findViewById(R.id.btn_daily_calorie_intake);
+        btn_daily_goal = findViewById(R.id.btn_daily_goal);
 
         RelativeLayout parentLayout = findViewById(R.id.activity_input_meal);
 
@@ -120,13 +122,22 @@ public class MealActivity extends AppCompatActivity {
             }
         });
 
-        btn_daily_calorie_intake.setOnClickListener(new View.OnClickListener() {
+        btn_daily_goal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MealActivity.this, DataVisOne.class);
                 startActivity(intent);
             }
         });
+
+        btn_daily_calorie_intake.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MealActivity.this, DataVisTwo.class);
+                startActivity(intent);
+            }
+        });
+
         parentLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

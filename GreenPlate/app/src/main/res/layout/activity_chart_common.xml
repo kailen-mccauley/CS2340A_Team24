@@ -16,14 +16,14 @@
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
 
     <LinearLayout
-        android:id="@+id/datavisone"
+        android:id="@+id/datavistwo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="600dp"
@@ -36,7 +36,7 @@
         android:layout_centerInParent="true">
 
         <Button
-            android:id="@+id/btn_datavisoneback"
+            android:id="@+id/btn_datavistwoback"
             android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

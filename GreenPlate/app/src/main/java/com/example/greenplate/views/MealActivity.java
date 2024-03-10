@@ -45,6 +45,11 @@ public class MealActivity extends AppCompatActivity {
         ImageButton toIngredientsButton = findViewById(R.id.btn_ingredients);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
+        TextView heightTextView = findViewById(R.id.heightTextView);
+        TextView weightTextView = findViewById(R.id.weightTextView);
+        TextView genderTextView = findViewById(R.id.genderTextView);
+        TextView goalTextView = findViewById(R.id.goalTextView);
+
 
         mAuth = FirebaseAuth.getInstance();
         viewModel = MealActivityViewModel.getInstance();
@@ -65,14 +70,15 @@ public class MealActivity extends AppCompatActivity {
             @Override
             public void onUserInfoReceived(PersonalActivityViewModel.User user) {
                 if (user != null) {
-                    int calorieGoal = user.getCalorieGoal();
-                    Toast.makeText(MealActivity.this, "Calorie Goal: " + calorieGoal, Toast.LENGTH_SHORT).show();
+                    heightTextView.setText(user.getUserHeight());
+                    weightTextView.setText(user.getUserWeight());
+                    genderTextView.setText(user.getUserGender().equals("M") ? "Male" : "Female");
+                    goalTextView.setText(String.valueOf(user.getCalorieGoal()));
                 } else {
                     Toast.makeText(MealActivity.this, "User information not available", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
 
         toHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override

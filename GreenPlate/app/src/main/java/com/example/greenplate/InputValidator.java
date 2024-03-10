@@ -8,7 +8,6 @@ public class InputValidator {
         if (input == null || input.isEmpty()) {
             return false;
         }
-        input = input.trim();
         return input.equals(input.trim());
     }
 }

@@ -37,6 +37,7 @@ public class MealActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // DO NOT MODIFY
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_meal);
         ImageButton toHomeButton = findViewById(R.id.btn_home);
@@ -48,6 +49,7 @@ public class MealActivity extends AppCompatActivity {
         TextView weightTextView = findViewById(R.id.weightTextView);
         TextView genderTextView = findViewById(R.id.genderTextView);
         TextView goalTextView = findViewById(R.id.goalTextView);
+        TextView intakeTextView = findViewById(R.id.intakeTextView);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -77,6 +79,13 @@ public class MealActivity extends AppCompatActivity {
                     Toast.makeText(MealActivity.this,
                             "User information not available", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        viewModel.getDailyCalorieIntake(new MealActivityViewModel.DailyCalorieIntakeCallback() {
+            @Override
+            public void onDailyCalorieIntakeReceived(int totalCalories) {
+                intakeTextView.setText(String.valueOf(totalCalories));
             }
         });
 
@@ -144,6 +153,12 @@ public class MealActivity extends AppCompatActivity {
                     mealNameEditText.setText("");
                     caloriesEditText.setText("");
                     hideKeyboard();
+                    viewModel.getDailyCalorieIntake(new MealActivityViewModel.DailyCalorieIntakeCallback() {
+                        @Override
+                        public void onDailyCalorieIntakeReceived(int totalCalories) {
+                            intakeTextView.setText(String.valueOf(totalCalories));
+                        }
+                    });
                 } else {
                     Toast.makeText(MealActivity.this,
                             "A field you entered is invalid!", Toast.LENGTH_SHORT).show();

@@ -16,7 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class PersonalActivityViewModel {
-    private static PersonalActivityViewModel instance;
+    private volatile static PersonalActivityViewModel instance;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -30,9 +30,13 @@ public class PersonalActivityViewModel {
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
     }
-    public static synchronized PersonalActivityViewModel getInstance() {
+    public static PersonalActivityViewModel getInstance() {
         if (instance == null) {
-            instance = new PersonalActivityViewModel();
+            synchronized (PersonalActivityViewModel.class) {
+                if (instance == null) {
+                    instance = new PersonalActivityViewModel();
+                }
+            }
         }
         return instance;
     }

@@ -1,10 +1,9 @@
 package com.example.greenplate.viewmodels;
 
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.greenplate.views.PersonalActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -12,7 +11,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -24,14 +22,6 @@ public class PersonalActivityViewModel {
     public interface UserInfoCallback {
         void onUserInfoReceived(User user);
     }
-
-    private PersonalActivityViewModel() {
-        // Initialize Firebase components
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
-    }
-
     public static synchronized PersonalActivityViewModel getInstance() {
         if (instance == null) {
             instance = new PersonalActivityViewModel();
@@ -46,13 +36,13 @@ public class PersonalActivityViewModel {
             int calGoal;
             int weightCalc = Integer.parseInt(weight);
             int heightCalc = Integer.parseInt(height);
-            if (gender.equals("m")) {
-                calGoal = 10*weightCalc + 6*heightCalc + 5;
+            if (gender.equals("M")) {
+                calGoal = 10 * weightCalc + 6 * heightCalc + 5;
             } else {
-                calGoal = 10*weightCalc + 6*heightCalc - 141;
+                calGoal = 10 * weightCalc + 6 * heightCalc - 141;
             }
 
-            User user = new User(height, weight, gender, calGoal );
+            User user = new User(height, weight, gender, calGoal);
             mDatabase.child("users").child(uid).setValue(user);
         }
     }
@@ -101,7 +91,7 @@ public class PersonalActivityViewModel {
         private String userHeight;
         private int calorieGoal;
 
-        public User() {}
+        public User() { }
 
         public User(String userHeight, String userWeight, String userGender, int calorieGoal) {
             this.setUserGender(userGender);

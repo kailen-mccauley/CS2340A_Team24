@@ -18,9 +18,9 @@ public class MealActivityViewModel {
 
     private int calculatedCalorieGoal;
 
-//    public interface MealDataCallback {
-//        void onMealDataReceived(int day, int calories);
-//    }
+    // public interface MealDataCallback {
+    // void onMealDataReceived(int day, int calories);
+    // }
 
     private MealActivityViewModel() {
         // Initialize Firebase components

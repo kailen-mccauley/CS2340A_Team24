@@ -1,10 +1,8 @@
 package com.example.greenplate.views;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.anychart.AnyChart;
@@ -21,8 +19,6 @@ import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
 
 import com.example.greenplate.R;
-import com.example.greenplate.viewmodels.MealActivityViewModel;
-import com.google.firebase.Firebase;
 
 import java.util.ArrayList;
 import java.util.List;

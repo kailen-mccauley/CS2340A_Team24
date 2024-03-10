@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -30,9 +29,9 @@ public class MealActivity extends AppCompatActivity {
 
     private EditText mealNameEditText;
     private EditText caloriesEditText;
-    private Button btn_submit_meal;
-    private Button btn_daily_calorie_intake;
-    private Button btn_daily_goal;
+    private Button btnSubmitMeal;
+    private Button btnDailyCalorieIntake;
+    private Button btnDailyGoal;
 
 
     @Override
@@ -56,9 +55,9 @@ public class MealActivity extends AppCompatActivity {
 
         mealNameEditText = findViewById(R.id.mealNameEditText);
         caloriesEditText = findViewById(R.id.caloriesEditText);
-        btn_submit_meal = findViewById(R.id.btn_submit_meal);
-        btn_daily_calorie_intake = findViewById(R.id.btn_daily_calorie_intake);
-        btn_daily_goal = findViewById(R.id.btn_daily_goal);
+        btnSubmitMeal = findViewById(R.id.btn_submit_meal);
+        btnDailyCalorieIntake = findViewById(R.id.btn_daily_calorie_intake);
+        btnDailyGoal = findViewById(R.id.btn_daily_goal);
 
         RelativeLayout parentLayout = findViewById(R.id.activity_input_meal);
 
@@ -75,7 +74,8 @@ public class MealActivity extends AppCompatActivity {
                     genderTextView.setText(user.getUserGender().equals("M") ? "Male" : "Female");
                     goalTextView.setText(String.valueOf(user.getCalorieGoal()));
                 } else {
-                    Toast.makeText(MealActivity.this, "User information not available", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MealActivity.this,
+                            "User information not available", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -120,7 +120,7 @@ public class MealActivity extends AppCompatActivity {
             }
         });
 
-        btn_submit_meal.setOnClickListener(new View.OnClickListener() {
+        btnSubmitMeal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String mealName = mealNameEditText.getText().toString();
@@ -131,23 +131,27 @@ public class MealActivity extends AppCompatActivity {
                     try {
                         int calorieValue = Integer.parseInt(calories);
                     } catch (NumberFormatException nfe) {
-                        Toast.makeText(MealActivity.this, "Please enter a valid integer value for calories", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MealActivity.this,
+                                "Please enter a valid integer value for calories",
+                                Toast.LENGTH_SHORT).show();
                         return;
                     }
 
                     viewModel.storeMeal(mealName, calories);
 
-                    Toast.makeText(MealActivity.this, "Submitted Successfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MealActivity.this,
+                            "Submitted Successfully!", Toast.LENGTH_SHORT).show();
                     mealNameEditText.setText("");
                     caloriesEditText.setText("");
                     hideKeyboard();
                 } else {
-                    Toast.makeText(MealActivity.this, "A field you entered is invalid!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MealActivity.this,
+                            "A field you entered is invalid!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        btn_daily_goal.setOnClickListener(new View.OnClickListener() {
+        btnDailyGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MealActivity.this, DataVisOne.class);
@@ -155,7 +159,7 @@ public class MealActivity extends AppCompatActivity {
             }
         });
 
-        btn_daily_calorie_intake.setOnClickListener(new View.OnClickListener() {
+        btnDailyCalorieIntake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MealActivity.this, DataVisTwo.class);
@@ -172,13 +176,13 @@ public class MealActivity extends AppCompatActivity {
             }
         });
 
-//        viewModel.calculateCalorieGoal(new MealActivityViewModel.CalorieGoalCallback() {
-//            @Override
-//            public void onCalorieGoalReceived(int calorieGoal) {
-//                TextView goalTextView = findViewById(R.id.goalTextView);
-//                goalTextView.setText(String.valueOf(calorieGoal));
-//            }
-//        });
+        //        viewModel.calculateCalorieGoal(new MealActivityViewModel.CalorieGoalCallback() {
+        //            @Override
+        //            public void onCalorieGoalReceived(int calorieGoal) {
+        //                TextView goalTextView = findViewById(R.id.goalTextView);
+        //                goalTextView.setText(String.valueOf(calorieGoal));
+        //            }
+        //        });
 
     }
     private void hideKeyboard() {

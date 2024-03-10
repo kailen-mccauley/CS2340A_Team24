@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +22,13 @@ public class PersonalActivityViewModel {
 
     public interface UserInfoCallback {
         void onUserInfoReceived(User user);
+    }
+
+    private PersonalActivityViewModel() {
+        // Initialize Firebase components
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
     }
     public static synchronized PersonalActivityViewModel getInstance() {
         if (instance == null) {

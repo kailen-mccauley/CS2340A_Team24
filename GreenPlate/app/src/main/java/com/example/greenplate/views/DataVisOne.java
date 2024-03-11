@@ -49,7 +49,8 @@ public class DataVisOne extends AppCompatActivity {
         personalViewModel.getUserInfo(new PersonalActivityViewModel.UserInfoCallback() {
             @Override
             public void onUserInfoReceived(PersonalActivityViewModel.User user) {
-                viewModel.getDailyCalorieIntake(new MealActivityViewModel.DailyCalorieIntakeCallback() {
+                viewModel.getDailyCalorieIntake(new MealActivityViewModel.
+                        DailyCalorieIntakeCallback() {
                     @Override
                     public void onDailyCalorieIntakeReceived(int totalCalories) {
                         data.add(new ValueDataEntry("Today", totalCalories));

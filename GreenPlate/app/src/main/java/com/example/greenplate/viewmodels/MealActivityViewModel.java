@@ -1,9 +1,5 @@
 package com.example.greenplate.viewmodels;
 
-import static android.content.ContentValues.TAG;
-
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -101,7 +97,8 @@ public class MealActivityViewModel {
                             if (dataSnapshot.exists()) {
                                 String date = dataSnapshot.child("date").getValue(String.class);
                                 if (date.equals(currentDate)) {
-                                    totalCalories += Integer.parseInt(dataSnapshot.child("calories").getValue(String.class));
+                                    totalCalories += Integer.parseInt(dataSnapshot.child("calories")
+                                            .getValue(String.class));
                                 }
                             }
                         }

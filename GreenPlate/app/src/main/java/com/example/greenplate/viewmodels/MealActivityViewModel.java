@@ -20,15 +20,11 @@ import java.util.Locale;
 
 public class MealActivityViewModel {
 
-    private volatile static MealActivityViewModel instance;
+    private static volatile MealActivityViewModel instance;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
     private int calculatedCalorieGoal;
-
-    // public interface MealDataCallback {
-    // void onMealDataReceived(int day, int calories);
-    // }
 
     private MealActivityViewModel() {
         // Initialize Firebase components
@@ -37,7 +33,7 @@ public class MealActivityViewModel {
 
     }
 
-    public static synchronized MealActivityViewModel getInstance() {
+    public static MealActivityViewModel getInstance() {
         if (instance == null) {
             synchronized (MealActivityViewModel.class) {
                 if (instance == null) {

@@ -1,9 +1,5 @@
 package com.example.greenplate.viewmodels;
 
-import static android.content.ContentValues.TAG;
-
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,7 +12,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+//ADDED
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+
 import java.util.Locale;
+
 
 public class MealActivityViewModel {
 
@@ -118,9 +122,56 @@ public class MealActivityViewModel {
         }
     }
 
+    public void getEveryCalorieIntake(EveryCalorieIntakeCallback callback) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM", Locale.getDefault());
+            String currentMonth = dateFormat.format(calendar.getTime());
+
+            DatabaseReference mealsRef = mDatabase.child("meals");
+            List<Integer> calorieIntakeList = new ArrayList<>();
+
+            int daysInMonth = calendar.getActualMaximum(Calendar.MARCH);
+
+            for (int i = 1; i <= daysInMonth; i++) {
+                String currentDate = currentMonth + "-" + String.format(Locale.getDefault(), "%02d", i);
+                final int[] totalCalories = {0};
+                mealsRef.orderByChild("userId").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                String date = dataSnapshot.child("date").getValue(String.class);
+                                if (date != null && date.startsWith(currentDate)) {
+                                    totalCalories[0] += Integer.parseInt(dataSnapshot.child("calories").getValue(String.class));
+                                }
+                            }
+                        }
+                        calorieIntakeList.add(totalCalories[0]);
+
+                        if (calorieIntakeList.size() == daysInMonth) {
+                            callback.onEveryCalorieIntakeReceived(calorieIntakeList);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        callback.onEveryCalorieIntakeReceived(new ArrayList<>()); // or -1 to indicate error
+                    }
+                });
+            }
+        }
+    }
+
     // Define a callback interface for returning daily calorie intake
     public interface DailyCalorieIntakeCallback {
         void onDailyCalorieIntakeReceived(int totalCalories);
+    }
+
+    public interface EveryCalorieIntakeCallback {
+        void onEveryCalorieIntakeReceived(List<Integer> totalCalories);
     }
 
 

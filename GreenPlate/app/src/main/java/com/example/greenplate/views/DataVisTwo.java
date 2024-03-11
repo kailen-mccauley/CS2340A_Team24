@@ -1,8 +1,11 @@
 package com.example.greenplate.views;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.anychart.AnyChart;
@@ -65,6 +68,7 @@ public class DataVisTwo extends AppCompatActivity {
         List<DataEntry> seriesData = new ArrayList<>();
 
         personalViewModel.getUserInfo(new PersonalActivityViewModel.UserInfoCallback() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onUserInfoReceived(PersonalActivityViewModel.User user) {
                 viewModel.getEveryCalorieIntake(new MealActivityViewModel.EveryCalorieIntakeCallback() {

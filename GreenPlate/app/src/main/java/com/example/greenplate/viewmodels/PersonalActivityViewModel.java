@@ -20,16 +20,12 @@ public class PersonalActivityViewModel {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
-    public interface UserInfoCallback {
-        void onUserInfoReceived(User user);
-    }
-
     private PersonalActivityViewModel() {
         // Initialize Firebase components
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
     }
+
     public static PersonalActivityViewModel getInstance() {
         if (instance == null) {
             synchronized (PersonalActivityViewModel.class) {
@@ -95,6 +91,9 @@ public class PersonalActivityViewModel {
         }
     }
 
+    public interface UserInfoCallback {
+        void onUserInfoReceived(User user);
+    }
 
     public class User {
 

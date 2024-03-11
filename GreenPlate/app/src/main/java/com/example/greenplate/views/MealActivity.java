@@ -37,7 +37,6 @@ public class MealActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // DO NOT MODIFY
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_meal);
         ImageButton toHomeButton = findViewById(R.id.btn_home);
@@ -134,7 +133,6 @@ public class MealActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String mealName = mealNameEditText.getText().toString();
                 String calories = caloriesEditText.getText().toString();
-
                 if (InputValidator.isValidInputWithSpacesBetween(mealName)
                         && InputValidator.isValidInput(calories)) {
                     try {
@@ -145,7 +143,6 @@ public class MealActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
-
                     viewModel.storeMeal(mealName, calories);
 
                     Toast.makeText(MealActivity.this,
@@ -165,7 +162,6 @@ public class MealActivity extends AppCompatActivity {
                 }
             }
         });
-
         btnDailyGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,7 +169,6 @@ public class MealActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         btnDailyCalorieIntake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,7 +176,6 @@ public class MealActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         parentLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -190,15 +184,6 @@ public class MealActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-        //        viewModel.calculateCalorieGoal(new MealActivityViewModel.CalorieGoalCallback() {
-        //            @Override
-        //            public void onCalorieGoalReceived(int calorieGoal) {
-        //                TextView goalTextView = findViewById(R.id.goalTextView);
-        //                goalTextView.setText(String.valueOf(calorieGoal));
-        //            }
-        //        });
-
     }
     private void hideKeyboard() {
         View view = this.getCurrentFocus();
@@ -208,5 +193,4 @@ public class MealActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
-
 }

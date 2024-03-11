@@ -102,7 +102,8 @@ public class MealActivityViewModel {
                             if (dataSnapshot.exists()) {
                                 String date = dataSnapshot.child("date").getValue(String.class);
                                 if (date.equals(currentDate)) {
-                                    totalCalories += Integer.parseInt(dataSnapshot.child("calories").getValue(String.class));
+                                    totalCalories += Integer.parseInt(dataSnapshot.child("calories")
+                                            .getValue(String.class));
                                 }
                             }
                         }

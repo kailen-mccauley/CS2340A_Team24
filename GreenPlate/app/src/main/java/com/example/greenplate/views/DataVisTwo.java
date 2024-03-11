@@ -10,14 +10,11 @@ import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Cartesian;
-import com.anychart.core.cartesian.series.Column;
 import com.anychart.core.cartesian.series.Line;
 import com.anychart.data.Mapping;
 import com.anychart.data.Set;
 import com.anychart.enums.Anchor;
-import com.anychart.enums.HoverMode;
 import com.anychart.enums.MarkerType;
-import com.anychart.enums.Position;
 import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
 

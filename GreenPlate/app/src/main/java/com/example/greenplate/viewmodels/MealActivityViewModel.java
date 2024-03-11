@@ -1,6 +1,9 @@
 package com.example.greenplate.viewmodels;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -11,12 +14,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.time.YearMonth;
 import java.util.Calendar;
+
+//ADDED
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 
 import java.util.List;
 import java.util.ArrayList;
 
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class MealActivityViewModel {
@@ -120,6 +130,7 @@ public class MealActivityViewModel {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void getEveryCalorieIntake(EveryCalorieIntakeCallback callback) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
@@ -131,7 +142,9 @@ public class MealActivityViewModel {
             DatabaseReference mealsRef = mDatabase.child("meals");
             List<Integer> calorieIntakeList = new ArrayList<>();
 
-            int daysInMonth = calendar.getActualMaximum(Calendar.MARCH);
+            YearMonth currentYearMonth = YearMonth.now();
+
+            int daysInMonth = currentYearMonth.lengthOfMonth();
 
             for (int i = 1; i <= daysInMonth; i++) {
                 String currentDate = currentMonth + "-" + String.format(Locale.getDefault(), "%02d", i);
@@ -163,6 +176,52 @@ public class MealActivityViewModel {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void getAverageCalorieIntake(AverageCalorieIntakeCallback callback) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM", Locale.getDefault());
+            String currentMonth = dateFormat.format(calendar.getTime());
+
+            DatabaseReference mealsRef = mDatabase.child("meals");
+            mealsRef.orderByChild("userId").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    int allCalories = 0;
+                    String currentDate = null;
+                    int daysData = 0;
+                    if (snapshot.exists()) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            String date = dataSnapshot.child("date").getValue(String.class);
+                            if (date != null && date.startsWith(currentMonth)) {
+                                allCalories += Integer.parseInt(dataSnapshot.child("calories").getValue(String.class));
+                                if (!date.equals(currentDate)) {
+                                    daysData++;
+                                    currentDate = date;
+                                }
+                            }
+                        }
+                    }
+                    Log.d("DEBUG", "Total Calories: " + allCalories);
+                    Log.d("DEBUG", "Days with Data: " + daysData);
+                    if (daysData > 0) {
+                        int averageCalories = allCalories / daysData;
+                        callback.onAverageCalorieIntakeReceived(averageCalories);
+                    } else {
+                        callback.onAverageCalorieIntakeReceived(-1); // Error: No data available
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    callback.onAverageCalorieIntakeReceived(-1); // Error occurred
+                }
+            });
+        }
+    }
+
     // Define a callback interface for returning daily calorie intake
     public interface DailyCalorieIntakeCallback {
         void onDailyCalorieIntakeReceived(int totalCalories);
@@ -170,6 +229,10 @@ public class MealActivityViewModel {
 
     public interface EveryCalorieIntakeCallback {
         void onEveryCalorieIntakeReceived(List<Integer> totalCalories);
+    }
+
+    public interface AverageCalorieIntakeCallback {
+        void onAverageCalorieIntakeReceived(int averageCalories);
     }
 
 

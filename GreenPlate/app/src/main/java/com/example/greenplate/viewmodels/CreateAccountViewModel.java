@@ -18,12 +18,16 @@ import androidx.lifecycle.MutableLiveData;
 
 
 public class CreateAccountViewModel {
-    private static CreateAccountViewModel instance;
+    private static volatile CreateAccountViewModel instance;
 
     private MutableLiveData<Boolean> createSuccess = new MutableLiveData<>(false);
-    public static synchronized CreateAccountViewModel getInstance() {
+    public static CreateAccountViewModel getInstance() {
         if (instance == null) {
-            instance = new CreateAccountViewModel();
+            synchronized (PersonalActivityViewModel.class) {
+                if (instance == null) {
+                    instance = new CreateAccountViewModel();
+                }
+            }
         }
         return instance;
     }

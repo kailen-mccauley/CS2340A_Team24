@@ -16,7 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class PersonalActivityViewModel {
-    private volatile static PersonalActivityViewModel instance;
+    private static volatile PersonalActivityViewModel instance;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 

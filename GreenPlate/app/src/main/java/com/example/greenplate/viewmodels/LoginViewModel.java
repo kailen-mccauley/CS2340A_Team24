@@ -17,12 +17,16 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.greenplate.views.LoginActivity;
 
 public class LoginViewModel {
-    private static LoginViewModel instance;
+    private static volatile LoginViewModel instance;
     private MutableLiveData<Boolean> loginSuccess = new MutableLiveData<>(false);
 
-    public static synchronized LoginViewModel getInstance() {
+    public static LoginViewModel getInstance() {
         if (instance == null) {
-            instance = new LoginViewModel();
+            synchronized (PersonalActivityViewModel.class) {
+                if (instance == null) {
+                    instance = new LoginViewModel();
+                }
+            }
         }
         return instance;
     }

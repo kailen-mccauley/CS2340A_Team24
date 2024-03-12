@@ -45,25 +45,25 @@ public class CreateAccountActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         CreateAccountViewModel createAccountViewModeL = CreateAccountViewModel.getInstance();
 
-
-
-
-
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = newUsernameEditText.getText().toString();
                 String password = newPasswordEditText.getText().toString();
-                if (InputValidator.isValidInput(email) && InputValidator.isValidInput(password)) {
-                    createAccountViewModeL.createAccount(email, password, mAuth,
-                            CreateAccountActivity.this);
-                } else {
-                    // Handle invalid username or password
-                    // For example, show an error message
-                    Toast.makeText(CreateAccountActivity.this, "Invalid username or password.",
+                if (!InputValidator.isValidInput(email)) {
+                    Toast.makeText(CreateAccountActivity.this, "Invalid email!",
                             Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                if (!InputValidator.isValidInput(password)) {
+                    Toast.makeText(CreateAccountActivity.this, "Invalid password!",
+                            Toast.LENGTH_SHORT).show();
+                    return;
                 }
+
+                createAccountViewModeL.createAccount(email, password, mAuth,
+                        CreateAccountActivity.this);
+            }
         });
         toLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override

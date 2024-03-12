@@ -14,6 +14,7 @@ import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Cartesian;
 import com.anychart.core.cartesian.series.Line;
+import com.anychart.core.cartesian.series.Marker;
 import com.anychart.data.Mapping;
 import com.anychart.data.Set;
 import com.anychart.enums.Anchor;
@@ -75,7 +76,11 @@ public class DataVisTwo extends AppCompatActivity {
                     @Override
                     public void onEveryCalorieIntakeReceived(List<Integer> calorieList) {
                         for (int i = 0; i < calorieList.size(); i++) {
-                            seriesData.add(new CustomDataEntry("Day "+(i+1), user.getCalorieGoal(), calorieList.get(i)));
+                            if (calorieList.get(i) == 0) {
+                                seriesData.add(new CustomDataEntry("Day "+(i+1), user.getCalorieGoal(), null));
+                            } else {
+                                seriesData.add(new CustomDataEntry("Day "+(i+1), user.getCalorieGoal(), calorieList.get(i)));
+                            }
                         }
 
                         Set set = Set.instantiate();
@@ -95,7 +100,7 @@ public class DataVisTwo extends AppCompatActivity {
                                 .offsetX(5d)
                                 .offsetY(5d);
 
-                        Line series2 = cartesian.line(series2Mapping);
+                        Marker series2 = cartesian.marker(series2Mapping);
                         series2.name("Monthly");
                         series2.hovered().markers().enabled(true);
                         series2.hovered().markers()

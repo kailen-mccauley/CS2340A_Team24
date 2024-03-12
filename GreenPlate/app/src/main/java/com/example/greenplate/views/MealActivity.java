@@ -133,33 +133,30 @@ public class MealActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String mealName = mealNameEditText.getText().toString();
                 String calories = caloriesEditText.getText().toString();
-                if (InputValidator.isValidInputWithSpacesBetween(mealName)
-                        && InputValidator.isValidInput(calories)) {
-                    try {
-                        int calorieValue = Integer.parseInt(calories);
-                    } catch (NumberFormatException nfe) {
-                        Toast.makeText(MealActivity.this,
-                                "Please enter a valid integer value for calories",
-                                Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    viewModel.storeMeal(mealName, calories);
-
+                if (!InputValidator.isValidInputWithSpacesBetween(mealName)) {
                     Toast.makeText(MealActivity.this,
-                            "Submitted Successfully!", Toast.LENGTH_SHORT).show();
-                    mealNameEditText.setText("");
-                    caloriesEditText.setText("");
-                    hideKeyboard();
-                    viewModel.getDailyCalorieIntake(new MealActivityViewModel.DailyCalorieIntakeCallback() {
-                        @Override
-                        public void onDailyCalorieIntakeReceived(int totalCalories) {
-                            intakeTextView.setText(String.valueOf(totalCalories));
-                        }
-                    });
-                } else {
-                    Toast.makeText(MealActivity.this,
-                            "A field you entered is invalid!", Toast.LENGTH_SHORT).show();
+                            "Please enter a valid meal name!",
+                            Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                if (!InputValidator.isValidInputWithInteger(calories)) {
+                    Toast.makeText(MealActivity.this,
+                            "Please enter a valid integer value for calories!",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                viewModel.storeMeal(mealName, String.valueOf(calories));
+                Toast.makeText(MealActivity.this,
+                        "Submitted Successfully!", Toast.LENGTH_SHORT).show();
+                mealNameEditText.setText("");
+                caloriesEditText.setText("");
+                hideKeyboard();
+                viewModel.getDailyCalorieIntake(new MealActivityViewModel.DailyCalorieIntakeCallback() {
+                    @Override
+                    public void onDailyCalorieIntakeReceived(int totalCalories) {
+                        intakeTextView.setText(String.valueOf(totalCalories));
+                    }
+                });
             }
         });
         btnDailyGoal.setOnClickListener(new View.OnClickListener() {

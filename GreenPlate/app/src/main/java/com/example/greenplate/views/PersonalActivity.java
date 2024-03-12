@@ -97,45 +97,31 @@ public class PersonalActivity extends AppCompatActivity {
                 String weight = weightEditText.getText().toString();
                 String height = heightEditText.getText().toString();
                 String gender = genderEditText.getText().toString();
-                if (InputValidator.isValidInput(weight)
-                        && InputValidator.isValidInput(height)
-                        && InputValidator.isValidInput(gender)) {
-                    try {
-                        int heightValue = Integer.parseInt(height);
-                    } catch (NumberFormatException nfe) {
-                        Toast.makeText(PersonalActivity.this,
-                                "Please enter a valid integer value for height (in cm)",
-                                Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    try {
-                        int weightValue = Integer.parseInt(weight);
-                    } catch (NumberFormatException nfe) {
-                        Toast.makeText(PersonalActivity.this,
-                                "Please enter a valid integer value for weight (in kg)",
-                                Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    if (!gender.equals("M") && !gender.equals("F")) {
-                        Toast.makeText(PersonalActivity.this,
-                                "Please enter 'M' for male or 'F' for female",
-                                Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    viewModel.storePersonalInfo(height, weight, gender);
-
+                if (!InputValidator.isValidInputWithInteger(height)) {
                     Toast.makeText(PersonalActivity.this,
-                            "Submitted Successfully!", Toast.LENGTH_SHORT).show();
-                    weightEditText.setText("");
-                    heightEditText.setText("");
-                    genderEditText.setText("");
-                    hideKeyboard();
-                } else {
-                    Toast.makeText(PersonalActivity.this,
-                            "Field is filled out incorrectly!", Toast.LENGTH_SHORT).show();
+                            "Please enter a valid integer value for height (in cm)",
+                            Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                if (!InputValidator.isValidInputWithInteger(weight)) {
+                    Toast.makeText(PersonalActivity.this,
+                            "Please enter a valid integer value for weight (in kg)",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!InputValidator.isValidInput(gender)) {
+                    Toast.makeText(PersonalActivity.this,
+                            "Please enter 'M' for male or 'F' for female",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                viewModel.storePersonalInfo(height, weight, gender);
+                Toast.makeText(PersonalActivity.this,
+                        "Submitted Successfully!", Toast.LENGTH_SHORT).show();
+                weightEditText.setText("");
+                heightEditText.setText("");
+                genderEditText.setText("");
+                hideKeyboard();
             }
         });
 

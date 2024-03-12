@@ -38,8 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         Button toCreateAccountButton = findViewById(R.id.btn_sign_up);
         Button toCloseApplication = findViewById(R.id.btn_close_app);
         mAuth = FirebaseAuth.getInstance();
-        LoginViewModel loginViewModeL = LoginViewModel.getInstance();
-
         LinearLayout parentLayout = findViewById(R.id.activity_login);
 
         toHomeButton.setOnClickListener(new View.OnClickListener() {
@@ -47,14 +45,17 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
-                if (InputValidator.isValidInput(email) && InputValidator.isValidInput(password)) {
-                    loginViewModeL.login(email, password, mAuth, LoginActivity.this);
-                } else {
-                    // Show a message indicating that email or password is empty
-                    Toast.makeText(LoginActivity.this, "invalid email or password.",
+                if (!InputValidator.isValidInput(email)) {
+                    Toast.makeText(LoginActivity.this, "Invalid email!",
                             Toast.LENGTH_SHORT).show();
+                    return;
                 }
-
+                if (!InputValidator.isValidInput(password)) {
+                    Toast.makeText(LoginActivity.this, "Invalid password!",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                viewModel.login(email, password, mAuth, LoginActivity.this);
             }
         });
 
@@ -72,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginViewModeL.getLoginSuccess().observe(this, new Observer<Boolean>() {
+        viewModel.getLoginSuccess().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean loginSuccess) {
                 if (loginSuccess) {

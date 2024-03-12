@@ -22,4 +22,9 @@ public class InputValidator {
         }
         return isValidInput(input);
     }
+
+    public static boolean isValidGender(String gender) {
+        return gender != null && ((gender.equals("M")) || (gender.equals("F")));
+    }
 }
+

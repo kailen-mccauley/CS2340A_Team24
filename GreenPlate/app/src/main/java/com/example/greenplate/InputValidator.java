@@ -10,4 +10,13 @@ public class InputValidator {
         }
         return input.equals(input.trim());
     }
+
+    public static boolean isValidInputWithInteger(String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return isValidInput(input);
+    }
 }

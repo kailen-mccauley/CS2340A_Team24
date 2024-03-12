@@ -144,7 +144,7 @@
                 android:id="@+id/lbsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="lbs."
+                android:text="kg."
                 android:textColor="@color/pennBlue"
                 android:textSize="22sp"
                 android:layout_marginBottom="25dp"/>

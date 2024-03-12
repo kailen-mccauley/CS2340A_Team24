@@ -10,6 +10,6 @@ import org.junit.Test;
 public class MealActivityUnitTest {
     @Test
     public void testMealEntryStored() {
-        MealActivityViewModel.getInstance().storeMeal("meal", "500"));
+        MealActivityViewModel.getInstance().storeMeal("meal", "500");
     }
 }

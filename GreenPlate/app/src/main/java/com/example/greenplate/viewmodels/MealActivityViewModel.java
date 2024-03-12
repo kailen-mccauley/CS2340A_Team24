@@ -1,5 +1,7 @@
 package com.example.greenplate.viewmodels;
 
+import com.example.greenplate.models.Meal;
+
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -54,6 +56,7 @@ public class MealActivityViewModel {
         }
         return instance;
     }
+
     // Method to store meal information in Firebase Database
     public void storeMeal(String mealName, String calories) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -233,58 +236,5 @@ public class MealActivityViewModel {
 
     public interface AverageCalorieIntakeCallback {
         void onAverageCalorieIntakeReceived(int averageCalories);
-    }
-
-
-    public class Meal {
-        private String userId; // To link meal to user
-        private String mealName;
-        private String calories;
-
-        private String date;
-
-        public Meal() {
-            // Default constructor required for Firebase
-        }
-
-        public Meal(String mealName, String calories, String userId, String date) {
-            this.mealName = mealName;
-            this.calories = calories;
-            this.userId = userId;
-            this.date = date;
-        }
-
-
-        public String getMealName() {
-            return mealName;
-        }
-
-        public void setMealName(String mealName) {
-            this.mealName = mealName;
-        }
-
-        public String getCalories() {
-            return calories;
-        }
-
-        public void setCalories(String calories) {
-            this.calories = calories;
-        }
-
-        public String getUserId() {
-            return userId;
-        }
-
-        public void setUserId(String userId) {
-            this.userId = userId;
-        }
-
-        public String getDate() {
-            return date;
-        }
-
-        public void setDate(String date) {
-            this.date = date;
-        }
     }
 }

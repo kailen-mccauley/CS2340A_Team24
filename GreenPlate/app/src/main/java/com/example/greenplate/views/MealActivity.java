@@ -1,4 +1,6 @@
 package com.example.greenplate.views;
+
+import com.example.greenplate.models.User;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -68,7 +70,7 @@ public class MealActivity extends AppCompatActivity {
         // Call getUserInfo to retrieve user information
         personalViewModel.getUserInfo(new PersonalActivityViewModel.UserInfoCallback() {
             @Override
-            public void onUserInfoReceived(PersonalActivityViewModel.User user) {
+            public void onUserInfoReceived(User user) {
                 if (user != null) {
                     heightTextView.setText(user.getUserHeight());
                     weightTextView.setText(user.getUserWeight());

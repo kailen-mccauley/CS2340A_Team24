@@ -1,4 +1,7 @@
 package com.example.greenplate.views;
+
+import com.example.greenplate.models.User;
+
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -71,7 +74,7 @@ public class DataVisTwo extends AppCompatActivity {
         personalViewModel.getUserInfo(new PersonalActivityViewModel.UserInfoCallback() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
-            public void onUserInfoReceived(PersonalActivityViewModel.User user) {
+            public void onUserInfoReceived(User user) {
                 viewModel.getEveryCalorieIntake(new MealActivityViewModel.EveryCalorieIntakeCallback() {
                     @Override
                     public void onEveryCalorieIntakeReceived(List<Integer> calorieList) {

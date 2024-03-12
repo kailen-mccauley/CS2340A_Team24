@@ -58,39 +58,42 @@ public class DataVisOne extends AppCompatActivity {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onDailyCalorieIntakeReceived(int totalCalories) {
-                        viewModel.getAverageCalorieIntake(new MealActivityViewModel.AverageCalorieIntakeCallback() {
-                            @Override
+                        viewModel
+                                .getAverageCalorieIntake(new
+                                MealActivityViewModel.AverageCalorieIntakeCallback() {
+                                        @Override
                             public void onAverageCalorieIntakeReceived(int averageCalories) {
-                                data.add(new ValueDataEntry("Today", totalCalories));
-                                data.add(new ValueDataEntry("Goal", user.getCalorieGoal()));
-                                data.add(new ValueDataEntry("Average", averageCalories));
+                                        data.add(new ValueDataEntry("Today", totalCalories));
+                                        data.add(new ValueDataEntry("Goal", user.getCalorieGoal()));
+                                        data.add(new ValueDataEntry("Average", averageCalories));
 
-                                Column column = cartesian.column(data);
+                                        Column column = cartesian.column(data);
 
-                                column.tooltip()
+                                        column.tooltip()
                                         .titleFormat("{%X}")
                                         .position(Position.CENTER_BOTTOM)
                                         .anchor(Anchor.CENTER_BOTTOM)
                                         .offsetX(0d)
                                         .offsetY(5d)
-                                        .format("{%Value}{groupsSeparator: }");
+                                            .format("{%Value}{groupsSeparator: }");
 
-                                cartesian.animation(true);
-                                cartesian.title("Today Vs Goal");
+                                        cartesian.animation(true);
+                                        cartesian.title("Today Vs Goal");
 
-                                cartesian.yScale().minimum(0d);
+                                        cartesian.yScale().minimum(0d);
 
-                                cartesian.yAxis(0).labels().format("{%Value}{groupsSeparator: }");
+                                        cartesian.yAxis(0).labels()
+                                                .format("{%Value}{groupsSeparator: }");
 
-                                cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
-                                cartesian.interactivity().hoverMode(HoverMode.BY_X);
+                                        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
+                                        cartesian.interactivity().hoverMode(HoverMode.BY_X);
 
-                                cartesian.xAxis(0).title("Intake");
-                                cartesian.yAxis(0).title("Calories");
+                                        cartesian.xAxis(0).title("Intake");
+                                        cartesian.yAxis(0).title("Calories");
 
-                                anyChartView.setChart(cartesian);
-                            }
-                        });
+                                        anyChartView.setChart(cartesian);
+                                    }
+                                });
                     }
                 });
             }

@@ -19,16 +19,10 @@ import java.text.SimpleDateFormat;
 import java.time.YearMonth;
 import java.util.Calendar;
 
-//ADDED
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-
 import java.util.List;
 import java.util.ArrayList;
 
 import java.util.Locale;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class MealActivityViewModel {
@@ -108,30 +102,33 @@ public class MealActivityViewModel {
             String currentDate = dateFormat.format(calendar.getTime());
 
             DatabaseReference mealsRef = mDatabase.child("meals");
-            mealsRef.orderByChild("userId").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
+            mealsRef.orderByChild("userId").equalTo(uid)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    int totalCalories = 0;
-                    if (snapshot.exists()) {
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            if (dataSnapshot.exists()) {
-                                String date = dataSnapshot.child("date").getValue(String.class);
-                                if (date.equals(currentDate)) {
-                                    totalCalories += Integer.parseInt(dataSnapshot.child("calories")
+                            int totalCalories = 0;
+                            if (snapshot.exists()) {
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                    if (dataSnapshot.exists()) {
+                                        String date = dataSnapshot.child("date")
+                                            .getValue(String.class);
+                                        if (date.equals(currentDate)) {
+                                            totalCalories += Integer.parseInt(dataSnapshot
+                                                    .child("calories")
                                             .getValue(String.class));
+                                        }
+                                    }
                                 }
                             }
+                            callback.onDailyCalorieIntakeReceived(totalCalories);
                         }
-                    }
-                    callback.onDailyCalorieIntakeReceived(totalCalories);
-                }
 
-                @Override
+                        @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    // Handle database error
-                    callback.onDailyCalorieIntakeReceived(0); // or -1 to indicate error
-                }
-            });
+                            // Handle database error
+                            callback.onDailyCalorieIntakeReceived(0); // or -1 to indicate error
+                        }
+                    });
         }
     }
 
@@ -151,32 +148,41 @@ public class MealActivityViewModel {
 
             int daysInMonth = currentYearMonth.lengthOfMonth();
 
-            for (int i = 1; i <= daysInMonth; i++) {
-                String currentDate = currentMonth + "-" + String.format(Locale.getDefault(), "%02d", i);
+            for (int i = 1;
+                 i <= daysInMonth; i++) {
+                String currentDate = currentMonth + "-"
+                        + String.format(Locale.getDefault(), "%02d", i);
                 final int[] totalCalories = {0};
-                mealsRef.orderByChild("userId").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
+                mealsRef.orderByChild("userId").equalTo(uid)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                String date = dataSnapshot.child("date").getValue(String.class);
-                                if (date != null && date.startsWith(currentDate)) {
-                                    totalCalories[0] += Integer.parseInt(dataSnapshot.child("calories").getValue(String.class));
+                                if (snapshot.exists()) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String date = dataSnapshot.child("date")
+                                                .getValue(String.class);
+                                        if (date != null && date
+                                                .startsWith(currentDate)) {
+                                            totalCalories[0] += Integer
+                                                    .parseInt(dataSnapshot.child("calories")
+                                                            .getValue(String.class));
+                                        }
+                                    }
+                                }
+                                calorieIntakeList.add(totalCalories[0]);
+
+                                if (calorieIntakeList.size() == daysInMonth) {
+                                    callback.onEveryCalorieIntakeReceived(calorieIntakeList);
                                 }
                             }
-                        }
-                        calorieIntakeList.add(totalCalories[0]);
 
-                        if (calorieIntakeList.size() == daysInMonth) {
-                            callback.onEveryCalorieIntakeReceived(calorieIntakeList);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        callback.onEveryCalorieIntakeReceived(new ArrayList<>()); // or -1 to indicate error
-                    }
-                });
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                callback
+                                        .onEveryCalorieIntakeReceived(new
+                                                ArrayList<>()); // or -1 to indicate error
+                            }
+                        });
             }
         }
     }
@@ -190,40 +196,46 @@ public class MealActivityViewModel {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM", Locale.getDefault());
             String currentMonth = dateFormat.format(calendar.getTime());
 
-            DatabaseReference mealsRef = mDatabase.child("meals");
-            mealsRef.orderByChild("userId").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    int allCalories = 0;
-                    String currentDate = null;
-                    int daysData = 0;
-                    if (snapshot.exists()) {
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            String date = dataSnapshot.child("date").getValue(String.class);
-                            if (date != null && date.startsWith(currentMonth)) {
-                                allCalories += Integer.parseInt(dataSnapshot.child("calories").getValue(String.class));
-                                if (!date.equals(currentDate)) {
-                                    daysData++;
-                                    currentDate = date;
+            DatabaseReference mealsRef
+                    = mDatabase.child("meals");
+            mealsRef.orderByChild("userId").equalTo(uid)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int allCalories = 0;
+                            String currentDate = null;
+                            int daysData = 0;
+                            if (snapshot.exists()) {
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                    String date = dataSnapshot.child("date")
+                                            .getValue(String.class);
+                                    if (date != null && date.startsWith(currentMonth)) {
+                                        allCalories += Integer
+                                                .parseInt(dataSnapshot.child("calories")
+                                                        .getValue(String.class));
+                                        if (!date.equals(currentDate)) {
+                                            daysData++;
+                                            currentDate = date;
+                                        }
+                                    }
                                 }
                             }
+                            if (daysData > 0) {
+                                int averageCalories = allCalories / daysData;
+                                callback.onAverageCalorieIntakeReceived(
+                                        averageCalories);
+                            } else {
+                                callback
+                                        .onAverageCalorieIntakeReceived(
+                                                -1); // Error: No data available
+                            }
                         }
-                    }
-                    Log.d("DEBUG", "Total Calories: " + allCalories);
-                    Log.d("DEBUG", "Days with Data: " + daysData);
-                    if (daysData > 0) {
-                        int averageCalories = allCalories / daysData;
-                        callback.onAverageCalorieIntakeReceived(averageCalories);
-                    } else {
-                        callback.onAverageCalorieIntakeReceived(-1); // Error: No data available
-                    }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    callback.onAverageCalorieIntakeReceived(-1); // Error occurred
-                }
-            });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            callback.onAverageCalorieIntakeReceived(-1); // Error occurred
+                        }
+                    });
         }
     }
     public Meal getMealData() {

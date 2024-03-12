@@ -1,6 +1,5 @@
 package com.example.greenplate.viewmodels;
 
-import com.example.greenplate.models.Meal;
 import com.example.greenplate.models.User;
 
 
@@ -62,31 +61,36 @@ public class PersonalActivityViewModel {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String uid = currentUser.getUid();
-            mDatabase.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        String height = dataSnapshot.child("userHeight").getValue(String.class);
-                        String weight = dataSnapshot.child("userWeight").getValue(String.class);
-                        String gender = dataSnapshot.child("userGender").getValue(String.class);
-                        int calorieGoal = dataSnapshot.child("calorieGoal").getValue(Integer.class);
+            mDatabase.child("users").child(uid)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                String height = dataSnapshot.child("userHeight")
+                                        .getValue(String.class);
+                                String weight = dataSnapshot.child("userWeight")
+                                        .getValue(String.class);
+                                String gender = dataSnapshot.child("userGender")
+                                        .getValue(String.class);
+                                int calorieGoal = dataSnapshot.child("calorieGoal")
+                                        .getValue(Integer.class);
 
-                        updateUser(height, weight, gender, calorieGoal);
+                                updateUser(height, weight, gender, calorieGoal);
 
-                        // Pass the user object to the callback
-                        callback.onUserInfoReceived(getUserData());
-                    } else {
-                        // Handle case where user data doesn't exist
-                        callback.onUserInfoReceived(null);
-                    }
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    // Handle database error
-                    // For example:
-                    callback.onUserInfoReceived(null);
-                }
-            });
+                                // Pass the user object to the callback
+                                callback.onUserInfoReceived(getUserData());
+                            } else {
+                                // Handle case where user data doesn't exist
+                                callback.onUserInfoReceived(null);
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            // Handle database error
+                            // For example:
+                            callback.onUserInfoReceived(null);
+                        }
+                    });
         } else {
             // Handle null current user
             // For example:

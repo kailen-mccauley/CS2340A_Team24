@@ -33,6 +33,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class MealActivityViewModel {
 
+    private final Meal mealData;
+
     private static volatile MealActivityViewModel instance;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -43,7 +45,7 @@ public class MealActivityViewModel {
         // Initialize Firebase components
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
+        mealData = new Meal();
     }
 
     public static MealActivityViewModel getInstance() {
@@ -224,6 +226,15 @@ public class MealActivityViewModel {
             });
         }
     }
+    public Meal getMealData() {
+        return mealData;
+    }
+    public void updateMeal(String userId, String mealName, String calories, String date) {
+        getMealData().setUserId(userId);
+        getMealData().setMealName(mealName);
+        getMealData().setCalories(calories);
+        getMealData().setDate(date);
+    }
 
     // Define a callback interface for returning daily calorie intake
     public interface DailyCalorieIntakeCallback {
@@ -237,4 +248,5 @@ public class MealActivityViewModel {
     public interface AverageCalorieIntakeCallback {
         void onAverageCalorieIntakeReceived(int averageCalories);
     }
+
 }

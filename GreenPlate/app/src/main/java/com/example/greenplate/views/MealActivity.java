@@ -164,15 +164,27 @@ public class MealActivity extends AppCompatActivity {
         btnDailyGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MealActivity.this, DataVisOne.class);
-                startActivity(intent);
+                if (personalViewModel.isValidUser()) {
+                    Intent intent = new Intent(MealActivity.this, DataVisOne.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MealActivity.this,
+                            "Enter personal info before seeing visualizations!",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
         btnDailyCalorieIntake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MealActivity.this, DataVisTwo.class);
-                startActivity(intent);
+                if (personalViewModel.isValidUser()) {
+                    Intent intent = new Intent(MealActivity.this, DataVisTwo.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MealActivity.this,
+                            "Enter personal info before seeing visualizations!",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
         parentLayout.setOnTouchListener(new View.OnTouchListener() {

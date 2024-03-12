@@ -13,7 +13,10 @@ public class InputValidator {
 
     public static boolean isValidInputWithInteger(String input) {
         try {
-            Integer.parseInt(input);
+            int num = Integer.parseInt(input);
+            if (num < 0) {
+                return false;
+            }
         } catch (NumberFormatException nfe) {
             return false;
         }

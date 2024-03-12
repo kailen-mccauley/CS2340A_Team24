@@ -1,5 +1,6 @@
 package com.example.greenplate.viewmodels;
 
+import com.example.greenplate.models.Meal;
 import com.example.greenplate.models.User;
 
 
@@ -19,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class PersonalActivityViewModel {
     private static volatile PersonalActivityViewModel instance;
+    private final User userData;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -26,6 +28,7 @@ public class PersonalActivityViewModel {
         // Initialize Firebase components
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        userData = new User();
     }
 
     public static PersonalActivityViewModel getInstance() {
@@ -51,9 +54,8 @@ public class PersonalActivityViewModel {
             } else {
                 calGoal = 10 * weightCalc + 6 * heightCalc - 141;
             }
-
-            User user = new User(height, weight, gender, calGoal);
-            mDatabase.child("users").child(uid).setValue(user);
+            updateUser(height, weight, gender, calGoal);
+            mDatabase.child("users").child(uid).setValue(getUserData());
         }
     }
     public void getUserInfo(UserInfoCallback callback) {
@@ -69,11 +71,10 @@ public class PersonalActivityViewModel {
                         String gender = dataSnapshot.child("userGender").getValue(String.class);
                         int calorieGoal = dataSnapshot.child("calorieGoal").getValue(Integer.class);
 
-                        // Create a User object
-                        User user = new User(height, weight, gender, calorieGoal);
+                        updateUser(height, weight, gender, calorieGoal);
 
                         // Pass the user object to the callback
-                        callback.onUserInfoReceived(user);
+                        callback.onUserInfoReceived(getUserData());
                     } else {
                         // Handle case where user data doesn't exist
                         callback.onUserInfoReceived(null);
@@ -91,6 +92,21 @@ public class PersonalActivityViewModel {
             // For example:
             callback.onUserInfoReceived(null);
         }
+    }
+    public User getUserData() {
+        return userData;
+    }
+    public void updateUser(String height, String weight, String gender, int calorieGoal) {
+        getUserData().setUserHeight(height);
+        getUserData().setUserWeight(weight);
+        getUserData().setUserGender(gender);
+        getUserData().setCalorieGoal(calorieGoal);
+    }
+
+    public boolean isValidUser() {
+        return getUserData().getUserHeight() != null
+                && getUserData().getUserWeight() != null
+                && getUserData().getUserGender() != null;
     }
 
     public interface UserInfoCallback {

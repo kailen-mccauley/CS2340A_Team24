@@ -109,7 +109,8 @@ public class PersonalActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (!InputValidator.isValidInput(gender)) {
+                if (!InputValidator.isValidInput(gender)
+                    || !(gender.equals("M") || gender.equals("F"))) {
                     Toast.makeText(PersonalActivity.this,
                             "Please enter 'M' for male or 'F' for female",
                             Toast.LENGTH_SHORT).show();

@@ -52,7 +52,6 @@ public class MealActivity extends AppCompatActivity {
         TextView goalTextView = findViewById(R.id.goalTextView);
         TextView intakeTextView = findViewById(R.id.intakeTextView);
 
-
         mAuth = FirebaseAuth.getInstance();
         viewModel = MealActivityViewModel.getInstance();
 
@@ -61,10 +60,8 @@ public class MealActivity extends AppCompatActivity {
         btnSubmitMeal = findViewById(R.id.btn_submit_meal);
         btnDailyCalorieIntake = findViewById(R.id.btn_daily_calorie_intake);
         btnDailyGoal = findViewById(R.id.btn_daily_goal);
-
         RelativeLayout parentLayout = findViewById(R.id.activity_input_meal);
 
-        viewModel = MealActivityViewModel.getInstance();
         personalViewModel = PersonalActivityViewModel.getInstance();
 
         // Call getUserInfo to retrieve user information
@@ -82,14 +79,12 @@ public class MealActivity extends AppCompatActivity {
                 }
             }
         });
-
         viewModel.getDailyCalorieIntake(new MealActivityViewModel.DailyCalorieIntakeCallback() {
             @Override
             public void onDailyCalorieIntakeReceived(int totalCalories) {
                 intakeTextView.setText(String.valueOf(totalCalories));
             }
         });
-
         toHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,7 +92,6 @@ public class MealActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         toRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,7 +99,6 @@ public class MealActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         toIngredientsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,7 +106,6 @@ public class MealActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         toShoppingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,7 +113,6 @@ public class MealActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         toPersonalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,7 +120,6 @@ public class MealActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         btnSubmitMeal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,7 +143,8 @@ public class MealActivity extends AppCompatActivity {
                 mealNameEditText.setText("");
                 caloriesEditText.setText("");
                 hideKeyboard();
-                viewModel.getDailyCalorieIntake(new MealActivityViewModel.DailyCalorieIntakeCallback() {
+                viewModel.getDailyCalorieIntake(new MealActivityViewModel
+                        .DailyCalorieIntakeCallback() {
                     @Override
                     public void onDailyCalorieIntakeReceived(int totalCalories) {
                         intakeTextView.setText(String.valueOf(totalCalories));

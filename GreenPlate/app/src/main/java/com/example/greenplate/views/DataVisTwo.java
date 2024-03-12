@@ -75,53 +75,57 @@ public class DataVisTwo extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onUserInfoReceived(User user) {
-                viewModel.getEveryCalorieIntake(new MealActivityViewModel.EveryCalorieIntakeCallback() {
-                    @Override
+                viewModel
+                        .getEveryCalorieIntake(new MealActivityViewModel
+                                                               .EveryCalorieIntakeCallback() {
+                            @Override
                     public void onEveryCalorieIntakeReceived(List<Integer> calorieList) {
-                        for (int i = 0; i < calorieList.size(); i++) {
-                            if (calorieList.get(i) == 0) {
-                                seriesData.add(new CustomDataEntry("Day "+(i+1), user.getCalorieGoal(), null));
-                            } else {
-                                seriesData.add(new CustomDataEntry("Day "+(i+1), user.getCalorieGoal(), calorieList.get(i)));
+                                for (int i = 0; i < calorieList.size(); i++) {
+                                    if (calorieList.get(i) == 0) {
+                                        seriesData.add(new CustomDataEntry("Day " + (i + 1), user
+                                                .getCalorieGoal(), null));
+                                    } else {
+                                        seriesData.add(new CustomDataEntry("Day " + (i + 1), user
+                                                .getCalorieGoal(), calorieList.get(i)));
+                                    }
+                                }
+
+                                Set set = Set.instantiate();
+                                set.data(seriesData);
+                                Mapping series1Mapping = set.mapAs("{ x: 'x', value: 'value' }");
+                                Mapping series2Mapping = set.mapAs("{ x: 'x', value: 'value2' }");
+
+                                Line series1 = cartesian.line(series1Mapping);
+                                series1.name("Goal");
+                                series1.hovered().markers().enabled(true);
+                                series1.hovered().markers()
+                                    .type(MarkerType.CIRCLE)
+                                    .size(4d);
+                                series1.tooltip()
+                                    .position("right")
+                                    .anchor(Anchor.LEFT_CENTER)
+                                    .offsetX(5d)
+                                    .offsetY(5d);
+
+                                Marker series2 = cartesian.marker(series2Mapping);
+                                series2.name("Monthly");
+                                series2.hovered().markers().enabled(true);
+                                series2.hovered().markers()
+                                        .type(MarkerType.CIRCLE)
+                                        .size(4d);
+                                series2.tooltip()
+                                        .position("right")
+                                        .anchor(Anchor.LEFT_CENTER)
+                                        .offsetX(5d)
+                                        .offsetY(5d);
+
+                                cartesian.legend().enabled(true);
+                                cartesian.legend().fontSize(13d);
+                                cartesian.legend().padding(0d, 0d, 10d, 0d);
+
+                                anyChartView.setChart(cartesian);
                             }
-                        }
-
-                        Set set = Set.instantiate();
-                        set.data(seriesData);
-                        Mapping series1Mapping = set.mapAs("{ x: 'x', value: 'value' }");
-                        Mapping series2Mapping = set.mapAs("{ x: 'x', value: 'value2' }");
-
-                        Line series1 = cartesian.line(series1Mapping);
-                        series1.name("Goal");
-                        series1.hovered().markers().enabled(true);
-                        series1.hovered().markers()
-                                .type(MarkerType.CIRCLE)
-                                .size(4d);
-                        series1.tooltip()
-                                .position("right")
-                                .anchor(Anchor.LEFT_CENTER)
-                                .offsetX(5d)
-                                .offsetY(5d);
-
-                        Marker series2 = cartesian.marker(series2Mapping);
-                        series2.name("Monthly");
-                        series2.hovered().markers().enabled(true);
-                        series2.hovered().markers()
-                                .type(MarkerType.CIRCLE)
-                                .size(4d);
-                        series2.tooltip()
-                                .position("right")
-                                .anchor(Anchor.LEFT_CENTER)
-                                .offsetX(5d)
-                                .offsetY(5d);
-
-                        cartesian.legend().enabled(true);
-                        cartesian.legend().fontSize(13d);
-                        cartesian.legend().padding(0d, 0d, 10d, 0d);
-
-                        anyChartView.setChart(cartesian);
-                    }
-                });
+                        });
             }
         });
 

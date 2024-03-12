@@ -1,4 +1,6 @@
 package com.example.greenplate.views;
+import com.example.greenplate.models.User;
+
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -50,7 +52,7 @@ public class DataVisOne extends AppCompatActivity {
         List<DataEntry> data = new ArrayList<>();
         personalViewModel.getUserInfo(new PersonalActivityViewModel.UserInfoCallback() {
             @Override
-            public void onUserInfoReceived(PersonalActivityViewModel.User user) {
+            public void onUserInfoReceived(User user) {
                 viewModel.getDailyCalorieIntake(new MealActivityViewModel.
                         DailyCalorieIntakeCallback() {
                     @RequiresApi(api = Build.VERSION_CODES.O)

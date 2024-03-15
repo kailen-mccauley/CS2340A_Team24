@@ -1,13 +1,21 @@
 package com.example.greenplate.views;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
 
 import java.util.ArrayList;
@@ -24,6 +32,8 @@ public class RecipeActivity extends AppCompatActivity {
         ImageButton toIngredientsButton = findViewById(R.id.btn_ingredients);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
+        Button increaseQuantity = findViewById(R.id.btn_increase_quantity);
+        Button decreaseQuantity = findViewById(R.id.btn_decrease_quantity);
 
 
         ArrayList<String> ingredients = new ArrayList<>();
@@ -89,5 +99,15 @@ public class RecipeActivity extends AppCompatActivity {
             }
         });
 
+        increaseQuantity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+        decreaseQuantity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
 }

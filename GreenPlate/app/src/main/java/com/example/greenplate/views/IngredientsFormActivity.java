@@ -1,0 +1,94 @@
+package com.example.greenplate.views;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.greenplate.InputValidator;
+import com.example.greenplate.R;
+
+public class IngredientsFormActivity extends AppCompatActivity {
+
+    private EditText ingredeintNameEditText;
+    private EditText caloriesEditText;
+    private EditText quantityEditText;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        // DO NOT MODIFY
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ingredients_form);
+        Button toIngredientsScreen = findViewById(R.id.btn_to_ingredient_screen);
+        Button btnSubmitIngredient = findViewById(R.id.btn_submit_ingredient);
+        RelativeLayout parentLayout = findViewById(R.id.activity_input_ingredients);
+
+        toIngredientsScreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(IngredientsFormActivity.this,
+                        IngredientsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnSubmitIngredient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String ingredientName = ingredeintNameEditText.getText().toString();
+                String calories = caloriesEditText.getText().toString();
+                String quantity = quantityEditText.getText().toString();
+                if (!InputValidator.isValidInputWithSpacesBetween(ingredientName)) {
+                    Toast.makeText(IngredientsFormActivity.this,
+                            "Please enter a valid ingredient name!",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!InputValidator.isValidInputWithInteger(calories)) {
+                    Toast.makeText(IngredientsFormActivity.this,
+                            "Please enter a valid integer value for calories!",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!InputValidator.isValidInputWithInteger(quantity)) {
+                    Toast.makeText(IngredientsFormActivity.this,
+                            "Please enter a valid integer value for quantity!",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                // IMPLEMENT LOGIC TO STORE INGREDIENT
+                Toast.makeText(IngredientsFormActivity.this,
+                        "Submitted Successfully!", Toast.LENGTH_SHORT).show();
+                ingredeintNameEditText.setText("");
+                caloriesEditText.setText("");
+                quantityEditText.setText("");
+                hideKeyboard();
+            }
+        });
+
+        parentLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Hide keyboard
+                hideKeyboard();
+                return false;
+            }
+        });
+    }
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+}
+

@@ -17,7 +17,7 @@ import com.example.greenplate.R;
 
 public class IngredientsFormActivity extends AppCompatActivity {
 
-    private EditText ingredeintNameEditText;
+    private EditText ingredientNameEditText;
     private EditText caloriesEditText;
     private EditText quantityEditText;
 
@@ -29,6 +29,9 @@ public class IngredientsFormActivity extends AppCompatActivity {
         Button toIngredientsScreen = findViewById(R.id.btn_to_ingredient_screen);
         Button btnSubmitIngredient = findViewById(R.id.btn_submit_ingredient);
         RelativeLayout parentLayout = findViewById(R.id.activity_input_ingredients);
+        ingredientNameEditText  = findViewById(R.id.ingredientNameEditText);
+        caloriesEditText = findViewById(R.id.caloriesEditText);
+        quantityEditText = findViewById(R.id.quantityEditText);
 
         toIngredientsScreen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +45,7 @@ public class IngredientsFormActivity extends AppCompatActivity {
         btnSubmitIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String ingredientName = ingredeintNameEditText.getText().toString();
+                String ingredientName = ingredientNameEditText.getText().toString();
                 String calories = caloriesEditText.getText().toString();
                 String quantity = quantityEditText.getText().toString();
                 if (!InputValidator.isValidInputWithSpacesBetween(ingredientName)) {
@@ -66,7 +69,7 @@ public class IngredientsFormActivity extends AppCompatActivity {
                 // IMPLEMENT LOGIC TO STORE INGREDIENT
                 Toast.makeText(IngredientsFormActivity.this,
                         "Submitted Successfully!", Toast.LENGTH_SHORT).show();
-                ingredeintNameEditText.setText("");
+                ingredientNameEditText.setText("");
                 caloriesEditText.setText("");
                 quantityEditText.setText("");
                 hideKeyboard();

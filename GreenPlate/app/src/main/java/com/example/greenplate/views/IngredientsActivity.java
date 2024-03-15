@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +21,7 @@ public class IngredientsActivity extends AppCompatActivity {
         ImageButton toRecipeButton = findViewById(R.id.btn_recipe);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
+        Button toIngredientsForm = findViewById(R.id.btn_to_ingredients_form);
 
         toHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +62,13 @@ public class IngredientsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(IngredientsActivity.this, PersonalActivity.class);
+                startActivity(intent);
+            }
+        });
+        toIngredientsForm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(IngredientsActivity.this, IngredientsFormActivity.class);
                 startActivity(intent);
             }
         });

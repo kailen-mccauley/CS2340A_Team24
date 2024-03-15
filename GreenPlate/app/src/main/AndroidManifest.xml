@@ -60,6 +60,10 @@
             android:name=".views.DataVisTwo"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".views.IngredientsFormActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

@@ -7,12 +7,13 @@
 
     <!-- Header layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_content"
+        android:id="@+id/recipeHeader"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/recipeHeaderTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
@@ -25,6 +26,69 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recipeHeader"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/inputIngredientBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/ingredientNameSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/stormySky"
+                android:layout_marginBottom="10dp"
+                android:textAlignment="center"
+                android:textSize="22sp" />
+
+            <Spinner
+                android:id="@+id/quantitySpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/stormySky"
+                android:prompt="@color/pennBlue"
+                android:textAlignment="center"
+                android:textSize="22sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/changeQuantityBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true">
+
+            <Button
+                android:id="@+id/btn_inecrease_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="5dp"
+                android:backgroundTint="@color/stormySky"
+                android:text="Increase\nQuantity"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_decrease_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="5dp"
+                android:backgroundTint="@color/stormySky"
+                android:text="Decrease\nQuantity"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
 
     <!-- Bottom navigation bar -->
     <LinearLayout

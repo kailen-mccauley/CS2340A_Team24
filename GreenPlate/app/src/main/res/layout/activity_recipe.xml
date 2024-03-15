@@ -43,21 +43,19 @@
 
             <Spinner
                 android:id="@+id/ingredientNameSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/stormySky"
-                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:textAlignment="center"
-                android:textSize="22sp" />
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"/>
 
             <Spinner
                 android:id="@+id/quantitySpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/stormySky"
-                android:prompt="@color/pennBlue"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:textAlignment="center"
-                android:textSize="22sp" />
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"/>
 
         </LinearLayout>
 

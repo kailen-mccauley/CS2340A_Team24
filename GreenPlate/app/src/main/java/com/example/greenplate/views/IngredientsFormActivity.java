@@ -14,12 +14,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
+import com.example.greenplate.viewmodels.IngredientsActivityViewModel;
 
 public class IngredientsFormActivity extends AppCompatActivity {
 
     private EditText ingredientNameEditText;
     private EditText caloriesEditText;
     private EditText quantityEditText;
+    private IngredientsActivityViewModel IngredientsViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,9 @@ public class IngredientsFormActivity extends AppCompatActivity {
         ingredientNameEditText  = findViewById(R.id.ingredientNameEditText);
         caloriesEditText = findViewById(R.id.caloriesEditText);
         quantityEditText = findViewById(R.id.quantityEditText);
+
+        IngredientsViewModel = IngredientsActivityViewModel.getInstance();
+
 
         toIngredientsScreen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,9 +72,20 @@ public class IngredientsFormActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-                // IMPLEMENT LOGIC TO STORE INGREDIENT
-                Toast.makeText(IngredientsFormActivity.this,
-                        "Submitted Successfully!", Toast.LENGTH_SHORT).show();
+
+
+                // IMPLEMENT LOGIC TO STORE INGREDIENT --------
+                int inputCals = Integer.parseInt(calories);
+                int inputQuantity = Integer.parseInt(quantity);
+
+                IngredientsViewModel.storeIngredient(ingredientName, inputCals, inputQuantity, IngredientsFormActivity.this);
+
+                // IMPLEMENT LOGIC TO STORE INGREDIENT ^^--------^^
+
+
+
+//                Toast.makeText(IngredientsFormActivity.this,
+//                        "Submitted Successfully!", Toast.LENGTH_SHORT).show();
                 ingredientNameEditText.setText("");
                 caloriesEditText.setText("");
                 quantityEditText.setText("");

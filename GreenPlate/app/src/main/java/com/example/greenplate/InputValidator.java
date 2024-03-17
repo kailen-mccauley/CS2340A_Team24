@@ -26,5 +26,8 @@ public class InputValidator {
     public static boolean isValidGender(String gender) {
         return gender != null && ((gender.equals("M")) || (gender.equals("F")));
     }
+    public static boolean isValidSpinnerItem(String itemSelcted) {
+        return !itemSelcted.contains("Select");
+    }
 }
 

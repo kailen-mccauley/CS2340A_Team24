@@ -102,53 +102,11 @@ public class RecipeActivity extends AppCompatActivity {
         increaseQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String ingredientName = ingredientNameSpinner.getSelectedItem().toString();
-                String quantity = quantatiesSpinner.getSelectedItem().toString();
-                if (!InputValidator.isValidSpinnerItem(ingredientName)) {
-                    Toast.makeText(RecipeActivity.this,
-                            "Please select a ingredient in your pantry!",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!InputValidator.isValidSpinnerItem(quantity)) {
-                    Toast.makeText(RecipeActivity.this,
-                            "Please select a quantity!",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                ingredientNameSpinner.setSelection(0);
-                quantatiesSpinner.setSelection(0);
-
-                Toast.makeText(RecipeActivity.this,
-                        "Quantity of "+ingredientName+ " increased by "+quantity+"!",
-                        Toast.LENGTH_SHORT).show();
             }
         });
         decreaseQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String ingredientName = ingredientNameSpinner.getSelectedItem().toString();
-                String quantity = quantatiesSpinner.getSelectedItem().toString();
-                if (!InputValidator.isValidSpinnerItem(ingredientName)) {
-                    Toast.makeText(RecipeActivity.this,
-                            "Please select a ingredient in your pantry!",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!InputValidator.isValidSpinnerItem(quantity)) {
-                    Toast.makeText(RecipeActivity.this,
-                            "Please select a quantity!",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                ingredientNameSpinner.setSelection(0);
-                quantatiesSpinner.setSelection(0);
-
-                Toast.makeText(RecipeActivity.this,
-                        "Quantity of "+ingredientName+ " decreased by "+quantity+"!",
-                        Toast.LENGTH_SHORT).show();
             }
         });
     }

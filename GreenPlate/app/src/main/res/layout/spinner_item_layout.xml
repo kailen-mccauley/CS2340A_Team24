@@ -5,4 +5,4 @@
     android:textSize="20sp"
     android:textColor="@color/lightGray"
     android:textAlignment="center"
-    android:background="@color/stormySky"/>
+    android:background="@color/darkGreen"/>

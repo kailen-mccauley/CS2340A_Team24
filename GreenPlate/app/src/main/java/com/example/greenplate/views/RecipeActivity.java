@@ -32,31 +32,6 @@ public class RecipeActivity extends AppCompatActivity {
         ImageButton toIngredientsButton = findViewById(R.id.btn_ingredients);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
-        Button increaseQuantity = findViewById(R.id.btn_increase_quantity);
-        Button decreaseQuantity = findViewById(R.id.btn_decrease_quantity);
-
-
-        ArrayList<String> ingredients = new ArrayList<>();
-        ingredients.add("Sugar");
-        ingredients.add("Flour");
-        ingredients.add("Butter");
-
-        Spinner ingredientNameSpinner = findViewById(R.id.ingredientNameSpinner);
-        ArrayAdapter<String> ingredientsAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_layout, ingredients);
-        ingredientsAdapter.insert("Select ingredient", 0);
-        ingredientsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ingredientNameSpinner.setAdapter(ingredientsAdapter);
-
-        ArrayList<String> quantities = new ArrayList<>();
-        for (int i = 1; i < 21; i++) {
-            quantities.add(String.valueOf(i));
-        }
-
-        Spinner quantatiesSpinner = findViewById(R.id.quantitySpinner);
-        ArrayAdapter<String> quantityAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_layout, quantities);
-        quantityAdapter.insert("Select quantity", 0);
-        quantityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        quantatiesSpinner.setAdapter(quantityAdapter);
 
 
         toHomeButton.setOnClickListener(new View.OnClickListener() {
@@ -96,59 +71,6 @@ public class RecipeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(RecipeActivity.this, PersonalActivity.class);
                 startActivity(intent);
-            }
-        });
-
-        increaseQuantity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String ingredientName = ingredientNameSpinner.getSelectedItem().toString();
-                String quantity = quantatiesSpinner.getSelectedItem().toString();
-                if (!InputValidator.isValidSpinnerItem(ingredientName)) {
-                    Toast.makeText(RecipeActivity.this,
-                            "Please select a ingredient in your pantry!",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!InputValidator.isValidSpinnerItem(quantity)) {
-                    Toast.makeText(RecipeActivity.this,
-                            "Please select a quantity!",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                ingredientNameSpinner.setSelection(0);
-                quantatiesSpinner.setSelection(0);
-
-                Toast.makeText(RecipeActivity.this,
-                        "Quantity of "+ingredientName+ " increased by "+quantity+"!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-        decreaseQuantity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String ingredientName = ingredientNameSpinner.getSelectedItem().toString();
-                String quantity = quantatiesSpinner.getSelectedItem().toString();
-                if (!InputValidator.isValidSpinnerItem(ingredientName)) {
-                    Toast.makeText(RecipeActivity.this,
-                            "Please select a ingredient in your pantry!",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!InputValidator.isValidSpinnerItem(quantity)) {
-                    Toast.makeText(RecipeActivity.this,
-                            "Please select a quantity!",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                ingredientNameSpinner.setSelection(0);
-                quantatiesSpinner.setSelection(0);
-
-                Toast.makeText(RecipeActivity.this,
-                        "Quantity of "+ingredientName+ " decreased by "+quantity+"!",
-                        Toast.LENGTH_SHORT).show();
             }
         });
     }

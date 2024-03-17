@@ -2,18 +2,22 @@ package com.example.greenplate.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
+import com.example.greenplate.models.Ingredient;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class IngredientsActivity extends AppCompatActivity {
 
@@ -29,17 +33,30 @@ public class IngredientsActivity extends AppCompatActivity {
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
         Button toIngredientsForm = findViewById(R.id.btn_to_ingredients_form);
 
+        TextView currQuantity = findViewById(R.id.currQuantityTextView);
         Button increaseQuantity = findViewById(R.id.btn_increase_quantity);
         Button decreaseQuantity = findViewById(R.id.btn_decrease_quantity);
 
+        // WILL BE CHANGED TO THE SORTED ARRAYLIST OF MEALS WE GET FROM VIEWMODEL
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(new Ingredient("Bread", 10, 10, "UserID"));
+        ingredients.add(new Ingredient("Flour", 5, 50, "UserID"));
+        ingredients.add(new Ingredient("cheese", 30, 15, "UserID"));
 
-        ArrayList<String> ingredients = new ArrayList<>();
-        ingredients.add("Sugar");
-        ingredients.add("Flour");
-        ingredients.add("Butter");
+
+        // WILL BE CHANGED TO THE HASHMAPE WE OF THE MEALS WE GET FROM VIEWMODEL
+        HashMap<String, Ingredient> ingredientHashMap = new HashMap<>();
+        for (Ingredient ingredient: ingredients) {
+            ingredientHashMap.put(ingredient.getIngredientName(), ingredient);
+        }
+
+        ArrayList<String> ingredientNames = new ArrayList<>();
+        for (Ingredient ingredient: ingredients) {
+            ingredientNames.add(ingredient.getIngredientName());
+        }
 
         Spinner ingredientNameSpinner = findViewById(R.id.ingredientNameSpinner);
-        ArrayAdapter<String> ingredientsAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_layout, ingredients);
+        ArrayAdapter<String> ingredientsAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_layout, ingredientNames);
         ingredientsAdapter.insert("Select ingredient", 0);
         ingredientsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ingredientNameSpinner.setAdapter(ingredientsAdapter);
@@ -127,7 +144,7 @@ public class IngredientsActivity extends AppCompatActivity {
                 quantatiesSpinner.setSelection(0);
 
                 Toast.makeText(IngredientsActivity.this,
-                        "Quantity of "+ingredientName+ " increased by "+quantity+"!",
+                        "Quantity of " + ingredientName + " increased by " + quantity + "!",
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -153,8 +170,24 @@ public class IngredientsActivity extends AppCompatActivity {
                 quantatiesSpinner.setSelection(0);
 
                 Toast.makeText(IngredientsActivity.this,
-                        "Quantity of "+ingredientName+ " decreased by "+quantity+"!",
+                        "Quantity of " + ingredientName + " decreased by "+quantity+"!",
                         Toast.LENGTH_SHORT).show();
+            }
+        });
+        ingredientNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                // Perform actions when an item is selected
+                String selectedRecipe = parentView.getItemAtPosition(position).toString();
+                if (InputValidator.isValidSpinnerItem(selectedRecipe)) {
+                    int quantity = ingredientHashMap.get(selectedRecipe).getQuantity();
+                    currQuantity.setText(String.valueOf(quantity));
+                } else {
+                    currQuantity.setText("");
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
             }
         });
 

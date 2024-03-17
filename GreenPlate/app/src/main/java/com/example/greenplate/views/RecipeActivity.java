@@ -8,6 +8,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Button;
+import android.widget.Switch;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.AdapterView;
@@ -32,6 +34,8 @@ public class RecipeActivity extends AppCompatActivity {
         ImageButton toIngredientsButton = findViewById(R.id.btn_ingredients);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
+        Switch sortSwitch = findViewById(R.id.sortingSwitch);
+        Spinner recipesSpinner = findViewById(R.id.recipesSpinner);
 
 
         toHomeButton.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +75,17 @@ public class RecipeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(RecipeActivity.this, PersonalActivity.class);
                 startActivity(intent);
+            }
+        });
+        sortSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // SORTING BASED ON Available INGREDIENTS
+
+                } else {
+                    // SORTING ALPHABETICALLY
+                }
             }
         });
     }

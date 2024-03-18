@@ -51,17 +51,30 @@ public class IngredientsActivity extends AppCompatActivity {
            public void onIngredientsReceived(ArrayList<Ingredient> sortedIngredients) {
                // DO whatever you need to do with the ingredients list here -----
                for (Ingredient ingredient : sortedIngredients) {
-                   System.out.println("inside loooop");
                    System.out.println(ingredient.getIngredientName());
                }
            }
         });
 
-        //Here is an example of how to get the Ingredients Map
-        IngredientsViewModel.getIngredientsMap(new IngredientsActivityViewModel.IngredientMapListener() {
+        //Here is an example of how to get the Ingredients HashMap
+        IngredientsViewModel.getIngredientsHashMap(new IngredientsActivityViewModel.IngredientHashMapListener() {
             @Override
-            public void onIngredientMapReceived(Map<String, Ingredient> ingredientMap) {
-                // DO whatever you need to do with the ingredients map here -----
+            public void onIngredientsHashMapReceived(Map<String, Ingredient> ingredientMap) {
+                // DO whatever you need to do with the ingredients hash map here -----
+                for (Map.Entry<String, Ingredient> entry : ingredientMap.entrySet()) {
+                    String ingredientName = entry.getKey();
+                    Ingredient ingredient = entry.getValue();
+                    System.out.println("Ingredient Name: " + ingredientName + ", Ingredient Object: " + ingredient);
+                }
+            }
+        });
+
+        //Here is an example of how to get the Ingredients Tree Map
+
+        IngredientsViewModel.getIngredientsTreeMap(new IngredientsActivityViewModel.IngredientTreeMapListener() {
+            @Override
+            public void onIngredientsTreeMapReceived(Map<String, Ingredient> ingredientMap) {
+                // DO whatever you need to do with the ingredients tree map here -----
                 for (Map.Entry<String, Ingredient> entry : ingredientMap.entrySet()) {
                     String ingredientName = entry.getKey();
                     Ingredient ingredient = entry.getValue();

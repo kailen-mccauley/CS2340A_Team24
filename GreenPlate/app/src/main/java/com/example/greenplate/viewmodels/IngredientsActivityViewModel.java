@@ -17,6 +17,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Collections;
+import java.util.Map;
+
 
 public class IngredientsActivityViewModel {
     private static volatile IngredientsActivityViewModel instance;
@@ -78,6 +86,72 @@ public class IngredientsActivityViewModel {
                     });
         }
 
+    }
+
+    public interface IngredientListListener {
+        void onIngredientsReceived(ArrayList<Ingredient> sortedIngredients);
+
+    }
+
+    public void getSortedIngredients(IngredientListListener listener) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        ArrayList<Ingredient> sortedIngredient = new ArrayList<>();
+        if (currentUser!= null) {
+            String uid = currentUser.getUid();
+            mDatabase.child("pantry").orderByChild("userId").equalTo(uid)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                                Ingredient ingredient = snapshot.getValue(Ingredient.class); // Assuming Ingredient class exists
+                                sortedIngredient.add(ingredient);
+                            }
+
+                            Collections.sort(sortedIngredient, new Comparator<Ingredient>() {
+                                @Override
+                                public int compare(Ingredient ingredient1, Ingredient ingredient2) {
+                                    return ingredient1.getIngredientName().compareToIgnoreCase(ingredient2.getIngredientName());
+                                }
+                            });
+
+                            listener.onIngredientsReceived(sortedIngredient);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+        }
+    }
+
+    public interface IngredientMapListener {
+        void onIngredientMapReceived(Map<String, Ingredient> ingredientMap);
+    }
+    public void getIngredientsMap(IngredientMapListener listener) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        Map<String,Ingredient> ingredientsMap = new HashMap();
+        if (currentUser!= null) {
+            String uid = currentUser.getUid();
+            mDatabase.child("pantry").orderByChild("userId").equalTo(uid)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                                Ingredient ingredient = snapshot.getValue(Ingredient.class); // Assuming Ingredient class exists
+                                ingredientsMap.put(ingredient.getIngredientName(), ingredient);
+                            }
+
+                            listener.onIngredientMapReceived(ingredientsMap);
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+        }
     }
 
     public void updateIngredientQuantity(String ingredientId, int newQuantity) {

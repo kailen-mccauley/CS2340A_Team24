@@ -15,11 +15,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
 import com.example.greenplate.models.Ingredient;
+import com.example.greenplate.viewmodels.IngredientsActivityViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class IngredientsActivity extends AppCompatActivity {
+
+    private IngredientsActivityViewModel IngredientsViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,37 @@ public class IngredientsActivity extends AppCompatActivity {
         TextView currQuantity = findViewById(R.id.currQuantityTextView);
         Button increaseQuantity = findViewById(R.id.btn_increase_quantity);
         Button decreaseQuantity = findViewById(R.id.btn_decrease_quantity);
+
+        IngredientsViewModel = IngredientsActivityViewModel.getInstance();
+
+
+        //Here is an example of how to get the Sorted Ingredients list
+        IngredientsViewModel.getSortedIngredients(new IngredientsActivityViewModel.IngredientListListener() {
+           @Override
+           public void onIngredientsReceived(ArrayList<Ingredient> sortedIngredients) {
+               // DO whatever you need to do with the ingredients list here -----
+               for (Ingredient ingredient : sortedIngredients) {
+                   System.out.println("inside loooop");
+                   System.out.println(ingredient.getIngredientName());
+               }
+           }
+        });
+
+        //Here is an example of how to get the Ingredients Map
+        IngredientsViewModel.getIngredientsMap(new IngredientsActivityViewModel.IngredientMapListener() {
+            @Override
+            public void onIngredientMapReceived(Map<String, Ingredient> ingredientMap) {
+                // DO whatever you need to do with the ingredients map here -----
+                for (Map.Entry<String, Ingredient> entry : ingredientMap.entrySet()) {
+                    String ingredientName = entry.getKey();
+                    Ingredient ingredient = entry.getValue();
+                    System.out.println("Ingredient Name: " + ingredientName + ", Ingredient Object: " + ingredient);
+                }
+            }
+        });
+
+
+
 
         // WILL BE CHANGED TO THE SORTED ARRAYLIST OF MEALS WE GET FROM VIEWMODEL
         ArrayList<Ingredient> ingredients = new ArrayList<>();

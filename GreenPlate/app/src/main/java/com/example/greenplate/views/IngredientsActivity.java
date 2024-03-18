@@ -170,15 +170,17 @@ public class IngredientsActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-                //TODO
-                // Call decrement update from IngredientsViewModel
-                // Update the spinners
-                ingredientNameSpinner.setSelection(0);
-                quantatiesSpinner.setSelection(0);
-
-                Toast.makeText(IngredientsActivity.this,
-                        "Quantity of " + ingredientName + " increased by " + quantity + "!",
-                        Toast.LENGTH_SHORT).show();
+                IngredientsViewModel.updateIngredientQuantityAndTreeMap(ingredientName, Integer.valueOf(quantity), new IngredientsActivityViewModel.IngredientTreeMapListener() {
+                    @Override
+                    public void onIngredientsTreeMapReceived(Map<String, Ingredient> ingredientMap) {
+                        updateTreeMapAndSpinners(ingredientMap, ingredientNameSpinner);
+                        ingredientNameSpinner.setSelection(0);
+                        quantatiesSpinner.setSelection(0);
+                        Toast.makeText(IngredientsActivity.this,
+                                "Quantity of " + ingredientName + " increased by " + quantity + "!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
         decreaseQuantity.setOnClickListener(new View.OnClickListener() {

@@ -20,10 +20,23 @@ import com.example.greenplate.viewmodels.IngredientsActivityViewModel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class IngredientsActivity extends AppCompatActivity {
 
     private IngredientsActivityViewModel IngredientsViewModel;
+    private TreeMap<String, Ingredient> ingredientsTreeMap;
+
+    private void updateTreeMapAndSpinners(Map<String, Ingredient> ingredientMap, Spinner ingredientNameSpinner) {
+        // Update the ingredients TreeMap
+        ingredientsTreeMap = new TreeMap<>(ingredientMap);
+        // Update the spinners with the new TreeMap data
+        ArrayList<String> ingredientNames = new ArrayList<>(ingredientsTreeMap.keySet());
+        ArrayAdapter<String> ingredientsAdapter = new ArrayAdapter<>(IngredientsActivity.this, R.layout.spinner_item_layout, ingredientNames);
+        ingredientsAdapter.insert("Select ingredient", 0);
+        ingredientsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ingredientNameSpinner.setAdapter(ingredientsAdapter);
+    }
 
 
     @Override
@@ -41,6 +54,7 @@ public class IngredientsActivity extends AppCompatActivity {
         TextView currQuantity = findViewById(R.id.currQuantityTextView);
         Button increaseQuantity = findViewById(R.id.btn_increase_quantity);
         Button decreaseQuantity = findViewById(R.id.btn_decrease_quantity);
+        Spinner ingredientNameSpinner = findViewById(R.id.ingredientNameSpinner);
 
         IngredientsViewModel = IngredientsActivityViewModel.getInstance();
 
@@ -74,41 +88,9 @@ public class IngredientsActivity extends AppCompatActivity {
         IngredientsViewModel.getIngredientsTreeMap(new IngredientsActivityViewModel.IngredientTreeMapListener() {
             @Override
             public void onIngredientsTreeMapReceived(Map<String, Ingredient> ingredientMap) {
-                // DO whatever you need to do with the ingredients tree map here -----
-                for (Map.Entry<String, Ingredient> entry : ingredientMap.entrySet()) {
-                    String ingredientName = entry.getKey();
-                    Ingredient ingredient = entry.getValue();
-                    System.out.println("Ingredient Name: " + ingredientName + ", Ingredient Object: " + ingredient);
-                }
+                updateTreeMapAndSpinners(ingredientMap, ingredientNameSpinner);
             }
         });
-
-
-
-
-        // WILL BE CHANGED TO THE SORTED ARRAYLIST OF MEALS WE GET FROM VIEWMODEL
-        ArrayList<Ingredient> ingredients = new ArrayList<>();
-        ingredients.add(new Ingredient("Bread", 10, 10, "UserID"));
-        ingredients.add(new Ingredient("Flour", 5, 50, "UserID"));
-        ingredients.add(new Ingredient("cheese", 30, 15, "UserID"));
-
-
-        // WILL BE CHANGED TO THE HASHMAPE WE OF THE MEALS WE GET FROM VIEWMODEL
-        HashMap<String, Ingredient> ingredientHashMap = new HashMap<>();
-        for (Ingredient ingredient: ingredients) {
-            ingredientHashMap.put(ingredient.getIngredientName(), ingredient);
-        }
-
-        ArrayList<String> ingredientNames = new ArrayList<>();
-        for (Ingredient ingredient: ingredients) {
-            ingredientNames.add(ingredient.getIngredientName());
-        }
-
-        Spinner ingredientNameSpinner = findViewById(R.id.ingredientNameSpinner);
-        ArrayAdapter<String> ingredientsAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_layout, ingredientNames);
-        ingredientsAdapter.insert("Select ingredient", 0);
-        ingredientsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ingredientNameSpinner.setAdapter(ingredientsAdapter);
 
         ArrayList<String> quantities = new ArrayList<>();
         for (int i = 1; i < 21; i++) {
@@ -188,7 +170,9 @@ public class IngredientsActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+                //TODO
+                // Call decrement update from IngredientsViewModel
+                // Update the spinners
                 ingredientNameSpinner.setSelection(0);
                 quantatiesSpinner.setSelection(0);
 
@@ -214,7 +198,9 @@ public class IngredientsActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+                //TODO
+                // Call decrement update from IngredientsViewModel
+                // Update the spinners
                 ingredientNameSpinner.setSelection(0);
                 quantatiesSpinner.setSelection(0);
 
@@ -229,7 +215,7 @@ public class IngredientsActivity extends AppCompatActivity {
                 // Perform actions when an item is selected
                 String selectedRecipe = parentView.getItemAtPosition(position).toString();
                 if (InputValidator.isValidSpinnerItem(selectedRecipe)) {
-                    int quantity = ingredientHashMap.get(selectedRecipe).getQuantity();
+                    int quantity = ingredientsTreeMap.get(selectedRecipe).getQuantity();
                     currQuantity.setText(String.valueOf(quantity));
                 } else {
                     currQuantity.setText("");

@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Collections;
 import java.util.Map;
+import java.util.TreeMap;
 
 
 public class IngredientsActivityViewModel {
@@ -61,7 +62,7 @@ public class IngredientsActivityViewModel {
                             boolean isDuplicate = false;
                             for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                                 Ingredient ingredient = snapshot.getValue(Ingredient.class);
-                                if (ingredient != null && ingredient.getIngredientName().equals(ingredientName)) {
+                                if (ingredient != null && ingredient.getIngredientName().equals(ingredientName.toLowerCase())) {
                                     isDuplicate = true;
                                     break;
                                 }
@@ -69,7 +70,7 @@ public class IngredientsActivityViewModel {
 
                             if (!isDuplicate) {
                                 String ingredientId = mDatabase.child("pantry").push().getKey();
-                                Ingredient newIngredient = new Ingredient(ingredientName, calories, quantity, uid);
+                                Ingredient newIngredient = new Ingredient(ingredientName.toLowerCase(), calories, quantity, uid);
                                 mDatabase.child("pantry").child(ingredientId).setValue(newIngredient);
                                 Toast.makeText(IngredientsFormActivity,
                                         "Submitted Successfully!", Toast.LENGTH_SHORT).show();
@@ -125,10 +126,10 @@ public class IngredientsActivityViewModel {
         }
     }
 
-    public interface IngredientMapListener {
-        void onIngredientMapReceived(Map<String, Ingredient> ingredientMap);
+    public interface IngredientHashMapListener {
+        void onIngredientsHashMapReceived(Map<String, Ingredient> ingredientMap);
     }
-    public void getIngredientsMap(IngredientMapListener listener) {
+    public void getIngredientsHashMap(IngredientHashMapListener listener) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         Map<String,Ingredient> ingredientsMap = new HashMap();
         if (currentUser!= null) {
@@ -142,7 +143,7 @@ public class IngredientsActivityViewModel {
                                 ingredientsMap.put(ingredient.getIngredientName(), ingredient);
                             }
 
-                            listener.onIngredientMapReceived(ingredientsMap);
+                            listener.onIngredientsHashMapReceived(ingredientsMap);
 
                         }
 
@@ -154,8 +155,59 @@ public class IngredientsActivityViewModel {
         }
     }
 
-    public void updateIngredientQuantity(String ingredientId, int newQuantity) {
-        mDatabase.child("pantry").child(ingredientId).child("quantity").setValue(newQuantity);
+    public interface IngredientTreeMapListener {
+        void onIngredientsTreeMapReceived(Map<String, Ingredient> ingredientMap);
+    }
+    public void getIngredientsTreeMap(IngredientTreeMapListener listener) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        Map<String,Ingredient> ingredientsTreeMap = new TreeMap<>();
+        if (currentUser!= null) {
+            String uid = currentUser.getUid();
+            mDatabase.child("pantry").orderByChild("userId").equalTo(uid)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                                Ingredient ingredient = snapshot.getValue(Ingredient.class); // Assuming Ingredient class exists
+                                ingredientsTreeMap.put(ingredient.getIngredientName(), ingredient);
+                            }
+
+                            listener.onIngredientsTreeMapReceived(ingredientsTreeMap);
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+        }
+    }
+
+    public void updateIngredientQuantity(String ingredientName, int newQuantity) {
+//        mDatabase.child("pantry").child(ingredientId).child("quantity").setValue(newQuantity);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String uid = currentUser.getUid();
+        mDatabase.child("pantry").orderByChild("userId").equalTo(uid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Ingredient ingredient = snapshot.getValue(Ingredient.class);
+                            if (ingredient != null && ingredient.getIngredientName().equals(ingredientName)) {
+                                String ingredientId = snapshot.getKey();
+                                int inputQuality = newQuantity + ingredient.getQuantity();
+                                mDatabase.child("pantry").child(ingredientId).child("quantity").setValue(inputQuality);
+                                break; // Exit loop once ingredient is found and updated
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 
 

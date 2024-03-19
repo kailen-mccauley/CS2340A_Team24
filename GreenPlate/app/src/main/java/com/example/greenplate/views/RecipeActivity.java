@@ -107,11 +107,13 @@ public class RecipeActivity extends AppCompatActivity {
                     Toast.makeText(RecipeActivity.this,
                             "Please input a name for your recipe!",
                             Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 if (!InputValidator.isValidInputWithSpacesBetween(ingredientList)) {
                     Toast.makeText(RecipeActivity.this,
                             "Please input the ingredient list for your recipe!",
                             Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 String[] ingredients = ingredientList.split(",");
                 for (String ingredient: ingredients) {

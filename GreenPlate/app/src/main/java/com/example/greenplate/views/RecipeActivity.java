@@ -18,6 +18,9 @@ import android.widget.Spinner;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.InputValidator;
@@ -116,9 +119,39 @@ public class RecipeActivity extends AppCompatActivity {
                     return;
                 }
                 String[] ingredients = ingredientList.split(",");
-                for (String ingredient: ingredients) {
-                    Log.d("ingredient", ingredient);
+                HashMap<String, String> ingredientsMap = new HashMap<>();
+                for (String ingredient : ingredients) {
+                    String[] nameAndQuantity = ingredient.split(": ");
+                    if (nameAndQuantity.length == 2) {
+                        String ingredientName = nameAndQuantity[0].trim();
+                        if (!InputValidator.isValidInputWithSpacesBetween(ingredientName)){
+                            Toast.makeText(RecipeActivity.this,
+                                    "Invalid ingredient name detected!",
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        String ingredientQuantity = nameAndQuantity[1].trim();
+                        if (!InputValidator.isValidInputWithInteger(ingredientQuantity)){
+                            Toast.makeText(RecipeActivity.this,
+                                    "Invalid quantity for " + ingredientName + "!",
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        ingredientsMap.put(ingredientName, ingredientQuantity);
+                    } else {
+                        Toast.makeText(RecipeActivity.this,
+                                "Invalid input format for ingredient!",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
+                //TODO
+                // Send the ingredientsMap over to the viewmodel
+                recipeNameEditText.setText("");
+                ingredientListEditText.setText("");
+                Toast.makeText(RecipeActivity.this,
+                        "Recipe  " + recipeName + "  submitted successfully!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
         parentLayout.setOnTouchListener(new View.OnTouchListener() {

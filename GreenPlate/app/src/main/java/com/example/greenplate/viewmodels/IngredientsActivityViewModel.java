@@ -210,5 +210,36 @@ public class IngredientsActivityViewModel {
                 });
     }
 
+    public void updateIngredientQuantityAndTreeMap(String ingredientName, int newQuantity, IngredientsActivityViewModel.IngredientTreeMapListener listener) {
+        // Update the quantity in Firebase
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String uid = currentUser.getUid();
+        mDatabase.child("pantry").orderByChild("userId").equalTo(uid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Ingredient ingredient = snapshot.getValue(Ingredient.class);
+                            if (ingredient != null && ingredient.getIngredientName().equals(ingredientName)) {
+                                String ingredientId = snapshot.getKey();
+                                int inputQuality = newQuantity + ingredient.getQuantity();
+                                mDatabase.child("pantry").child(ingredientId).child("quantity").setValue(inputQuality);
+                                break; // Exit loop once ingredient is found and updated
+                            }
+                        }
+                        getIngredientsTreeMap(new IngredientsActivityViewModel.IngredientTreeMapListener() {
+                            @Override
+                            public void onIngredientsTreeMapReceived(Map<String, Ingredient> ingredientMap) {
+                                listener.onIngredientsTreeMapReceived(ingredientMap);
+                            }
+                        });
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+    }
+
+
 
 }

@@ -264,7 +264,7 @@ public class IngredientsActivityViewModel {
                                 } else {
                                     mDatabase.child("pantry").child(ingredientId).removeValue();
                                     Toast.makeText(IngredientsActivity,
-                                            "You're Out of " + ingredient.getIngredientName(), Toast.LENGTH_SHORT).show();
+                                            "You're out of " + ingredient.getIngredientName(), Toast.LENGTH_SHORT).show();
                                     break;
                                 }
                             }

@@ -176,9 +176,16 @@ public class IngredientsActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-                //TODO
-                // Call decrement update from IngredientsViewModel
-                // Update the spinners
+                int decreaseQuantity = Integer.valueOf(quantity);
+                int currentQuantity = ingredientsTreeMap.get(ingredientName).getQuantity();
+                if (!InputValidator.isValidQuantityDecrease(decreaseQuantity, currentQuantity)) {
+                    Toast.makeText(IngredientsActivity.this,
+                            "Quantity of " + ingredientName
+                                    + " can only be decreased by a max of"
+                                    + currentQuantity + "!",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 IngredientsViewModel.decreaseIngredientQuantityAndTreeMap(ingredientName,Integer.valueOf(quantity),
                         new IngredientsActivityViewModel.IngredientTreeMapListener() {

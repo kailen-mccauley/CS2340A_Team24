@@ -59,30 +59,6 @@ public class IngredientsActivity extends AppCompatActivity {
         IngredientsViewModel = IngredientsActivityViewModel.getInstance();
 
 
-        //Here is an example of how to get the Sorted Ingredients list
-        IngredientsViewModel.getSortedIngredients(new IngredientsActivityViewModel.IngredientListListener() {
-           @Override
-           public void onIngredientsReceived(ArrayList<Ingredient> sortedIngredients) {
-               // DO whatever you need to do with the ingredients list here -----
-               for (Ingredient ingredient : sortedIngredients) {
-                   System.out.println(ingredient.getIngredientName());
-               }
-           }
-        });
-
-        //Here is an example of how to get the Ingredients HashMap
-        IngredientsViewModel.getIngredientsHashMap(new IngredientsActivityViewModel.IngredientHashMapListener() {
-            @Override
-            public void onIngredientsHashMapReceived(Map<String, Ingredient> ingredientMap) {
-                // DO whatever you need to do with the ingredients hash map here -----
-                for (Map.Entry<String, Ingredient> entry : ingredientMap.entrySet()) {
-                    String ingredientName = entry.getKey();
-                    Ingredient ingredient = entry.getValue();
-                    System.out.println("Ingredient Name: " + ingredientName + ", Ingredient Object: " + ingredient);
-                }
-            }
-        });
-
         //Here is an example of how to get the Ingredients Tree Map
 
         IngredientsViewModel.getIngredientsTreeMap(new IngredientsActivityViewModel.IngredientTreeMapListener() {
@@ -203,12 +179,18 @@ public class IngredientsActivity extends AppCompatActivity {
                 //TODO
                 // Call decrement update from IngredientsViewModel
                 // Update the spinners
-                ingredientNameSpinner.setSelection(0);
-                quantatiesSpinner.setSelection(0);
 
-                Toast.makeText(IngredientsActivity.this,
-                        "Quantity of " + ingredientName + " decreased by "+quantity+"!",
-                        Toast.LENGTH_SHORT).show();
+                IngredientsViewModel.decreaseIngredientQuantityAndTreeMap(ingredientName,Integer.valueOf(quantity),
+                        new IngredientsActivityViewModel.IngredientTreeMapListener() {
+                            @Override
+                            public void onIngredientsTreeMapReceived(Map<String, Ingredient> ingredientMap) {
+                                updateTreeMapAndSpinners(ingredientMap, ingredientNameSpinner);
+                                ingredientNameSpinner.setSelection(0);
+                                quantatiesSpinner.setSelection(0);
+                            }
+                        }, IngredientsActivity.this
+
+                );
             }
         });
         ingredientNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

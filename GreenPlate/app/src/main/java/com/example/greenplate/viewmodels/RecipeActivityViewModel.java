@@ -29,4 +29,18 @@ public class RecipeActivityViewModel {
         }
         return instance;
     }
+
+    //TODO: storeRecipe method
+    // Should be a map of ingredient,quantity pairs
+    // Each recipe should be visible to all other users
+
+    // TODO: doesUserHaveIngredients method
+    //  checks if a user has enough ingredients in their pantry to make a recipe
+
+    //TODO: withUserIngredients
+    // creates a list of recipe objects that a user can make.
+
+    //TODO: sortRecipes
+    // sort recipes in alphabetical order
+
 }

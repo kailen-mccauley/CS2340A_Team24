@@ -25,10 +25,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
+import com.example.greenplate.viewmodels.MealActivityViewModel;
+import com.example.greenplate.viewmodels.RecipeActivityViewModel;
 
 import java.util.ArrayList;
 
 public class RecipeActivity extends AppCompatActivity {
+    private RecipeActivityViewModel viewModel;
     private EditText recipeNameEditText;
     private EditText ingredientListEditText;
 
@@ -48,6 +51,7 @@ public class RecipeActivity extends AppCompatActivity {
         recipeNameEditText = findViewById(R.id.recipeNameEditText);
         ingredientListEditText = findViewById(R.id.recipeIngredientsEditText);
         Button submitRecipe = findViewById(R.id.btn_submit_recipe);
+        viewModel = RecipeActivityViewModel.getInstance();
 
 
         toHomeButton.setOnClickListener(new View.OnClickListener() {
@@ -144,6 +148,7 @@ public class RecipeActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
+
                 }
                 //TODO
                 // Send the ingredientsMap over to the viewmodel
@@ -152,6 +157,7 @@ public class RecipeActivity extends AppCompatActivity {
                 Toast.makeText(RecipeActivity.this,
                         "Recipe  " + recipeName + "  submitted successfully!",
                         Toast.LENGTH_SHORT).show();
+                viewModel.storeRecipe(recipeName, ingredientsMap);
             }
         });
         parentLayout.setOnTouchListener(new View.OnTouchListener() {

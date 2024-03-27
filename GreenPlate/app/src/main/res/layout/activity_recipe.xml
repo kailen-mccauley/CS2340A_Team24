@@ -130,7 +130,7 @@
             android:id="@+id/recipeIngredientsEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter ingredients and quantity as a list"
+            android:hint="Enter ingredients list (E.g.: peas : 10, corn: 13)"
             android:textAlignment="center" />
         <Button
             android:id="@+id/btn_submit_recipe"

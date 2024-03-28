@@ -123,7 +123,7 @@ public class RecipeActivity extends AppCompatActivity {
                     return;
                 }
                 String[] ingredients = ingredientList.split(",");
-                HashMap<String, String> ingredientsMap = new HashMap<>();
+                HashMap<String, Integer> ingredientsMap = new HashMap<>();
                 for (String ingredient : ingredients) {
                     String[] nameAndQuantity = ingredient.split(": ");
                     if (nameAndQuantity.length == 2) {
@@ -141,7 +141,8 @@ public class RecipeActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        ingredientsMap.put(ingredientName, ingredientQuantity);
+                        Integer ingredientQuantityInt = Integer.parseInt(nameAndQuantity[1].trim());
+                        ingredientsMap.put(ingredientName, ingredientQuantityInt);
                     } else {
                         Toast.makeText(RecipeActivity.this,
                                 "Invalid input format for ingredient!",

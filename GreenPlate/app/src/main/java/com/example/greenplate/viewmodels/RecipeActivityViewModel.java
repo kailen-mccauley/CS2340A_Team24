@@ -112,7 +112,29 @@ public class RecipeActivityViewModel {
 
     //TODO: withUserIngredients
     // creates a list of recipe objects that a user can make.
+    public List<Recipe> withUserIngredients() {
+        List<Recipe> userCanMakeRecipes = new ArrayList<>();
+        DatabaseReference recipeRef = mDatabase.child("cookbook");
+        recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot recipeSnapshot : snapshot.getChildren()) {
+                    String recipeName = recipeSnapshot.child("name").getValue(String.class);
+                    Map<String, Integer> ingredientsMap = (Map<String, Integer>) recipeSnapshot.child("ingredients").getValue();
+                    Recipe recipe = new Recipe(recipeName, ingredientsMap);
+                    if (doesUserHaveIngredients(recipe)) {
+                        userCanMakeRecipes.add(recipe);
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("withUserIngredients", "Failed to read recipes from database.");
+            }
+        });
+        return userCanMakeRecipes;
+    }
 
     //TODO: sortRecipes
     // sort recipes in alphabetical order

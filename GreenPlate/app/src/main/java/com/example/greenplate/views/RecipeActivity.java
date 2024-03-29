@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
+import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.viewmodels.MealActivityViewModel;
 import com.example.greenplate.viewmodels.RecipeActivityViewModel;
 
@@ -144,7 +145,7 @@ public class RecipeActivity extends AppCompatActivity {
                             return;
                         }
                         Integer ingredientQuantityInt = Integer.parseInt(nameAndQuantity[1].trim());
-                        ingredientsMap.put(ingredientName, ingredientQuantityInt);
+                        ingredientsMap.put(ingredientName.toLowerCase(), ingredientQuantityInt);
                     } else {
                         Toast.makeText(RecipeActivity.this,
                                 "Invalid input format for ingredient!",
@@ -171,6 +172,7 @@ public class RecipeActivity extends AppCompatActivity {
                 return false;
             }
         });
+
     }
     private void hideKeyboard() {
         View view = this.getCurrentFocus();

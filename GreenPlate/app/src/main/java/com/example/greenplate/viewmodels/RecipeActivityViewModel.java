@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class RecipeActivityViewModel {
     private static volatile RecipeActivityViewModel instance;
@@ -61,6 +62,7 @@ public class RecipeActivityViewModel {
             Map<String, Object> recipeData = new HashMap<>();
             recipeData.put("name", recipeName);
             recipeData.put("ingredients", ingredientsMap);
+            recipeData.put("recipeID", recipeId);
 
             if (recipeId != null) {
                 mDatabase.child("cookbook").child(recipeId).setValue(recipeData)
@@ -121,7 +123,8 @@ public class RecipeActivityViewModel {
                 for (DataSnapshot recipeSnapshot : snapshot.getChildren()) {
                     String recipeName = recipeSnapshot.child("name").getValue(String.class);
                     Map<String, Integer> ingredientsMap = (Map<String, Integer>) recipeSnapshot.child("ingredients").getValue();
-                    Recipe recipe = new Recipe(recipeName, ingredientsMap);
+                    String recipeID = recipeSnapshot.child("recipeID").getValue(String.class);
+                    Recipe recipe = new Recipe(recipeName, ingredientsMap, recipeID);
                     if (doesUserHaveIngredients(recipe)) {
                         userCanMakeRecipes.add(recipe);
                     }
@@ -160,6 +163,41 @@ public class RecipeActivityViewModel {
                 Log.w("DatabaseError", "loadRecipe:onCancelled", error.toException());
             }
         });
+    }
+
+    public interface RecipeListListener {
+        void onRecipeListReceived(ArrayList<Map<String,Recipe>> recipeList);
+    }
+    public void getRecipelist(RecipeListListener Listener) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        ArrayList<Map<String,Recipe>> recipeList = new ArrayList<>();
+
+        if (currentUser!= null) {
+            String uid = currentUser.getUid();
+            mDatabase.child("cookbook").orderByChild("name")
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                                String recipeName = snapshot.child("name").getValue(String.class);
+                                Map<String, Integer> ingredientsMap = (Map<String, Integer>) snapshot.child("ingredients").getValue();
+                                String recipeID = snapshot.child("recipeID").getValue(String.class);
+                                Recipe recipe = new Recipe(recipeName, ingredientsMap, recipeID);
+                                Map<String,Recipe> recipeMap = new HashMap<>();
+                                recipeMap.put(recipe.getRecipeName(), recipe);
+                                recipeList.add(recipeMap);
+                            }
+
+                            Listener.onRecipeListReceived(recipeList);
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+        }
     }
 
 }

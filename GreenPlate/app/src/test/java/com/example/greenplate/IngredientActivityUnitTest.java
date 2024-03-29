@@ -52,8 +52,9 @@ public class IngredientActivityUnitTest {
             viewModel.getSortedIngredients(updatedIngredients -> {
                 boolean negativeQuantity = false;
                 for (Ingredient ing : updatedIngredients) {
-                    if (ing.getQuantity() == -3) {
+                    if (ing.getQuantity() < 1) {
                         negativeQuantity = true;
+                        break;
                     }
                 }
                 assertFalse(negativeQuantity);
@@ -72,6 +73,7 @@ public class IngredientActivityUnitTest {
                 for (Ingredient ing : updatedIngredients) {
                     if (ing.getQuantity() == 3 && ing.getIngredientName().equalsIgnoreCase("milk") && ing.getCalories() == 50) {
                         present = true;
+                        break;
                     }
                 }
                 assertTrue(present);
@@ -95,6 +97,26 @@ public class IngredientActivityUnitTest {
                     }
                 }
                 assertFalse(present);
+            });
+        });
+    }
+
+    @Test
+    public void testUpdateQuantity() {
+        FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                viewModel.storeIngredient("milk", 50, 3, null);
+                viewModel.updateIngredientQuantity("milk", 5);
+            }
+            viewModel.getSortedIngredients(updatedIngredients -> {
+                boolean present = false;
+                for (Ingredient ing : updatedIngredients) {
+                    if (ing.getIngredientName().equalsIgnoreCase("milk") && ing.getQuantity() == 5) {
+                        present = true;
+                        break;
+                    }
+                }
+                assertTrue(present);
             });
         });
     }

@@ -138,5 +138,28 @@ public class RecipeActivityViewModel {
 
     //TODO: sortRecipes
     // sort recipes in alphabetical order
+    public void sortRecipes() {
+        DatabaseReference cookbookRef = mDatabase.child("cookbook");
+        cookbookRef.orderByChild("name").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<Recipe> recipes = new ArrayList<>();
+                for (DataSnapshot recipeSnapshot : dataSnapshot.getChildren()) {
+                    Recipe recipe = recipeSnapshot.getValue(Recipe.class);
+                    recipes.add(recipe);
+                }
+
+                //Logged for now but cassandra going to use it for her UI
+                for (Recipe r : recipes) {
+                    Log.d("SortedRecipe", "Recipe Name: " + r.getRecipeName());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("DatabaseError", "loadRecipe:onCancelled", error.toException());
+            }
+        });
+    }
 
 }

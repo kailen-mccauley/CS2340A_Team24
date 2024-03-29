@@ -97,10 +97,12 @@ public class RecipeActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    // SORTING BASED ON Available INGREDIENTS
-
+                    // SORTING BASED ON Available INGREDIENTS for cassandra
+                    Log.d("available", "testMehdi1");
                 } else {
                     // SORTING ALPHABETICALLY
+                    Log.d("alpha", "testMehdi2");
+                    viewModel.sortRecipes();
                 }
             }
         });

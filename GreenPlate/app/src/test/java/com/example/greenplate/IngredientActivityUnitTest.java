@@ -120,4 +120,20 @@ public class IngredientActivityUnitTest {
             });
         });
     }
+
+    @Test
+    public void testAnyNonPositiveQuantity() {
+        FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener(task -> {
+            viewModel.getSortedIngredients(updatedIngredients -> {
+                boolean present = false;
+                for (Ingredient ing : updatedIngredients) {
+                    if (ing.getQuantity() < 1) {
+                        present = true;
+                        break;
+                    }
+                }
+                assertFalse(present);
+            });
+        });
+    }
 }

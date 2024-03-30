@@ -46,6 +46,7 @@ public class RecipeActivity extends AppCompatActivity {
         for (Map<SpannableString, Recipe> recipeMap : recipesArrayList) {
             recipeNames.addAll(recipeMap.keySet());
         }
+        viewModel.setSortRecipeInstance(new sortRecipeUserHasIngredients());
         ArrayAdapter<SpannableString> ingredientsAdapter = new ArrayAdapter<>(RecipeActivity.this, R.layout.spinner_item_layout_recipe, recipeNames);
         ingredientsAdapter.insert(new SpannableString("Select ingredient"), 0);
         ingredientsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -147,7 +148,7 @@ public class RecipeActivity extends AppCompatActivity {
         submitRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String recipeName = recipeNameEditText.getText().toString();
+                String recipeName = recipeNameEditText.getText().toString().toLowerCase();
                 String ingredientList = ingredientListEditText.getText().toString();
                 if (!InputValidator.isValidInputWithSpacesBetween(recipeName)) {
                     Toast.makeText(RecipeActivity.this,

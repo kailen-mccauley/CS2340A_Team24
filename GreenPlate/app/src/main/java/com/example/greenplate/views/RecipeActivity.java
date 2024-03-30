@@ -2,6 +2,7 @@ package com.example.greenplate.views;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,12 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
 import java.util.Map;
@@ -25,8 +24,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
-import com.example.greenplate.models.Ingredient;
-import com.example.greenplate.viewmodels.MealActivityViewModel;
+import com.example.greenplate.models.Recipe;
+import com.example.greenplate.sortRecipeAlphabetical;
+import com.example.greenplate.sortRecipeUserHasIngredients;
 import com.example.greenplate.viewmodels.RecipeActivityViewModel;
 
 import java.util.ArrayList;
@@ -35,6 +35,22 @@ public class RecipeActivity extends AppCompatActivity {
     private RecipeActivityViewModel viewModel;
     private EditText recipeNameEditText;
     private EditText ingredientListEditText;
+
+    private ArrayList<Map<SpannableString, Recipe>> recipesArrayList;
+
+    private void updateArrayListAndSpinners(ArrayList<Map<SpannableString, Recipe>> recipeList, Spinner recipesSpinner) {
+        // Update the ingredients TreeMap
+        recipesArrayList = recipeList;
+        // Update the spinners with the new TreeMap data
+        ArrayList<SpannableString> recipeNames = new ArrayList<>();
+        for (Map<SpannableString, Recipe> recipeMap : recipesArrayList) {
+            recipeNames.addAll(recipeMap.keySet());
+        }
+        ArrayAdapter<SpannableString> ingredientsAdapter = new ArrayAdapter<>(RecipeActivity.this, R.layout.spinner_item_layout_recipe, recipeNames);
+        ingredientsAdapter.insert(new SpannableString("Select ingredient"), 0);
+        ingredientsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        recipesSpinner.setAdapter(ingredientsAdapter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +69,14 @@ public class RecipeActivity extends AppCompatActivity {
         ingredientListEditText = findViewById(R.id.recipeIngredientsEditText);
         Button submitRecipe = findViewById(R.id.btn_submit_recipe);
         viewModel = RecipeActivityViewModel.getInstance();
+
+
+        viewModel.getRecipelist(new RecipeActivityViewModel.RecipeListListener() {
+            @Override
+            public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
+                updateArrayListAndSpinners(recipeList, recipesSpinner);
+            }
+        });
 
 
         toHomeButton.setOnClickListener(new View.OnClickListener() {
@@ -99,10 +123,22 @@ public class RecipeActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // SORTING BASED ON Available INGREDIENTS for cassandra
-                    Log.d("available", "testMehdi1");
+                    viewModel.setSortRecipeInstance(new sortRecipeUserHasIngredients());
+                    viewModel.getRecipelist(new RecipeActivityViewModel.RecipeListListener() {
+                        @Override
+                        public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
+                            updateArrayListAndSpinners(recipeList, recipesSpinner);
+                        }
+                    });
                 } else {
                     // SORTING ALPHABETICALLY
-                    Log.d("alpha", "testMehdi2");
+                    viewModel.setSortRecipeInstance(new sortRecipeAlphabetical());
+                    viewModel.getRecipelist(new RecipeActivityViewModel.RecipeListListener() {
+                        @Override
+                        public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
+                            updateArrayListAndSpinners(recipeList, recipesSpinner);
+                        }
+                    });
                     viewModel.sortRecipes();
                 }
             }

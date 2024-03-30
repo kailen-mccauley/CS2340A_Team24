@@ -18,7 +18,6 @@ import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.viewmodels.IngredientsActivityViewModel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -32,7 +31,7 @@ public class IngredientsActivity extends AppCompatActivity {
         ingredientsTreeMap = new TreeMap<>(ingredientMap);
         // Update the spinners with the new TreeMap data
         ArrayList<String> ingredientNames = new ArrayList<>(ingredientsTreeMap.keySet());
-        ArrayAdapter<String> ingredientsAdapter = new ArrayAdapter<>(IngredientsActivity.this, R.layout.spinner_item_layout, ingredientNames);
+        ArrayAdapter<String> ingredientsAdapter = new ArrayAdapter<>(IngredientsActivity.this, R.layout.spinner_item_layout_ingredients, ingredientNames);
         ingredientsAdapter.insert("Select ingredient", 0);
         ingredientsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ingredientNameSpinner.setAdapter(ingredientsAdapter);
@@ -74,7 +73,7 @@ public class IngredientsActivity extends AppCompatActivity {
         }
 
         Spinner quantatiesSpinner = findViewById(R.id.quantitySpinner);
-        ArrayAdapter<String> quantityAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_layout, quantities);
+        ArrayAdapter<String> quantityAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_layout_ingredients, quantities);
         quantityAdapter.insert("Select quantity", 0);
         quantityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         quantatiesSpinner.setAdapter(quantityAdapter);

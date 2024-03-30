@@ -50,7 +50,7 @@ public class sortRecipeUserHasIngredients implements sortRecipe {
                 for (Map<SpannableString, Recipe> recipe : recipeList) {
                     // Check if a recipe has not already been added to our sorted map
                     // AKA if this is a recipe a user can not make
-                    if(!sortedRecipes.contains(recipe)) {
+                    if (!sortedRecipes.contains(recipe)) {
 
                         // for that map entry, get the name (there is only 1 mapping in the map but we need this for loop)
                         for (SpannableString recipeName : recipe.keySet()) {

@@ -4,6 +4,7 @@ import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.models.Meal;
 import com.example.greenplate.models.Recipe;
 import com.example.greenplate.sortRecipe;
+import com.example.greenplate.sortRecipeAlphabetical;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,8 +31,8 @@ import java.util.TreeMap;
 public class RecipeActivityViewModel {
     private static volatile RecipeActivityViewModel instance;
     private final Recipe recipeData;
-    private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
+    private final FirebaseAuth mAuth;
+    private final DatabaseReference mDatabase;
 
     private sortRecipe sortRecipeInstance;
     private RecipeActivityViewModel() {
@@ -39,7 +40,7 @@ public class RecipeActivityViewModel {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         recipeData = new Recipe();
-        //sortRecipeInstance = sortRecipeAlphabetical;
+        sortRecipeInstance = new sortRecipeAlphabetical();
     }
 
     public static RecipeActivityViewModel getInstance() {

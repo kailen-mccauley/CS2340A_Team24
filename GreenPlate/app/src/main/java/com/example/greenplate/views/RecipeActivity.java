@@ -36,14 +36,14 @@ public class RecipeActivity extends AppCompatActivity {
     private EditText recipeNameEditText;
     private EditText ingredientListEditText;
 
-    private ArrayList<Map<SpannableString, Recipe>> recipesArrayList;
+    private ArrayList<Map<SpannableString, String>> recipesArrayList;
 
-    private void updateArrayListAndSpinners(ArrayList<Map<SpannableString, Recipe>> recipeList, Spinner recipesSpinner) {
+    private void updateArrayListAndSpinners(ArrayList<Map<SpannableString, String>> recipeList, Spinner recipesSpinner) {
         // Update the ingredients TreeMap
         recipesArrayList = recipeList;
         // Update the spinners with the new TreeMap data
         ArrayList<SpannableString> recipeNames = new ArrayList<>();
-        for (Map<SpannableString, Recipe> recipeMap : recipesArrayList) {
+        for (Map<SpannableString, String> recipeMap : recipesArrayList) {
             recipeNames.addAll(recipeMap.keySet());
         }
         ArrayAdapter<SpannableString> ingredientsAdapter = new ArrayAdapter<>(RecipeActivity.this, R.layout.spinner_item_layout_recipe, recipeNames);
@@ -74,7 +74,7 @@ public class RecipeActivity extends AppCompatActivity {
         viewModel.getRecipelist(new RecipeActivityViewModel.RecipeListListener() {
             @Override
             public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
-                updateArrayListAndSpinners(recipeList, recipesSpinner);
+                updateArrayListAndSpinners(viewModel.getSorted(), recipesSpinner);
             }
         });
 
@@ -122,23 +122,14 @@ public class RecipeActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    System.out.println("SWITCHING TO USER HAS INGREDIENT");
                     // SORTING BASED ON Available INGREDIENTS for cassandra
                     viewModel.setSortRecipeInstance(new sortRecipeUserHasIngredients());
-                    viewModel.getRecipelist(new RecipeActivityViewModel.RecipeListListener() {
-                        @Override
-                        public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
-                            updateArrayListAndSpinners(recipeList, recipesSpinner);
-                        }
-                    });
+                    updateArrayListAndSpinners(viewModel.getSorted(), recipesSpinner);
+                    viewModel.sortRecipes();
                 } else {
                     // SORTING ALPHABETICALLY
                     viewModel.setSortRecipeInstance(new sortRecipeAlphabetical());
-                    viewModel.getRecipelist(new RecipeActivityViewModel.RecipeListListener() {
-                        @Override
-                        public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
-                            updateArrayListAndSpinners(recipeList, recipesSpinner);
-                        }
-                    });
                     viewModel.sortRecipes();
                 }
             }

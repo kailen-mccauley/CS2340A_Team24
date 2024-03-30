@@ -3,6 +3,7 @@ package com.example.greenplate.viewmodels;
 import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.models.Meal;
 import com.example.greenplate.models.Recipe;
+import com.example.greenplate.sortRecipe;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,7 +39,7 @@ public class RecipeActivityViewModel {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         recipeData = new Recipe();
-        sortRecipeInstance = sortRecipeAlphabetical;
+        //sortRecipeInstance = sortRecipeAlphabetical;
     }
 
     public static RecipeActivityViewModel getInstance() {

@@ -32,11 +32,13 @@ public class RecipeActivityViewModel {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
+    private sortRecipe sortRecipeInstance;
     private RecipeActivityViewModel() {
         // Initialize Firebase components
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         recipeData = new Recipe();
+        sortRecipeInstance = sortRecipeAlphabetical;
     }
 
     public static RecipeActivityViewModel getInstance() {
@@ -248,4 +250,15 @@ public class RecipeActivityViewModel {
         }
     }
 
+    public ArrayList<Map<SpannableString, String>> getSorted () {
+        return sortRecipeInstance.sortRecipes(this);
+    }
+
+    public sortRecipe getSortRecipeInstance() {
+        return sortRecipeInstance;
+    }
+
+    public void setSortRecipeInstance(sortRecipe sortRecipeInstance) {
+        this.sortRecipeInstance = sortRecipeInstance;
+    }
 }

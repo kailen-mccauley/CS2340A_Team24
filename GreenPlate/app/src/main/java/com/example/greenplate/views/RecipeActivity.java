@@ -151,31 +151,7 @@ public class RecipeActivity extends AppCompatActivity {
         sortSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    Log.d("test1", "test1");
-                    viewModel.fetchAndSortRecipesByIngredientsAvailability(new RecipeActivityViewModel.RecipeListListener() {
-                        @Override
-                        public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> sortedRecipeList) {
-                            Log.d("test2", "test2");
-                            updateArrayListAndSpinners(sortedRecipeList, recipesSpinner);
-                        }
-                    });
-                } else {
-                    // SORTING ALPHABETICALLY
-                    viewModel.setSortRecipeInstance(new sortRecipeAlphabetical());
-                    viewModel.getRecipelist(new RecipeActivityViewModel.RecipeListListener() {
-                        @Override
-                        public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipes) {
-                            updateArrayListAndSpinners(recipes, recipesSpinner);
-                            viewModel.fetchAndSortRecipesByIngredientsAvailability(new RecipeActivityViewModel.RecipeListListener() {
-                                @Override
-                                public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
-                                    highlightMatchingRecipes(recipeList, recipesSpinner);
-                                }
-                            });
-                        }
-                    });
-                }
+                sortBasedOnSwitch(sortSwitch, recipesSpinner);
             }
         });
 
@@ -244,14 +220,13 @@ public class RecipeActivity extends AppCompatActivity {
                     }
 
                 }
-                //TODO
-                // Send the ingredientsMap over to the viewmodel
                 recipeNameEditText.setText("");
                 ingredientListEditText.setText("");
                 Toast.makeText(RecipeActivity.this,
                         "Recipe  " + recipeName + "  submitted successfully!",
                         Toast.LENGTH_SHORT).show();
                 viewModel.storeRecipe(recipeName, ingredientsMap);
+                sortBasedOnSwitch(sortSwitch, recipesSpinner);
             }
         });
         parentLayout.setOnTouchListener(new View.OnTouchListener() {
@@ -270,6 +245,25 @@ public class RecipeActivity extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager)
                     getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    private void sortBasedOnSwitch(Switch sortSwitch, Spinner recipesSpinner) {
+        if (sortSwitch.isChecked()) {
+            viewModel.fetchAndSortRecipesByIngredientsAvailability(new RecipeActivityViewModel.RecipeListListener() {
+                @Override
+                public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> sortedRecipeList) {
+                    Log.d("test2", "test2");
+                    updateArrayListAndSpinners(sortedRecipeList, recipesSpinner);
+                }
+            });
+        } else {
+            viewModel.getRecipelist(new RecipeActivityViewModel.RecipeListListener() {
+                @Override
+                public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
+                    updateArrayListAndSpinners(recipeList, recipesSpinner);
+                }
+            });
         }
     }
 

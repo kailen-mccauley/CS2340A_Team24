@@ -55,6 +55,33 @@ public class RecipeActivityViewModel {
         return instance;
     }
 
+    public interface RecipeDetailsListener {
+        void onRecipeDetailsReceived(Recipe recipe);
+        void onRecipeDetailsError(String errorMessage);
+    }
+
+    public void getRecipeDetails(String recipeID, RecipeDetailsListener listener) {
+        DatabaseReference recipeRef = mDatabase.child("cookbook").child(recipeID);
+        recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String recipeName = dataSnapshot.child("name").getValue(String.class);
+                    Map<String, Integer> ingredientsMap = dataSnapshot.child("ingredients").getValue(new GenericTypeIndicator<Map<String, Integer>>() {});
+                    Recipe recipe = new Recipe(recipeName, ingredientsMap, recipeID);
+                    listener.onRecipeDetailsReceived(recipe);
+                } else {
+                    listener.onRecipeDetailsError("Recipe not found");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                listener.onRecipeDetailsError("Error fetching recipe details: " + error.getMessage());
+            }
+        });
+    }
+
     //TODO: storeRecipe method
     // Should be a map of ingredient,quantity pairs
     // Each recipe should be visible to all other users

@@ -1,12 +1,18 @@
 package com.example.greenplate.views;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -35,7 +41,8 @@ public class RecipeActivity extends AppCompatActivity {
     private RecipeActivityViewModel viewModel;
     private EditText recipeNameEditText;
     private EditText ingredientListEditText;
-
+    private Spinner recipesSpinner;
+    private Switch sortSwitch;
     private ArrayList<Map<SpannableString, Recipe>> recipesArrayList;
 
     private void updateArrayListAndSpinners(ArrayList<Map<SpannableString, Recipe>> recipeList, Spinner recipesSpinner) {
@@ -47,9 +54,26 @@ public class RecipeActivity extends AppCompatActivity {
             recipeNames.addAll(recipeMap.keySet());
         }
         ArrayAdapter<SpannableString> ingredientsAdapter = new ArrayAdapter<>(RecipeActivity.this, R.layout.spinner_item_layout_recipe, recipeNames);
-        ingredientsAdapter.insert(new SpannableString("Select ingredient"), 0);
+        ingredientsAdapter.insert(new SpannableString("Select Recipe"), 0);
         ingredientsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         recipesSpinner.setAdapter(ingredientsAdapter);
+    }
+
+    private void highlightMatchingRecipes(ArrayList<Map<SpannableString, Recipe>> recipeList, Spinner recipesSpinner) {
+        ArrayAdapter<SpannableString> adapter = (ArrayAdapter<SpannableString>) recipesSpinner.getAdapter();
+        for (int i = 0; i < adapter.getCount(); i++) {
+            SpannableString spannableString = adapter.getItem(i);
+            if (spannableString != null) {
+                for (Map<SpannableString, Recipe> recipeMap : recipeList) {
+                    Recipe recipe = recipeMap.values().iterator().next();
+                    if (spannableString.toString().equals(recipe.getRecipeName())) {
+                        spannableString.setSpan(new BackgroundColorSpan(Color.GREEN), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        adapter.notifyDataSetChanged();
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -63,8 +87,8 @@ public class RecipeActivity extends AppCompatActivity {
         ImageButton toIngredientsButton = findViewById(R.id.btn_ingredients);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
-        Switch sortSwitch = findViewById(R.id.sortingSwitch);
-        Spinner recipesSpinner = findViewById(R.id.recipesSpinner);
+        sortSwitch = findViewById(R.id.sortingSwitch);
+        recipesSpinner = findViewById(R.id.recipesSpinner);
         recipeNameEditText = findViewById(R.id.recipeNameEditText);
         ingredientListEditText = findViewById(R.id.recipeIngredientsEditText);
         Button submitRecipe = findViewById(R.id.btn_submit_recipe);
@@ -73,8 +97,14 @@ public class RecipeActivity extends AppCompatActivity {
 
         viewModel.getRecipelist(new RecipeActivityViewModel.RecipeListListener() {
             @Override
-            public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
-                updateArrayListAndSpinners(recipeList, recipesSpinner);
+            public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipes) {
+                updateArrayListAndSpinners(recipes, recipesSpinner);
+                viewModel.fetchAndSortRecipesByIngredientsAvailability(new RecipeActivityViewModel.RecipeListListener() {
+                    @Override
+                    public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
+                        highlightMatchingRecipes(recipeList, recipesSpinner);
+                    }
+                });
             }
         });
 
@@ -122,6 +152,25 @@ public class RecipeActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 sortBasedOnSwitch(sortSwitch, recipesSpinner);
+            }
+        });
+
+        recipesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0) {
+                    Map<SpannableString, Recipe> selectedRecipeMap = recipesArrayList.get(position - 1);
+                    Recipe selectedRecipe = selectedRecipeMap.values().iterator().next();
+
+                    Intent intent = new Intent(RecipeActivity.this, DetailActivity.class);
+                    intent.putExtra("recipeID", selectedRecipe.getRecipeID());
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 

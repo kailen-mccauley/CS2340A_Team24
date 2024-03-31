@@ -181,6 +181,7 @@ public class RecipeActivity extends AppCompatActivity {
                                 Intent intent = new Intent(RecipeActivity.this,
                                         DetailActivity.class);
                                 intent.putExtra("recipeID", selectRecipe.getRecipeID());
+                                intent.putExtra("recipeName", selectRecipe.getRecipeName());
                                 startActivity(intent);
                             }
                         }

@@ -1,12 +1,18 @@
 package com.example.greenplate.views;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -53,6 +59,24 @@ public class RecipeActivity extends AppCompatActivity {
         recipesSpinner.setAdapter(ingredientsAdapter);
     }
 
+    private void highlightMatchingRecipes(ArrayList<Map<SpannableString, Recipe>> recipeList, Spinner recipesSpinner) {
+        ArrayAdapter<SpannableString> adapter = (ArrayAdapter<SpannableString>) recipesSpinner.getAdapter();
+        for (int i = 0; i < adapter.getCount(); i++) {
+            SpannableString spannableString = adapter.getItem(i);
+            if (spannableString != null) {
+                for (Map<SpannableString, Recipe> recipeMap : recipeList) {
+                    Recipe recipe = recipeMap.values().iterator().next(); // Assuming each map has only one recipe
+                    if (spannableString.toString().equals(recipe.getRecipeName())) {
+                        // Highlight the recipe in the UI (e.g., change text color to green)
+                        spannableString.setSpan(new BackgroundColorSpan(Color.GREEN), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        adapter.notifyDataSetChanged();
+                        break; // Exit the inner loop since the recipe has been found
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // DO NOT MODIFY
@@ -74,8 +98,14 @@ public class RecipeActivity extends AppCompatActivity {
 
         viewModel.getRecipelist(new RecipeActivityViewModel.RecipeListListener() {
             @Override
-            public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
-                updateArrayListAndSpinners(recipeList, recipesSpinner);
+            public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipes) {
+                updateArrayListAndSpinners(recipes, recipesSpinner);
+                viewModel.fetchAndSortRecipesByIngredientsAvailability(new RecipeActivityViewModel.RecipeListListener() {
+                    @Override
+                    public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
+                        highlightMatchingRecipes(recipeList, recipesSpinner);
+                    }
+                });
             }
         });
 
@@ -136,11 +166,38 @@ public class RecipeActivity extends AppCompatActivity {
                     viewModel.setSortRecipeInstance(new sortRecipeAlphabetical());
                     viewModel.getRecipelist(new RecipeActivityViewModel.RecipeListListener() {
                         @Override
-                        public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
-                            updateArrayListAndSpinners(recipeList, recipesSpinner);
+                        public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipes) {
+                            updateArrayListAndSpinners(recipes, recipesSpinner);
+                            viewModel.fetchAndSortRecipesByIngredientsAvailability(new RecipeActivityViewModel.RecipeListListener() {
+                                @Override
+                                public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
+                                    highlightMatchingRecipes(recipeList, recipesSpinner);
+                                }
+                            });
                         }
                     });
                 }
+            }
+        });
+
+        recipesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0) {
+                    // Get the selected recipe
+                    Map<SpannableString, Recipe> selectedRecipeMap = recipesArrayList.get(position - 1); // -1 because of "Select Recipe" option
+                    Recipe selectedRecipe = selectedRecipeMap.values().iterator().next(); // Assuming each map has only one recipe
+
+                    // Start a new activity to show the details of the selected recipe
+                    Intent intent = new Intent(RecipeActivity.this, DetailActivity.class);
+                    // intent.putExtra("recipe", (Parcelable) selectedRecipe);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 

@@ -35,7 +35,8 @@ public class RecipeActivity extends AppCompatActivity {
     private RecipeActivityViewModel viewModel;
     private EditText recipeNameEditText;
     private EditText ingredientListEditText;
-
+    private Spinner recipesSpinner;
+    private Switch sortSwitch;
     private ArrayList<Map<SpannableString, Recipe>> recipesArrayList;
 
     private void updateArrayListAndSpinners(ArrayList<Map<SpannableString, Recipe>> recipeList, Spinner recipesSpinner) {
@@ -47,7 +48,7 @@ public class RecipeActivity extends AppCompatActivity {
             recipeNames.addAll(recipeMap.keySet());
         }
         ArrayAdapter<SpannableString> ingredientsAdapter = new ArrayAdapter<>(RecipeActivity.this, R.layout.spinner_item_layout_recipe, recipeNames);
-        ingredientsAdapter.insert(new SpannableString("Select ingredient"), 0);
+        ingredientsAdapter.insert(new SpannableString("Select Recipe"), 0);
         ingredientsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         recipesSpinner.setAdapter(ingredientsAdapter);
     }
@@ -63,8 +64,8 @@ public class RecipeActivity extends AppCompatActivity {
         ImageButton toIngredientsButton = findViewById(R.id.btn_ingredients);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
-        Switch sortSwitch = findViewById(R.id.sortingSwitch);
-        Spinner recipesSpinner = findViewById(R.id.recipesSpinner);
+        sortSwitch = findViewById(R.id.sortingSwitch);
+        recipesSpinner = findViewById(R.id.recipesSpinner);
         recipeNameEditText = findViewById(R.id.recipeNameEditText);
         ingredientListEditText = findViewById(R.id.recipeIngredientsEditText);
         Button submitRecipe = findViewById(R.id.btn_submit_recipe);

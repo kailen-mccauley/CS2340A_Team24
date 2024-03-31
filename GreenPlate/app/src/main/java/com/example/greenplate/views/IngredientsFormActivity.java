@@ -21,7 +21,7 @@ public class IngredientsFormActivity extends AppCompatActivity {
     private EditText ingredientNameEditText;
     private EditText caloriesEditText;
     private EditText quantityEditText;
-    private IngredientsActivityViewModel IngredientsViewModel;
+    private IngredientsActivityViewModel ingredientsViewModel;
 
 
     @Override
@@ -36,7 +36,7 @@ public class IngredientsFormActivity extends AppCompatActivity {
         caloriesEditText = findViewById(R.id.caloriesEditText);
         quantityEditText = findViewById(R.id.quantityEditText);
 
-        IngredientsViewModel = IngredientsActivityViewModel.getInstance();
+        ingredientsViewModel = IngredientsActivityViewModel.getInstance();
 
 
         toIngredientsScreen.setOnClickListener(new View.OnClickListener() {
@@ -78,14 +78,8 @@ public class IngredientsFormActivity extends AppCompatActivity {
                 int inputCals = Integer.parseInt(calories);
                 int inputQuantity = Integer.parseInt(quantity);
 
-                IngredientsViewModel.storeIngredient(ingredientName, inputCals, inputQuantity, IngredientsFormActivity.this);
-
-                // IMPLEMENT LOGIC TO STORE INGREDIENT ^^--------^^
-
-
-
-//                Toast.makeText(IngredientsFormActivity.this,
-//                        "Submitted Successfully!", Toast.LENGTH_SHORT).show();
+                ingredientsViewModel.storeIngredient(ingredientName, inputCals, inputQuantity,
+                        IngredientsFormActivity.this);
                 ingredientNameEditText.setText("");
                 caloriesEditText.setText("");
                 quantityEditText.setText("");

@@ -1,9 +1,5 @@
 package com.example.greenplate;
 
-import com.example.greenplate.models.Ingredient;
-
-import java.util.TreeMap;
-
 public class InputValidator {
     public static boolean isValidInput(String input) {
         return input != null && !input.contains(" ") && !input.isEmpty();

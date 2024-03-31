@@ -5,8 +5,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.greenplate.models.Ingredient;
-import com.example.greenplate.models.Meal;
-import com.example.greenplate.models.User;
 import com.example.greenplate.views.IngredientsActivity;
 import com.example.greenplate.views.IngredientsFormActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,10 +16,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
@@ -51,9 +47,10 @@ public class IngredientsActivityViewModel {
         return instance;
     }
 
-    public void storeIngredient(String ingredientName, int calories, int quantity, IngredientsFormActivity IngredientsFormActivity) {
+    public void storeIngredient(String ingredientName, int calories, int quantity,
+                                IngredientsFormActivity ingredientsFormActivity) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser!= null) {
+        if (currentUser != null) {
             String uid = currentUser.getUid();
             mDatabase.child("pantry").orderByChild("userId").equalTo(uid)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -62,7 +59,8 @@ public class IngredientsActivityViewModel {
                             boolean isDuplicate = false;
                             for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                                 Ingredient ingredient = snapshot.getValue(Ingredient.class);
-                                if (ingredient != null && ingredient.getIngredientName().equals(ingredientName.toLowerCase())) {
+                                if (ingredient != null && ingredient.getIngredientName()
+                                        .equals(ingredientName.toLowerCase())) {
                                     isDuplicate = true;
                                     break;
                                 }
@@ -70,12 +68,14 @@ public class IngredientsActivityViewModel {
 
                             if (!isDuplicate) {
                                 String ingredientId = mDatabase.child("pantry").push().getKey();
-                                Ingredient newIngredient = new Ingredient(ingredientName.toLowerCase(), calories, quantity, uid);
-                                mDatabase.child("pantry").child(ingredientId).setValue(newIngredient);
-                                Toast.makeText(IngredientsFormActivity,
+                                Ingredient newIngredient = new Ingredient(ingredientName
+                                        .toLowerCase(), calories, quantity, uid);
+                                mDatabase.child("pantry").child(ingredientId)
+                                        .setValue(newIngredient);
+                                Toast.makeText(ingredientsFormActivity,
                                         "Submitted Successfully!", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(IngredientsFormActivity,
+                                Toast.makeText(ingredientsFormActivity,
                                         "Duplicate Ingredient!", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -89,29 +89,25 @@ public class IngredientsActivityViewModel {
 
     }
 
-    public interface IngredientListListener {
-        void onIngredientsReceived(ArrayList<Ingredient> sortedIngredients);
-
-    }
-
     public void getSortedIngredients(IngredientListListener listener) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         ArrayList<Ingredient> sortedIngredient = new ArrayList<>();
-        if (currentUser!= null) {
+        if (currentUser != null) {
             String uid = currentUser.getUid();
             mDatabase.child("pantry").orderByChild("userId").equalTo(uid)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                                Ingredient ingredient = snapshot.getValue(Ingredient.class); // Assuming Ingredient class exists
+                                Ingredient ingredient = snapshot.getValue(Ingredient.class);
                                 sortedIngredient.add(ingredient);
                             }
 
                             Collections.sort(sortedIngredient, new Comparator<Ingredient>() {
                                 @Override
                                 public int compare(Ingredient ingredient1, Ingredient ingredient2) {
-                                    return ingredient1.getIngredientName().compareToIgnoreCase(ingredient2.getIngredientName());
+                                    return ingredient1.getIngredientName()
+                                            .compareToIgnoreCase(ingredient2.getIngredientName());
                                 }
                             });
 
@@ -126,20 +122,17 @@ public class IngredientsActivityViewModel {
         }
     }
 
-    public interface IngredientHashMapListener {
-        void onIngredientsHashMapReceived(Map<String, Ingredient> ingredientMap);
-    }
     public void getIngredientsHashMap(IngredientHashMapListener listener) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        Map<String,Ingredient> ingredientsMap = new HashMap();
-        if (currentUser!= null) {
+        Map<String, Ingredient> ingredientsMap = new HashMap();
+        if (currentUser != null) {
             String uid = currentUser.getUid();
             mDatabase.child("pantry").orderByChild("userId").equalTo(uid)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                                Ingredient ingredient = snapshot.getValue(Ingredient.class); // Assuming Ingredient class exists
+                                Ingredient ingredient = snapshot.getValue(Ingredient.class);
                                 ingredientsMap.put(ingredient.getIngredientName(), ingredient);
                             }
 
@@ -155,24 +148,22 @@ public class IngredientsActivityViewModel {
         }
     }
 
-    public interface IngredientTreeMapListener {
-        void onIngredientsTreeMapReceived(Map<String, Ingredient> ingredientMap);
-    }
-    public void getIngredientsTreeMap(IngredientTreeMapListener listener) {
+    //getIngredientsTreeMap
+    public void getIngredTree(IngredientTreeMapListener listener) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        Map<String,Ingredient> ingredientsTreeMap = new TreeMap<>();
-        if (currentUser!= null) {
+        Map<String, Ingredient> ingredientsTreeMap = new TreeMap<>();
+        if (currentUser != null) {
             String uid = currentUser.getUid();
             mDatabase.child("pantry").orderByChild("userId").equalTo(uid)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                                Ingredient ingredient = snapshot.getValue(Ingredient.class); // Assuming Ingredient class exists
+                                Ingredient ingredient = snapshot.getValue(Ingredient.class);
                                 ingredientsTreeMap.put(ingredient.getIngredientName(), ingredient);
                             }
 
-                            listener.onIngredientsTreeMapReceived(ingredientsTreeMap);
+                            listener.onIngredTreeReceive(ingredientsTreeMap);
 
                         }
 
@@ -185,7 +176,6 @@ public class IngredientsActivityViewModel {
     }
 
     public void updateIngredientQuantity(String ingredientName, int newQuantity) {
-//        mDatabase.child("pantry").child(ingredientId).child("quantity").setValue(newQuantity);
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String uid = currentUser.getUid();
         mDatabase.child("pantry").orderByChild("userId").equalTo(uid)
@@ -194,10 +184,12 @@ public class IngredientsActivityViewModel {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Ingredient ingredient = snapshot.getValue(Ingredient.class);
-                            if (ingredient != null && ingredient.getIngredientName().equals(ingredientName)) {
+                            if (ingredient != null && ingredient.getIngredientName()
+                                    .equals(ingredientName)) {
                                 String ingredientId = snapshot.getKey();
                                 int inputQuality = newQuantity + ingredient.getQuantity();
-                                mDatabase.child("pantry").child(ingredientId).child("quantity").setValue(inputQuality);
+                                mDatabase.child("pantry").child(ingredientId)
+                                        .child("quantity").setValue(inputQuality);
                                 break; // Exit loop once ingredient is found and updated
                             }
                         }
@@ -209,8 +201,8 @@ public class IngredientsActivityViewModel {
                     }
                 });
     }
-
-    public void updateIngredientQuantityAndTreeMap(String ingredientName, int newQuantity, IngredientsActivityViewModel.IngredientTreeMapListener listener) {
+    public void updateIngredQuanTree(String ingredName, int newQuan, IngredientsActivityViewModel
+            .IngredientTreeMapListener listener) {
         // Update the quantity in Firebase
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String uid = currentUser.getUid();
@@ -220,17 +212,19 @@ public class IngredientsActivityViewModel {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Ingredient ingredient = snapshot.getValue(Ingredient.class);
-                            if (ingredient != null && ingredient.getIngredientName().equals(ingredientName)) {
+                            if (ingredient != null && ingredient.getIngredientName()
+                                    .equals(ingredName)) {
                                 String ingredientId = snapshot.getKey();
-                                int inputQuality = newQuantity + ingredient.getQuantity();
-                                mDatabase.child("pantry").child(ingredientId).child("quantity").setValue(inputQuality);
+                                int inputQuality = newQuan + ingredient.getQuantity();
+                                mDatabase.child("pantry").child(ingredientId)
+                                        .child("quantity").setValue(inputQuality);
                                 break; // Exit loop once ingredient is found and updated
                             }
                         }
-                        getIngredientsTreeMap(new IngredientsActivityViewModel.IngredientTreeMapListener() {
+                        getIngredTree(new IngredientsActivityViewModel.IngredientTreeMapListener() {
                             @Override
-                            public void onIngredientsTreeMapReceived(Map<String, Ingredient> ingredientMap) {
-                                listener.onIngredientsTreeMapReceived(ingredientMap);
+                            public void onIngredTreeReceive(Map<String, Ingredient> ingredientMap) {
+                                listener.onIngredTreeReceive(ingredientMap);
                             }
                         });
                     }
@@ -239,9 +233,8 @@ public class IngredientsActivityViewModel {
                     }
                 });
     }
-
-    public void decreaseIngredientQuantityAndTreeMap(String ingredientName, int quantity, IngredientsActivityViewModel.IngredientTreeMapListener listener
-            ,IngredientsActivity IngredientsActivity) {
+    public void decreaseIngrQuanTree(String ingredientName, int quan, IngredientsActivityViewModel
+            .IngredientTreeMapListener listener, IngredientsActivity ingredientsActivity) {
         // Update the quantity in Firebase
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String uid = currentUser.getUid();
@@ -251,28 +244,31 @@ public class IngredientsActivityViewModel {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Ingredient ingredient = snapshot.getValue(Ingredient.class);
-                            if (ingredient != null && ingredient.getIngredientName().equals(ingredientName)) {
+                            if (ingredient != null && ingredient.getIngredientName()
+                                    .equals(ingredientName)) {
                                 String ingredientId = snapshot.getKey();
-                                int inputQuality =  ingredient.getQuantity() - quantity;
+                                int inputQuality =  ingredient.getQuantity() - quan;
 
                                 if (inputQuality > 0) {
-                                    mDatabase.child("pantry").child(ingredientId).child("quantity").setValue(inputQuality);
-                                    Toast.makeText(IngredientsActivity,
-                                            "Quantity of " + ingredientName + " decreased by "+quantity+"!",
+                                    mDatabase.child("pantry").child(ingredientId)
+                                            .child("quantity").setValue(inputQuality);
+                                    Toast.makeText(ingredientsActivity, "Quantity of "
+                                            + ingredientName + " decreased by " + quan + "!",
                                             Toast.LENGTH_SHORT).show();
                                     break; // Exit loop once ingredient is found and updated
                                 } else {
                                     mDatabase.child("pantry").child(ingredientId).removeValue();
-                                    Toast.makeText(IngredientsActivity,
-                                            "You're out of " + ingredient.getIngredientName(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ingredientsActivity, "You're out of "
+                                            + ingredient.getIngredientName(),
+                                            Toast.LENGTH_SHORT).show();
                                     break;
                                 }
                             }
                         }
-                        getIngredientsTreeMap(new IngredientsActivityViewModel.IngredientTreeMapListener() {
+                        getIngredTree(new IngredientsActivityViewModel.IngredientTreeMapListener() {
                             @Override
-                            public void onIngredientsTreeMapReceived(Map<String, Ingredient> ingredientMap) {
-                                listener.onIngredientsTreeMapReceived(ingredientMap);
+                            public void onIngredTreeReceive(Map<String, Ingredient> ingredientMap) {
+                                listener.onIngredTreeReceive(ingredientMap);
                             }
                         });
                     }
@@ -281,8 +277,15 @@ public class IngredientsActivityViewModel {
                     }
                 });
     }
+    public interface IngredientListListener {
+        void onIngredientsReceived(ArrayList<Ingredient> sortedIngredients);
 
-
-
+    }
+    public interface IngredientTreeMapListener {
+        void onIngredTreeReceive(Map<String, Ingredient> ingredientMap);
+    }
+    public interface IngredientHashMapListener {
+        void onIngredientsHashMapReceived(Map<String, Ingredient> ingredientMap);
+    }
 
 }

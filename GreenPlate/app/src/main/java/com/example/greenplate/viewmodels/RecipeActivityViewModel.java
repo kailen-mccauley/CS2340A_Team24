@@ -61,20 +61,13 @@ public class RecipeActivityViewModel {
     public void storeRecipe(String recipeName, HashMap<String, Integer> ingredientsMap) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            Map<String, Integer> convertedIngredientsMap = new HashMap<>();
-            for (Map.Entry<String, Integer> entry : ingredientsMap.entrySet()) {
-                // Convert the value to Integer if it's a Long
-                Long quantityLong = entry.getValue().longValue();
-                Integer quantityInt = quantityLong.intValue();
-                convertedIngredientsMap.put(entry.getKey(), quantityInt);
-            }
             // Generate a unique key for the new recipe
             String recipeId = mDatabase.child("recipes").push().getKey();
 
             // Create a map to store both the name and the ingredients of the recipe
             Map<String, Object> recipeData = new HashMap<>();
             recipeData.put("name", recipeName);
-            recipeData.put("ingredients", convertedIngredientsMap);
+            recipeData.put("ingredients", ingredientsMap);
             recipeData.put("recipeID", recipeId);
 
             if (recipeId != null) {

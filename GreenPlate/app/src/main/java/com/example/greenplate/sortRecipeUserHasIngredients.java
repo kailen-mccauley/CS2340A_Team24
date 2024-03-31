@@ -45,6 +45,27 @@ public class sortRecipeUserHasIngredients implements sortRecipe {
                         });
                     }
                 }
+
+                // PLACES RECIPES A USER CANT MAKE NEXT
+                for (Map<SpannableString, Recipe> recipe : recipeList) {
+                    // Check if a recipe has not already been added to our sorted map
+                    // AKA if this is a recipe a user can not make
+                    if (!sortedRecipes.contains(recipe)) {
+
+                        // for that map entry, get the name (there is only 1 mapping in the map but we need this for loop)
+                        for (SpannableString recipeName : recipe.keySet()) {
+
+                            // Create a Map so we can map the recipe name to the recipe id
+                            Map<SpannableString, String> temp = new HashMap<>();
+
+                            // Creates single entry in the temp map
+                            temp.put(recipeName, recipe.get(recipeName).getRecipeID());
+
+                            // Adds to our sorted array list
+                            sortedRecipes.add(temp);
+                        }
+                    }
+                }
             }
         });
         return sortedRecipes;

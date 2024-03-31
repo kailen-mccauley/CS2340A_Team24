@@ -11,6 +11,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import android.text.SpannableString;
@@ -19,6 +20,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import java.text.SimpleDateFormat;
@@ -125,70 +127,52 @@ public class RecipeActivityViewModel {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String uid = currentUser.getUid();
-            DatabaseReference ingredientsRef = mDatabase.child("pantry").child(uid);
-            Map<String, Integer> recipeIngredients = recipe.getIngredients();
+            DatabaseReference pantryRef = mDatabase.child("pantry");
 
-            ingredientsRef.equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            pantryRef.orderByChild("userId").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    // Check if the user has all ingredients required for the recipe
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Map<String, Integer> recipeIngredients = recipe.getIngredients();
                     boolean hasAllIngredients = true;
+
+                    // Here we store a count of each ingredient found
+                    Map<String, Integer> pantryQuantities = new HashMap<>();
+                    for (DataSnapshot itemSnapshot : dataSnapshot.getChildren()) {
+                        String pantryIngredientName = itemSnapshot.child("ingredientName").getValue(String.class);
+                        Integer pantryQuantity = itemSnapshot.child("quantity").getValue(Integer.class);
+
+                        if (pantryIngredientName != null && pantryQuantity != null) {
+                            pantryQuantities.put(pantryIngredientName, pantryQuantities.getOrDefault(pantryIngredientName, 0) + pantryQuantity);
+                        }
+                    }
+
+                    // Now check if we have enough of each ingredient
                     for (Map.Entry<String, Integer> entry : recipeIngredients.entrySet()) {
                         String ingredientName = entry.getKey();
                         int requiredQuantity = entry.getValue();
-                        // Check if the user has this ingredient and has enough quantity
-                        if (!snapshot.hasChild(ingredientName) || snapshot.child(ingredientName).getValue(Integer.class) < requiredQuantity) {
+
+                        Integer pantryQuantity = pantryQuantities.get(ingredientName);
+                        if (pantryQuantity == null || pantryQuantity < requiredQuantity) {
                             hasAllIngredients = false;
-                            break; // No need to continue checking if any ingredient is missing
+                            break;
                         }
                     }
-                    // Call the listener with the result
+
                     listener.onIngredientCheckResult(hasAllIngredients);
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    // Handle database error
-                    Log.d("doesUserHaveIngredients", "Failed to read user ingredients from database.");
-                    // Call the listener with a default result (false)
+                    Log.d("FirebaseData", "Error checking ingredients: " + error.getMessage());
                     listener.onIngredientCheckResult(false);
                 }
             });
         } else {
-            Log.d("doesUserHaveIngredients", "No authenticated user found.");
-            // Call the listener with a default result (false)
             listener.onIngredientCheckResult(false);
         }
     }
 
 
-
-    //TODO: withUserIngredients
-    // creates a list of recipe objects that a user can make.
-//    public List<Recipe> withUserIngredients() {
-//        List<Recipe> userCanMakeRecipes = new ArrayList<>();
-//        DatabaseReference recipeRef = mDatabase.child("cookbook");
-//        recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot recipeSnapshot : snapshot.getChildren()) {
-//                    String recipeName = recipeSnapshot.child("name").getValue(String.class);
-//                    Map<String, Integer> ingredientsMap = (Map<String, Integer>) recipeSnapshot.child("ingredients").getValue();
-//                    String recipeID = recipeSnapshot.child("recipeID").getValue(String.class);
-//                    Recipe recipe = new Recipe(recipeName, ingredientsMap, recipeID);
-//                    if (doesUserHaveIngredients(recipe)) {
-//                        userCanMakeRecipes.add(recipe);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.d("withUserIngredients", "Failed to read recipes from database.");
-//            }
-//        });
-//        return userCanMakeRecipes;
-//    }
 
     //TODO: sortRecipes
     // sort recipes in alphabetical order
@@ -262,5 +246,61 @@ public class RecipeActivityViewModel {
 
     public void setSortRecipeInstance(sortRecipe sortRecipeInstance) {
         this.sortRecipeInstance = sortRecipeInstance;
+    }
+
+    private ArrayList<Map<SpannableString, Recipe>> convertToExpectedFormat(List<Recipe> sortedRecipes) {
+        ArrayList<Map<SpannableString, Recipe>> formattedList = new ArrayList<>();
+        for (Recipe recipe : sortedRecipes) {
+            SpannableString recipeNameSpannable = new SpannableString(recipe.getRecipeName());
+            // Optionally, you could apply formatting to recipeNameSpannable here
+            Map<SpannableString, Recipe> recipeMap = new HashMap<>();
+            recipeMap.put(recipeNameSpannable, recipe);
+            formattedList.add(recipeMap);
+        }
+        return formattedList;
+    }
+
+    public void fetchAndSortRecipesByIngredientsAvailability(RecipeListListener listener) {
+        ArrayList<Recipe> sortedRecipes = new ArrayList<>();
+        DatabaseReference cookbookRef = mDatabase.child("cookbook");
+        cookbookRef.orderByChild("name").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                List<Recipe> recipesWithIngredients = new ArrayList<>();
+                List<Recipe> recipesWithoutIngredients = new ArrayList<>();
+
+                for (DataSnapshot recipeSnapshot : dataSnapshot.getChildren()) {
+                    Recipe recipe = recipeSnapshot.getValue(Recipe.class);
+                    if (recipe != null) {
+                        Log.d("FetchData", "Recipe fetched: " + recipe.getRecipeName());
+                    } else {
+                        Log.d("FetchData", "Failed to parse a Recipe from snapshot: " + recipeSnapshot.getValue());
+                    }
+                    if (recipe != null) {
+                        doesUserHaveIngredients(recipe, hasIngredients -> {
+                            if (hasIngredients) {
+                                recipesWithIngredients.add(recipe);
+                            } else {
+                                recipesWithoutIngredients.add(recipe);
+                            }
+
+                            if (recipesWithIngredients.size() + recipesWithoutIngredients.size() == dataSnapshot.getChildrenCount()) {
+                                Log.d("FetchData", "All ingredient checks completed. With ingredients: " + recipesWithIngredients.size() + ", Without ingredients: " + recipesWithoutIngredients.size());
+                                sortedRecipes.addAll(recipesWithIngredients);
+                                ArrayList<Map<SpannableString, Recipe>> finalList = convertToExpectedFormat(sortedRecipes);
+                                Log.d("FetchData", "Invoking listener with sorted recipes.");
+                                listener.onRecipeListReceived(finalList);
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("DatabaseError", "Error fetching recipes.");
+            }
+        });
     }
 }

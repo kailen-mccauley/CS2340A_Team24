@@ -122,15 +122,23 @@ public class RecipeActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    System.out.println("SWITCHING TO USER HAS INGREDIENT");
-                    // SORTING BASED ON Available INGREDIENTS for cassandra
-                    viewModel.setSortRecipeInstance(new sortRecipeUserHasIngredients());
-                    updateArrayListAndSpinners(viewModel.getSorted(), recipesSpinner);
-                    viewModel.sortRecipes();
+                    Log.d("test1", "test1");
+                    viewModel.fetchAndSortRecipesByIngredientsAvailability(new RecipeActivityViewModel.RecipeListListener() {
+                        @Override
+                        public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> sortedRecipeList) {
+                            Log.d("test2", "test2");
+                            updateArrayListAndSpinners(sortedRecipeList, recipesSpinner);
+                        }
+                    });
                 } else {
                     // SORTING ALPHABETICALLY
                     viewModel.setSortRecipeInstance(new sortRecipeAlphabetical());
-                    viewModel.sortRecipes();
+                    viewModel.getRecipelist(new RecipeActivityViewModel.RecipeListListener() {
+                        @Override
+                        public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
+                            updateArrayListAndSpinners(recipeList, recipesSpinner);
+                        }
+                    });
                 }
             }
         });
@@ -138,7 +146,7 @@ public class RecipeActivity extends AppCompatActivity {
         submitRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String recipeName = recipeNameEditText.getText().toString();
+                String recipeName = recipeNameEditText.getText().toString().toLowerCase();
                 String ingredientList = ingredientListEditText.getText().toString();
                 if (!InputValidator.isValidInputWithSpacesBetween(recipeName)) {
                     Toast.makeText(RecipeActivity.this,

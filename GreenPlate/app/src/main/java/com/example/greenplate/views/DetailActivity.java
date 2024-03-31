@@ -22,6 +22,7 @@ import java.util.Map;
 public class DetailActivity extends AppCompatActivity {
 
     private RecipeActivityViewModel recipeViewModel;
+    private TextView title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // DO NOT MODIFY
@@ -29,14 +30,15 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_display);
         Button toRecipeScreen = findViewById(R.id.btn_to_recipe_screen);
         RelativeLayout parentLayout = findViewById(R.id.activity_input_ingredients);
+        title = findViewById(R.id.recipeDetailsTextView);
 
         recipeViewModel = RecipeActivityViewModel.getInstance();
 
         Intent intent = getIntent();
-        Log.d("DetailActivity", "Recipe object: " + intent.getStringExtra("recipeID"));
         if (intent != null && intent.hasExtra("recipeID")) {
             String recipeID = intent.getStringExtra("recipeID");
             if (recipeID != null) {
+                title.setText(intent.getStringExtra("recipeName"));
                 recipeViewModel.getRecipeDetails(recipeID,
                         new RecipeActivityViewModel.RecipeDetailsListener() {
                         @Override

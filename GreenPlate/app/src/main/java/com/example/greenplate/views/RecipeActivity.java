@@ -180,11 +180,17 @@ public class RecipeActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
                     Map<SpannableString, Recipe> selectedRecipeMap = recipesArrayList.get(position - 1);
-                    Recipe selectedRecipe = selectedRecipeMap.values().iterator().next();
-
-                    Intent intent = new Intent(RecipeActivity.this, DetailActivity.class);
-                    intent.putExtra("recipeID", selectedRecipe.getRecipeID());
-                    startActivity(intent);
+                    for (SpannableString spannable : selectedRecipeMap.keySet()) {
+                        BackgroundColorSpan[] spans = spannable.getSpans(0, spannable.length(), BackgroundColorSpan.class);
+                        for (BackgroundColorSpan span : spans) {
+                            if (span.getBackgroundColor() == Color.GREEN) {
+                                Recipe selectedRecipe = selectedRecipeMap.values().iterator().next();
+                                Intent intent = new Intent(RecipeActivity.this, DetailActivity.class);
+                                intent.putExtra("recipeID", selectedRecipe.getRecipeID());
+                                startActivity(intent);
+                            }
+                        }
+                    }
                 }
             }
 

@@ -147,7 +147,7 @@ public class RecipeActivity extends AppCompatActivity {
         submitRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String recipeName = recipeNameEditText.getText().toString();
+                String recipeName = recipeNameEditText.getText().toString().toLowerCase();
                 String ingredientList = ingredientListEditText.getText().toString();
                 if (!InputValidator.isValidInputWithSpacesBetween(recipeName)) {
                     Toast.makeText(RecipeActivity.this,

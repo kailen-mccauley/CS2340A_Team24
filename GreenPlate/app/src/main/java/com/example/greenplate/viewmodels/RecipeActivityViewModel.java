@@ -10,6 +10,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import android.text.SpannableString;
@@ -18,6 +19,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import java.text.SimpleDateFormat;
@@ -159,35 +161,6 @@ public class RecipeActivityViewModel {
             listener.onIngredientCheckResult(false);
         }
     }
-
-
-
-    //TODO: withUserIngredients
-    // creates a list of recipe objects that a user can make.
-//    public List<Recipe> withUserIngredients() {
-//        List<Recipe> userCanMakeRecipes = new ArrayList<>();
-//        DatabaseReference recipeRef = mDatabase.child("cookbook");
-//        recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot recipeSnapshot : snapshot.getChildren()) {
-//                    String recipeName = recipeSnapshot.child("name").getValue(String.class);
-//                    Map<String, Integer> ingredientsMap = (Map<String, Integer>) recipeSnapshot.child("ingredients").getValue();
-//                    String recipeID = recipeSnapshot.child("recipeID").getValue(String.class);
-//                    Recipe recipe = new Recipe(recipeName, ingredientsMap, recipeID);
-//                    if (doesUserHaveIngredients(recipe)) {
-//                        userCanMakeRecipes.add(recipe);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.d("withUserIngredients", "Failed to read recipes from database.");
-//            }
-//        });
-//        return userCanMakeRecipes;
-//    }
 
     //TODO: sortRecipes
     // sort recipes in alphabetical order

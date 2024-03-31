@@ -1,9 +1,7 @@
 package com.example.greenplate.viewmodels;
 
-import com.example.greenplate.models.Ingredient;
-import com.example.greenplate.models.Meal;
+import com.example.greenplate.SortRecipe;
 import com.example.greenplate.models.Recipe;
-import com.example.greenplate.sortRecipe;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,15 +17,10 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class RecipeActivityViewModel {
     private static volatile RecipeActivityViewModel instance;
@@ -35,7 +28,7 @@ public class RecipeActivityViewModel {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
-    private sortRecipe sortRecipeInstance;
+    private SortRecipe sortRecipeInstance;
     private RecipeActivityViewModel() {
         // Initialize Firebase components
         mAuth = FirebaseAuth.getInstance();
@@ -55,11 +48,6 @@ public class RecipeActivityViewModel {
         return instance;
     }
 
-    public interface RecipeDetailsListener {
-        void onRecipeDetailsReceived(Recipe recipe);
-        void onRecipeDetailsError(String errorMessage);
-    }
-
     public void getRecipeDetails(String recipeID, RecipeDetailsListener listener) {
         DatabaseReference recipeRef = mDatabase.child("cookbook").child(recipeID);
         recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -67,7 +55,8 @@ public class RecipeActivityViewModel {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     String recipeName = dataSnapshot.child("name").getValue(String.class);
-                    Map<String, Integer> ingredientsMap = dataSnapshot.child("ingredients").getValue(new GenericTypeIndicator<Map<String, Integer>>() {});
+                    Map<String, Integer> ingredientsMap = dataSnapshot.child("ingredients")
+                            .getValue(new GenericTypeIndicator<Map<String, Integer>>() { });
                     Recipe recipe = new Recipe(recipeName, ingredientsMap, recipeID);
                     listener.onRecipeDetailsReceived(recipe);
                 } else {
@@ -77,12 +66,12 @@ public class RecipeActivityViewModel {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                listener.onRecipeDetailsError("Error fetching recipe details: " + error.getMessage());
+                listener.onRecipeDetailsError("Error fetching recipe details: "
+                        + error.getMessage());
             }
         });
     }
 
-    //TODO: storeRecipe method
     // Should be a map of ingredient,quantity pairs
     // Each recipe should be visible to all other users
     public void storeRecipe(String recipeName, HashMap<String, Integer> ingredientsMap) {
@@ -99,54 +88,14 @@ public class RecipeActivityViewModel {
 
             if (recipeId != null) {
                 mDatabase.child("cookbook").child(recipeId).setValue(recipeData)
-                        .addOnSuccessListener(aVoid -> Log.d("storeRecipe", "Recipe successfully stored."))
-                        .addOnFailureListener(e -> Log.d("storeRecipe", "Failed to store recipe.", e));
+                        .addOnSuccessListener(aVoid -> Log.d("storeRecipe",
+                                "Recipe successfully stored."))
+                        .addOnFailureListener(e -> Log.d("storeRecipe",
+                                "Failed to store recipe.", e));
             }
         } else {
             Log.d("storeRecipe", "No authenticated user found.");
         }
-    }
-
-    // TODO: doesUserHaveIngredients method
-    //  checks if a user has enough ingredients in their pantry to make a recipe
-//    public boolean doesUserHaveIngredients(Recipe recipe) {
-//        FirebaseUser currUser = mAuth.getCurrentUser();
-//        boolean[] res = {true};
-//        if (currUser != null) {
-//            String uid = currUser.getUid();
-//            mDatabase.child("pantry").equalTo(uid)
-//                    .addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                            for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-//                                Ingredient ingredient = snapshot1.getValue(Ingredient.class);
-//                                if (ingredient != null && recipe.getIngredients().containsKey(ingredient.getIngredientName())) {
-//                                    Integer recipeQuantity = recipe.getIngredients().get(ingredient.getIngredientName());
-//                                    if (recipeQuantity != null) {
-//                                        int pantryQuantity = ingredient.getQuantity();
-//                                        if (pantryQuantity < recipeQuantity) {
-//                                            res[0] = false;
-//                                            break;
-//                                        }
-//                                    }
-//                                }
-//
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//                            Log.d("doesUserHaveIngredients", "Error accessing database.");
-//                        }
-//                    });
-//        } else {
-//            Log.d("doesUserHaveIngredients", "No authenticated user found.");
-//        }
-//        return res[0];
-//    }
-
-    public interface IngredientCheckListener {
-        void onIngredientCheckResult(boolean hasIngredients);
     }
 
     public void doesUserHaveIngredients(Recipe recipe, IngredientCheckListener listener) {
@@ -155,85 +104,58 @@ public class RecipeActivityViewModel {
             String uid = currentUser.getUid();
             DatabaseReference pantryRef = mDatabase.child("pantry");
 
-            pantryRef.orderByChild("userId").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Map<String, Integer> recipeIngredients = recipe.getIngredients();
-                    boolean hasAllIngredients = true;
+            pantryRef.orderByChild("userId").equalTo(uid)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Map<String, Integer> recipeIngredients = recipe.getIngredients();
+                            boolean hasAllIngredients = true;
 
-                    // Here we store a count of each ingredient found
-                    Map<String, Integer> pantryQuantities = new HashMap<>();
-                    for (DataSnapshot itemSnapshot : dataSnapshot.getChildren()) {
-                        String pantryIngredientName = itemSnapshot.child("ingredientName").getValue(String.class);
-                        Integer pantryQuantity = itemSnapshot.child("quantity").getValue(Integer.class);
+                            // Here we store a count of each ingredient found
+                            Map<String, Integer> pantryQuantities = new HashMap<>();
+                            for (DataSnapshot itemSnapshot : dataSnapshot.getChildren()) {
+                                String pantryIngredientName = itemSnapshot.child("ingredientName")
+                                        .getValue(String.class);
+                                Integer pantryQuantity = itemSnapshot.child("quantity")
+                                        .getValue(Integer.class);
 
-                        if (pantryIngredientName != null && pantryQuantity != null) {
-                            pantryQuantities.put(pantryIngredientName, pantryQuantities.getOrDefault(pantryIngredientName, 0) + pantryQuantity);
+                                if (pantryIngredientName != null && pantryQuantity != null) {
+                                    pantryQuantities.put(pantryIngredientName, pantryQuantities
+                                            .getOrDefault(pantryIngredientName, 0)
+                                            + pantryQuantity);
+                                }
+                            }
+
+                            // Now check if we have enough of each ingredient
+                            for (Map.Entry<String, Integer> entry : recipeIngredients.entrySet()) {
+                                String ingredientName = entry.getKey();
+                                int requiredQuantity = entry.getValue();
+
+                                Integer pantryQuantity = pantryQuantities.get(ingredientName);
+                                if (pantryQuantity == null || pantryQuantity < requiredQuantity) {
+                                    hasAllIngredients = false;
+                                    break;
+                                }
+                            }
+
+                            listener.onIngredientCheckResult(hasAllIngredients);
                         }
-                    }
 
-                    // Now check if we have enough of each ingredient
-                    for (Map.Entry<String, Integer> entry : recipeIngredients.entrySet()) {
-                        String ingredientName = entry.getKey();
-                        int requiredQuantity = entry.getValue();
-
-                        Integer pantryQuantity = pantryQuantities.get(ingredientName);
-                        if (pantryQuantity == null || pantryQuantity < requiredQuantity) {
-                            hasAllIngredients = false;
-                            break;
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            listener.onIngredientCheckResult(false);
                         }
-                    }
-
-                    listener.onIngredientCheckResult(hasAllIngredients);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Log.d("FirebaseData", "Error checking ingredients: " + error.getMessage());
-                    listener.onIngredientCheckResult(false);
-                }
-            });
+                    });
         } else {
             listener.onIngredientCheckResult(false);
         }
     }
 
-
-
-    //TODO: sortRecipes
-    // sort recipes in alphabetical order
-    public void sortRecipes() {
-        DatabaseReference cookbookRef = mDatabase.child("cookbook");
-        cookbookRef.orderByChild("name").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Recipe> recipes = new ArrayList<>();
-                for (DataSnapshot recipeSnapshot : dataSnapshot.getChildren()) {
-                    Recipe recipe = recipeSnapshot.getValue(Recipe.class);
-                    recipes.add(recipe);
-                }
-
-                //Logged for now but cassandra going to use it for her UI
-                for (Recipe r : recipes) {
-                    Log.d("SortedRecipe", "Recipe Name: " + r.getRecipeName());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w("DatabaseError", "loadRecipe:onCancelled", error.toException());
-            }
-        });
-    }
-
-    public interface RecipeListListener {
-        void onRecipeListReceived(ArrayList<Map<SpannableString,Recipe>> recipeList);
-    }
-    public void getRecipelist(RecipeListListener Listener) {
+    public void getRecipeList(RecipeListListener listener) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        ArrayList<Map<SpannableString,Recipe>> recipeList = new ArrayList<>();
+        ArrayList<Map<SpannableString, Recipe>> recipeList = new ArrayList<>();
 
-        if (currentUser!= null) {
+        if (currentUser != null) {
             String uid = currentUser.getUid();
             mDatabase.child("cookbook").orderByChild("name")
                     .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -242,15 +164,16 @@ public class RecipeActivityViewModel {
                             for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                                 String recipeName = snapshot.child("name").getValue(String.class);
                                 SpannableString name = new SpannableString(recipeName);
-                                Map<String, Integer> ingredientsMap = (Map<String, Integer>) snapshot.child("ingredients").getValue();
+                                Map<String, Integer> ingredientsMap = (Map<String, Integer>)
+                                        snapshot.child("ingredients").getValue();
                                 String recipeID = snapshot.child("recipeID").getValue(String.class);
                                 Recipe recipe = new Recipe(recipeName, ingredientsMap, recipeID);
-                                Map<SpannableString,Recipe> recipeMap = new HashMap<>();
+                                Map<SpannableString, Recipe> recipeMap = new HashMap<>();
                                 recipeMap.put(name, recipe);
                                 recipeList.add(recipeMap);
                             }
 
-                            Listener.onRecipeListReceived(recipeList);
+                            listener.onRecipeListReceived(recipeList);
 
                         }
 
@@ -262,31 +185,30 @@ public class RecipeActivityViewModel {
         }
     }
 
-    public ArrayList<Map<SpannableString, String>> getSorted () {
+    public ArrayList<Map<SpannableString, String>> getSorted() {
         return sortRecipeInstance.sortRecipes(this);
     }
 
-    public sortRecipe getSortRecipeInstance() {
+    public SortRecipe getSortRecipeInstance() {
         return sortRecipeInstance;
     }
 
-    public void setSortRecipeInstance(sortRecipe sortRecipeInstance) {
+    public void setSortRecipeInstance(SortRecipe sortRecipeInstance) {
         this.sortRecipeInstance = sortRecipeInstance;
     }
 
-    private ArrayList<Map<SpannableString, Recipe>> convertToExpectedFormat(List<Recipe> sortedRecipes) {
+    private ArrayList<Map<SpannableString, Recipe>> convertToExpectedFormat(List<Recipe>
+                                                                                    sortedRecipes) {
         ArrayList<Map<SpannableString, Recipe>> formattedList = new ArrayList<>();
         for (Recipe recipe : sortedRecipes) {
             SpannableString recipeNameSpannable = new SpannableString(recipe.getRecipeName());
-            // Optionally, you could apply formatting to recipeNameSpannable here
             Map<SpannableString, Recipe> recipeMap = new HashMap<>();
             recipeMap.put(recipeNameSpannable, recipe);
             formattedList.add(recipeMap);
         }
         return formattedList;
     }
-
-    public void fetchAndSortRecipesByIngredientsAvailability(RecipeListListener listener) {
+    public void fetchRecipesbyIngredAvail(RecipeListListener listener) {
         ArrayList<Recipe> sortedRecipes = new ArrayList<>();
         DatabaseReference cookbookRef = mDatabase.child("cookbook");
         cookbookRef.orderByChild("name").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -301,7 +223,8 @@ public class RecipeActivityViewModel {
                     if (recipe != null) {
                         Log.d("FetchData", "Recipe fetched: " + recipe.getRecipeName());
                     } else {
-                        Log.d("FetchData", "Failed to parse a Recipe from snapshot: " + recipeSnapshot.getValue());
+                        Log.d("FetchData", "Failed to parse a Recipe from snapshot: "
+                                + recipeSnapshot.getValue());
                     }
                     if (recipe != null) {
                         doesUserHaveIngredients(recipe, hasIngredients -> {
@@ -311,11 +234,11 @@ public class RecipeActivityViewModel {
                                 recipesWithoutIngredients.add(recipe);
                             }
 
-                            if (recipesWithIngredients.size() + recipesWithoutIngredients.size() == dataSnapshot.getChildrenCount()) {
-                                Log.d("FetchData", "All ingredient checks completed. With ingredients: " + recipesWithIngredients.size() + ", Without ingredients: " + recipesWithoutIngredients.size());
+                            if (recipesWithIngredients.size() + recipesWithoutIngredients.size()
+                                    == dataSnapshot.getChildrenCount()) {
                                 sortedRecipes.addAll(recipesWithIngredients);
-                                ArrayList<Map<SpannableString, Recipe>> finalList = convertToExpectedFormat(sortedRecipes);
-                                Log.d("FetchData", "Invoking listener with sorted recipes.");
+                                ArrayList<Map<SpannableString, Recipe>> finalList
+                                        = convertToExpectedFormat(sortedRecipes);
                                 listener.onRecipeListReceived(finalList);
                             }
                         });
@@ -328,5 +251,15 @@ public class RecipeActivityViewModel {
                 Log.w("DatabaseError", "Error fetching recipes.");
             }
         });
+    }
+    public interface RecipeDetailsListener {
+        void onRecipeDetailsReceived(Recipe recipe);
+        void onRecipeDetailsError(String errorMessage);
+    }
+    public interface RecipeListListener {
+        void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList);
+    }
+    public interface IngredientCheckListener {
+        void onIngredientCheckResult(boolean hasIngredients);
     }
 }

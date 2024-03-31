@@ -86,7 +86,7 @@ public class IngredientActivityUnitTest {
         FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 viewModel.storeIngredient("milk", 50, 3, null);
-                viewModel.decreaseIngredientQuantityAndTreeMap("milk", 3, null, null);;
+                viewModel.decreaseIngrQuanTree("milk", 3, null, null);;
             }
             viewModel.getSortedIngredients(updatedIngredients -> {
                 boolean present = true;

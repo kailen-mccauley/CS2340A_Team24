@@ -183,7 +183,6 @@ public class RecipeActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
-                    // Get the selected recipe
                     Map<SpannableString, Recipe> selectedRecipeMap = recipesArrayList.get(position - 1);
                     Recipe selectedRecipe = selectedRecipeMap.values().iterator().next();
 

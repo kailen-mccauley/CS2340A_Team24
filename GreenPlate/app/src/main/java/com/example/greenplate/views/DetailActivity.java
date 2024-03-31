@@ -77,7 +77,7 @@ public class DetailActivity extends AppCompatActivity {
                                         1
                                 );
                                 quantityParams.width = 0;
-                                quantityParams.setMarginStart(60);
+                                quantityParams.setMarginStart(200);
                                 quantityTextView.setLayoutParams(quantityParams);
                                 quantityTextView.setText(String.valueOf(quantity));
                                 quantityTextView.setTextSize(22);

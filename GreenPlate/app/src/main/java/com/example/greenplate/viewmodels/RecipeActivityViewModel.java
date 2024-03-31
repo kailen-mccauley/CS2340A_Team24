@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.example.greenplate.RecipeSorter;
 
 import android.text.SpannableString;
 import android.util.Log;
@@ -27,6 +28,7 @@ public class RecipeActivityViewModel {
     private final Recipe recipeData;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private RecipeSorter recipeSorter;
 
     private SortRecipe sortRecipeInstance;
     private RecipeActivityViewModel() {
@@ -34,7 +36,7 @@ public class RecipeActivityViewModel {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         recipeData = new Recipe();
-        //sortRecipeInstance = sortRecipeAlphabetical;
+        recipeSorter = new RecipeSorter();
     }
 
     public static RecipeActivityViewModel getInstance() {
@@ -208,50 +210,11 @@ public class RecipeActivityViewModel {
         }
         return formattedList;
     }
+
     public void fetchRecipesbyIngredAvail(RecipeListListener listener) {
-        ArrayList<Recipe> sortedRecipes = new ArrayList<>();
-        DatabaseReference cookbookRef = mDatabase.child("cookbook");
-        cookbookRef.orderByChild("name").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                List<Recipe> recipesWithIngredients = new ArrayList<>();
-                List<Recipe> recipesWithoutIngredients = new ArrayList<>();
-
-                for (DataSnapshot recipeSnapshot : dataSnapshot.getChildren()) {
-                    Recipe recipe = recipeSnapshot.getValue(Recipe.class);
-                    if (recipe != null) {
-                        Log.d("FetchData", "Recipe fetched: " + recipe.getRecipeName());
-                    } else {
-                        Log.d("FetchData", "Failed to parse a Recipe from snapshot: "
-                                + recipeSnapshot.getValue());
-                    }
-                    if (recipe != null) {
-                        doesUserHaveIngredients(recipe, hasIngredients -> {
-                            if (hasIngredients) {
-                                recipesWithIngredients.add(recipe);
-                            } else {
-                                recipesWithoutIngredients.add(recipe);
-                            }
-
-                            if (recipesWithIngredients.size() + recipesWithoutIngredients.size()
-                                    == dataSnapshot.getChildrenCount()) {
-                                sortedRecipes.addAll(recipesWithIngredients);
-                                ArrayList<Map<SpannableString, Recipe>> finalList
-                                        = convertToExpectedFormat(sortedRecipes);
-                                listener.onRecipeListReceived(finalList);
-                            }
-                        });
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w("DatabaseError", "Error fetching recipes.");
-            }
-        });
+        recipeSorter.fetchAndSortRecipesByIngredientsAvailability(listener);
     }
+
     public interface RecipeDetailsListener {
         void onRecipeDetailsReceived(Recipe recipe);
         void onRecipeDetailsError(String errorMessage);

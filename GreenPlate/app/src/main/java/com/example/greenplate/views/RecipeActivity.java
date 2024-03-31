@@ -122,12 +122,12 @@ public class RecipeActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    // SORTING BASED ON Available INGREDIENTS for cassandra
-                    viewModel.setSortRecipeInstance(new sortRecipeUserHasIngredients());
-                    viewModel.getRecipelist(new RecipeActivityViewModel.RecipeListListener() {
+                    Log.d("test1", "test1");
+                    viewModel.fetchAndSortRecipesByIngredientsAvailability(new RecipeActivityViewModel.RecipeListListener() {
                         @Override
-                        public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
-                            updateArrayListAndSpinners(recipeList, recipesSpinner);
+                        public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> sortedRecipeList) {
+                            Log.d("test2", "test2");
+                            updateArrayListAndSpinners(sortedRecipeList, recipesSpinner);
                         }
                     });
                 } else {
@@ -139,7 +139,6 @@ public class RecipeActivity extends AppCompatActivity {
                             updateArrayListAndSpinners(recipeList, recipesSpinner);
                         }
                     });
-                    viewModel.sortRecipes();
                 }
             }
         });

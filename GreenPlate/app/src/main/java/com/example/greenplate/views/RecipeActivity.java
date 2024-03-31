@@ -190,7 +190,7 @@ public class RecipeActivity extends AppCompatActivity {
 
                     // Start a new activity to show the details of the selected recipe
                     Intent intent = new Intent(RecipeActivity.this, DetailActivity.class);
-                    // intent.putExtra("recipe", (Parcelable) selectedRecipe);
+                    intent.putExtra("recipeID", selectedRecipe.getRecipeID());
                     startActivity(intent);
                 }
             }

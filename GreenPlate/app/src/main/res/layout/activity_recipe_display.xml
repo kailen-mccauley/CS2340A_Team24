@@ -30,42 +30,52 @@
             android:id="@+id/buttonOutsideScroll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_marginTop="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipeDetailsTextView">
-
             <LinearLayout
-                android:id="@+id/inputIngredientBar"
+                android:id="@+id/scrollableLay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/recipeDetailsTextView"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recipeDetailsTextView">
 
-                <EditText
-                    android:id="@+id/recipeingredientName"
+                <LinearLayout
+                    android:id="@+id/inputIngredientBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Ingredient Name"
-                    android:textAlignment="center"
-                    android:textColorHint="@color/pennBlue"
-                    android:textSize="22sp" />
+                    android:layout_below="@id/recipeDetailsTextView"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recipeDetailsTextView">
 
-                <EditText
-                    android:id="@+id/quantityEditText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    <TextView
+                        android:id="@+id/recipeingredientName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Ingredient        "
+                        android:textAlignment="center"
+                        android:textColorHint="@color/pennBlue"
+                        android:textSize="22sp" />
 
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginBottom="25dp"
-                    android:hint="Quantity"
-                    android:textAlignment="center"
-                    android:textColorHint="@color/pennBlue"
-                    android:textSize="22sp" />
+                    <TextView
+                        android:id="@+id/quantityEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginBottom="25dp"
+                        android:hint="Quantity"
+                        android:textAlignment="center"
+                        android:textColorHint="@color/pennBlue"
+                        android:textSize="22sp" />
 
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
 

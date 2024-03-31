@@ -65,12 +65,11 @@ public class RecipeActivity extends AppCompatActivity {
             SpannableString spannableString = adapter.getItem(i);
             if (spannableString != null) {
                 for (Map<SpannableString, Recipe> recipeMap : recipeList) {
-                    Recipe recipe = recipeMap.values().iterator().next(); // Assuming each map has only one recipe
+                    Recipe recipe = recipeMap.values().iterator().next();
                     if (spannableString.toString().equals(recipe.getRecipeName())) {
-                        // Highlight the recipe in the UI (e.g., change text color to green)
                         spannableString.setSpan(new BackgroundColorSpan(Color.GREEN), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         adapter.notifyDataSetChanged();
-                        break; // Exit the inner loop since the recipe has been found
+                        break;
                     }
                 }
             }
@@ -185,10 +184,9 @@ public class RecipeActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
                     // Get the selected recipe
-                    Map<SpannableString, Recipe> selectedRecipeMap = recipesArrayList.get(position - 1); // -1 because of "Select Recipe" option
-                    Recipe selectedRecipe = selectedRecipeMap.values().iterator().next(); // Assuming each map has only one recipe
+                    Map<SpannableString, Recipe> selectedRecipeMap = recipesArrayList.get(position - 1);
+                    Recipe selectedRecipe = selectedRecipeMap.values().iterator().next();
 
-                    // Start a new activity to show the details of the selected recipe
                     Intent intent = new Intent(RecipeActivity.this, DetailActivity.class);
                     intent.putExtra("recipeID", selectedRecipe.getRecipeID());
                     startActivity(intent);

@@ -46,12 +46,10 @@ public class DetailActivity extends AppCompatActivity {
                     @Override
                     public void onRecipeDetailsReceived(Recipe recipe) {
                         LinearLayout scrollable = findViewById(R.id.scrollableLay);
-                        // Iterate through the ingredients of the recipe
                         for (Map.Entry<String, Integer> entry : recipe.getIngredients().entrySet()) {
                             String ingredientName = entry.getKey();
                             int quantity = entry.getValue();
 
-                            // Create a new horizontal LinearLayout to contain the ingredient and its quantity
                             LinearLayout ingredientLayout = new LinearLayout(DetailActivity.this);
                             ingredientLayout.setLayoutParams(new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -59,7 +57,6 @@ public class DetailActivity extends AppCompatActivity {
                             ));
                             ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-                            // Create a TextView for the ingredient name
                             TextView ingredientNameTextView = new TextView(DetailActivity.this);
                             LinearLayout.LayoutParams ingredientNameParams = new LinearLayout.LayoutParams(
                                     0,
@@ -72,7 +69,6 @@ public class DetailActivity extends AppCompatActivity {
                             ingredientNameTextView.setTextSize(22);
                             ingredientNameTextView.setTextColor(getResources().getColor(R.color.pennBlue));
 
-                            // Create a TextView for the quantity
                             TextView quantityTextView = new TextView(DetailActivity.this);
                             LinearLayout.LayoutParams quantityParams = new LinearLayout.LayoutParams(
                                     0,
@@ -86,11 +82,9 @@ public class DetailActivity extends AppCompatActivity {
                             quantityTextView.setTextSize(22);
                             quantityTextView.setTextColor(getResources().getColor(R.color.pennBlue));
 
-                            // Add the TextViews to the ingredientLayout LinearLayout
                             ingredientLayout.addView(ingredientNameTextView);
                             ingredientLayout.addView(quantityTextView);
 
-                            // Add the ingredientLayout to the inputIngredientBar LinearLayout
                             scrollable.addView(ingredientLayout);
                         }
                     }

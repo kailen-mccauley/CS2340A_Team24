@@ -143,10 +143,9 @@ public class RecipeActivityViewModel {
                     boolean hasAllIngredients = true;
                     for (Map.Entry<String, Integer> entry : recipeIngredients.entrySet()) {
                         String ingredientName = entry.getKey();
-                        Integer quantityInteger = snapshot.child(ingredientName).getValue(Integer.class);
-                        int requiredQuantity = quantityInteger != null ? quantityInteger.intValue() : 0;
+                        int requiredQuantity = entry.getValue();
                         // Check if the user has this ingredient and has enough quantity
-                        if (!snapshot.hasChild(ingredientName) || quantityInteger < requiredQuantity) {
+                        if (!snapshot.hasChild(ingredientName) || snapshot.child(ingredientName).getValue(Integer.class) < requiredQuantity) {
                             hasAllIngredients = false;
                             break; // No need to continue checking if any ingredient is missing
                         }

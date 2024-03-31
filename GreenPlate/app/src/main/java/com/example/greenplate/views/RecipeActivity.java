@@ -45,7 +45,7 @@ public class RecipeActivity extends AppCompatActivity {
     private Switch sortSwitch;
     private ArrayList<Map<SpannableString, Recipe>> recipesArrayList;
 
-    private void updateArrayListAndSpinners(ArrayList<Map<SpannableString, Recipe>> recipeList, Spinner recipesSpinner) {
+    private void updateArrayListAndSpinners(ArrayList<Map<SpannableString, Recipe>> recipeList) {
         // Update the ingredients TreeMap
         recipesArrayList = recipeList;
         // Update the spinners with the new TreeMap data
@@ -58,21 +58,46 @@ public class RecipeActivity extends AppCompatActivity {
         ingredientsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         recipesSpinner.setAdapter(ingredientsAdapter);
     }
-
-    private void highlightMatchingRecipes(ArrayList<Map<SpannableString, Recipe>> recipeList, Spinner recipesSpinner) {
-        ArrayAdapter<SpannableString> adapter = (ArrayAdapter<SpannableString>) recipesSpinner.getAdapter();
-        for (int i = 0; i < adapter.getCount(); i++) {
-            SpannableString spannableString = adapter.getItem(i);
-            if (spannableString != null) {
-                for (Map<SpannableString, Recipe> recipeMap : recipeList) {
-                    Recipe recipe = recipeMap.values().iterator().next();
-                    if (spannableString.toString().equals(recipe.getRecipeName())) {
-                        spannableString.setSpan(new BackgroundColorSpan(Color.GREEN), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        adapter.notifyDataSetChanged();
-                        break;
-                    }
+    private void highlightMatchingRecipes(ArrayList<Map<SpannableString, Recipe>> recipeList) {
+        for (Map<SpannableString, Recipe> entry : recipesArrayList) {
+            Recipe currRecipe = entry.values().iterator().next();
+            for (Map<SpannableString, Recipe> recipeMap : recipeList) {
+                Recipe recipe = recipeMap.values().iterator().next();
+                if (currRecipe.getRecipeID().equals(recipe.getRecipeID())) {
+                    SpannableString recipeName = entry.keySet().iterator().next();
+                    recipeName.setSpan(new BackgroundColorSpan(Color.GREEN), 0, recipeName.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    break;
                 }
             }
+        }
+    }
+
+    private void getRecipeListAndHighlight() {
+        viewModel.fetchAndSortRecipesByIngredientsAvailability(new RecipeActivityViewModel.RecipeListListener() {
+            @Override
+            public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
+                highlightMatchingRecipes(recipeList);
+            }
+        });
+    }
+
+    private void sortBasedOnSwitch() {
+        if (sortSwitch.isChecked()) {
+            viewModel.fetchAndSortRecipesByIngredientsAvailability(new RecipeActivityViewModel.RecipeListListener() {
+                @Override
+                public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> sortedRecipeList) {
+                    updateArrayListAndSpinners(sortedRecipeList);
+                    getRecipeListAndHighlight();
+                }
+            });
+        } else {
+            viewModel.getRecipelist(new RecipeActivityViewModel.RecipeListListener() {
+                @Override
+                public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
+                    updateArrayListAndSpinners(recipeList);
+                    getRecipeListAndHighlight();
+                }
+            });
         }
     }
 
@@ -98,13 +123,8 @@ public class RecipeActivity extends AppCompatActivity {
         viewModel.getRecipelist(new RecipeActivityViewModel.RecipeListListener() {
             @Override
             public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipes) {
-                updateArrayListAndSpinners(recipes, recipesSpinner);
-                viewModel.fetchAndSortRecipesByIngredientsAvailability(new RecipeActivityViewModel.RecipeListListener() {
-                    @Override
-                    public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
-                        highlightMatchingRecipes(recipeList, recipesSpinner);
-                    }
-                });
+                updateArrayListAndSpinners(recipes);
+                sortBasedOnSwitch();
             }
         });
 
@@ -151,7 +171,7 @@ public class RecipeActivity extends AppCompatActivity {
         sortSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                sortBasedOnSwitch(sortSwitch, recipesSpinner);
+                sortBasedOnSwitch();
             }
         });
 
@@ -226,7 +246,7 @@ public class RecipeActivity extends AppCompatActivity {
                         "Recipe  " + recipeName + "  submitted successfully!",
                         Toast.LENGTH_SHORT).show();
                 viewModel.storeRecipe(recipeName, ingredientsMap);
-                sortBasedOnSwitch(sortSwitch, recipesSpinner);
+                sortBasedOnSwitch();
             }
         });
         parentLayout.setOnTouchListener(new View.OnTouchListener() {
@@ -245,25 +265,6 @@ public class RecipeActivity extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager)
                     getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-
-    private void sortBasedOnSwitch(Switch sortSwitch, Spinner recipesSpinner) {
-        if (sortSwitch.isChecked()) {
-            viewModel.fetchAndSortRecipesByIngredientsAvailability(new RecipeActivityViewModel.RecipeListListener() {
-                @Override
-                public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> sortedRecipeList) {
-                    Log.d("test2", "test2");
-                    updateArrayListAndSpinners(sortedRecipeList, recipesSpinner);
-                }
-            });
-        } else {
-            viewModel.getRecipelist(new RecipeActivityViewModel.RecipeListListener() {
-                @Override
-                public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
-                    updateArrayListAndSpinners(recipeList, recipesSpinner);
-                }
-            });
         }
     }
 

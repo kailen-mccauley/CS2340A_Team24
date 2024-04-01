@@ -122,32 +122,6 @@ public class IngredientsActivityViewModel {
         }
     }
 
-    public void getIngredientsHashMap(IngredientHashMapListener listener) {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        Map<String, Ingredient> ingredientsMap = new HashMap();
-        if (currentUser != null) {
-            String uid = currentUser.getUid();
-            mDatabase.child("pantry").orderByChild("userId").equalTo(uid)
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                                Ingredient ingredient = snapshot.getValue(Ingredient.class);
-                                ingredientsMap.put(ingredient.getIngredientName(), ingredient);
-                            }
-
-                            listener.onIngredientsHashMapReceived(ingredientsMap);
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-        }
-    }
-
     //getIngredientsTreeMap
     public void getIngredTree(IngredientTreeMapListener listener) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -283,9 +257,6 @@ public class IngredientsActivityViewModel {
     }
     public interface IngredientTreeMapListener {
         void onIngredTreeReceive(Map<String, Ingredient> ingredientMap);
-    }
-    public interface IngredientHashMapListener {
-        void onIngredientsHashMapReceived(Map<String, Ingredient> ingredientMap);
     }
 
 }

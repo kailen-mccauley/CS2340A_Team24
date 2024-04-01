@@ -40,10 +40,6 @@ public class CreateAccountViewModel {
         createSuccess.setValue(success);
     }
 
-    public boolean isValidUsernameOrPassword(String username, String password) {
-        return username != null && !username.contains(" ") && !username.isEmpty()
-                && password != null && !password.contains(" ") && !password.isEmpty();
-    }
 
     public void createAccount(String email, String password,
                               FirebaseAuth mAuth, CreateAccountActivity createAccountActivity) {

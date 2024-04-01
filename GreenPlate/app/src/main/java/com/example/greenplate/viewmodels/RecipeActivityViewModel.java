@@ -21,7 +21,6 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import java.util.List;
 import java.util.Map;
 
 public class RecipeActivityViewModel {
@@ -30,8 +29,6 @@ public class RecipeActivityViewModel {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private SortRecipe recipeSorter;
-
-    private SortRecipe sortRecipeInstance;
     private RecipeActivityViewModel() {
         // Initialize Firebase components
         mAuth = FirebaseAuth.getInstance();
@@ -101,113 +98,6 @@ public class RecipeActivityViewModel {
         }
     }
 
-    public void doesUserHaveIngredients(Recipe recipe, IngredientCheckListener listener) {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            String uid = currentUser.getUid();
-            DatabaseReference pantryRef = mDatabase.child("pantry");
-
-            pantryRef.orderByChild("userId").equalTo(uid)
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Map<String, Integer> recipeIngredients = recipe.getIngredients();
-                            boolean hasAllIngredients = true;
-
-                            // Here we store a count of each ingredient found
-                            Map<String, Integer> pantryQuantities = new HashMap<>();
-                            for (DataSnapshot itemSnapshot : dataSnapshot.getChildren()) {
-                                String pantryIngredientName = itemSnapshot.child("ingredientName")
-                                        .getValue(String.class);
-                                Integer pantryQuantity = itemSnapshot.child("quantity")
-                                        .getValue(Integer.class);
-
-                                if (pantryIngredientName != null && pantryQuantity != null) {
-                                    pantryQuantities.put(pantryIngredientName, pantryQuantities
-                                            .getOrDefault(pantryIngredientName, 0)
-                                            + pantryQuantity);
-                                }
-                            }
-
-                            // Now check if we have enough of each ingredient
-                            for (Map.Entry<String, Integer> entry : recipeIngredients.entrySet()) {
-                                String ingredientName = entry.getKey();
-                                int requiredQuantity = entry.getValue();
-
-                                Integer pantryQuantity = pantryQuantities.get(ingredientName);
-                                if (pantryQuantity == null || pantryQuantity < requiredQuantity) {
-                                    hasAllIngredients = false;
-                                    break;
-                                }
-                            }
-
-                            listener.onIngredientCheckResult(hasAllIngredients);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            listener.onIngredientCheckResult(false);
-                        }
-                    });
-        } else {
-            listener.onIngredientCheckResult(false);
-        }
-    }
-
-//    public void getRecipeList(RecipeListListener listener) {
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        ArrayList<Map<SpannableString, Recipe>> recipeList = new ArrayList<>();
-//
-//        if (currentUser != null) {
-//            String uid = currentUser.getUid();
-//            mDatabase.child("cookbook").orderByChild("name")
-//                    .addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-//                                String recipeName = snapshot.child("name").getValue(String.class);
-//                                SpannableString name = new SpannableString(recipeName);
-//                                Map<String, Integer> ingredientsMap = (Map<String, Integer>)
-//                                        snapshot.child("ingredients").getValue();
-//                                String recipeID = snapshot.child("recipeID").getValue(String.class);
-//                                Recipe recipe = new Recipe(recipeName, ingredientsMap, recipeID);
-//                                Map<SpannableString, Recipe> recipeMap = new HashMap<>();
-//                                recipeMap.put(name, recipe);
-//                                recipeList.add(recipeMap);
-//                            }
-//
-//                            listener.onRecipeListReceived(recipeList);
-//
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//
-//                        }
-//                    });
-//        }
-//    }
-
-
-    public SortRecipe getSortRecipeInstance() {
-        return sortRecipeInstance;
-    }
-
-    public void setSortRecipeInstance(SortRecipe sortRecipeInstance) {
-        this.sortRecipeInstance = sortRecipeInstance;
-    }
-
-    private ArrayList<Map<SpannableString, Recipe>> convertToExpectedFormat(List<Recipe>
-                                                                                    sortedRecipes) {
-        ArrayList<Map<SpannableString, Recipe>> formattedList = new ArrayList<>();
-        for (Recipe recipe : sortedRecipes) {
-            SpannableString recipeNameSpannable = new SpannableString(recipe.getRecipeName());
-            Map<SpannableString, Recipe> recipeMap = new HashMap<>();
-            recipeMap.put(recipeNameSpannable, recipe);
-            formattedList.add(recipeMap);
-        }
-        return formattedList;
-    }
 
     public void fetchRecipesbyIngredAvail(RecipeListListener listener) {
         recipeSorter = new RecipeUserHasIngredientsSorter();

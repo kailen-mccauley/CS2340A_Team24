@@ -211,37 +211,15 @@ public class RecipeActivity extends AppCompatActivity {
                                     + "for your recipe!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                String[] ingredients = ingredientList.split(",");
-                HashMap<String, Integer> ingredientsMap = new HashMap<>();
-                for (String ingredient : ingredients) {
-                    String[] nameAndQuantity = ingredient.split(": ");
-                    if (nameAndQuantity.length == 2) {
-                        String ingredientName = nameAndQuantity[0].trim();
-                        if (!InputValidator.isValidInputWithSpacesBetween(ingredientName)) {
-                            Toast.makeText(RecipeActivity.this, "Invalid ingredient name "
-                                            + "detected!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        String ingredientQuantity = nameAndQuantity[1].trim();
-                        if (!InputValidator.isValidInputWithInteger(ingredientQuantity)) {
-                            Toast.makeText(RecipeActivity.this, "Invalid quantity for "
-                                            + ingredientName + "!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        Integer ingredientQuantityInt = Integer.parseInt(nameAndQuantity[1].trim());
-                        ingredientsMap.put(ingredientName.toLowerCase(), ingredientQuantityInt);
-                    } else {
-                        Toast.makeText(RecipeActivity.this,
-                                "Invalid input format for ingredient!", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+                HashMap<String, Integer> ingredientsMap = parseIngredientList(ingredientList);
+                if (ingredientsMap != null) {
+                    recipeNameEditText.setText("");
+                    ingredientListEditText.setText("");
+                    Toast.makeText(RecipeActivity.this, "Recipe  " + recipeName
+                            + "  submitted successfully!", Toast.LENGTH_SHORT).show();
+                    viewModel.storeRecipe(recipeName, ingredientsMap);
+                    sortBasedOnSwitch();
                 }
-                recipeNameEditText.setText("");
-                ingredientListEditText.setText("");
-                Toast.makeText(RecipeActivity.this, "Recipe  " + recipeName
-                                + "  submitted successfully!", Toast.LENGTH_SHORT).show();
-                viewModel.storeRecipe(recipeName, ingredientsMap);
-                sortBasedOnSwitch();
             }
         });
         parentLayout.setOnTouchListener(new View.OnTouchListener() {
@@ -260,6 +238,35 @@ public class RecipeActivity extends AppCompatActivity {
                     getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    private HashMap<String, Integer> parseIngredientList(String ingredientList) {
+        String[] ingredients = ingredientList.split(",");
+        HashMap<String, Integer> ingredientsMap = new HashMap<>();
+        for (String ingredient : ingredients) {
+            String[] nameAndQuantity = ingredient.split(": ");
+            if (nameAndQuantity.length == 2) {
+                String ingredientName = nameAndQuantity[0].trim();
+                if (!InputValidator.isValidInputWithSpacesBetween(ingredientName)) {
+                    Toast.makeText(RecipeActivity.this, "Invalid ingredient name "
+                            + "detected!", Toast.LENGTH_SHORT).show();
+                    return null;
+                }
+                String ingredientQuantity = nameAndQuantity[1].trim();
+                if (!InputValidator.isValidInputWithInteger(ingredientQuantity)) {
+                    Toast.makeText(RecipeActivity.this, "Invalid quantity for "
+                            + ingredientName + "!", Toast.LENGTH_SHORT).show();
+                    return null;
+                }
+                Integer ingredientQuantityInt = Integer.parseInt(nameAndQuantity[1].trim());
+                ingredientsMap.put(ingredientName.toLowerCase(), ingredientQuantityInt);
+            } else {
+                Toast.makeText(RecipeActivity.this,
+                        "Invalid input format for ingredient!", Toast.LENGTH_SHORT).show();
+                return null;
+            }
+        }
+        return ingredientsMap;
     }
 
 }

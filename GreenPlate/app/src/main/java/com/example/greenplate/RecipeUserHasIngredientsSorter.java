@@ -20,12 +20,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RecipeSorter {
+public class RecipeUserHasIngredientsSorter implements SortRecipe {
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
-    public RecipeSorter() {
+    public RecipeUserHasIngredientsSorter() {
         // Initialize Firebase components
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -43,7 +43,7 @@ public class RecipeSorter {
         return formattedList;
     }
 
-    public void fetchAndSortRecipesByIngredientsAvailability(RecipeActivityViewModel.RecipeListListener listener) {
+    public void sortRecipes(RecipeActivityViewModel.RecipeListListener listener) {
         ArrayList<Recipe> sortedRecipes = new ArrayList<>();
         DatabaseReference cookbookRef = mDatabase.child("cookbook");
         cookbookRef.orderByChild("name").addListenerForSingleValueEvent(new ValueEventListener() {

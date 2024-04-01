@@ -1,5 +1,6 @@
 package com.example.greenplate.viewmodels;
 
+import com.example.greenplate.RecipeAlphabeticalSorter;
 import com.example.greenplate.SortRecipe;
 import com.example.greenplate.models.Recipe;
 import com.google.firebase.auth.FirebaseAuth;
@@ -10,7 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.example.greenplate.RecipeSorter;
+import com.example.greenplate.RecipeUserHasIngredientsSorter;
 
 import android.text.SpannableString;
 import android.util.Log;
@@ -28,7 +29,7 @@ public class RecipeActivityViewModel {
     private final Recipe recipeData;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-    private RecipeSorter recipeSorter;
+    private SortRecipe recipeSorter;
 
     private SortRecipe sortRecipeInstance;
     private RecipeActivityViewModel() {
@@ -36,7 +37,7 @@ public class RecipeActivityViewModel {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         recipeData = new Recipe();
-        recipeSorter = new RecipeSorter();
+        recipeSorter = new RecipeUserHasIngredientsSorter();
     }
 
     public static RecipeActivityViewModel getInstance() {
@@ -153,43 +154,40 @@ public class RecipeActivityViewModel {
         }
     }
 
-    public void getRecipeList(RecipeListListener listener) {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        ArrayList<Map<SpannableString, Recipe>> recipeList = new ArrayList<>();
+//    public void getRecipeList(RecipeListListener listener) {
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        ArrayList<Map<SpannableString, Recipe>> recipeList = new ArrayList<>();
+//
+//        if (currentUser != null) {
+//            String uid = currentUser.getUid();
+//            mDatabase.child("cookbook").orderByChild("name")
+//                    .addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+//                                String recipeName = snapshot.child("name").getValue(String.class);
+//                                SpannableString name = new SpannableString(recipeName);
+//                                Map<String, Integer> ingredientsMap = (Map<String, Integer>)
+//                                        snapshot.child("ingredients").getValue();
+//                                String recipeID = snapshot.child("recipeID").getValue(String.class);
+//                                Recipe recipe = new Recipe(recipeName, ingredientsMap, recipeID);
+//                                Map<SpannableString, Recipe> recipeMap = new HashMap<>();
+//                                recipeMap.put(name, recipe);
+//                                recipeList.add(recipeMap);
+//                            }
+//
+//                            listener.onRecipeListReceived(recipeList);
+//
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                        }
+//                    });
+//        }
+//    }
 
-        if (currentUser != null) {
-            String uid = currentUser.getUid();
-            mDatabase.child("cookbook").orderByChild("name")
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                                String recipeName = snapshot.child("name").getValue(String.class);
-                                SpannableString name = new SpannableString(recipeName);
-                                Map<String, Integer> ingredientsMap = (Map<String, Integer>)
-                                        snapshot.child("ingredients").getValue();
-                                String recipeID = snapshot.child("recipeID").getValue(String.class);
-                                Recipe recipe = new Recipe(recipeName, ingredientsMap, recipeID);
-                                Map<SpannableString, Recipe> recipeMap = new HashMap<>();
-                                recipeMap.put(name, recipe);
-                                recipeList.add(recipeMap);
-                            }
-
-                            listener.onRecipeListReceived(recipeList);
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-        }
-    }
-
-    public ArrayList<Map<SpannableString, String>> getSorted() {
-        return sortRecipeInstance.sortRecipes(this);
-    }
 
     public SortRecipe getSortRecipeInstance() {
         return sortRecipeInstance;
@@ -212,7 +210,13 @@ public class RecipeActivityViewModel {
     }
 
     public void fetchRecipesbyIngredAvail(RecipeListListener listener) {
-        recipeSorter.fetchAndSortRecipesByIngredientsAvailability(listener);
+        recipeSorter = new RecipeUserHasIngredientsSorter();
+        recipeSorter.sortRecipes(listener);
+    }
+
+    public void getRecipeList(RecipeListListener listener) {
+        recipeSorter = new RecipeAlphabeticalSorter();
+        recipeSorter.sortRecipes(listener);
     }
 
     public interface RecipeDetailsListener {

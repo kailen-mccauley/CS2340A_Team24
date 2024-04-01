@@ -20,7 +20,6 @@ import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
 import com.example.greenplate.viewmodels.MealActivityViewModel;
 import com.example.greenplate.viewmodels.PersonalActivityViewModel;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class MealActivity extends AppCompatActivity {
     private MealActivityViewModel viewModel;

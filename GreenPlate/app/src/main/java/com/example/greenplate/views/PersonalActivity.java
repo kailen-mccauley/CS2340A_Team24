@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
 import com.example.greenplate.viewmodels.PersonalActivityViewModel;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class PersonalActivity extends AppCompatActivity {
 

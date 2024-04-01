@@ -33,8 +33,6 @@ public class MealActivityViewModel {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
-    private int calculatedCalorieGoal;
-
     private MealActivityViewModel() {
         // Initialize Firebase components
         mAuth = FirebaseAuth.getInstance();
@@ -69,26 +67,6 @@ public class MealActivityViewModel {
 
             // Store the meal in the database under "meals" node
             mDatabase.child("meals").child(mealId).setValue(meal);
-        }
-    }
-
-    // Method to query meals associated with the current user
-    public void queryUserMeals() {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            String uid = currentUser.getUid();
-            mDatabase.child("meals").orderByChild("userId").equalTo(uid)
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
         }
     }
 

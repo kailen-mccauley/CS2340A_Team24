@@ -61,7 +61,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                     return;
                 }
 
-                createAccountViewModeL.createAccount(email, password, mAuth,
+                createAccountViewModeL.createAccount(email, password,
                         CreateAccountActivity.this);
             }
         });

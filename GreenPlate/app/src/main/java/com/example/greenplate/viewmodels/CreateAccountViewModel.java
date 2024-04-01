@@ -19,8 +19,11 @@ import androidx.lifecycle.MutableLiveData;
 
 public class CreateAccountViewModel {
     private static volatile CreateAccountViewModel instance;
-
+    private FirebaseAuth mAuth;
     private MutableLiveData<Boolean> createSuccess = new MutableLiveData<>(false);
+    private CreateAccountViewModel() {
+        this.mAuth = FirebaseAuth.getInstance();
+    }
     public static CreateAccountViewModel getInstance() {
         if (instance == null) {
             synchronized (PersonalActivityViewModel.class) {
@@ -40,13 +43,9 @@ public class CreateAccountViewModel {
         createSuccess.setValue(success);
     }
 
-    public boolean isValidUsernameOrPassword(String username, String password) {
-        return username != null && !username.contains(" ") && !username.isEmpty()
-                && password != null && !password.contains(" ") && !password.isEmpty();
-    }
 
     public void createAccount(String email, String password,
-                              FirebaseAuth mAuth, CreateAccountActivity createAccountActivity) {
+                              CreateAccountActivity createAccountActivity) {
         // if userName and password pass check, we must create an account before going to login
         Task<AuthResult> authResultTask = mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(createAccountActivity, new OnCompleteListener<AuthResult>() {

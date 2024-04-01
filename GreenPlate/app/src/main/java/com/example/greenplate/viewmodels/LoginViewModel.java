@@ -18,8 +18,12 @@ import com.example.greenplate.views.LoginActivity;
 
 public class LoginViewModel {
     private static volatile LoginViewModel instance;
+    private FirebaseAuth mAuth;
     private MutableLiveData<Boolean> loginSuccess = new MutableLiveData<>(false);
 
+    private LoginViewModel() {
+        mAuth = FirebaseAuth.getInstance();
+    }
     public static LoginViewModel getInstance() {
         if (instance == null) {
             synchronized (PersonalActivityViewModel.class) {
@@ -39,8 +43,7 @@ public class LoginViewModel {
         loginSuccess.setValue(success);
     }
 
-    public void login(String email, String password, FirebaseAuth mAuth,
-                      LoginActivity loginActivity) {
+    public void login(String email, String password, LoginActivity loginActivity) {
         Task<AuthResult> authResultTask = mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(loginActivity, new OnCompleteListener<AuthResult>() {
                     @Override

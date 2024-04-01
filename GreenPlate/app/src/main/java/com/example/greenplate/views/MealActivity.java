@@ -20,14 +20,12 @@ import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
 import com.example.greenplate.viewmodels.MealActivityViewModel;
 import com.example.greenplate.viewmodels.PersonalActivityViewModel;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class MealActivity extends AppCompatActivity {
     private MealActivityViewModel viewModel;
     private PersonalActivityViewModel personalViewModel; // Declare personalViewModel variable
 
 
-    private FirebaseAuth mAuth;
 
     private EditText mealNameEditText;
     private EditText caloriesEditText;
@@ -52,7 +50,6 @@ public class MealActivity extends AppCompatActivity {
         TextView goalTextView = findViewById(R.id.goalTextView);
         TextView intakeTextView = findViewById(R.id.intakeTextView);
 
-        mAuth = FirebaseAuth.getInstance();
         viewModel = MealActivityViewModel.getInstance();
 
         mealNameEditText = findViewById(R.id.mealNameEditText);

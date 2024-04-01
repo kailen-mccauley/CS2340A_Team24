@@ -88,7 +88,8 @@ public class RecipeUserHasIngredientsSorter implements SortRecipe {
         });
     }
 
-    public void doesUserHaveIngredients(Recipe recipe, RecipeActivityViewModel.IngredientCheckListener listener) {
+    public void doesUserHaveIngredients(Recipe recipe,
+                                        RecipeActivityViewModel.IngredientCheckListener listener) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String uid = currentUser.getUid();

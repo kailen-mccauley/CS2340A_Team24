@@ -17,7 +17,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
@@ -112,32 +111,6 @@ public class IngredientsActivityViewModel {
                             });
 
                             listener.onIngredientsReceived(sortedIngredient);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-        }
-    }
-
-    public void getIngredientsHashMap(IngredientHashMapListener listener) {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        Map<String, Ingredient> ingredientsMap = new HashMap();
-        if (currentUser != null) {
-            String uid = currentUser.getUid();
-            mDatabase.child("pantry").orderByChild("userId").equalTo(uid)
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                                Ingredient ingredient = snapshot.getValue(Ingredient.class);
-                                ingredientsMap.put(ingredient.getIngredientName(), ingredient);
-                            }
-
-                            listener.onIngredientsHashMapReceived(ingredientsMap);
-
                         }
 
                         @Override
@@ -283,9 +256,6 @@ public class IngredientsActivityViewModel {
     }
     public interface IngredientTreeMapListener {
         void onIngredTreeReceive(Map<String, Ingredient> ingredientMap);
-    }
-    public interface IngredientHashMapListener {
-        void onIngredientsHashMapReceived(Map<String, Ingredient> ingredientMap);
     }
 
 }

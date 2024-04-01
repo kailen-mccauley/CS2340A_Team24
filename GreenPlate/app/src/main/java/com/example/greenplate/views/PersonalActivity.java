@@ -22,7 +22,6 @@ public class PersonalActivity extends AppCompatActivity {
 
     private PersonalActivityViewModel viewModel;
 
-    private FirebaseAuth mAuth;
 
     private EditText weightEditText;
     private EditText heightEditText;
@@ -40,7 +39,6 @@ public class PersonalActivity extends AppCompatActivity {
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toMealButton = findViewById(R.id.btn_meal);
 
-        mAuth = FirebaseAuth.getInstance();
         viewModel = PersonalActivityViewModel.getInstance();
 
         weightEditText = findViewById(R.id.weightEditText);

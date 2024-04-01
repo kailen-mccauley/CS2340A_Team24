@@ -37,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         Button toHomeButton = findViewById(R.id.btn_login);
         Button toCreateAccountButton = findViewById(R.id.btn_sign_up);
         Button toCloseApplication = findViewById(R.id.btn_close_app);
-        mAuth = FirebaseAuth.getInstance();
         LinearLayout parentLayout = findViewById(R.id.activity_login);
 
         toHomeButton.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-                viewModel.login(email, password, mAuth, LoginActivity.this);
+                viewModel.login(email, password, LoginActivity.this);
             }
         });
 

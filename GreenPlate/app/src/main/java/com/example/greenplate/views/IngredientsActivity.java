@@ -93,8 +93,6 @@ public class IngredientsActivity extends AppCompatActivity {
         makeNavigationBar(toShoppingButton, intentShopping);
         Intent intentPersonal = new Intent(IngredientsActivity.this, PersonalActivity.class);
         makeNavigationBar(toPersonalButton, intentPersonal);
-        Intent intentIngredient = new Intent(IngredientsActivity.this, IngredientsActivity.class);
-        makeNavigationBar(toIngredientButton, intentIngredient);
         toIngredientsForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

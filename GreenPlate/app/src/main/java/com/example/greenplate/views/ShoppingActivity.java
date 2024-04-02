@@ -37,8 +37,6 @@ public class ShoppingActivity extends AppCompatActivity {
         makeNavigationBar(toMealButton, intentMeal);
         Intent intentRecipe = new Intent(ShoppingActivity.this, RecipeActivity.class);
         makeNavigationBar(toRecipeButton, intentRecipe);
-        Intent intentShopping = new Intent(ShoppingActivity.this, ShoppingActivity.class);
-        makeNavigationBar(toShoppingButton, intentShopping);
         Intent intentPersonal = new Intent(ShoppingActivity.this, PersonalActivity.class);
         makeNavigationBar(toPersonalButton, intentPersonal);
         Intent intentIngredient = new Intent(ShoppingActivity.this, IngredientsActivity.class);

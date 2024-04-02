@@ -30,5 +30,9 @@
     <color name="tanBrown">#B5651D</color>
     <color name="darkGreen">#4CAF50</color>
     <color name="stormySky">#5B97A9</color>
+    <color name="magenta">#8F293B</color>
+    <color name="softPink">#FAEBE7</color>
+    <color name="pink">#EAADBB</color>
+    <color name="lightYellow">#F9EDDD</color>
 
 </resources>

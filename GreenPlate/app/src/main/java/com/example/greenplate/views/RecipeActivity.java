@@ -101,6 +101,15 @@ public class RecipeActivity extends AppCompatActivity {
         }
     }
 
+    private void makeNavigationBar(ImageButton button, Intent intent) {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intent);
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) { // DO NOT MODIFY
         super.onCreate(savedInstanceState);
@@ -108,7 +117,8 @@ public class RecipeActivity extends AppCompatActivity {
         RelativeLayout parentLayout = findViewById(R.id.activity_recipe);
         ImageButton toHomeButton = findViewById(R.id.btn_home);
         ImageButton toMealButton = findViewById(R.id.btn_meal);
-        ImageButton toIngredientsButton = findViewById(R.id.btn_ingredients);
+        ImageButton toRecipeButton = findViewById(R.id.btn_recipe);
+        ImageButton toIngredientButton = findViewById(R.id.btn_ingredients);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
         sortSwitch = findViewById(R.id.sortingSwitch);
@@ -124,41 +134,20 @@ public class RecipeActivity extends AppCompatActivity {
                 sortBasedOnSwitch();
             }
         });
-        toHomeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RecipeActivity.this, HomeActivity.class);
-                startActivity(intent);
-            }
-        });
-        toMealButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RecipeActivity.this, MealActivity.class);
-                startActivity(intent);
-            }
-        });
-        toIngredientsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RecipeActivity.this, IngredientsActivity.class);
-                startActivity(intent);
-            }
-        });
-        toShoppingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RecipeActivity.this, ShoppingActivity.class);
-                startActivity(intent);
-            }
-        });
-        toPersonalButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RecipeActivity.this, PersonalActivity.class);
-                startActivity(intent);
-            }
-        });
+
+        Intent intentHome = new Intent(RecipeActivity.this, HomeActivity.class);
+        makeNavigationBar(toHomeButton, intentHome);
+        Intent intentMeal = new Intent(RecipeActivity.this, MealActivity.class);
+        makeNavigationBar(toMealButton, intentMeal);
+        Intent intentRecipe = new Intent(RecipeActivity.this, RecipeActivity.class);
+        makeNavigationBar(toRecipeButton, intentRecipe);
+        Intent intentShopping = new Intent(RecipeActivity.this, ShoppingActivity.class);
+        makeNavigationBar(toShoppingButton, intentShopping);
+        Intent intentPersonal = new Intent(RecipeActivity.this, PersonalActivity.class);
+        makeNavigationBar(toPersonalButton, intentPersonal);
+        Intent intentIngredient = new Intent(RecipeActivity.this, IngredientsActivity.class);
+        makeNavigationBar(toIngredientButton, intentIngredient);
+
         sortSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

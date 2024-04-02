@@ -10,54 +10,38 @@ import com.example.greenplate.R;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private void makeNavigationBar(ImageButton button, Intent intent) {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intent);
+            }
+        });
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // DO NOT MODIFY
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        ImageButton toHomeButton = findViewById(R.id.btn_home);
         ImageButton toMealButton = findViewById(R.id.btn_meal);
         ImageButton toRecipeButton = findViewById(R.id.btn_recipe);
-        ImageButton toIngredientsButton = findViewById(R.id.btn_ingredients);
+        ImageButton toIngredientButton = findViewById(R.id.btn_ingredients);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
 
-        toMealButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, MealActivity.class);
-                startActivity(intent);
-            }
-        });
-        toRecipeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, RecipeActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        toIngredientsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, IngredientsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        toShoppingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, ShoppingActivity.class);
-                startActivity(intent);
-            }
-        });
-        toPersonalButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, PersonalActivity.class);
-                startActivity(intent);
-            }
-        });
-
+        Intent intentHome = new Intent(HomeActivity.this, HomeActivity.class);
+        makeNavigationBar(toHomeButton, intentHome);
+        Intent intentMeal = new Intent(HomeActivity.this, MealActivity.class);
+        makeNavigationBar(toMealButton, intentMeal);
+        Intent intentRecipe = new Intent(HomeActivity.this, RecipeActivity.class);
+        makeNavigationBar(toRecipeButton, intentRecipe);
+        Intent intentShopping = new Intent(HomeActivity.this, ShoppingActivity.class);
+        makeNavigationBar(toShoppingButton, intentShopping);
+        Intent intentPersonal = new Intent(HomeActivity.this, PersonalActivity.class);
+        makeNavigationBar(toPersonalButton, intentPersonal);
+        Intent intentIngredient = new Intent(HomeActivity.this, IngredientsActivity.class);
+        makeNavigationBar(toIngredientButton, intentIngredient);
     }
 }

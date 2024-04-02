@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/frenchGray">
+    android:background="@color/softPink">
 
     <!-- Header layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +18,7 @@
             android:fontFamily="sans-serif-black"
             android:text="Shopping List Screen"
             android:textAlignment="center"
-            android:textColor="@color/lilac"
+            android:textColor="@color/pink"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,24 +34,24 @@
         android:layout_alignParentBottom="true"
         android:background="@android:color/darker_gray"
         android:orientation="horizontal"
-        android:padding="10dp"
-        android:backgroundTint="@color/roseQuartz"
+        android:padding="5dp"
+        android:backgroundTint="@color/magenta"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <!-- Column 1 -->
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.75"
             android:gravity="center">
 
             <ImageButton
                 android:id="@+id/btn_home"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="70dp"
+                android:layout_height="75dp"
                 android:src="@drawable/ic_home_foreground"
                 android:layout_centerHorizontal="true"
-                android:backgroundTint="@color/frenchGray"/>
+                android:backgroundTint="@color/softPink" />
 
             <TextView
                 android:id="@+id/textView0"
@@ -60,7 +60,7 @@
                 android:layout_below="@id/btn_home"
                 android:layout_centerHorizontal="true"
                 android:text="HOME"
-                android:textColor="@color/mintCream"
+                android:textColor="@color/softPink"
                 android:textSize="14sp" />
         </RelativeLayout>
 
@@ -68,93 +68,16 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <ImageButton
-                android:id="@+id/btn_meal"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/ic_meal_foreground"
-                android:layout_centerHorizontal="true"
-                android:backgroundTint="@color/frenchGray"/>
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/btn_meal"
-                android:layout_centerHorizontal="true"
-                android:text="MEALS"
-                android:textColor="@color/mintCream"
-                android:textSize="14sp" />
-        </RelativeLayout>
-
-        <!-- Column 3 -->
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <ImageButton
-                android:id="@+id/btn_recipe"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/ic_recipe_foreground"
-                android:layout_centerHorizontal="true"
-                android:backgroundTint="@color/frenchGray"/>
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/btn_recipe"
-                android:layout_centerHorizontal="true"
-                android:text="RECIPES"
-                android:textColor="@color/mintCream"
-                android:textSize="14sp" />
-        </RelativeLayout>
-
-        <!-- Column 4 -->
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <ImageButton
-                android:id="@+id/btn_ingredients"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/ic_ingredient_foreground"
-                android:layout_centerHorizontal="true"
-                android:backgroundTint="@color/frenchGray"/>
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/btn_ingredients"
-                android:layout_centerHorizontal="true"
-                android:text="ITEMS"
-                android:textColor="@color/mintCream"
-                android:textSize="14sp" />
-        </RelativeLayout>
-        <!-- Column 5 -->
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.75"
             android:gravity="center">
 
             <ImageButton
                 android:id="@+id/btn_personal"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="70dp"
+                android:layout_height="75dp"
                 android:src="@drawable/personal_info_foreground"
                 android:layout_centerHorizontal="true"
-                android:backgroundTint="@color/frenchGray"/>
+                android:backgroundTint="@color/softPink" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -163,8 +86,112 @@
                 android:layout_below="@id/btn_personal"
                 android:layout_centerHorizontal="true"
                 android:text="PERSONAL"
-                android:textColor="@color/mintCream"
+                android:textColor="@color/softPink"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <!-- Column 3 -->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.75"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/btn_meal"
+                android:layout_width="70dp"
+                android:layout_height="75dp"
+                android:src="@drawable/ic_meal_foreground"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/softPink" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_meal"
+                android:layout_centerHorizontal="true"
+                android:text="MEALS"
+                android:textColor="@color/softPink"
                 android:textSize="14sp" />
+        </RelativeLayout>
+
+        <!-- Column 4 -->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.75"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/btn_recipe"
+                android:layout_width="70dp"
+                android:layout_height="75dp"
+                android:src="@drawable/ic_recipe_foreground"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/softPink" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_recipe"
+                android:layout_centerHorizontal="true"
+                android:text="RECIPES"
+                android:textColor="@color/softPink"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <!-- Column 5 -->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.75"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/btn_ingredients"
+                android:layout_width="70dp"
+                android:layout_height="75dp"
+                android:src="@drawable/ic_ingredient_foreground"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/softPink" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_ingredients"
+                android:layout_centerHorizontal="true"
+                android:text="ITEMS"
+                android:textColor="@color/softPink"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <!-- Column 6 -->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.75"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/btn_shopping"
+                android:layout_width="70dp"
+                android:layout_height="75dp"
+                android:src="@drawable/ic_shopping_foreground"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/softPink" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_shopping"
+                android:layout_centerHorizontal="true"
+                android:text="SHOPPING"
+                android:textColor="@color/softPink"
+                android:textSize="13sp" />
         </RelativeLayout>
 
     </LinearLayout>

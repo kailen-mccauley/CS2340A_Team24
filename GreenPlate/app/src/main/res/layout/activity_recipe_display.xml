@@ -34,7 +34,7 @@
             android:orientation="vertical"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="50dp"
-            app:layout_constraintBottom_toTopOf="@id/btn_to_recipe_screen"
+            app:layout_constraintBottom_toTopOf="@id/buttonsBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipeDetailsTextView">
@@ -46,7 +46,8 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recipeDetailsTextView">
+                app:layout_constraintTop_toBottomOf="@+id/recipeDetailsTextView"
+                app:layout_constraintBottom_toTopOf="@+id/buttonsBar">
 
                 <LinearLayout
                     android:id="@+id/inputIngredientBar"
@@ -82,17 +83,34 @@
             </LinearLayout>
         </ScrollView>
 
-        <Button
-            android:id="@+id/btn_to_recipe_screen"
+        <LinearLayout
+            android:id="@+id/buttonsBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/darkPowderBlue"
-            android:text="Return to Recipe Screen"
-            android:textSize="22sp"
+            android:layout_below="@id/recipeDetailsTextView"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginBottom="50dp"/>
+            android:layout_marginBottom="50dp">
+
+            <Button
+                android:id="@+id/btn_to_recipe_screen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/darkPowderBlue"
+                android:text="Return"
+                android:textSize="22sp" />
+            <Button
+                android:id="@+id/btn_to_cook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/darkPowderBlue"
+                android:text="Cook"
+                android:layout_marginLeft="50dp"
+                android:textSize="22sp" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

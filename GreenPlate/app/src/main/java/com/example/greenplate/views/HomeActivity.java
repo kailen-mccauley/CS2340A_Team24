@@ -31,8 +31,6 @@ public class HomeActivity extends AppCompatActivity {
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
 
-        Intent intentHome = new Intent(HomeActivity.this, HomeActivity.class);
-        makeNavigationBar(toHomeButton, intentHome);
         Intent intentMeal = new Intent(HomeActivity.this, MealActivity.class);
         makeNavigationBar(toMealButton, intentMeal);
         Intent intentRecipe = new Intent(HomeActivity.this, RecipeActivity.class);

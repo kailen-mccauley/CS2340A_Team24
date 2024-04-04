@@ -139,8 +139,6 @@ public class RecipeActivity extends AppCompatActivity {
         makeNavigationBar(toHomeButton, intentHome);
         Intent intentMeal = new Intent(RecipeActivity.this, MealActivity.class);
         makeNavigationBar(toMealButton, intentMeal);
-        Intent intentRecipe = new Intent(RecipeActivity.this, RecipeActivity.class);
-        makeNavigationBar(toRecipeButton, intentRecipe);
         Intent intentShopping = new Intent(RecipeActivity.this, ShoppingActivity.class);
         makeNavigationBar(toShoppingButton, intentShopping);
         Intent intentPersonal = new Intent(RecipeActivity.this, PersonalActivity.class);

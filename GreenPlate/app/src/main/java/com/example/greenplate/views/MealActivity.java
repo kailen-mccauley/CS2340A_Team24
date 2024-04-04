@@ -94,8 +94,6 @@ public class MealActivity extends AppCompatActivity {
 
         Intent intentHome = new Intent(MealActivity.this, HomeActivity.class);
         makeNavigationBar(toHomeButton, intentHome);
-        Intent intentMeal = new Intent(MealActivity.this, MealActivity.class);
-        makeNavigationBar(toMealButton, intentMeal);
         Intent intentRecipe = new Intent(MealActivity.this, RecipeActivity.class);
         makeNavigationBar(toRecipeButton, intentRecipe);
         Intent intentShopping = new Intent(MealActivity.this, ShoppingActivity.class);

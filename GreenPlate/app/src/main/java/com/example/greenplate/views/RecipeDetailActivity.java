@@ -19,7 +19,7 @@ import com.example.greenplate.viewmodels.RecipeActivityViewModel;
 
 import java.util.Map;
 
-public class DetailActivity extends AppCompatActivity {
+public class RecipeDetailActivity extends AppCompatActivity {
 
     private RecipeActivityViewModel recipeViewModel;
     private TextView title;
@@ -50,14 +50,14 @@ public class DetailActivity extends AppCompatActivity {
                                 int quantity = entry.getValue();
 
                                 LinearLayout ingredientLayout
-                                        = new LinearLayout(DetailActivity.this);
+                                        = new LinearLayout(RecipeDetailActivity.this);
                                 ingredientLayout.setLayoutParams(new LinearLayout.LayoutParams(
                                         LinearLayout.LayoutParams.MATCH_PARENT,
                                         LinearLayout.LayoutParams.WRAP_CONTENT
                                 ));
                                 ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-                                TextView ingredientNameTextView = new TextView(DetailActivity.this);
+                                TextView ingredientNameTextView = new TextView(RecipeDetailActivity.this);
                                 LinearLayout.LayoutParams ingredientNameParams
                                         = new LinearLayout.LayoutParams(
                                         0,
@@ -71,7 +71,7 @@ public class DetailActivity extends AppCompatActivity {
                                 ingredientNameTextView.setTextColor(getResources()
                                         .getColor(R.color.pennBlue));
 
-                                TextView quantityTextView = new TextView(DetailActivity.this);
+                                TextView quantityTextView = new TextView(RecipeDetailActivity.this);
                                 LinearLayout.LayoutParams quantityParams
                                         = new LinearLayout.LayoutParams(
                                         0,
@@ -105,7 +105,7 @@ public class DetailActivity extends AppCompatActivity {
         toRecipeScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DetailActivity.this,
+                Intent intent = new Intent(RecipeDetailActivity.this,
                         RecipeActivity.class);
                 startActivity(intent);
             }

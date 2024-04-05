@@ -1,4 +1,6 @@
 package com.example.greenplate;
+import android.content.Intent;
+import android.util.Log;
 
 public class InputValidator {
     public static boolean isValidInput(String input) {
@@ -32,6 +34,13 @@ public class InputValidator {
     }
     public static boolean isValidQuantityDecrease(int decreaseQuantity, int currentQuantity) {
         return decreaseQuantity <= currentQuantity;
+    }
+
+    public static boolean isValidRecipeDetailIntent(Intent intent) {
+        if (intent != null && intent.hasExtra("recipeID") && intent.hasExtra("recipeName")) {
+            return true;
+        }
+        return false;
     }
 }
 

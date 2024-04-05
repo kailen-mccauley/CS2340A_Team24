@@ -166,7 +166,7 @@ public class RecipeActivity extends AppCompatActivity {
                                 toast = false;
                                 Recipe selectRecipe = selectedRecipeMap.values().iterator().next();
                                 Intent intent = new Intent(RecipeActivity.this,
-                                        DetailActivity.class);
+                                        RecipeDetailActivity.class);
                                 intent.putExtra("recipeID", selectRecipe.getRecipeID());
                                 intent.putExtra("recipeName", selectRecipe.getRecipeName());
                                 startActivity(intent);

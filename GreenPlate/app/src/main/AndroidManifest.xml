@@ -65,7 +65,7 @@
             android:exported="true">
         </activity>
         <activity
-            android:name=".views.DetailActivity"
+            android:name=".views.RecipeDetailActivity"
             android:exported="true">
         </activity>
     </application>

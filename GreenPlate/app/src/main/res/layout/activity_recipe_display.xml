@@ -27,6 +27,45 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/buttonOutsideScroll"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recipeDetailsTextView">
+            <TextView
+                android:id="@+id/ingredientNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="sans-serif-black"
+                android:text="Ingredients"
+                android:textAlignment="center"
+                android:textColor="@color/mintCream"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginRight="20dp"/>
+            <TextView
+                android:id="@+id/ingredientQuantityTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="sans-serif-black"
+                android:text="Quantity"
+                android:textAlignment="center"
+                android:textColor="@color/mintCream"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+        </LinearLayout>
         <ScrollView
             android:id="@+id/buttonOutsideScroll"
             android:layout_width="wrap_content"
@@ -34,6 +73,7 @@
             android:orientation="vertical"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="50dp"
+            android:paddingTop="20dp"
             app:layout_constraintBottom_toTopOf="@id/buttonsBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,34 +91,13 @@
 
                 <LinearLayout
                     android:id="@+id/inputIngredientBar"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/recipeDetailsTextView"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recipeDetailsTextView">
-
-                    <TextView
-                        android:id="@+id/recipeingredientName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="Ingredient        "
-                        android:textAlignment="center"
-                        android:textColorHint="@color/pennBlue"
-                        android:textSize="22sp" />
-
-                    <TextView
-                        android:id="@+id/quantityEditText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="5dp"
-                        android:layout_marginBottom="25dp"
-                        android:hint="Quantity"
-                        android:textAlignment="center"
-                        android:textColorHint="@color/pennBlue"
-                        android:textSize="22sp" />
-
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

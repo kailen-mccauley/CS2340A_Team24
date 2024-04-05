@@ -62,9 +62,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                         = new LinearLayout.LayoutParams(
                                         0,
                                         LinearLayout.LayoutParams.WRAP_CONTENT,
-                                        1
+                                        3
                                 );
-                                ingredientNameParams.width = 0;
                                 ingredientNameTextView.setLayoutParams(ingredientNameParams);
                                 ingredientNameTextView.setText(ingredientName);
                                 ingredientNameTextView.setTextSize(22);
@@ -78,7 +77,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                         LinearLayout.LayoutParams.WRAP_CONTENT,
                                         1
                                 );
-                                quantityParams.width = 0;
                                 quantityParams.setMarginStart(200);
                                 quantityTextView.setLayoutParams(quantityParams);
                                 quantityTextView.setText(String.valueOf(quantity));

@@ -120,11 +120,15 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                         }
                                     });
                                 }
-
                                 @Override
                                 public void onRecipeDetailsError(String errorMessage) {
                                 }
                             });
+                    Intent intent = new Intent(RecipeDetailActivity.this,
+                        RecipeActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(RecipeDetailActivity.this,
+                            title.getText() + " was cooked!", Toast.LENGTH_SHORT).show();
 
             }
 

@@ -250,6 +250,68 @@ public class IngredientsActivityViewModel {
                     }
                 });
     }
+    public void getCaloriesForRecipe(Map<String, Integer> ingredients, CaloriesListener listener) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+            mDatabase.child("pantry").orderByChild("userId").equalTo(uid)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            int totalCalories = 0;
+                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                                Ingredient ingredient = snapshot.getValue(Ingredient.class);
+                                if (ingredient != null && ingredients.containsKey(ingredient.getIngredientName())) {
+                                    totalCalories += (ingredient.getCalories() * ingredients.get(ingredient.getIngredientName()));
+                                }
+                            }
+                            listener.onCaloriesReceived(totalCalories);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            // if yk yk
+                        }
+                    });
+        }
+    }
+
+    public void decreaseIngredQuantByRecipe(Map<String, Integer> ingredients) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+            mDatabase.child("pantry").orderByChild("userId").equalTo(uid)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                Ingredient ingredient = snapshot.getValue(Ingredient.class);
+                                if (ingredient != null && ingredients.containsKey(ingredient.getIngredientName())) {
+                                    String ingredientId = snapshot.getKey();
+                                    int inputQuality =  ingredient.getQuantity() - ingredients.get(ingredient.getIngredientName());
+
+                                    if (inputQuality > 0) {
+                                        mDatabase.child("pantry").child(ingredientId)
+                                                .child("quantity").setValue(inputQuality);
+                                    } else {
+                                        mDatabase.child("pantry").child(ingredientId).removeValue();
+                                    }
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            // if yk yk
+                        }
+                    });
+        }
+    }
+
+    public interface CaloriesListener {
+        void onCaloriesReceived(int calories);
+    }
     public interface IngredientListListener {
         void onIngredientsReceived(ArrayList<Ingredient> sortedIngredients);
 

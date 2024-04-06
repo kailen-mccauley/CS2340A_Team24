@@ -10,11 +10,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
+import com.example.greenplate.models.Meal;
 import com.example.greenplate.models.Recipe;
 import com.example.greenplate.viewmodels.IngredientsActivityViewModel;
 import com.example.greenplate.viewmodels.MealActivityViewModel;
@@ -108,11 +110,15 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                 @Override
                                 public void onRecipeDetailsReceived(Recipe recipe) {
                                     Map<String, Integer> ingredients = recipe.getIngredients();
-                                    int calCount = 0;
-                                    for (String ingredientName : ingredients.keySet()) {
-                                        IngredientsActivityViewModel ingredientsVM = IngredientsActivityViewModel.getInstance();
-                                        // NEED A WAY TO GET A SINGLE INGREDIENT's CALORIES HERE!!
-                                    }
+                                    IngredientsActivityViewModel ingredientsVM = IngredientsActivityViewModel.getInstance();
+                                    ingredientsVM.getCaloriesForRecipe(ingredients, new IngredientsActivityViewModel.CaloriesListener() {
+                                        @Override
+                                        public void onCaloriesReceived(int calories) {
+                                            MealActivityViewModel mealVM = MealActivityViewModel.getInstance();
+                                            mealVM.storeMeal(recipe.getRecipeName(), String.valueOf(calories));
+                                            ingredientsVM.decreaseIngredQuantByRecipe(ingredients);
+                                        }
+                                    });
                                 }
 
                                 @Override

@@ -155,29 +155,33 @@ public class RecipeActivity extends AppCompatActivity {
         recipesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                boolean toast = true;
-                if (position > 0) {
-                    Map<SpannableString, Recipe> selectedRecipeMap = recipesList.get(position - 1);
-                    for (SpannableString spannable : selectedRecipeMap.keySet()) {
-                        BackgroundColorSpan[] spans = spannable.getSpans(0, spannable.length(),
-                                BackgroundColorSpan.class);
-                        for (BackgroundColorSpan span : spans) {
-                            if (span.getBackgroundColor() == Color.GREEN) {
-                                toast = false;
-                                Recipe selectRecipe = selectedRecipeMap.values().iterator().next();
-                                Intent intent = new Intent(RecipeActivity.this,
-                                        RecipeDetailActivity.class);
-                                intent.putExtra("recipeID", selectRecipe.getRecipeID());
-                                intent.putExtra("recipeName", selectRecipe.getRecipeName());
-                                startActivity(intent);
+                if (position <= 0) {
+                    return;
+                }
+                Map<SpannableString, Recipe> selectedRecipeMap = recipesList.get(position - 1);
+                viewModel.fetchRecipesbyIngredAvail(new RecipeActivityViewModel.RecipeListListener() {
+                    @Override
+                    public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> sortedRecipeList) {
+                        Recipe currRecipe = null;
+                        for (Recipe recipe : selectedRecipeMap.values()) {
+                            currRecipe = recipe;
+                            break;
+                        }
+                        Intent intent = new Intent(RecipeActivity.this, RecipeDetailActivity.class);
+                        intent.putExtra("recipeID", currRecipe.getRecipeID());
+                        intent.putExtra("recipeName", currRecipe.getRecipeName());
+                        for (Map<SpannableString, Recipe> entry : sortedRecipeList) {
+                            for (Recipe recipe : entry.values()) {
+                                if (recipe.getRecipeID().equals(currRecipe.getRecipeID())) {
+                                    intent.putExtra("canMake", true);
+                                    startActivity(intent);
+                                    return;
+                                }
                             }
                         }
+                        startActivity(intent);
                     }
-                    if (toast) {
-                        Toast.makeText(RecipeActivity.this, "Not enough ingredients in "
-                                + "your pantry to make this recipe!", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                });
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {

@@ -29,19 +29,24 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private RecipeActivityViewModel recipeViewModel;
     private TextView title;
     private String recipeID;
+    private Boolean canMake;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // DO NOT MODIFY
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_display);
         Button toRecipeScreen = findViewById(R.id.btn_to_recipe_screen);
-        Button toCookRecipe = findViewById(R.id.btn_to_cook);
+        Button toCookOrShop = findViewById(R.id.btn_to_cook_or_shop);
         RelativeLayout parentLayout = findViewById(R.id.activity_input_ingredients);
         title = findViewById(R.id.recipeDetailsTextView);
         recipeViewModel = RecipeActivityViewModel.getInstance();
         if (InputValidator.isValidRecipeDetailIntent(getIntent())) {
             recipeID = getIntent().getStringExtra("recipeID");
             title.setText(getIntent().getStringExtra("recipeName"));
+            canMake = getIntent().getBooleanExtra("canMake", false);
+        }
+        if (!canMake) {
+            toCookOrShop.setText("Add to\nShopping List");
         }
         recipeViewModel.getRecipeDetails(recipeID, new RecipeActivityViewModel.RecipeDetailsListener() {
             @Override
@@ -102,9 +107,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        toCookRecipe.setOnClickListener(new View.OnClickListener() {
+
+        // Potentially strategy pattern here?????
+        // One strategy can be for if the user can make a recipe, we "cook" the meal.
+        // Second strategy can be for if they cannot make a recipe, so we add ingredients to the shopping cart
+        toCookOrShop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (canMake) {
                     recipeViewModel.getRecipeDetails(recipeID,
                             new RecipeActivityViewModel.RecipeDetailsListener() {
                                 @Override
@@ -125,6 +135,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                 public void onRecipeDetailsError(String errorMessage) {
                                 }
                             });
+                    Intent intent = new Intent(RecipeDetailActivity.this,
+                            RecipeActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(RecipeDetailActivity.this,
+                            title.getText() + " was cooked!", Toast.LENGTH_SHORT).show();
+                } else {
+                    // We add the logic for adding the ingredients to the shopping cart
+                }
 
             }
 

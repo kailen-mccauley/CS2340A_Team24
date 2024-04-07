@@ -29,6 +29,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private RecipeActivityViewModel recipeViewModel;
     private TextView title;
     private String recipeID;
+    private Boolean canMake;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // DO NOT MODIFY
@@ -42,6 +43,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
         if (InputValidator.isValidRecipeDetailIntent(getIntent())) {
             recipeID = getIntent().getStringExtra("recipeID");
             title.setText(getIntent().getStringExtra("recipeName"));
+            canMake = getIntent().getBooleanExtra("canMake", false);
+        }
+        if (!canMake) {
+            toCookRecipe.setText("Add to\nShopping List");
         }
         recipeViewModel.getRecipeDetails(recipeID, new RecipeActivityViewModel.RecipeDetailsListener() {
             @Override
@@ -102,9 +107,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Potentially strategy pattern here?????
+        // One strategy can be for if the user can make a recipe, we "cook" the meal.
+        // Second strategy can be for if they cannot make a recipe, so we add ingredients to the shopping cart
         toCookRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (canMake) {
                     recipeViewModel.getRecipeDetails(recipeID,
                             new RecipeActivityViewModel.RecipeDetailsListener() {
                                 @Override
@@ -120,15 +130,19 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                         }
                                     });
                                 }
+
                                 @Override
                                 public void onRecipeDetailsError(String errorMessage) {
                                 }
                             });
                     Intent intent = new Intent(RecipeDetailActivity.this,
-                        RecipeActivity.class);
+                            RecipeActivity.class);
                     startActivity(intent);
                     Toast.makeText(RecipeDetailActivity.this,
                             title.getText() + " was cooked!", Toast.LENGTH_SHORT).show();
+                } else {
+                    // We add the logic for adding the ingredients to the shopping cart
+                }
 
             }
 

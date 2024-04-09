@@ -3,10 +3,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import com.example.greenplate.viewmodels.ShoppingListActivityViewModel;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShoppingActivity extends AppCompatActivity {
 
@@ -41,5 +45,9 @@ public class ShoppingActivity extends AppCompatActivity {
         makeNavigationBar(toPersonalButton, intentPersonal);
         Intent intentIngredient = new Intent(ShoppingActivity.this, IngredientsActivity.class);
         makeNavigationBar(toIngredientButton, intentIngredient);
+
+        List<String> list = new ArrayList<>();
+        list.add("spinach");
+        ShoppingListActivityViewModel.getInstance().buyItems(list);
     }
 }

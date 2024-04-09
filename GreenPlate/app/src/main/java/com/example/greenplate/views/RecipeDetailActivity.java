@@ -79,9 +79,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams quantityParams
                             = new LinearLayout.LayoutParams(0,
                             LinearLayout.LayoutParams.WRAP_CONTENT,
-                            1
+                            2
                     );
-                    quantityParams.setMarginStart(200);
+                    quantityParams.setMarginStart(50);
                     quantityTextView.setLayoutParams(quantityParams);
                     quantityTextView.setText(String.valueOf(quantity));
                     quantityTextView.setTextSize(22);

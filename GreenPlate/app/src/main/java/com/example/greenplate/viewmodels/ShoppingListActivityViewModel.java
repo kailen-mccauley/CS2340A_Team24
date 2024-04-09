@@ -12,7 +12,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public class ShoppingListActivityViewModel {
     private static volatile ShoppingListActivityViewModel instance;
@@ -36,12 +39,95 @@ public class ShoppingListActivityViewModel {
         return instance;
     }
 
-     /* TODO1: Add to shopping list
-     * - Take in ingredient name, quantity
-     * - Query database to see if there is another shopping list item w/ same name
-     * - If there is, then simply update the quantity
-     * - Otherwise, add a new shopping list item to database
-     */
+    public void fetchShoppingListItems(ShoppingItemsListener listener) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        Map<String, Integer> items = new HashMap<>();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+            mDatabase.child("shoppinglist").orderByChild("userId").equalTo(uid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                            String ingredientName = snapshot.child("ingredientName").getValue(String.class);
+                            int quantity = snapshot.child("quantity").getValue(Integer.class);
+                            items.put(ingredientName, quantity);
+                        }
+                        listener.onShoppingItemsReceived(items);
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+        }
+    }
+
+    public void storeShoppingListItem(String ingredientName, int quantity, ShoppingActivity shoppingActivity) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+            mDatabase.child("shoppinglist").orderByChild("userId").equalTo(uid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        boolean isDuplicate = false;
+                        String id = null;
+                        for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                            String name = snapshot.child("ingredientName").getValue(String.class);
+                            if (name != null && name.equals(ingredientName.toLowerCase())) {
+                                isDuplicate = true;
+                                id = snapshot.getKey();
+                                break;
+                            }
+                        }
+
+                        if (isDuplicate) {
+                            mDatabase.child("shoppinglist").child(id).child("quantity").setValue(quantity);
+                            Toast.makeText(shoppingActivity, "Item already in shopping cart; quantity updated!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            id = mDatabase.child("shoppinglist").push().getKey();
+                            mDatabase.child("shoppinglist").child(id).child("quantity").setValue(quantity);
+                            mDatabase.child("shoppinglist").child(id).child("ingredientName").setValue(ingredientName.toLowerCase());
+                            mDatabase.child("shoppinglist").child(id).child("userId").setValue(uid);
+                            Toast.makeText(shoppingActivity, "Item added to shopping cart!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+        }
+    }
+
+    public void removeShoppingListItem(String ingredientName) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+            mDatabase.child("shoppinglist").orderByChild("userId").equalTo(uid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                            String name = snapshot.child("ingredientName").getValue(String.class);
+                            if (name != null && name.equals(ingredientName.toLowerCase())) {
+                                String id = snapshot.getKey();
+                                mDatabase.child("shoppinglist").child(id).removeValue();
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+        }
+    }
+    
+    public interface ShoppingItemsListener {
+        void onShoppingItemsReceived(List<Triplet<String, String, Integer>> shoppingListItems);
+    }
 
 
      /* TODO2: Increase quantity

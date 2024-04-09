@@ -126,7 +126,7 @@ public class ShoppingListActivityViewModel {
     }
     
     public interface ShoppingItemsListener {
-        void onShoppingItemsReceived(List<Triplet<String, String, Integer>> shoppingListItems);
+        void onShoppingItemsReceived(Map<String, Integer> shoppingListItems);
     }
 
 

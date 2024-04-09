@@ -45,9 +45,5 @@ public class ShoppingActivity extends AppCompatActivity {
         makeNavigationBar(toPersonalButton, intentPersonal);
         Intent intentIngredient = new Intent(ShoppingActivity.this, IngredientsActivity.class);
         makeNavigationBar(toIngredientButton, intentIngredient);
-
-        List<String> list = new ArrayList<>();
-        list.add("spinach");
-        ShoppingListActivityViewModel.getInstance().buyItems(list);
     }
 }

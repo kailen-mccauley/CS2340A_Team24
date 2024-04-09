@@ -1,9 +1,11 @@
 package com.example.greenplate.viewmodels;
 import android.provider.ContactsContract;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.greenplate.models.Ingredient;
+import com.example.greenplate.views.ShoppingActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -205,4 +207,66 @@ public class ShoppingListActivityViewModel {
      * - Take in a list of items by name
      * - Remove each item from shopping list and add to pantry
      */
+     public void buyItems(List<String> itemNames) {
+         FirebaseUser currentUser = mAuth.getCurrentUser();
+         if (currentUser != null) {
+             String uid = currentUser.getUid();
+             mDatabase.child("shoppinglist").orderByChild("userId").equalTo(uid)
+                     .addListenerForSingleValueEvent(new ValueEventListener() {
+                         @Override
+                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                 Ingredient ingredient = snapshot.getValue(Ingredient.class);
+                                 if (ingredient != null && itemNames.contains(ingredient.getIngredientName())) {
+                                     snapshot.getRef().removeValue();
+
+                                     mDatabase.child("pantry").orderByChild("ingredientName")
+                                             .equalTo(ingredient.getIngredientName())
+                                             .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                 @Override
+                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                     boolean ingredientExists = false;
+                                                     String pantryItemName = null;
+                                                     for (DataSnapshot pantryItemSnapshot : snapshot.getChildren()) {
+                                                         Ingredient pantryItem = pantryItemSnapshot.getValue(Ingredient.class);
+                                                         if (pantryItem != null && pantryItem.getUserId().equals(uid)) {
+                                                             ingredientExists = true;
+                                                             pantryItemName = pantryItemSnapshot.getKey();
+                                                             int newQuantity = pantryItem.getQuantity() + ingredient.getQuantity();
+                                                             mDatabase.child("pantry").child(pantryItemName).child("quantity").setValue(newQuantity);
+                                                             break;
+                                                         }
+                                                     }
+
+                                                     if (!ingredientExists) {
+                                                         String newPantryItemId = mDatabase.child("pantry").push().getKey();
+                                                         if (newPantryItemId != null) {
+                                                             Ingredient pantryItem = new Ingredient(
+                                                                     ingredient.getIngredientName(),
+                                                                     ingredient.getCalories(),
+                                                                     ingredient.getQuantity(),
+                                                                     uid
+                                                             );
+                                                             mDatabase.child("pantry").child(newPantryItemId).setValue(pantryItem);
+                                                         }
+                                                     }
+                                                 }
+
+                                                 @Override
+                                                 public void onCancelled(@NonNull DatabaseError error) {
+
+                                                 }
+                                             });
+                                 }
+                             }
+                         }
+
+                         @Override
+                         public void onCancelled(@NonNull DatabaseError error) {
+
+                         }
+                     });
+         }
+     }
+
 }

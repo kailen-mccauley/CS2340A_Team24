@@ -70,36 +70,33 @@ public class ShoppingListActivityViewModel {
         if (currentUser != null) {
             String uid = currentUser.getUid();
             mDatabase.child("shoppinglist").orderByChild("userId").equalTo(uid)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        boolean isDuplicate = false;
-                        String id = null;
-                        for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                            String name = snapshot.child("ingredientName").getValue(String.class);
-                            if (name != null && name.equals(ingredientName.toLowerCase())) {
-                                isDuplicate = true;
-                                id = snapshot.getKey();
-                                break;
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            boolean isDuplicate = false;
+                            String id = null;
+                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                                String name = snapshot.child("ingredientName").getValue(String.class);
+                                if (name != null && name.equals(ingredientName.toLowerCase())) {
+                                    isDuplicate = true;
+                                    id = snapshot.getKey();
+                                    int currQuantity = snapshot.child("quantity").getValue(Integer.class);
+                                    mDatabase.child("shoppinglist").child(id).child("quantity").setValue(quantity + currQuantity);
+                                    break;
+                                }
+                            }
+                            if (!isDuplicate) {
+                                id = mDatabase.child("shoppinglist").push().getKey();
+                                mDatabase.child("shoppinglist").child(id).child("quantity").setValue(quantity);
+                                mDatabase.child("shoppinglist").child(id).child("ingredientName").setValue(ingredientName.toLowerCase());
+                                mDatabase.child("shoppinglist").child(id).child("userId").setValue(uid);
                             }
                         }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                        if (isDuplicate) {
-                            mDatabase.child("shoppinglist").child(id).child("quantity").setValue(quantity);
-                            //Toast.makeText(shoppingActivity, "Item already in shopping cart; quantity updated!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            id = mDatabase.child("shoppinglist").push().getKey();
-                            mDatabase.child("shoppinglist").child(id).child("quantity").setValue(quantity);
-                            mDatabase.child("shoppinglist").child(id).child("ingredientName").setValue(ingredientName.toLowerCase());
-                            mDatabase.child("shoppinglist").child(id).child("userId").setValue(uid);
-                            //Toast.makeText(shoppingActivity, "Item added to shopping cart!", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                    });
         }
     }
 
@@ -130,78 +127,6 @@ public class ShoppingListActivityViewModel {
     public interface ShoppingItemsListener {
         void onShoppingItemsReceived(Map<String, Integer> shoppingListItems);
     }
-
-
-     /* TODO2: Increase quantity
-     * - Take in ingredient name, quantity
-     * - Increment quantity
-     */
-     public void increaseShoppingListQuantity(String ingredientName, int quantity) {
-         FirebaseUser currentUser = mAuth.getCurrentUser();
-         if (currentUser != null) {
-             String uid = currentUser.getUid();
-             mDatabase.child("shoppinglist").orderByChild("userId").equalTo(uid)
-                     .addListenerForSingleValueEvent(new ValueEventListener() {
-                         @Override
-                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                 Ingredient ingredient = snapshot.getValue(Ingredient.class);
-                                 if (ingredient != null && ingredient.getIngredientName()
-                                         .equals(ingredientName)) {
-                                     String itemID = snapshot.getKey();
-                                     int newQuantity = quantity + ingredient.getQuantity();
-                                     //ADD FUNCTIONALITY IN VIEW SO THAT IT TESTS USING INPUT VALIDATOR THAT THE QUANTITY CANNOT BE NEGATIVE
-                                     mDatabase.child("shoppinglist").child(itemID)
-                                             .child("quantity").setValue(newQuantity);
-                                     return; // Exit loop once ingredient is found and updated
-                                 }
-                             }
-                         }
-
-                         @Override
-                         public void onCancelled(@NonNull DatabaseError error) {
-
-                         }
-                     });
-         }
-     }
-
-     /* TODO3: Decrease quantity
-     * - Same thing, but decrease
-     * - Edge case: if quantity drops to 0 or below, remove it from database
-     */
-     public void decreaseShoppingListQuantity(String ingredientName, int quantity) {
-         FirebaseUser currentUser = mAuth.getCurrentUser();
-         if (currentUser != null) {
-             String uid = currentUser.getUid();
-             mDatabase.child("shoppinglist").orderByChild("userId").equalTo(uid)
-                     .addListenerForSingleValueEvent(new ValueEventListener() {
-                         @Override
-                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                 Ingredient ingredient = snapshot.getValue(Ingredient.class);
-                                 if (ingredient != null && ingredient.getIngredientName()
-                                         .equals(ingredientName)) {
-                                     String itemID = snapshot.getKey();
-                                     int newQuantity = ingredient.getQuantity() - quantity;
-                                     if (newQuantity <= 0) {
-                                         mDatabase.child("shoppinglist").child(itemID).removeValue();
-                                     } else {
-                                         mDatabase.child("shoppinglist").child(itemID)
-                                                 .child("quantity").setValue(newQuantity);
-                                     }
-                                     return; // Exit loop once ingredient is found and updated
-                                 }
-                             }
-                         }
-
-                         @Override
-                         public void onCancelled(@NonNull DatabaseError error) {
-
-                         }
-                     });
-         }
-     }
 
      /* TODO4: Buy items
      * - Take in a list of items by name

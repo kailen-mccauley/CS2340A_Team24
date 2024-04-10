@@ -65,7 +65,7 @@ public class ShoppingListActivityViewModel {
         }
     }
 
-    public void storeShoppingListItem(String ingredientName, int quantity) {
+    public void storeShoppingListItem(String ingredientName, int quantity, ShoppingActivity shoppingActivity) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String uid = currentUser.getUid();
@@ -86,13 +86,13 @@ public class ShoppingListActivityViewModel {
 
                         if (isDuplicate) {
                             mDatabase.child("shoppinglist").child(id).child("quantity").setValue(quantity);
-                            //Toast.makeText(shoppingActivity, "Item already in shopping cart; quantity updated!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(shoppingActivity, "Item already in shopping cart; quantity updated!", Toast.LENGTH_SHORT).show();
                         } else {
                             id = mDatabase.child("shoppinglist").push().getKey();
                             mDatabase.child("shoppinglist").child(id).child("quantity").setValue(quantity);
                             mDatabase.child("shoppinglist").child(id).child("ingredientName").setValue(ingredientName.toLowerCase());
                             mDatabase.child("shoppinglist").child(id).child("userId").setValue(uid);
-                            //Toast.makeText(shoppingActivity, "Item added to shopping cart!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(shoppingActivity, "Item added to shopping cart!", Toast.LENGTH_SHORT).show();
                         }
                     }
                     @Override

@@ -2,7 +2,6 @@ package com.example.greenplate.views;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -16,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
-import com.example.greenplate.models.Meal;
 import com.example.greenplate.models.Recipe;
 import com.example.greenplate.viewmodels.IngredientsActivityViewModel;
 import com.example.greenplate.viewmodels.MealActivityViewModel;
@@ -49,7 +47,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
         if (!canMake) {
             toCookOrShop.setText("Add to\nShopping List");
         }
-        recipeViewModel.getRecipeDetails(recipeID, new RecipeActivityViewModel.RecipeDetailsListener() {
+        recipeViewModel.getRecipeDetails(recipeID, new
+                RecipeActivityViewModel.RecipeDetailsListener() {
             @Override
             public void onRecipeDetailsReceived(Recipe recipe) {
                 LinearLayout scrollable = findViewById(R.id.scrollableLay);
@@ -108,10 +107,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        // Potentially strategy pattern here?????
-        // One strategy can be for if the user can make a recipe, we "cook" the meal.
-        // Second strategy can be for if they cannot make a recipe, so we add ingredients to the shopping cart
         toCookOrShop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,17 +116,22 @@ public class RecipeDetailActivity extends AppCompatActivity {
                             public void onRecipeDetailsReceived(Recipe recipe) {
                                 Map<String, Integer> ingredients = recipe.getIngredients();
                                 if (canMake) {
-                                    IngredientsActivityViewModel ingredientsVM = IngredientsActivityViewModel.getInstance();
-                                    ingredientsVM.getCaloriesForRecipe(ingredients, new IngredientsActivityViewModel.CaloriesListener() {
+                                    IngredientsActivityViewModel ingredientsVM =
+                                            IngredientsActivityViewModel.getInstance();
+                                    ingredientsVM.getCaloriesForRecipe(ingredients, new
+                                            IngredientsActivityViewModel.CaloriesListener() {
                                         @Override
                                         public void onCaloriesReceived(int calories) {
-                                            MealActivityViewModel mealVM = MealActivityViewModel.getInstance();
-                                            mealVM.storeMeal(recipe.getRecipeName(), String.valueOf(calories));
+                                            MealActivityViewModel mealVM =
+                                                    MealActivityViewModel.getInstance();
+                                            mealVM.storeMeal(recipe.getRecipeName(),
+                                                    String.valueOf(calories));
                                             ingredientsVM.decreaseIngredQuantByRecipe(ingredients);
                                         }
                                     });
                                 } else {
-                                    ShoppingListActivityViewModel shoppingVM = ShoppingListActivityViewModel.getInstance();
+                                    ShoppingListActivityViewModel shoppingVM =
+                                            ShoppingListActivityViewModel.getInstance();
                                     for (String ingredient : ingredients.keySet()) {
                                         int quantity = ingredients.get(ingredient);
                                         shoppingVM.storeShoppingListItem(ingredient, quantity);

@@ -44,7 +44,6 @@ public class PersonalActivity extends AppCompatActivity {
         ImageButton toHomeButton = findViewById(R.id.btn_home);
         ImageButton toRecipeButton = findViewById(R.id.btn_recipe);
         ImageButton toIngredientButton = findViewById(R.id.btn_ingredients);
-        ImageButton toPersonalButton = findViewById(R.id.btn_personal);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toMealButton = findViewById(R.id.btn_meal);
 

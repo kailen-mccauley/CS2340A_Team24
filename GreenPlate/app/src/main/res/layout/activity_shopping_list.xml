@@ -40,7 +40,7 @@
                 android:id="@+id/scrollableLay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/recipeDetailsTextView"
+                android:layout_below="@id/shoppingTextView"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,11 +50,11 @@
                     android:id="@+id/inputIngredientBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/recipeDetailsTextView"
+                    android:layout_below="@id/shoppingTextView"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/recipeDetailsTextView">
+                    app:layout_constraintTop_toBottomOf="@+id/shoppingTextView">
 
                     <TextView
                         android:id="@+id/recipeingredientName"

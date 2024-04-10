@@ -24,8 +24,7 @@ public class ShoppingActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        // DO NOT MODIFY
+    protected void onCreate(Bundle savedInstanceState) { // DO NOT MODIFY
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
         ImageButton toHomeButton = findViewById(R.id.btn_home);
@@ -33,7 +32,6 @@ public class ShoppingActivity extends AppCompatActivity {
         ImageButton toIngredientButton = findViewById(R.id.btn_ingredients);
         ImageButton toMealButton = findViewById(R.id.btn_meal);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
-        ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
 
         Intent intentHome = new Intent(ShoppingActivity.this, HomeActivity.class);
         makeNavigationBar(toHomeButton, intentHome);
@@ -45,5 +43,8 @@ public class ShoppingActivity extends AppCompatActivity {
         makeNavigationBar(toPersonalButton, intentPersonal);
         Intent intentIngredient = new Intent(ShoppingActivity.this, IngredientsActivity.class);
         makeNavigationBar(toIngredientButton, intentIngredient);
+
+
+
     }
 }

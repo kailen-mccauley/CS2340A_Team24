@@ -65,7 +65,6 @@ public class IngredientsActivity extends AppCompatActivity {
         ImageButton toRecipeButton = findViewById(R.id.btn_recipe);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
-        ImageButton toIngredientButton = findViewById(R.id.btn_ingredients);
         Button toIngredientsForm = findViewById(R.id.btn_to_ingredients_form);
         TextView currQuantity = findViewById(R.id.currQuantityTextView);
         Button increaseQuantity = findViewById(R.id.btn_increase_quantity);

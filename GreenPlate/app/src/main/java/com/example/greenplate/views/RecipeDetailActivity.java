@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
+import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.models.Recipe;
 import com.example.greenplate.viewmodels.IngredientsActivityViewModel;
 import com.example.greenplate.viewmodels.MealActivityViewModel;
@@ -108,9 +109,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
                             @Override
                             public void onRecipeDetailsReceived(Recipe recipe) {
                                 Map<String, Integer> ingredients = recipe.getIngredients();
+                                IngredientsActivityViewModel ingredientsVM =
+                                        IngredientsActivityViewModel.getInstance();
                                 if (canMake) {
-                                    IngredientsActivityViewModel ingredientsVM =
-                                            IngredientsActivityViewModel.getInstance();
                                     ingredientsVM.getCaloriesForRecipe(ingredients, new
                                             IngredientsActivityViewModel.CaloriesListener() {
                                         @Override
@@ -126,8 +127,21 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                     ShoppingListActivityViewModel shoppingVM =
                                             ShoppingListActivityViewModel.getInstance();
                                     for (String ingredient : ingredients.keySet()) {
-                                        int quantity = ingredients.get(ingredient);
-                                        shoppingVM.storeShoppingListItem(ingredient, quantity);
+                                        ingredientsVM.getIngredTree(new IngredientsActivityViewModel
+                                                .IngredientTreeMapListener() {
+                                            @Override
+                                            public void onIngredTreeReceive(Map<String,
+                                                    Ingredient> ingredientMap) {
+                                                Ingredient pantryIngredient =
+                                                        ingredientMap.get(ingredient);
+                                                int quantity = ingredients.get(ingredient);
+                                                if (pantryIngredient != null) {
+                                                    quantity -= pantryIngredient.getQuantity();
+                                                }
+                                                shoppingVM.storeShoppingListItem(ingredient,
+                                                        quantity);
+                                            }
+                                        });
                                     }
                                 }
                             }

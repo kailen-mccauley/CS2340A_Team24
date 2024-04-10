@@ -72,35 +72,32 @@ public class ShoppingListActivityViewModel {
         if (currentUser != null) {
             String uid = currentUser.getUid();
             mDatabase.child("shoppinglist").orderByChild("userId").equalTo(uid)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        boolean isDuplicate = false;
-                        String id = null;
-                        for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                            String name = snapshot.getValue(ShoppingItem.class).getIngredientName();
-                            if (name != null && name.equals(ingredientName.toLowerCase())) {
-                                isDuplicate = true;
-                                id = snapshot.getKey();
-                                break;
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            boolean isDuplicate = false;
+                            String id = null;
+                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                                String name = snapshot.getValue(ShoppingItem.class).getIngredientName();
+                                if (name != null && name.equals(ingredientName.toLowerCase())) {
+                                    isDuplicate = true;
+                                    id = snapshot.getKey();
+                                    int currQuantity = snapshot.getValue(ShoppingItem.class).getQuantity();
+                                    mDatabase.child("shoppinglist").child(id).child("quantity").setValue(quantity + currQuantity);
+                                    break;
+                                }
+                            }
+                            if (!isDuplicate) {
+                                id = mDatabase.child("shoppinglist").push().getKey();
+                                ShoppingItem item = new ShoppingItem(ingredientName, quantity, uid);
+                                mDatabase.child("shoppinglist").child(id).setValue(item);
                             }
                         }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                        if (isDuplicate) {
-                            mDatabase.child("shoppinglist").child(id).child("quantity").setValue(quantity);
-                            //Toast.makeText(shoppingActivity, "Item already in shopping cart; quantity updated!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            id = mDatabase.child("shoppinglist").push().getKey();
-                            ShoppingItem item = new ShoppingItem(ingredientName, quantity, uid);
-                            mDatabase.child("shoppinglist").child(id).setValue(item);
-                            //Toast.makeText(shoppingActivity, "Item added to shopping cart!", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                    });
         }
     }
 

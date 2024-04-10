@@ -21,7 +21,6 @@ import com.example.greenplate.models.Recipe;
 import com.example.greenplate.viewmodels.IngredientsActivityViewModel;
 import com.example.greenplate.viewmodels.MealActivityViewModel;
 import com.example.greenplate.viewmodels.RecipeActivityViewModel;
-import com.example.greenplate.viewmodels.ShoppingListActivityViewModel;
 
 import java.util.Map;
 
@@ -115,12 +114,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
         toCookOrShop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recipeViewModel.getRecipeDetails(recipeID,
-                        new RecipeActivityViewModel.RecipeDetailsListener() {
-                            @Override
-                            public void onRecipeDetailsReceived(Recipe recipe) {
-                                Map<String, Integer> ingredients = recipe.getIngredients();
-                                if (canMake) {
+                if (canMake) {
+                    recipeViewModel.getRecipeDetails(recipeID,
+                            new RecipeActivityViewModel.RecipeDetailsListener() {
+                                @Override
+                                public void onRecipeDetailsReceived(Recipe recipe) {
+                                    Map<String, Integer> ingredients = recipe.getIngredients();
                                     IngredientsActivityViewModel ingredientsVM = IngredientsActivityViewModel.getInstance();
                                     ingredientsVM.getCaloriesForRecipe(ingredients, new IngredientsActivityViewModel.CaloriesListener() {
                                         @Override
@@ -130,24 +129,21 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                             ingredientsVM.decreaseIngredQuantByRecipe(ingredients);
                                         }
                                     });
-                                } else {
-                                    ShoppingListActivityViewModel shoppingVM = ShoppingListActivityViewModel.getInstance();
-                                    for (String ingredient : ingredients.keySet()) {
-                                        int quantity = ingredients.get(ingredient);
-                                        shoppingVM.storeShoppingListItem(ingredient, quantity);
-                                    }
                                 }
-                            }
-                            @Override
-                            public void onRecipeDetailsError(String errorMessage) {
-                            }
-                        });
-                Intent intent = new Intent(RecipeDetailActivity.this,
-                        RecipeActivity.class);
-                startActivity(intent);
-                String message = canMake ? " was cooked!" : " ingredients added to shopping list!";
-                Toast.makeText(RecipeDetailActivity.this,
-                        title.getText() + message, Toast.LENGTH_SHORT).show();
+
+                                @Override
+                                public void onRecipeDetailsError(String errorMessage) {
+                                }
+                            });
+                    Intent intent = new Intent(RecipeDetailActivity.this,
+                            RecipeActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(RecipeDetailActivity.this,
+                            title.getText() + " was cooked!", Toast.LENGTH_SHORT).show();
+                } else {
+                    // We add the logic for adding the ingredients to the shopping cart
+                }
+
             }
 
         });

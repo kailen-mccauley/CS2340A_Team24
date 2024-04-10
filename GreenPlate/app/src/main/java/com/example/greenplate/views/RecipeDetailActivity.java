@@ -49,55 +49,48 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
         recipeViewModel.getRecipeDetails(recipeID, new
                 RecipeActivityViewModel.RecipeDetailsListener() {
-                    @Override
-                    public void onRecipeDetailsReceived(Recipe recipe) {
-                        LinearLayout scrollable = findViewById(R.id.scrollableLay);
-                        for (Map.Entry<String, Integer> entry : recipe.
-                                getIngredients().entrySet()) {
-                            String ingredientName = entry.getKey();
-                            int quantity = entry.getValue();
-                            LinearLayout ingredientLayout
+            @Override
+            public void onRecipeDetailsReceived(Recipe recipe) {
+                LinearLayout scrollable = findViewById(R.id.scrollableLay);
+                for (Map.Entry<String, Integer> entry : recipe.
+                        getIngredients().entrySet()) {
+                    String ingredientName = entry.getKey();
+                    int quantity = entry.getValue();
+                    LinearLayout ingredientLayout
                                     = new LinearLayout(RecipeDetailActivity.this);
-                            ingredientLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.MATCH_PARENT,
-                                    LinearLayout.LayoutParams.WRAP_CONTENT
-                            ));
-                            ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
-                            TextView ingredientNameTextView = new TextView(RecipeDetailActivity.this);
-                            LinearLayout.LayoutParams ingredientNameParams
-                                    = new LinearLayout.LayoutParams(
-                                    0,
-                                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                                    3
-                            );
-                            ingredientNameTextView.setLayoutParams(ingredientNameParams);
-                            ingredientNameTextView.setText(ingredientName);
-                            ingredientNameTextView.setTextSize(22);
-                            ingredientNameTextView.setTextColor(getResources().getColor(R.color.pennBlue));
+                    ingredientLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    ));
+                    ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
+                    TextView ingredientNameTextView = new TextView(RecipeDetailActivity.this);
+                    LinearLayout.LayoutParams ingredientNameParams
+                            = new LinearLayout.LayoutParams(0,
+                            LinearLayout.LayoutParams.WRAP_CONTENT, 3);
+                    ingredientNameTextView.setLayoutParams(ingredientNameParams);
+                    ingredientNameTextView.setText(ingredientName);
+                    ingredientNameTextView.setTextSize(22);
+                    ingredientNameTextView.setTextColor(getResources().getColor(R.color.pennBlue));
 
-                            TextView quantityTextView = new TextView(RecipeDetailActivity.this);
-                            LinearLayout.LayoutParams quantityParams
-                                    = new LinearLayout.LayoutParams(0,
-                                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                                    2
-                            );
-                            quantityParams.setMarginStart(50);
-                            quantityTextView.setLayoutParams(quantityParams);
-                            quantityTextView.setText(String.valueOf(quantity));
-                            quantityTextView.setTextSize(22);
-                            quantityTextView.setTextColor(getResources().getColor(R.color.pennBlue));
+                    TextView quantityTextView = new TextView(RecipeDetailActivity.this);
+                    LinearLayout.LayoutParams quantityParams
+                            = new LinearLayout.LayoutParams(0,
+                            LinearLayout.LayoutParams.WRAP_CONTENT, 2);
+                    quantityParams.setMarginStart(50);
+                    quantityTextView.setLayoutParams(quantityParams);
+                    quantityTextView.setText(String.valueOf(quantity));
+                    quantityTextView.setTextSize(22);
+                    quantityTextView.setTextColor(getResources().getColor(R.color.pennBlue));
+                    ingredientLayout.addView(ingredientNameTextView);
+                    ingredientLayout.addView(quantityTextView);
 
-                            ingredientLayout.addView(ingredientNameTextView);
-                            ingredientLayout.addView(quantityTextView);
-
-                            scrollable.addView(ingredientLayout);
-                        }
-                    }
-
-                    @Override
-                    public void onRecipeDetailsError(String errorMessage) {
-                    }
-                });
+                    scrollable.addView(ingredientLayout);
+                }
+            }
+            @Override
+            public void onRecipeDetailsError(String errorMessage) {
+            }
+        });
 
         toRecipeScreen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,15 +113,15 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                             IngredientsActivityViewModel.getInstance();
                                     ingredientsVM.getCaloriesForRecipe(ingredients, new
                                             IngredientsActivityViewModel.CaloriesListener() {
-                                                @Override
-                                                public void onCaloriesReceived(int calories) {
-                                                    MealActivityViewModel mealVM =
-                                                            MealActivityViewModel.getInstance();
-                                                    mealVM.storeMeal(recipe.getRecipeName(),
-                                                            String.valueOf(calories));
-                                                    ingredientsVM.decreaseIngredQuantByRecipe(ingredients);
-                                                }
-                                            });
+                                        @Override
+                                        public void onCaloriesReceived(int calories) {
+                                            MealActivityViewModel mealVM =
+                                                    MealActivityViewModel.getInstance();
+                                            mealVM.storeMeal(recipe.getRecipeName(),
+                                                    String.valueOf(calories));
+                                            ingredientsVM.decreaseIngredQuantByRecipe(ingredients);
+                                        }
+                                    });
                                 } else {
                                     ShoppingListActivityViewModel shoppingVM =
                                             ShoppingListActivityViewModel.getInstance();

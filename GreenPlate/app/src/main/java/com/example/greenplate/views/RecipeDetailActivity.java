@@ -133,9 +133,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                                 if (pantryIngredient != null
                                                     && pantryIngredient.getQuantity() < quantity) {
                                                     quantity -= pantryIngredient.getQuantity();
+                                                    shoppingVM.storeShoppingListItem(ingredient,
+                                                            quantity);
                                                 }
-                                                shoppingVM.storeShoppingListItem(ingredient,
-                                                        quantity);
                                             }
                                         });
                                     }

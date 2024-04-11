@@ -24,7 +24,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        ImageButton toHomeButton = findViewById(R.id.btn_home);
         ImageButton toMealButton = findViewById(R.id.btn_meal);
         ImageButton toRecipeButton = findViewById(R.id.btn_recipe);
         ImageButton toIngredientButton = findViewById(R.id.btn_ingredients);

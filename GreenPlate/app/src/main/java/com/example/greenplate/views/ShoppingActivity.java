@@ -33,7 +33,6 @@ public class ShoppingActivity extends AppCompatActivity {
         ImageButton toIngredientButton = findViewById(R.id.btn_ingredients);
         ImageButton toMealButton = findViewById(R.id.btn_meal);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
-        ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
 
         Intent intentHome = new Intent(ShoppingActivity.this, HomeActivity.class);
         makeNavigationBar(toHomeButton, intentHome);

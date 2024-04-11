@@ -5,6 +5,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.greenplate.models.Ingredient;
+import com.example.greenplate.models.ShoppingItem;
 import com.example.greenplate.views.ShoppingActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -51,8 +52,9 @@ public class ShoppingListActivityViewModel {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                            String ingredientName = snapshot.child("ingredientName").getValue(String.class);
-                            int quantity = snapshot.child("quantity").getValue(Integer.class);
+                            ShoppingItem item = snapshot.getValue(ShoppingItem.class);
+                            String ingredientName = item.getIngredientName();
+                            int quantity = item.getQuantity();
                             items.put(ingredientName, quantity);
                         }
                         listener.onShoppingItemsReceived(items);
@@ -76,20 +78,19 @@ public class ShoppingListActivityViewModel {
                             boolean isDuplicate = false;
                             String id = null;
                             for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                                String name = snapshot.child("ingredientName").getValue(String.class);
+                                String name = snapshot.getValue(ShoppingItem.class).getIngredientName();
                                 if (name != null && name.equals(ingredientName.toLowerCase())) {
                                     isDuplicate = true;
                                     id = snapshot.getKey();
-                                    int currQuantity = snapshot.child("quantity").getValue(Integer.class);
+                                    int currQuantity = snapshot.getValue(ShoppingItem.class).getQuantity();
                                     mDatabase.child("shoppinglist").child(id).child("quantity").setValue(quantity + currQuantity);
                                     break;
                                 }
                             }
                             if (!isDuplicate) {
                                 id = mDatabase.child("shoppinglist").push().getKey();
-                                mDatabase.child("shoppinglist").child(id).child("quantity").setValue(quantity);
-                                mDatabase.child("shoppinglist").child(id).child("ingredientName").setValue(ingredientName.toLowerCase());
-                                mDatabase.child("shoppinglist").child(id).child("userId").setValue(uid);
+                                ShoppingItem item = new ShoppingItem(ingredientName, quantity, uid);
+                                mDatabase.child("shoppinglist").child(id).setValue(item);
                             }
                         }
                         @Override
@@ -109,7 +110,7 @@ public class ShoppingListActivityViewModel {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                            String name = snapshot.child("ingredientName").getValue(String.class);
+                            String name = snapshot.getValue(ShoppingItem.class).getIngredientName();
                             if (name != null && name.equals(ingredientName.toLowerCase())) {
                                 String id = snapshot.getKey();
                                 mDatabase.child("shoppinglist").child(id).removeValue();
@@ -141,12 +142,12 @@ public class ShoppingListActivityViewModel {
                          @Override
                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                              for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                 Ingredient ingredient = snapshot.getValue(Ingredient.class);
-                                 if (ingredient != null && itemNames.contains(ingredient.getIngredientName())) {
+                                 ShoppingItem item = snapshot.getValue(ShoppingItem.class);
+                                 if (item != null && itemNames.contains(item.getIngredientName())) {
                                      snapshot.getRef().removeValue();
 
                                      mDatabase.child("pantry").orderByChild("ingredientName")
-                                             .equalTo(ingredient.getIngredientName())
+                                             .equalTo(item.getIngredientName())
                                              .addListenerForSingleValueEvent(new ValueEventListener() {
                                                  @Override
                                                  public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -157,7 +158,7 @@ public class ShoppingListActivityViewModel {
                                                          if (pantryItem != null && pantryItem.getUserId().equals(uid)) {
                                                              ingredientExists = true;
                                                              pantryItemName = pantryItemSnapshot.getKey();
-                                                             int newQuantity = pantryItem.getQuantity() + ingredient.getQuantity();
+                                                             int newQuantity = pantryItem.getQuantity() + item.getQuantity();
                                                              mDatabase.child("pantry").child(pantryItemName).child("quantity").setValue(newQuantity);
                                                              break;
                                                          }
@@ -167,9 +168,9 @@ public class ShoppingListActivityViewModel {
                                                          String newPantryItemId = mDatabase.child("pantry").push().getKey();
                                                          if (newPantryItemId != null) {
                                                              Ingredient pantryItem = new Ingredient(
-                                                                     ingredient.getIngredientName(),
-                                                                     ingredient.getCalories(),
-                                                                     ingredient.getQuantity(),
+                                                                     item.getIngredientName(),
+                                                                     0,
+                                                                     item.getQuantity(),
                                                                      uid
                                                              );
                                                              mDatabase.child("pantry").child(newPantryItemId).setValue(pantryItem);

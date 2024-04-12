@@ -15,17 +15,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
+import com.example.greenplate.ValueExtractor;
 import com.example.greenplate.viewmodels.PersonalActivityViewModel;
 
 public class PersonalActivity extends AppCompatActivity {
 
     private PersonalActivityViewModel viewModel;
-
-
     private EditText weightEditText;
     private EditText heightEditText;
     private EditText genderEditText;
-    private Button submitButton;
 
     private void makeNavigationBar(ImageButton button, Intent intent) {
         button.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +50,7 @@ public class PersonalActivity extends AppCompatActivity {
         weightEditText = findViewById(R.id.weightEditText);
         heightEditText = findViewById(R.id.heightEditText);
         genderEditText = findViewById(R.id.genderEditText);
-        submitButton = findViewById(R.id.btn_submit_personal_info);
+        Button submitButton = findViewById(R.id.btn_submit_personal_info);
 
         RelativeLayout parentLayout = findViewById(R.id.activity_personal_info);
 
@@ -70,10 +68,9 @@ public class PersonalActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Retrieve values from input fields
-                String weight = weightEditText.getText().toString();
-                String height = heightEditText.getText().toString();
-                String gender = genderEditText.getText().toString();
+                String weight = ValueExtractor.extract(weightEditText);
+                String height = ValueExtractor.extract(heightEditText);
+                String gender = ValueExtractor.extract(genderEditText);
                 if (!InputValidator.isValidInputWithInteger(height)) {
                     Toast.makeText(PersonalActivity.this,
                             "Please enter a valid integer value for height (in cm)",

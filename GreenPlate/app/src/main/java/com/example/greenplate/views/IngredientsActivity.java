@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
+import com.example.greenplate.ValueExtractor;
 import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.viewmodels.IngredientsActivityViewModel;
 
@@ -27,7 +28,8 @@ public class IngredientsActivity extends AppCompatActivity {
     private TreeMap<String, Ingredient> ingredientsTreeMap;
 
     private void updateTreeMapAndSpinners(Map<String, Ingredient> ingredientMap,
-                                          Spinner ingredientNameSpinner) {
+                                          Spinner ingredientNameSpinner,
+                                          Spinner quantitiesSpinner) {
         ingredientsTreeMap = new TreeMap<>(ingredientMap);
         ArrayList<String> ingredientNames = new ArrayList<>(ingredientsTreeMap.keySet());
         ArrayAdapter<String> ingredientsAdapter = new ArrayAdapter<>(IngredientsActivity.this,
@@ -35,9 +37,12 @@ public class IngredientsActivity extends AppCompatActivity {
         ingredientsAdapter.insert("Select ingredient", 0);
         ingredientsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ingredientNameSpinner.setAdapter(ingredientsAdapter);
+        ingredientNameSpinner.setSelection(0);
+        quantitiesSpinner.setSelection(0);
     }
 
-    private void quantityMakeSpinner(ArrayList<String> quantities, Spinner quantitiesSpinner) {
+    private void makeQuantitySpinner(Spinner quantitiesSpinner) {
+        ArrayList<String> quantities = new ArrayList<>();
         for (int i = 1; i < 21; i++) {
             quantities.add(String.valueOf(i));
         }
@@ -76,11 +81,10 @@ public class IngredientsActivity extends AppCompatActivity {
                 .IngredientTreeMapListener() {
             @Override
             public void onIngredTreeReceive(Map<String, Ingredient> ingredientMap) {
-                updateTreeMapAndSpinners(ingredientMap, ingredientNameSpinner);
+                updateTreeMapAndSpinners(ingredientMap, ingredientNameSpinner, quantitiesSpinner);
             }
         });
-        ArrayList<String> quantities = new ArrayList<>();
-        quantityMakeSpinner(quantities, quantitiesSpinner);
+        makeQuantitySpinner(quantitiesSpinner);
 
         Intent intentHome = new Intent(IngredientsActivity.this, HomeActivity.class);
         makeNavigationBar(toHomeButton, intentHome);
@@ -102,8 +106,8 @@ public class IngredientsActivity extends AppCompatActivity {
         increaseQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String ingredientName = ingredientNameSpinner.getSelectedItem().toString();
-                String quantity = quantitiesSpinner.getSelectedItem().toString();
+                String ingredientName = ValueExtractor.extract(ingredientNameSpinner);
+                String quantity = ValueExtractor.extract(quantitiesSpinner);
                 if (!InputValidator.isValidSpinnerItem(ingredientName)) {
                     Toast.makeText(IngredientsActivity.this, "Please select a ingredient "
                             + "in your pantry!", Toast.LENGTH_SHORT).show();
@@ -118,9 +122,10 @@ public class IngredientsActivity extends AppCompatActivity {
                         new IngredientsActivityViewModel.IngredientTreeMapListener() {
                         @Override
                         public void onIngredTreeReceive(Map<String, Ingredient> ingredientMap) {
-                            updateTreeMapAndSpinners(ingredientMap, ingredientNameSpinner);
-                            ingredientNameSpinner.setSelection(0);
-                            quantitiesSpinner.setSelection(0);
+                            updateTreeMapAndSpinners(ingredientMap,
+                                    ingredientNameSpinner,
+                                    quantitiesSpinner);
+
                             Toast.makeText(IngredientsActivity.this, "Quantity of " + ingredientName
                                     + " increased by " + quantity + "!", Toast.LENGTH_SHORT).show();
                         }
@@ -130,8 +135,8 @@ public class IngredientsActivity extends AppCompatActivity {
         decreaseQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String ingredientName = ingredientNameSpinner.getSelectedItem().toString();
-                String quantity = quantitiesSpinner.getSelectedItem().toString();
+                String ingredientName = ValueExtractor.extract(ingredientNameSpinner);
+                String quantity = ValueExtractor.extract(quantitiesSpinner);
                 if (!InputValidator.isValidSpinnerItem(ingredientName)) {
                     Toast.makeText(IngredientsActivity.this, "Please select a ingredient "
                             + "in your pantry!", Toast.LENGTH_SHORT).show();
@@ -154,9 +159,9 @@ public class IngredientsActivity extends AppCompatActivity {
                         new IngredientsActivityViewModel.IngredientTreeMapListener() {
                             @Override
                             public void onIngredTreeReceive(Map<String, Ingredient> ingredientMap) {
-                                updateTreeMapAndSpinners(ingredientMap, ingredientNameSpinner);
-                                ingredientNameSpinner.setSelection(0);
-                                quantitiesSpinner.setSelection(0);
+                                updateTreeMapAndSpinners(ingredientMap,
+                                        ingredientNameSpinner,
+                                        quantitiesSpinner);
                             }
                         }, IngredientsActivity.this
                 );

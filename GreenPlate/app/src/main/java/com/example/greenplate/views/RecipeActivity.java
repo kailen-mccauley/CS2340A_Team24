@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
+import com.example.greenplate.ValueExtractor;
 import com.example.greenplate.models.Recipe;
 import com.example.greenplate.viewmodels.RecipeActivityViewModel;
 
@@ -117,7 +118,6 @@ public class RecipeActivity extends AppCompatActivity {
         RelativeLayout parentLayout = findViewById(R.id.activity_recipe);
         ImageButton toHomeButton = findViewById(R.id.btn_home);
         ImageButton toMealButton = findViewById(R.id.btn_meal);
-        ImageButton toRecipeButton = findViewById(R.id.btn_recipe);
         ImageButton toIngredientButton = findViewById(R.id.btn_ingredients);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
@@ -190,8 +190,8 @@ public class RecipeActivity extends AppCompatActivity {
         submitRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String recipeName = recipeNameEditText.getText().toString().toLowerCase();
-                String ingredientList = ingredientListEditText.getText().toString();
+                String recipeName = ValueExtractor.extract(recipeNameEditText).toLowerCase();
+                String ingredientList = ValueExtractor.extract(ingredientListEditText);
                 if (!InputValidator.isValidInputWithSpacesBetween(recipeName)) {
                     Toast.makeText(RecipeActivity.this,
                             "Please input a name for your recipe!", Toast.LENGTH_SHORT).show();

@@ -1,5 +1,6 @@
 package com.example.greenplate.views;
 
+import com.example.greenplate.ValueExtractor;
 import com.example.greenplate.models.User;
 import android.content.Context;
 import android.content.Intent;
@@ -24,9 +25,6 @@ import com.example.greenplate.viewmodels.PersonalActivityViewModel;
 public class MealActivity extends AppCompatActivity {
     private MealActivityViewModel viewModel;
     private PersonalActivityViewModel personalViewModel; // Declare personalViewModel variable
-
-
-
     private EditText mealNameEditText;
     private EditText caloriesEditText;
     private Button btnSubmitMeal;
@@ -105,8 +103,8 @@ public class MealActivity extends AppCompatActivity {
         btnSubmitMeal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String mealName = mealNameEditText.getText().toString();
-                String calories = caloriesEditText.getText().toString();
+                String mealName = ValueExtractor.extract(mealNameEditText);
+                String calories = ValueExtractor.extract(caloriesEditText);
                 if (!InputValidator.isValidInputWithSpacesBetween(mealName)) {
                     Toast.makeText(MealActivity.this,
                             "Please enter a valid meal name!",

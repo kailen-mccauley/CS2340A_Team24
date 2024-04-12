@@ -25,11 +25,22 @@ import com.example.greenplate.viewmodels.ShoppingListActivityViewModel;
 import java.util.Map;
 
 public class RecipeDetailActivity extends AppCompatActivity {
-
     private RecipeActivityViewModel recipeViewModel;
     private TextView title;
     private String recipeID;
     private Boolean canMake;
+
+    private TextView buildTextView(int weight, String text) {
+        TextView textView = new TextView(RecipeDetailActivity.this);
+        LinearLayout.LayoutParams ingredientNameParams
+                = new LinearLayout.LayoutParams(0,
+                LinearLayout.LayoutParams.WRAP_CONTENT, weight);
+        textView.setLayoutParams(ingredientNameParams);
+        textView.setText(text);
+        textView.setTextSize(22);
+        textView.setTextColor(getResources().getColor(R.color.pennBlue));
+        return textView;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // DO NOT MODIFY
@@ -56,7 +67,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 for (Map.Entry<String, Integer> entry : recipe.
                         getIngredients().entrySet()) {
                     String ingredientName = entry.getKey();
-                    int quantity = entry.getValue();
+                    String quantity = entry.getValue().toString();
                     LinearLayout ingredientLayout
                                     = new LinearLayout(RecipeDetailActivity.this);
                     ingredientLayout.setLayoutParams(new LinearLayout.LayoutParams(
@@ -64,24 +75,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
                             LinearLayout.LayoutParams.WRAP_CONTENT
                     ));
                     ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
-                    TextView ingredientNameTextView = new TextView(RecipeDetailActivity.this);
-                    LinearLayout.LayoutParams ingredientNameParams
-                            = new LinearLayout.LayoutParams(0,
-                            LinearLayout.LayoutParams.WRAP_CONTENT, 3);
-                    ingredientNameTextView.setLayoutParams(ingredientNameParams);
-                    ingredientNameTextView.setText(ingredientName);
-                    ingredientNameTextView.setTextSize(22);
-                    ingredientNameTextView.setTextColor(getResources().getColor(R.color.pennBlue));
-
-                    TextView quantityTextView = new TextView(RecipeDetailActivity.this);
-                    LinearLayout.LayoutParams quantityParams
-                            = new LinearLayout.LayoutParams(0,
-                            LinearLayout.LayoutParams.WRAP_CONTENT, 2);
-                    quantityParams.setMarginStart(50);
-                    quantityTextView.setLayoutParams(quantityParams);
-                    quantityTextView.setText(String.valueOf(quantity));
-                    quantityTextView.setTextSize(22);
-                    quantityTextView.setTextColor(getResources().getColor(R.color.pennBlue));
+                    TextView ingredientNameTextView = buildTextView(3, ingredientName);
+                    TextView quantityTextView = buildTextView(2, quantity);
                     ingredientLayout.addView(ingredientNameTextView);
                     ingredientLayout.addView(quantityTextView);
 
@@ -158,8 +153,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
 
         });
-
-
         parentLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

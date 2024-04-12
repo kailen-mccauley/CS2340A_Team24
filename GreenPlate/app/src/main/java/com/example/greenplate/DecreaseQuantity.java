@@ -6,6 +6,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.greenplate.models.Ingredient;
+import com.example.greenplate.models.ShoppingItem;
 import com.example.greenplate.views.ShoppingActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,11 +35,11 @@ public class DecreaseQuantity implements ChangeQuantity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                Ingredient ingredient = snapshot.getValue(Ingredient.class);
-                                if (ingredient != null && ingredient.getIngredientName()
+                                ShoppingItem item = snapshot.getValue(ShoppingItem.class);
+                                if (item != null && item.getIngredientName()
                                         .equals(ingredientName)) {
                                     String itemID = snapshot.getKey();
-                                    int newQuantity = ingredient.getQuantity() - quantity;
+                                    int newQuantity = item.getQuantity() - quantity;
                                     if (newQuantity <= 0) {
                                         mDatabase.child("shoppinglist").child(itemID).removeValue();
                                     } else {

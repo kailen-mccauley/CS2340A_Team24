@@ -130,7 +130,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                                 Ingredient pantryIngredient =
                                                         ingredientMap.get(ingredient);
                                                 int quantity = ingredients.get(ingredient);
-                                                if (pantryIngredient != null) {
+                                                if (pantryIngredient != null
+                                                    && pantryIngredient.getQuantity() < quantity) {
                                                     quantity -= pantryIngredient.getQuantity();
                                                 }
                                                 shoppingVM.storeShoppingListItem(ingredient,

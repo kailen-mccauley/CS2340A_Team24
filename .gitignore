@@ -31,4 +31,14 @@ render.experimental.xml
 
 .DS_Store
 
-minimap/
+GreenPlate/app/src/main/lock-playstore.png
+GreenPlate/app/src/main/person-playstore.png
+GreenPlate/app/src/main/res/drawable/lock_background.xml
+GreenPlate/app/src/main/res/drawable/person_background.xml
+GreenPlate/app/src/test/java/com/example/greenplate/DecoratorUnitTest.java
+
+GreenPlate/app/src/main/res/mipmap*/lock.webp
+GreenPlate/app/src/main/res/mipmap*/lock_round.webp
+GreenPlate/app/src/main/res/mipmap*/person.webp
+GreenPlate/app/src/main/res/mipmap*/person_round.webp
+

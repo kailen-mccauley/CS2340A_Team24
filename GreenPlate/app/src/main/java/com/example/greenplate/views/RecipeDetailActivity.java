@@ -2,6 +2,7 @@ package com.example.greenplate.views;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -22,6 +23,7 @@ import com.example.greenplate.viewmodels.MealActivityViewModel;
 import com.example.greenplate.viewmodels.RecipeActivityViewModel;
 import com.example.greenplate.viewmodels.ShoppingListActivityViewModel;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class RecipeDetailActivity extends AppCompatActivity {
@@ -61,32 +63,32 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
         recipeViewModel.getRecipeDetails(recipeID, new
                 RecipeActivityViewModel.RecipeDetailsListener() {
-            @Override
-            public void onRecipeDetailsReceived(Recipe recipe) {
-                LinearLayout scrollable = findViewById(R.id.scrollableLay);
-                for (Map.Entry<String, Integer> entry : recipe.
-                        getIngredients().entrySet()) {
-                    String ingredientName = entry.getKey();
-                    String quantity = entry.getValue().toString();
-                    LinearLayout ingredientLayout
+                    @Override
+                    public void onRecipeDetailsReceived(Recipe recipe) {
+                        LinearLayout scrollable = findViewById(R.id.scrollableLay);
+                        for (Map.Entry<String, Integer> entry : recipe.
+                                getIngredients().entrySet()) {
+                            String ingredientName = entry.getKey();
+                            String quantity = entry.getValue().toString();
+                            LinearLayout ingredientLayout
                                     = new LinearLayout(RecipeDetailActivity.this);
-                    ingredientLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT
-                    ));
-                    ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
-                    TextView ingredientNameTextView = buildTextView(3, ingredientName);
-                    TextView quantityTextView = buildTextView(2, quantity);
-                    ingredientLayout.addView(ingredientNameTextView);
-                    ingredientLayout.addView(quantityTextView);
+                            ingredientLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT
+                            ));
+                            ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
+                            TextView ingredientNameTextView = buildTextView(3, ingredientName);
+                            TextView quantityTextView = buildTextView(2, quantity);
+                            ingredientLayout.addView(ingredientNameTextView);
+                            ingredientLayout.addView(quantityTextView);
 
-                    scrollable.addView(ingredientLayout);
-                }
-            }
-            @Override
-            public void onRecipeDetailsError(String errorMessage) {
-            }
-        });
+                            scrollable.addView(ingredientLayout);
+                        }
+                    }
+                    @Override
+                    public void onRecipeDetailsError(String errorMessage) {
+                    }
+                });
 
         toRecipeScreen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,21 +111,20 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                 if (canMake) {
                                     ingredientsVM.getCaloriesForRecipe(ingredients, new
                                             IngredientsActivityViewModel.CaloriesListener() {
-                                        @Override
-                                        public void onCaloriesReceived(int calories) {
-                                            MealActivityViewModel mealVM =
-                                                    MealActivityViewModel.getInstance();
-                                            mealVM.storeMeal(recipe.getRecipeName(),
-                                                    String.valueOf(calories));
-                                            ingredientsVM.decreaseIngredQuantByRecipe(ingredients);
-                                        }
-                                    });
+                                                @Override
+                                                public void onCaloriesReceived(int calories) {
+                                                    MealActivityViewModel mealVM =
+                                                            MealActivityViewModel.getInstance();
+                                                    mealVM.storeMeal(recipe.getRecipeName(),
+                                                            String.valueOf(calories));
+                                                    ingredientsVM.decreaseIngredQuantByRecipe(ingredients);
+                                                }
+                                            });
                                 } else {
-                                    ShoppingListActivityViewModel shoppingVM =
-                                            ShoppingListActivityViewModel.getInstance();
+                                    ShoppingListActivityViewModel shoppingVM = ShoppingListActivityViewModel.getInstance();
+                                    ArrayList<Bundle> ingredientExtrasList = new ArrayList<>();
                                     for (String ingredient : ingredients.keySet()) {
-                                        ingredientsVM.getIngredTree(new IngredientsActivityViewModel
-                                                .IngredientTreeMapListener() {
+                                        ingredientsVM.getIngredTree(new IngredientsActivityViewModel.IngredientTreeMapListener() {
                                             @Override
                                             public void onIngredTreeReceive(Map<String,
                                                     Ingredient> ingredientMap) {
@@ -172,4 +173,5 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
 }
+
 

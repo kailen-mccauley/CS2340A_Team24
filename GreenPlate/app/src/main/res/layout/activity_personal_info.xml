@@ -41,7 +41,8 @@
                 android:hint="Height (cm)"
                 android:textColorHint="@color/white"
                 android:textColor="@color/white"
-                android:layout_marginHorizontal="5dp"/>
+                android:layout_marginHorizontal="5dp"
+                android:inputType="number"/>
             <EditText
                 android:id="@+id/weightEditText"
                 android:layout_width="wrap_content"
@@ -50,7 +51,8 @@
                 android:hint="Weight (kg)"
                 android:textColorHint="@color/white"
                 android:textColor="@color/white"
-                android:layout_marginHorizontal="5dp"/>
+                android:layout_marginHorizontal="5dp"
+                android:inputType="number"/>
             <EditText
                 android:id="@+id/genderEditText"
                 android:layout_width="wrap_content"

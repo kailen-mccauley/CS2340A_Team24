@@ -42,3 +42,8 @@ GreenPlate/app/src/main/res/mipmap*/lock_round.webp
 GreenPlate/app/src/main/res/mipmap*/person.webp
 GreenPlate/app/src/main/res/mipmap*/person_round.webp
 
+GreenPlate/app/src/main/res/mipmap-anydpi-v26/lock.xml
+GreenPlate/app/src/main/res/mipmap-anydpi-v26/lock_round.xml
+GreenPlate/app/src/main/res/mipmap-anydpi-v26/person.xml
+GreenPlate/app/src/main/res/mipmap-anydpi-v26/person_round.xml
+

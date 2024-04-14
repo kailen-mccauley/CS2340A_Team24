@@ -26,12 +26,7 @@ public class PersonalActivity extends AppCompatActivity {
     private EditText genderEditText;
 
     private void makeNavigationBar(ImageButton button, Intent intent) {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(intent);
-            }
-        });
+        button.setOnClickListener(v -> startActivity(intent));
     }
 
     @Override
@@ -65,47 +60,41 @@ public class PersonalActivity extends AppCompatActivity {
         Intent intentIngredient = new Intent(PersonalActivity.this, IngredientsActivity.class);
         makeNavigationBar(toIngredientButton, intentIngredient);
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String weight = ValueExtractor.extract(weightEditText);
-                String height = ValueExtractor.extract(heightEditText);
-                String gender = ValueExtractor.extract(genderEditText);
-                if (!InputValidator.isValidInputWithInteger(height)) {
-                    Toast.makeText(PersonalActivity.this,
-                            "Please enter a valid integer value for height (in cm)",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!InputValidator.isValidInputWithInteger(weight)) {
-                    Toast.makeText(PersonalActivity.this,
-                            "Please enter a valid integer value for weight (in kg)",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!InputValidator.isValidGender(gender)) {
-                    Toast.makeText(PersonalActivity.this,
-                            "Please enter 'M' for male or 'F' for female",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                viewModel.storePersonalInfo(height, weight, gender);
+        submitButton.setOnClickListener(v -> {
+            String weight = ValueExtractor.extract(weightEditText);
+            String height = ValueExtractor.extract(heightEditText);
+            String gender = ValueExtractor.extract(genderEditText);
+            if (!InputValidator.isValidInputWithInteger(height)) {
                 Toast.makeText(PersonalActivity.this,
-                        "Submitted Successfully!", Toast.LENGTH_SHORT).show();
-                weightEditText.setText("");
-                heightEditText.setText("");
-                genderEditText.setText("");
-                hideKeyboard();
+                        "Please enter a valid integer value for height (in cm)",
+                        Toast.LENGTH_SHORT).show();
+                return;
             }
+            if (!InputValidator.isValidInputWithInteger(weight)) {
+                Toast.makeText(PersonalActivity.this,
+                        "Please enter a valid integer value for weight (in kg)",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!InputValidator.isValidGender(gender)) {
+                Toast.makeText(PersonalActivity.this,
+                        "Please enter 'M' for male or 'F' for female",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            viewModel.storePersonalInfo(height, weight, gender);
+            Toast.makeText(PersonalActivity.this,
+                    "Submitted Successfully!", Toast.LENGTH_SHORT).show();
+            weightEditText.setText("");
+            heightEditText.setText("");
+            genderEditText.setText("");
+            hideKeyboard();
         });
 
-        parentLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Hide keyboard
-                hideKeyboard();
-                return false;
-            }
+        parentLayout.setOnTouchListener((v, event) -> {
+            // Hide keyboard
+            hideKeyboard();
+            return false;
         });
 
     }

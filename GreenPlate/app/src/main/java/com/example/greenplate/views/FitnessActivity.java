@@ -3,7 +3,6 @@ package com.example.greenplate.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -20,21 +19,14 @@ public class FitnessActivity extends AppCompatActivity {
     private TextView activityGoalTextView;
     private TextView timerTextView;
     private Button startStopButton;
-    private Button saveActivityButton;
     private EditText stepsEditText;
-    private Button saveStepsButton;
 
     private Handler timerHandler = new Handler();
     private boolean stopwatchRunning = false;
     private int seconds = 0;
 
     private void makeNavigationBar(ImageButton button, Intent intent) {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(intent);
-            }
-        });
+        button.setOnClickListener(v -> startActivity(intent));
     }
 
 
@@ -63,19 +55,17 @@ public class FitnessActivity extends AppCompatActivity {
         timerTextView = findViewById(R.id.timerTextView);
 
         startStopButton = findViewById(R.id.startStopButton);
-        saveActivityButton = findViewById(R.id.saveActivityButton);
+        Button saveActivityButton = findViewById(R.id.saveActivityButton);
 
         stepsEditText = findViewById(R.id.stepsEditText);
-        saveStepsButton = findViewById(R.id.saveStepsButton);
-
-
+        Button saveStepsButton = findViewById(R.id.saveStepsButton);
 
         Intent wellnessIntent = getIntent();
         Bundle extras = wellnessIntent.getExtras();
+        // We need this for if a user wants to set an activity goal that can be seen here.
+        // Don't necessarily need this if we do the activity rings on the home page.
         if (extras != null) {
         }
-
-
 
         startStopButton.setOnClickListener(v -> {
             runTimer();
@@ -97,7 +87,7 @@ public class FitnessActivity extends AppCompatActivity {
                 times[i] = Integer.parseInt(brokenDownTime[i]);
                 System.out.println(times[i]);
             }
-            // PASS THE TIMES ARRAY TO VIEWMODEL!!!!
+            // PASS THE TIMES ARRAY TO VIEW MODEL!!!!
             Toast.makeText(FitnessActivity.this,
                     "Activity logged!",
                     Toast.LENGTH_SHORT).show();
@@ -113,21 +103,15 @@ public class FitnessActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             } else {
                 int stepNum = Integer.parseInt(steps);
-                // PASS stepNum  TO VIEWMODEL!!!!
+                // PASS stepNum  TO VIEW MODEL!!!!
                 Toast.makeText(FitnessActivity.this,
                         "Steps tracked!",
                         Toast.LENGTH_SHORT).show();
                 stepsEditText.setText("");
             }
         });
-
-
     }
 
-
-    /**
-     * DO NOT MODIFY!
-     */
     private void runTimer() {
         new Thread(() -> {
             while (stopwatchRunning) {
@@ -142,10 +126,6 @@ public class FitnessActivity extends AppCompatActivity {
         }).start();
     }
 
-
-    /**
-     DO NOT MODIFY!
-     */
     private String formatTime(int totalSecs) {
         int hours = totalSecs / 3600;
         int minutes = (totalSecs % 3600) / 60;

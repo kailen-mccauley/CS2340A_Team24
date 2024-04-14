@@ -45,58 +45,46 @@ public class CreateAccountActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         CreateAccountViewModel createAccountViewModeL = CreateAccountViewModel.getInstance();
 
-        createAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = newUsernameEditText.getText().toString();
-                String password = newPasswordEditText.getText().toString();
-                if (!InputValidator.isValidInput(email)) {
-                    Toast.makeText(CreateAccountActivity.this, "Invalid email!",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!InputValidator.isValidInput(password)) {
-                    Toast.makeText(CreateAccountActivity.this, "Invalid password!",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                createAccountViewModeL.createAccount(email, password,
-                        CreateAccountActivity.this);
+        createAccount.setOnClickListener(v -> {
+            String email = newUsernameEditText.getText().toString();
+            String password = newPasswordEditText.getText().toString();
+            if (!InputValidator.isValidInput(email)) {
+                Toast.makeText(CreateAccountActivity.this, "Invalid email!",
+                        Toast.LENGTH_SHORT).show();
+                return;
             }
+            if (!InputValidator.isValidInput(password)) {
+                Toast.makeText(CreateAccountActivity.this, "Invalid password!",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            createAccountViewModeL.createAccount(email, password,
+                    CreateAccountActivity.this);
         });
-        toLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        toLoginButton.setOnClickListener(v ->  {
+            Intent intent = new Intent(CreateAccountActivity.this,
+                    LoginActivity.class);
+            startActivity(intent);
+
+        });
+        createAccountViewModeL.getCreateSuccess().observe(this, loginSuccess -> {
+            if (loginSuccess) {
+                // Login successful, navigate to HomeActivity
+                Toast.makeText(CreateAccountActivity.this, "Account creation successful.",
+                        Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(CreateAccountActivity.this,
                         LoginActivity.class);
                 startActivity(intent);
-            }
-        });
-
-        createAccountViewModeL.getCreateSuccess().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean loginSuccess) {
-                if (loginSuccess) {
-                    // Login successful, navigate to HomeActivity
-                    Toast.makeText(CreateAccountActivity.this, "Account creation successful.",
-                            Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(CreateAccountActivity.this,
-                            LoginActivity.class);
-                    startActivity(intent);
-                    finish(); // Close LoginActivity
-                }
+                finish(); // Close LoginActivity
             }
         });
 
         // Set touch listener to hide keyboard when touched outside EditText
-        parentLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Hide keyboard
-                hideKeyboard();
-                return false;
-            }
+        parentLayout.setOnTouchListener((v, event) -> {
+            // Hide keyboard
+            hideKeyboard();
+            return false;
         });
 
     }

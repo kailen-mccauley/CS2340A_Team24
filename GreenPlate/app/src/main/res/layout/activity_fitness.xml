@@ -116,7 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@android:color/darker_gray"
-        android:backgroundTint="@color/AirforceBlue"
+        android:backgroundTint="@color/Olivine"
         android:orientation="horizontal"
         android:padding="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -135,7 +135,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
-                android:background="@color/AirforceBlue"
+                android:background="@color/Olivine"
                 android:src="@drawable/ic_home_foreground" />
 
         </RelativeLayout>
@@ -152,7 +152,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
-                android:background="@color/AirforceBlue"
+                android:background="@color/Olivine"
                 android:src="@drawable/personal_info_foreground" />
 
         </RelativeLayout>
@@ -169,7 +169,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
-                android:background="@color/AirforceBlue"
+                android:background="@color/Olivine"
                 android:src="@drawable/ic_shopping_foreground" />
 
         </RelativeLayout>
@@ -186,7 +186,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
-                android:background="@color/AirforceBlue"
+                android:background="@color/Olivine"
                 android:src="@drawable/recipe_foreground" />
 
         </RelativeLayout>
@@ -203,7 +203,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
-                android:background="@color/AirforceBlue"
+                android:background="@color/Olivine"
                 android:src="@drawable/ic_ingredient_foreground" />
 
         </RelativeLayout>
@@ -220,7 +220,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
-                android:background="@color/AirforceBlue"
+                android:background="@color/Olivine"
                 android:src="@drawable/ic_meal_foreground" />
 
         </RelativeLayout>
@@ -237,7 +237,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
-                android:background="@color/AirforceBlue"
+                android:background="@color/Olivine"
                 android:src="@drawable/ic_fitness_foreground"
                 android:tint="@color/White"/>
 

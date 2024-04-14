@@ -1,11 +1,9 @@
 package com.example.greenplate.views;
 
 import com.example.greenplate.ValueExtractor;
-import com.example.greenplate.models.User;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -24,20 +22,12 @@ import com.example.greenplate.viewmodels.PersonalActivityViewModel;
 
 public class MealActivity extends AppCompatActivity {
     private MealActivityViewModel viewModel;
-    private PersonalActivityViewModel personalViewModel; // Declare personalViewModel variable
+    private PersonalActivityViewModel personalViewModel;
     private EditText mealNameEditText;
     private EditText caloriesEditText;
-    private Button btnSubmitMeal;
-    private Button btnDailyCalorieIntake;
-    private Button btnDailyGoal;
 
     private void makeNavigationBar(ImageButton button, Intent intent) {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(intent);
-            }
-        });
+        button.setOnClickListener(v -> startActivity(intent));
     }
 
     @Override
@@ -60,34 +50,27 @@ public class MealActivity extends AppCompatActivity {
 
         mealNameEditText = findViewById(R.id.mealNameEditText);
         caloriesEditText = findViewById(R.id.caloriesEditText);
-        btnSubmitMeal = findViewById(R.id.btn_submit_meal);
-        btnDailyCalorieIntake = findViewById(R.id.btn_daily_calorie_intake);
-        btnDailyGoal = findViewById(R.id.btn_daily_goal);
+        Button btnSubmitMeal = findViewById(R.id.btn_submit_meal);
+        Button btnDailyCalorieIntake = findViewById(R.id.btn_daily_calorie_intake);
+        Button btnDailyGoal = findViewById(R.id.btn_daily_goal);
         RelativeLayout parentLayout = findViewById(R.id.activity_input_meal);
 
         personalViewModel = PersonalActivityViewModel.getInstance();
 
         // Call getUserInfo to retrieve user information
-        personalViewModel.getUserInfo(new PersonalActivityViewModel.UserInfoCallback() {
-            @Override
-            public void onUserInfoReceived(User user) {
-                if (user != null) {
-                    heightTextView.setText(user.getUserHeight());
-                    weightTextView.setText(user.getUserWeight());
-                    genderTextView.setText(user.getUserGender().equals("M") ? "Male" : "Female");
-                    goalTextView.setText(String.valueOf(user.getCalorieGoal()));
-                } else {
-                    Toast.makeText(MealActivity.this,
-                            "User information not available", Toast.LENGTH_SHORT).show();
-                }
+        personalViewModel.getUserInfo(user ->  {
+            if (user != null) {
+                heightTextView.setText(user.getUserHeight());
+                weightTextView.setText(user.getUserWeight());
+                genderTextView.setText(user.getUserGender().equals("M") ? "Male" : "Female");
+                goalTextView.setText(String.valueOf(user.getCalorieGoal()));
+            } else {
+                Toast.makeText(MealActivity.this,
+                        "User information not available", Toast.LENGTH_SHORT).show();
             }
         });
-        viewModel.getDailyCalorieIntake(new MealActivityViewModel.DailyCalorieIntakeCallback() {
-            @Override
-            public void onDailyCalorieIntakeReceived(int totalCalories) {
-                intakeTextView.setText(String.valueOf(totalCalories));
-            }
-        });
+        viewModel.getDailyCalorieIntake(totalCalories ->
+                intakeTextView.setText(String.valueOf(totalCalories)));
 
         Intent intentHome = new Intent(MealActivity.this, HomeActivity.class);
         makeNavigationBar(toHomeButton, intentHome);
@@ -100,71 +83,54 @@ public class MealActivity extends AppCompatActivity {
         Intent intentIngredient = new Intent(MealActivity.this, IngredientsActivity.class);
         makeNavigationBar(toIngredientButton, intentIngredient);
 
-        btnSubmitMeal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String mealName = ValueExtractor.extract(mealNameEditText);
-                String calories = ValueExtractor.extract(caloriesEditText);
-                if (!InputValidator.isValidInputWithSpacesBetween(mealName)) {
-                    Toast.makeText(MealActivity.this,
-                            "Please enter a valid meal name!",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!InputValidator.isValidInputWithInteger(calories)) {
-                    Toast.makeText(MealActivity.this,
-                            "Please enter a valid integer value for calories!",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                viewModel.storeMeal(mealName, String.valueOf(calories));
+        btnSubmitMeal.setOnClickListener(v ->  {
+            String mealName = ValueExtractor.extract(mealNameEditText);
+            String calories = ValueExtractor.extract(caloriesEditText);
+            if (!InputValidator.isValidInputWithSpacesBetween(mealName)) {
                 Toast.makeText(MealActivity.this,
-                        "Submitted Successfully!", Toast.LENGTH_SHORT).show();
-                mealNameEditText.setText("");
-                caloriesEditText.setText("");
-                hideKeyboard();
-                viewModel.getDailyCalorieIntake(new MealActivityViewModel
-                        .DailyCalorieIntakeCallback() {
-                    @Override
-                    public void onDailyCalorieIntakeReceived(int totalCalories) {
-                        intakeTextView.setText(String.valueOf(totalCalories));
-                    }
-                });
+                        "Please enter a valid meal name!",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!InputValidator.isValidInputWithInteger(calories)) {
+                Toast.makeText(MealActivity.this,
+                        "Please enter a valid integer value for calories!",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            viewModel.storeMeal(mealName, calories);
+            Toast.makeText(MealActivity.this,
+                    "Submitted Successfully!", Toast.LENGTH_SHORT).show();
+            mealNameEditText.setText("");
+            caloriesEditText.setText("");
+            hideKeyboard();
+            viewModel.getDailyCalorieIntake(totalCalories ->
+                    intakeTextView.setText(String.valueOf(totalCalories)));
+        });
+        btnDailyGoal.setOnClickListener(v ->  {
+            if (personalViewModel.isValidUser()) {
+                Intent intent = new Intent(MealActivity.this, DataVisOne.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(MealActivity.this,
+                        "Enter personal info before seeing visualizations!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
-        btnDailyGoal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (personalViewModel.isValidUser()) {
-                    Intent intent = new Intent(MealActivity.this, DataVisOne.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(MealActivity.this,
-                            "Enter personal info before seeing visualizations!",
-                            Toast.LENGTH_SHORT).show();
-                }
+        btnDailyCalorieIntake.setOnClickListener(v ->  {
+            if (personalViewModel.isValidUser()) {
+                Intent intent = new Intent(MealActivity.this, DataVisTwo.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(MealActivity.this,
+                        "Enter personal info before seeing visualizations!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
-        btnDailyCalorieIntake.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (personalViewModel.isValidUser()) {
-                    Intent intent = new Intent(MealActivity.this, DataVisTwo.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(MealActivity.this,
-                            "Enter personal info before seeing visualizations!",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        parentLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Hide keyboard
-                hideKeyboard();
-                return false;
-            }
+        parentLayout.setOnTouchListener((v, event) -> {
+            // Hide keyboard
+            hideKeyboard();
+            return false;
         });
     }
     private void hideKeyboard() {

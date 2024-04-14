@@ -18,7 +18,6 @@ import com.example.greenplate.ValueExtractor;
 import com.example.greenplate.viewmodels.FitnessActivityViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class FitnessActivity extends AppCompatActivity {
@@ -104,7 +103,6 @@ public class FitnessActivity extends AppCompatActivity {
                 System.out.println(timesList.get(i));
             }
             System.out.println(timesList);
-            // PASS THE TIMES ARRAY TO VIEWMODEL!!!!
             fitnessVM.storeActivity(time);
             Toast.makeText(FitnessActivity.this,
                     "Activity logged!",
@@ -121,7 +119,6 @@ public class FitnessActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             } else {
                 int stepNum = Integer.parseInt(steps);
-                // PASS stepNum  TO VIEWMODEL!!!!
                 fitnessVM.storeSteps(stepNum);
 
                 Toast.makeText(FitnessActivity.this,

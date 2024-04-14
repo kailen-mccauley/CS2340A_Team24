@@ -113,6 +113,7 @@ public class ShoppingActivity extends AppCompatActivity {
         ImageButton toIngredientButton = findViewById(R.id.btn_ingredients);
         ImageButton toMealButton = findViewById(R.id.btn_meal);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
+        ImageButton toFitnessButton = findViewById(R.id.btn_fitness);
         Button buyItems = findViewById(R.id.btn_buy_items);
 
         LinearLayout scrollable = findViewById(R.id.scrollLay);
@@ -129,6 +130,8 @@ public class ShoppingActivity extends AppCompatActivity {
         makeNavigationBar(toPersonalButton, intentPersonal);
         Intent intentIngredient = new Intent(ShoppingActivity.this, IngredientsActivity.class);
         makeNavigationBar(toIngredientButton, intentIngredient);
+        Intent intentFitness = new Intent(ShoppingActivity.this, FitnessActivity.class);
+        makeNavigationBar(toFitnessButton, intentFitness);
 
         shoppingListActivityViewModel.fetchShoppingListItems(new ShoppingListActivityViewModel.ShoppingItemsListener() {
             @Override

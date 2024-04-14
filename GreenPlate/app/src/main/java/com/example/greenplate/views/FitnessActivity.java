@@ -41,12 +41,16 @@ public class FitnessActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fitness);
+
+        ImageButton toHomeButton = findViewById(R.id.btn_home);
         ImageButton toMealButton = findViewById(R.id.btn_meal);
         ImageButton toRecipeButton = findViewById(R.id.btn_recipe);
         ImageButton toIngredientButton = findViewById(R.id.btn_ingredients);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
 
+        Intent intentHome = new Intent(FitnessActivity.this, HomeActivity.class);
+        makeNavigationBar(toHomeButton, intentHome);
         Intent intentMeal = new Intent(FitnessActivity.this, MealActivity.class);
         makeNavigationBar(toMealButton, intentMeal);
         Intent intentRecipe = new Intent(FitnessActivity.this, RecipeActivity.class);

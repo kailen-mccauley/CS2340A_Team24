@@ -38,6 +38,8 @@ public class PersonalActivity extends AppCompatActivity {
         ImageButton toIngredientButton = findViewById(R.id.btn_ingredients);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toMealButton = findViewById(R.id.btn_meal);
+        ImageButton toFitnessButton = findViewById(R.id.btn_fitness);
+
 
         viewModel = PersonalActivityViewModel.getInstance();
 
@@ -58,6 +60,8 @@ public class PersonalActivity extends AppCompatActivity {
         makeNavigationBar(toShoppingButton, intentShopping);
         Intent intentIngredient = new Intent(PersonalActivity.this, IngredientsActivity.class);
         makeNavigationBar(toIngredientButton, intentIngredient);
+        Intent intentFitness = new Intent(PersonalActivity.this, FitnessActivity.class);
+        makeNavigationBar(toFitnessButton, intentFitness);
 
         submitButton.setOnClickListener(v -> {
             String weight = ValueExtractor.extract(weightEditText);

@@ -40,6 +40,8 @@ public class MealActivity extends AppCompatActivity {
         ImageButton toIngredientButton = findViewById(R.id.btn_ingredients);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
+        ImageButton toFitnessButton = findViewById(R.id.btn_fitness);
+
         TextView heightTextView = findViewById(R.id.heightTextView);
         TextView weightTextView = findViewById(R.id.weightTextView);
         TextView genderTextView = findViewById(R.id.genderTextView);
@@ -82,6 +84,8 @@ public class MealActivity extends AppCompatActivity {
         makeNavigationBar(toPersonalButton, intentPersonal);
         Intent intentIngredient = new Intent(MealActivity.this, IngredientsActivity.class);
         makeNavigationBar(toIngredientButton, intentIngredient);
+        Intent intentFitness = new Intent(MealActivity.this, FitnessActivity.class);
+        makeNavigationBar(toFitnessButton, intentFitness);
 
         btnSubmitMeal.setOnClickListener(v ->  {
             String mealName = ValueExtractor.extract(mealNameEditText);

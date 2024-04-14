@@ -101,6 +101,9 @@ public class RecipeActivity extends AppCompatActivity {
         ImageButton toIngredientButton = findViewById(R.id.btn_ingredients);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
+        ImageButton toFitnessButton = findViewById(R.id.btn_fitness);
+
+
         sortSwitch = findViewById(R.id.sortingSwitch);
         recipesSpinner = findViewById(R.id.recipesSpinner);
         recipeNameEditText = findViewById(R.id.recipeNameEditText);
@@ -122,6 +125,8 @@ public class RecipeActivity extends AppCompatActivity {
         makeNavigationBar(toPersonalButton, intentPersonal);
         Intent intentIngredient = new Intent(RecipeActivity.this, IngredientsActivity.class);
         makeNavigationBar(toIngredientButton, intentIngredient);
+        Intent intentFitness = new Intent(RecipeActivity.this, FitnessActivity.class);
+        makeNavigationBar(toFitnessButton, intentFitness);
 
         sortSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> sortBasedOnSwitch());
         recipesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

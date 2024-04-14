@@ -1,12 +1,15 @@
 package com.example.greenplate.views;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.CheckBox;
@@ -57,13 +60,44 @@ public class ShoppingActivity extends AppCompatActivity {
             ingredientLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
             TextView ingredientNameTextView = buildTextView(3, ingredient);
-            TextView quantityTextView = buildTextView(2, quantity);
+
+            TextView quantityTextView = buildTextView(1, quantity);
             CheckBox checkBox = new CheckBox(ShoppingActivity.this);
-            checkBox.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+            checkBox.setLayoutParams(new LinearLayout.LayoutParams(2, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
             checkBox.setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.magenta)));
 
+            ImageButton minusButton = new ImageButton(ShoppingActivity.this);
+            minusButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+            minusButton.setImageResource(R.drawable.ic_minus_icon);
+            minusButton.setBackgroundColor(Color.TRANSPARENT);
+            minusButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int currentQuantity = Integer.parseInt(quantityTextView.getText().toString());
+                    if (currentQuantity > 0) {
+                        currentQuantity--;
+                        quantityTextView.setText(String.valueOf(currentQuantity));
+                    }
+                }
+            });
+
+            ImageButton addButton = new ImageButton(ShoppingActivity.this);
+            addButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+            addButton.setImageResource(R.drawable.ic_add_icon);
+            addButton.setBackgroundColor(Color.TRANSPARENT);
+            addButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int currentQuantity = Integer.parseInt(quantityTextView.getText().toString());
+                    currentQuantity++;
+                    quantityTextView.setText(String.valueOf(currentQuantity));
+                }
+            });
+
             ingredientLayout.addView(ingredientNameTextView);
+            ingredientLayout.addView(minusButton);
             ingredientLayout.addView(quantityTextView);
+            ingredientLayout.addView(addButton);
             ingredientLayout.addView(checkBox);
 
             scrollable.addView(ingredientLayout);

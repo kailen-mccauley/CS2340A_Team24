@@ -53,12 +53,7 @@ public class IngredientsActivity extends AppCompatActivity {
         quantitiesSpinner.setAdapter(quantityAdapter);
     }
     private void makeNavigationBar(ImageButton button, Intent intent) {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(intent);
-            }
-        });
+        button.setOnClickListener(v -> startActivity(intent));
     }
 
     @Override
@@ -77,13 +72,8 @@ public class IngredientsActivity extends AppCompatActivity {
         Spinner ingredientNameSpinner = findViewById(R.id.ingredientNameSpinner);
         Spinner quantitiesSpinner = findViewById(R.id.quantitySpinner);
         ingredientsViewModel = IngredientsActivityViewModel.getInstance();
-        ingredientsViewModel.getIngredTree(new IngredientsActivityViewModel
-                .IngredientTreeMapListener() {
-            @Override
-            public void onIngredTreeReceive(Map<String, Ingredient> ingredientMap) {
-                updateTreeMapAndSpinners(ingredientMap, ingredientNameSpinner, quantitiesSpinner);
-            }
-        });
+        ingredientsViewModel.getIngredTree(ingredientMap ->
+                updateTreeMapAndSpinners(ingredientMap, ingredientNameSpinner, quantitiesSpinner));
         makeQuantitySpinner(quantitiesSpinner);
 
         Intent intentHome = new Intent(IngredientsActivity.this, HomeActivity.class);
@@ -96,76 +86,57 @@ public class IngredientsActivity extends AppCompatActivity {
         makeNavigationBar(toShoppingButton, intentShopping);
         Intent intentPersonal = new Intent(IngredientsActivity.this, PersonalActivity.class);
         makeNavigationBar(toPersonalButton, intentPersonal);
-        toIngredientsForm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this, IngredientsFormActivity.class);
-                startActivity(intent);
-            }
+        toIngredientsForm.setOnClickListener(v -> {
+            Intent intent = new Intent(IngredientsActivity.this, IngredientsFormActivity.class);
+            startActivity(intent);
         });
-        increaseQuantity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String ingredientName = ValueExtractor.extract(ingredientNameSpinner);
-                String quantity = ValueExtractor.extract(quantitiesSpinner);
-                if (!InputValidator.isValidSpinnerItem(ingredientName)) {
-                    Toast.makeText(IngredientsActivity.this, "Please select a ingredient "
-                            + "in your pantry!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!InputValidator.isValidSpinnerItem(quantity)) {
-                    Toast.makeText(IngredientsActivity.this,
-                            "Please select a quantity!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                ingredientsViewModel.updateIngredQuanTree(ingredientName, Integer.valueOf(quantity),
-                        new IngredientsActivityViewModel.IngredientTreeMapListener() {
-                        @Override
-                        public void onIngredTreeReceive(Map<String, Ingredient> ingredientMap) {
-                            updateTreeMapAndSpinners(ingredientMap,
-                                    ingredientNameSpinner,
-                                    quantitiesSpinner);
+        increaseQuantity.setOnClickListener(v -> {
+            String ingredientName = ValueExtractor.extract(ingredientNameSpinner);
+            String quantity = ValueExtractor.extract(quantitiesSpinner);
+            if (!InputValidator.isValidSpinnerItem(ingredientName)) {
+                Toast.makeText(IngredientsActivity.this, "Please select a ingredient "
+                        + "in your pantry!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!InputValidator.isValidSpinnerItem(quantity)) {
+                Toast.makeText(IngredientsActivity.this,
+                        "Please select a quantity!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            ingredientsViewModel.updateIngredQuanTree(ingredientName, Integer.parseInt(quantity),
+                    ingredientMap -> {
+                    updateTreeMapAndSpinners(ingredientMap, ingredientNameSpinner,
+                            quantitiesSpinner);
+                    Toast.makeText(IngredientsActivity.this, "Quantity of " + ingredientName
+                            + " increased by " + quantity + "!", Toast.LENGTH_SHORT).show();
+                });
+        });
+        decreaseQuantity.setOnClickListener(v ->  {
+            String ingredientName = ValueExtractor.extract(ingredientNameSpinner);
+            String quantity = ValueExtractor.extract(quantitiesSpinner);
+            if (!InputValidator.isValidSpinnerItem(ingredientName)) {
+                Toast.makeText(IngredientsActivity.this, "Please select a ingredient "
+                        + "in your pantry!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!InputValidator.isValidSpinnerItem(quantity)) {
+                Toast.makeText(IngredientsActivity.this,
+                        "Please select a quantity!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            int decrementQuantity = Integer.parseInt(quantity);
+            int currentQuantity = ingredientsTreeMap.get(ingredientName).getQuantity();
+            if (!InputValidator.isValidQuantityDecrease(decrementQuantity, currentQuantity)) {
+                Toast.makeText(IngredientsActivity.this,
+                        "Quantity of " + ingredientName + " can only be decreased by a max of "
+                                + currentQuantity + "!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            ingredientsViewModel.decreaseIngrQuanTree(ingredientName, Integer.parseInt(quantity),
+                    ingredientMap ->
+                    updateTreeMapAndSpinners(ingredientMap, ingredientNameSpinner,
+                            quantitiesSpinner), IngredientsActivity.this);
 
-                            Toast.makeText(IngredientsActivity.this, "Quantity of " + ingredientName
-                                    + " increased by " + quantity + "!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            }
-        });
-        decreaseQuantity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String ingredientName = ValueExtractor.extract(ingredientNameSpinner);
-                String quantity = ValueExtractor.extract(quantitiesSpinner);
-                if (!InputValidator.isValidSpinnerItem(ingredientName)) {
-                    Toast.makeText(IngredientsActivity.this, "Please select a ingredient "
-                            + "in your pantry!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!InputValidator.isValidSpinnerItem(quantity)) {
-                    Toast.makeText(IngredientsActivity.this,
-                            "Please select a quantity!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                int decreaseQuantity = Integer.valueOf(quantity);
-                int currentQuantity = ingredientsTreeMap.get(ingredientName).getQuantity();
-                if (!InputValidator.isValidQuantityDecrease(decreaseQuantity, currentQuantity)) {
-                    Toast.makeText(IngredientsActivity.this,
-                            "Quantity of " + ingredientName + " can only be decreased by a max of "
-                                    + currentQuantity + "!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                ingredientsViewModel.decreaseIngrQuanTree(ingredientName, Integer.valueOf(quantity),
-                        new IngredientsActivityViewModel.IngredientTreeMapListener() {
-                            @Override
-                            public void onIngredTreeReceive(Map<String, Ingredient> ingredientMap) {
-                                updateTreeMapAndSpinners(ingredientMap,
-                                        ingredientNameSpinner,
-                                        quantitiesSpinner);
-                            }
-                        }, IngredientsActivity.this
-                );
-            }
         });
         ingredientNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

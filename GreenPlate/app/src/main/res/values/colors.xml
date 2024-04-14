@@ -34,5 +34,14 @@
     <color name="softPink">#FAEBE7</color>
     <color name="pink">#EAADBB</color>
     <color name="lightYellow">#F9EDDD</color>
+    <color name="EnglishViolet">#514663</color>
+    <color name="UltraViolet">#4D5382</color>
+    <color name="AirforceBlue">#658E9C</color>
+    <color name="Citron">#CACF85</color>
+    <color name="Olivine">#8CBA80</color>
+
+
+
+
 
 </resources>

@@ -1,7 +1,6 @@
 package com.example.greenplate.views;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,12 +10,7 @@ import com.example.greenplate.R;
 public class HomeActivity extends AppCompatActivity {
 
     private void makeNavigationBar(ImageButton button, Intent intent) {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(intent);
-            }
-        });
+        button.setOnClickListener(v -> startActivity(intent));
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,5 +34,11 @@ public class HomeActivity extends AppCompatActivity {
         makeNavigationBar(toPersonalButton, intentPersonal);
         Intent intentIngredient = new Intent(HomeActivity.this, IngredientsActivity.class);
         makeNavigationBar(toIngredientButton, intentIngredient);
+
+        // TEMPORARY JUST SO WE CAN GET TO THE FITNESS PAGE
+        // WILL EVENTUALLY HAVE TO REBUILD THE NAV BAR
+        ImageButton toFitnessButton = findViewById(R.id.btn_home);
+        Intent intentFitness = new Intent(HomeActivity.this, FitnessActivity.class);
+        makeNavigationBar(toFitnessButton, intentFitness);
     }
 }

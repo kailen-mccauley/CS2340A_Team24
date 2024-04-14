@@ -2,7 +2,6 @@ package com.example.greenplate.views;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -89,13 +88,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
                     }
                 });
 
-        toRecipeScreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RecipeDetailActivity.this,
-                        RecipeActivity.class);
-                startActivity(intent);
-            }
+        toRecipeScreen.setOnClickListener(v ->  {
+            Intent intent = new Intent(RecipeDetailActivity.this,
+                    RecipeActivity.class);
+            startActivity(intent);
         });
         toCookOrShop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,28 +134,26 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                             }
                                         });
                                     }
-                                }
+                                    shoppingVM.storeShoppingListItem(ingredient, quantity);
+                                });
                             }
-                            @Override
-                            public void onRecipeDetailsError(String errorMessage) {
-                            }
-                        });
-                Intent intent = new Intent(RecipeDetailActivity.this,
-                        RecipeActivity.class);
-                startActivity(intent);
-                String message = canMake ? " was cooked!" : " ingredients added to shopping list!";
-                Toast.makeText(RecipeDetailActivity.this,
-                        title.getText() + message, Toast.LENGTH_SHORT).show();
-            }
+                        }
+                    }
+                    @Override
+                    public void onRecipeDetailsError(String errorMessage) {
+                    }
+                });
+            Intent intent = new Intent(RecipeDetailActivity.this, RecipeActivity.class);
+            startActivity(intent);
+            String message = canMake ? " was cooked!" : " ingredients added to shopping list!";
+            Toast.makeText(RecipeDetailActivity.this,
+                    title.getText() + message, Toast.LENGTH_SHORT).show();
 
         });
-        parentLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Hide keyboard
-                hideKeyboard();
-                return false;
-            }
+        parentLayout.setOnTouchListener((v, event) -> {
+            // Hide keyboard
+            hideKeyboard();
+            return false;
         });
     }
     private void hideKeyboard() {

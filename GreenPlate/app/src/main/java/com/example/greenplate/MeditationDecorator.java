@@ -7,9 +7,11 @@ public class MeditationDecorator extends HomeScreenDecorator {
 
     @Override
     public void display() {
-        // Add clock component to the home screen before displaying the decorated element
+        // Add mediation steak component to the home screen before displaying the decorated element
+        // should have a button users can click to indicate that they have met their
+                 //  meditation for the day and add to the streak
         // For example:
-        // drawClock();
+        // meditationDisplay();
         // Call the display method of the decorated element
         super.display();
     }

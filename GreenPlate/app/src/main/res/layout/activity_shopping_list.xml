@@ -26,68 +26,31 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ScrollView
-            android:id="@+id/buttonOutsideScroll"
+            android:id="@+id/shopScroll"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:orientation="vertical"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="50dp"
-            app:layout_constraintBottom_toTopOf="@id/btn_to_recipe_screen"
+            app:layout_constraintBottom_toTopOf="@id/btn_buy_items"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/shoppingTextView">
             <LinearLayout
-                android:id="@+id/scrollableLay"
-                android:layout_width="wrap_content"
+                android:id="@+id/scrollLay"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/recipeDetailsTextView"
+                android:layout_below="@id/shoppingTextView"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recipeDetailsTextView">
+                app:layout_constraintTop_toBottomOf="@+id/shoppingTextView">
 
-                <LinearLayout
-                    android:id="@+id/inputIngredientBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/recipeDetailsTextView"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/recipeDetailsTextView">
-
-                    <TextView
-                        android:id="@+id/recipeingredientName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="Ingredient      "
-                        android:textAlignment="center"
-                        android:textColorHint="@color/magenta"
-                        android:textSize="22sp" />
-
-                    <TextView
-                        android:id="@+id/quantityEditText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="5dp"
-                        android:layout_marginBottom="25dp"
-                        android:hint="Quantity   "
-                        android:textAlignment="center"
-                        android:textColorHint="@color/magenta"
-                        android:textSize="22sp" />
-
-                    <CheckBox
-                        android:id="@+id/checkbox_id"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/magenta"/>
-
-                </LinearLayout>
             </LinearLayout>
         </ScrollView>
 
         <Button
-            android:id="@+id/btn_to_recipe_screen"
+            android:id="@+id/btn_buy_items"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/magenta"
@@ -108,7 +71,7 @@
         android:layout_alignParentBottom="true"
         android:background="@android:color/darker_gray"
         android:orientation="horizontal"
-        android:padding="5dp"
+        android:padding="3dp"
         android:backgroundTint="@color/magenta"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -128,14 +91,14 @@
                 android:backgroundTint="@color/softPink" />
 
             <TextView
-                android:id="@+id/textView0"
+                android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btn_home"
                 android:layout_centerHorizontal="true"
                 android:text="HOME"
                 android:textColor="@color/softPink"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
         </RelativeLayout>
 
         <!-- Column 2 -->
@@ -154,95 +117,17 @@
                 android:backgroundTint="@color/softPink" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btn_personal"
                 android:layout_centerHorizontal="true"
-                android:text="PERSONAL"
+                android:text="INFO"
                 android:textColor="@color/softPink"
                 android:textSize="13sp" />
         </RelativeLayout>
 
         <!-- Column 3 -->
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.75"
-            android:gravity="center">
-
-            <ImageButton
-                android:id="@+id/btn_meal"
-                android:layout_width="70dp"
-                android:layout_height="75dp"
-                android:src="@drawable/ic_meal_foreground"
-                android:layout_centerHorizontal="true"
-                android:backgroundTint="@color/softPink" />
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/btn_meal"
-                android:layout_centerHorizontal="true"
-                android:text="MEALS"
-                android:textColor="@color/softPink"
-                android:textSize="14sp" />
-        </RelativeLayout>
-
-        <!-- Column 4 -->
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.75"
-            android:gravity="center">
-
-            <ImageButton
-                android:id="@+id/btn_recipe"
-                android:layout_width="70dp"
-                android:layout_height="75dp"
-                android:src="@drawable/ic_recipe_foreground"
-                android:layout_centerHorizontal="true"
-                android:backgroundTint="@color/softPink" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/btn_recipe"
-                android:layout_centerHorizontal="true"
-                android:text="RECIPES"
-                android:textColor="@color/softPink"
-                android:textSize="14sp" />
-        </RelativeLayout>
-
-        <!-- Column 5 -->
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.75"
-            android:gravity="center">
-
-            <ImageButton
-                android:id="@+id/btn_ingredients"
-                android:layout_width="70dp"
-                android:layout_height="75dp"
-                android:src="@drawable/ic_ingredient_foreground"
-                android:layout_centerHorizontal="true"
-                android:backgroundTint="@color/softPink" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/btn_ingredients"
-                android:layout_centerHorizontal="true"
-                android:text="ITEMS"
-                android:textColor="@color/softPink"
-                android:textSize="14sp" />
-        </RelativeLayout>
-
-        <!-- Column 6 -->
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -263,7 +148,111 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btn_shopping"
                 android:layout_centerHorizontal="true"
-                android:text="SHOPPING"
+                android:text="CART"
+                android:textColor="@color/softPink"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <!-- Column 4 -->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.75"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/btn_recipe"
+                android:layout_width="70dp"
+                android:layout_height="75dp"
+                android:src="@drawable/ic_recipe_foreground"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/softPink" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_recipe"
+                android:layout_centerHorizontal="true"
+                android:text="RECIPES"
+                android:textColor="@color/softPink"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <!-- Column 5 -->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.75"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/btn_ingredients"
+                android:layout_width="70dp"
+                android:layout_height="75dp"
+                android:src="@drawable/ic_ingredient_foreground"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/softPink" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_ingredients"
+                android:layout_centerHorizontal="true"
+                android:text="ITEMS"
+                android:textColor="@color/softPink"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <!-- Column 6 -->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.75"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/btn_meal"
+                android:layout_width="70dp"
+                android:layout_height="75dp"
+                android:src="@drawable/ic_meal_foreground"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/softPink" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_meal"
+                android:layout_centerHorizontal="true"
+                android:text="MEALS"
+                android:textColor="@color/softPink"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <!-- Column 7 -->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.75"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/btn_fitness"
+                android:layout_width="70dp"
+                android:layout_height="75dp"
+                android:src="@drawable/ic_fitness_foreground"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/softPink" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_fitness"
+                android:layout_centerHorizontal="true"
+                android:text="FITNESS"
                 android:textColor="@color/softPink"
                 android:textSize="13sp" />
         </RelativeLayout>

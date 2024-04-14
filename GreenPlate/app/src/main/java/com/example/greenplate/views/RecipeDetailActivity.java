@@ -21,6 +21,7 @@ import com.example.greenplate.viewmodels.MealActivityViewModel;
 import com.example.greenplate.viewmodels.RecipeActivityViewModel;
 import com.example.greenplate.viewmodels.ShoppingListActivityViewModel;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class RecipeDetailActivity extends AppCompatActivity {
@@ -60,62 +61,78 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
         recipeViewModel.getRecipeDetails(recipeID, new
                 RecipeActivityViewModel.RecipeDetailsListener() {
-            @Override
-            public void onRecipeDetailsReceived(Recipe recipe) {
-                LinearLayout scrollable = findViewById(R.id.scrollableLay);
-                for (Map.Entry<String, Integer> entry : recipe.
-                        getIngredients().entrySet()) {
-                    String ingredientName = entry.getKey();
-                    String quantity = entry.getValue().toString();
-                    LinearLayout ingredientLayout
+                    @Override
+                    public void onRecipeDetailsReceived(Recipe recipe) {
+                        LinearLayout scrollable = findViewById(R.id.scrollableLay);
+                        for (Map.Entry<String, Integer> entry : recipe.
+                                getIngredients().entrySet()) {
+                            String ingredientName = entry.getKey();
+                            String quantity = entry.getValue().toString();
+                            LinearLayout ingredientLayout
                                     = new LinearLayout(RecipeDetailActivity.this);
-                    ingredientLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT
-                    ));
-                    ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
-                    TextView ingredientNameTextView = buildTextView(3, ingredientName);
-                    TextView quantityTextView = buildTextView(2, quantity);
-                    ingredientLayout.addView(ingredientNameTextView);
-                    ingredientLayout.addView(quantityTextView);
+                            ingredientLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT
+                            ));
+                            ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
+                            TextView ingredientNameTextView = buildTextView(3, ingredientName);
+                            TextView quantityTextView = buildTextView(2, quantity);
+                            ingredientLayout.addView(ingredientNameTextView);
+                            ingredientLayout.addView(quantityTextView);
 
-                    scrollable.addView(ingredientLayout);
-                }
-            }
-            @Override
-            public void onRecipeDetailsError(String errorMessage) {
-            }
-        });
+                            scrollable.addView(ingredientLayout);
+                        }
+                    }
+                    @Override
+                    public void onRecipeDetailsError(String errorMessage) {
+                    }
+                });
 
         toRecipeScreen.setOnClickListener(v ->  {
             Intent intent = new Intent(RecipeDetailActivity.this,
                     RecipeActivity.class);
             startActivity(intent);
         });
-        toCookOrShop.setOnClickListener(v ->  {
-            recipeViewModel.getRecipeDetails(recipeID,
-                    new RecipeActivityViewModel.RecipeDetailsListener() {
-                    @Override
-                    public void onRecipeDetailsReceived(Recipe recipe) {
-                        Map<String, Integer> ingredients = recipe.getIngredients();
-                        IngredientsActivityViewModel ingredientsVM =
-                                IngredientsActivityViewModel.getInstance();
-                        if (canMake) {
-                            ingredientsVM.getCaloriesForRecipe(ingredients, calories ->  {
-                                MealActivityViewModel mealVM = MealActivityViewModel.getInstance();
-                                mealVM.storeMeal(recipe.getRecipeName(), String.valueOf(calories));
-                                ingredientsVM.decreaseIngredQuantByRecipe(ingredients);
-                            });
-                        } else {
-                            ShoppingListActivityViewModel shoppingVM =
-                                    ShoppingListActivityViewModel.getInstance();
-                            for (String ingredient : ingredients.keySet()) {
-                                ingredientsVM.getIngredTree(ingredientMap -> {
-                                    Ingredient pantryIngredient = ingredientMap.get(ingredient);
-                                    int quantity = ingredients.get(ingredient);
-                                    if (pantryIngredient != null
-                                            && pantryIngredient.getQuantity() < quantity) {
-                                        quantity -= pantryIngredient.getQuantity();
+        toCookOrShop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recipeViewModel.getRecipeDetails(recipeID,
+                        new RecipeActivityViewModel.RecipeDetailsListener() {
+                            @Override
+                            public void onRecipeDetailsReceived(Recipe recipe) {
+                                Map<String, Integer> ingredients = recipe.getIngredients();
+                                IngredientsActivityViewModel ingredientsVM =
+                                        IngredientsActivityViewModel.getInstance();
+                                if (canMake) {
+                                    ingredientsVM.getCaloriesForRecipe(ingredients, new
+                                            IngredientsActivityViewModel.CaloriesListener() {
+                                                @Override
+                                                public void onCaloriesReceived(int calories) {
+                                                    MealActivityViewModel mealVM =
+                                                            MealActivityViewModel.getInstance();
+                                                    mealVM.storeMeal(recipe.getRecipeName(),
+                                                            String.valueOf(calories));
+                                                    ingredientsVM.decreaseIngredQuantByRecipe(ingredients);
+                                                }
+                                            });
+                                } else {
+                                    ShoppingListActivityViewModel shoppingVM = ShoppingListActivityViewModel.getInstance();
+                                    ArrayList<Bundle> ingredientExtrasList = new ArrayList<>();
+                                    for (String ingredient : ingredients.keySet()) {
+                                        ingredientsVM.getIngredTree(new IngredientsActivityViewModel.IngredientTreeMapListener() {
+                                            @Override
+                                            public void onIngredTreeReceive(Map<String,
+                                                    Ingredient> ingredientMap) {
+                                                Ingredient pantryIngredient =
+                                                        ingredientMap.get(ingredient);
+                                                int quantity = ingredients.get(ingredient);
+                                                if (pantryIngredient != null) {
+                                                    quantity -= pantryIngredient.getQuantity();
+                                                }
+                                                shoppingVM.storeShoppingListItem(ingredient,
+                                                        quantity);
+                                            }
+                                        });
                                     }
                                     shoppingVM.storeShoppingListItem(ingredient, quantity);
                                 });
@@ -149,4 +166,5 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
 }
+
 

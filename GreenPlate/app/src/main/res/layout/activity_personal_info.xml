@@ -118,6 +118,7 @@
                 android:layout_height="50dp"
                 android:background="@color/tanBrown"
                 android:src="@drawable/personal_info_foreground"
+                android:tint="@color/White"
                 android:layout_centerHorizontal="true" />
 
         </RelativeLayout>

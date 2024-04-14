@@ -390,6 +390,7 @@
                 android:layout_height="50dp"
                 android:background="@color/coralPink"
                 android:src="@drawable/ic_meal_foreground"
+                android:tint="@color/White"
                 android:layout_centerHorizontal="true" />
 
         </RelativeLayout>

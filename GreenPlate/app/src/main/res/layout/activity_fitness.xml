@@ -238,7 +238,8 @@
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
                 android:background="@color/AirforceBlue"
-                android:src="@drawable/ic_fitness_foreground" />
+                android:src="@drawable/ic_fitness_foreground"
+                android:tint="@color/White"/>
 
         </RelativeLayout>
 

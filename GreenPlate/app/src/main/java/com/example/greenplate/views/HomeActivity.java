@@ -23,6 +23,7 @@ public class HomeActivity extends AppCompatActivity {
         ImageButton toIngredientButton = findViewById(R.id.btn_ingredients);
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
+        ImageButton toFitnessButton = findViewById(R.id.btn_fitness);
 
         Intent intentMeal = new Intent(HomeActivity.this, MealActivity.class);
         makeNavigationBar(toMealButton, intentMeal);
@@ -34,10 +35,6 @@ public class HomeActivity extends AppCompatActivity {
         makeNavigationBar(toPersonalButton, intentPersonal);
         Intent intentIngredient = new Intent(HomeActivity.this, IngredientsActivity.class);
         makeNavigationBar(toIngredientButton, intentIngredient);
-
-        // TEMPORARY JUST SO WE CAN GET TO THE FITNESS PAGE
-        // WILL EVENTUALLY HAVE TO REBUILD THE NAV BAR
-        ImageButton toFitnessButton = findViewById(R.id.btn_home);
         Intent intentFitness = new Intent(HomeActivity.this, FitnessActivity.class);
         makeNavigationBar(toFitnessButton, intentFitness);
     }

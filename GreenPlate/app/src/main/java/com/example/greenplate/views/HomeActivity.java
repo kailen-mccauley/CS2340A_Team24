@@ -40,5 +40,11 @@ public class HomeActivity extends AppCompatActivity {
         makeNavigationBar(toPersonalButton, intentPersonal);
         Intent intentIngredient = new Intent(HomeActivity.this, IngredientsActivity.class);
         makeNavigationBar(toIngredientButton, intentIngredient);
+
+        // TEMPORARY JUST SO WE CAN GET TO THE FITNESS PAGE
+        // WILL EVENTUALLY HAVE TO REBUILD THE NAV BAR
+        ImageButton toFitnessButton = findViewById(R.id.btn_home);
+        Intent intentFitness = new Intent(HomeActivity.this, FitnessActivity.class);
+        makeNavigationBar(toFitnessButton, intentFitness);
     }
 }

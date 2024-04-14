@@ -15,6 +15,12 @@ import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
 import com.example.greenplate.ValueExtractor;
 
+import com.example.greenplate.viewmodels.FitnessActivityViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class FitnessActivity extends AppCompatActivity {
     private TextView activityGoalTextView;
     private TextView timerTextView;
@@ -24,6 +30,8 @@ public class FitnessActivity extends AppCompatActivity {
     private Handler timerHandler = new Handler();
     private boolean stopwatchRunning = false;
     private int seconds = 0;
+
+    private FitnessActivityViewModel fitnessVM;
 
     private void makeNavigationBar(ImageButton button, Intent intent) {
         button.setOnClickListener(v -> startActivity(intent));
@@ -50,6 +58,8 @@ public class FitnessActivity extends AppCompatActivity {
         makeNavigationBar(toPersonalButton, intentPersonal);
         Intent intentIngredient = new Intent(FitnessActivity.this, IngredientsActivity.class);
         makeNavigationBar(toIngredientButton, intentIngredient);
+
+        fitnessVM = FitnessActivityViewModel.getInstance();
 
         activityGoalTextView = findViewById(R.id.activityGoalTextView);
         timerTextView = findViewById(R.id.timerTextView);
@@ -81,13 +91,21 @@ public class FitnessActivity extends AppCompatActivity {
 
         saveActivityButton.setOnClickListener(v -> {
             String time = ValueExtractor.extract(timerTextView);
+            System.out.println(time);
             String[] brokenDownTime = time.split(":");
             int[] times = new int[3];
             for (int i = 0; i < brokenDownTime.length; i++) {
                 times[i] = Integer.parseInt(brokenDownTime[i]);
                 System.out.println(times[i]);
             }
-            // PASS THE TIMES ARRAY TO VIEW MODEL!!!!
+            ArrayList<Integer> timesList = new ArrayList<>();
+            for (int i = 0; i < brokenDownTime.length; i++) {
+                timesList.add(Integer.parseInt(brokenDownTime[i]));
+                System.out.println(timesList.get(i));
+            }
+            System.out.println(timesList);
+            // PASS THE TIMES ARRAY TO VIEWMODEL!!!!
+            fitnessVM.storeActivity(time);
             Toast.makeText(FitnessActivity.this,
                     "Activity logged!",
                     Toast.LENGTH_SHORT).show();
@@ -103,7 +121,9 @@ public class FitnessActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             } else {
                 int stepNum = Integer.parseInt(steps);
-                // PASS stepNum  TO VIEW MODEL!!!!
+                // PASS stepNum  TO VIEWMODEL!!!!
+                fitnessVM.storeSteps(stepNum);
+
                 Toast.makeText(FitnessActivity.this,
                         "Steps tracked!",
                         Toast.LENGTH_SHORT).show();

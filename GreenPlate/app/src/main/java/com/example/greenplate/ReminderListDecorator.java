@@ -7,9 +7,9 @@ public class ReminderListDecorator extends HomeScreenDecorator {
 
     @Override
     public void display() {
-        // Add goal's list component to the home screen before displaying the decorated element
+        // Add reminder's list component to the home screen before displaying the decorated element
         // For example:
-        // goalsListDisplay();
+        // reminderListDisplay();
         // Call the display method of the decorated element
         super.display();
     }

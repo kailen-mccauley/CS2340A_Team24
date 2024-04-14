@@ -58,9 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        toCloseApplication.setOnClickListener(v -> {
-            finishAffinity();
-        });
+        toCloseApplication.setOnClickListener(v -> finishAffinity());
 
         viewModel.getLoginSuccess().observe(this, loginSuccess -> {
             if (loginSuccess) {

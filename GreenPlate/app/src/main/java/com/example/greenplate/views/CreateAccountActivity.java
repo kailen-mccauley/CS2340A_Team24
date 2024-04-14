@@ -2,7 +2,6 @@ package com.example.greenplate.views;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.MotionEvent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -12,7 +11,6 @@ import android.widget.Toast;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 
 import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;

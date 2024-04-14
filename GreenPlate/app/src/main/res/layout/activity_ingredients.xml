@@ -223,7 +223,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@color/dimGray"
-                android:src="@drawable/ic_recipe_foreground"
+                android:src="@drawable/recipe_foreground"
                 android:layout_centerHorizontal="true" />
 
         </RelativeLayout>

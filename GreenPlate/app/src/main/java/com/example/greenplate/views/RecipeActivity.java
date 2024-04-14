@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -15,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Button;
 import android.widget.Switch;
-import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -72,43 +70,25 @@ public class RecipeActivity extends AppCompatActivity {
     }
 
     private void getRecipeListAndHighlight() {
-        viewModel.fetchRecipesbyIngredAvail(new RecipeActivityViewModel.RecipeListListener() {
-            @Override
-            public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipeList) {
-                highlightMatchingRecipes(recipeList);
-            }
-        });
+        viewModel.fetchRecipesbyIngredAvail(this::highlightMatchingRecipes);
     }
 
     private void sortBasedOnSwitch() {
         if (sortSwitch.isChecked()) {
-            viewModel.fetchRecipesbyIngredAvail(new RecipeActivityViewModel.RecipeListListener() {
-                @Override
-                public void onRecipeListReceived(ArrayList<Map<SpannableString,
-                        Recipe>> sortedRecipeList) {
-                    updateArrayListAndSpinners(sortedRecipeList);
-                    getRecipeListAndHighlight();
-                }
+            viewModel.fetchRecipesbyIngredAvail(sortedRecipeList -> {
+                updateArrayListAndSpinners(sortedRecipeList);
+                getRecipeListAndHighlight();
             });
         } else {
-            viewModel.getRecipeList(new RecipeActivityViewModel.RecipeListListener() {
-                @Override
-                public void onRecipeListReceived(ArrayList<Map<SpannableString,
-                        Recipe>> recipeList) {
-                    updateArrayListAndSpinners(recipeList);
-                    getRecipeListAndHighlight();
-                }
+            viewModel.getRecipeList(recipeList -> {
+                updateArrayListAndSpinners(recipeList);
+                getRecipeListAndHighlight();
             });
         }
     }
 
     private void makeNavigationBar(ImageButton button, Intent intent) {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(intent);
-            }
-        });
+        button.setOnClickListener(v ->  startActivity(intent));
     }
 
     @Override
@@ -127,12 +107,9 @@ public class RecipeActivity extends AppCompatActivity {
         ingredientListEditText = findViewById(R.id.recipeIngredientsEditText);
         Button submitRecipe = findViewById(R.id.btn_submit_recipe);
         viewModel = RecipeActivityViewModel.getInstance();
-        viewModel.getRecipeList(new RecipeActivityViewModel.RecipeListListener() {
-            @Override
-            public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> recipes) {
-                updateArrayListAndSpinners(recipes);
-                sortBasedOnSwitch();
-            }
+        viewModel.getRecipeList(recipes -> {
+            updateArrayListAndSpinners(recipes);
+            sortBasedOnSwitch();
         });
 
         Intent intentHome = new Intent(RecipeActivity.this, HomeActivity.class);
@@ -146,12 +123,7 @@ public class RecipeActivity extends AppCompatActivity {
         Intent intentIngredient = new Intent(RecipeActivity.this, IngredientsActivity.class);
         makeNavigationBar(toIngredientButton, intentIngredient);
 
-        sortSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                sortBasedOnSwitch();
-            }
-        });
+        sortSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> sortBasedOnSwitch());
         recipesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -159,67 +131,58 @@ public class RecipeActivity extends AppCompatActivity {
                     return;
                 }
                 Map<SpannableString, Recipe> selectedRecipeMap = recipesList.get(position - 1);
-                viewModel.fetchRecipesbyIngredAvail(new RecipeActivityViewModel.RecipeListListener() {
-                    @Override
-                    public void onRecipeListReceived(ArrayList<Map<SpannableString, Recipe>> sortedRecipeList) {
-                        Recipe currRecipe = null;
-                        for (Recipe recipe : selectedRecipeMap.values()) {
-                            currRecipe = recipe;
-                            break;
-                        }
-                        Intent intent = new Intent(RecipeActivity.this, RecipeDetailActivity.class);
-                        intent.putExtra("recipeID", currRecipe.getRecipeID());
-                        intent.putExtra("recipeName", currRecipe.getRecipeName());
-                        for (Map<SpannableString, Recipe> entry : sortedRecipeList) {
-                            for (Recipe recipe : entry.values()) {
-                                if (recipe.getRecipeID().equals(currRecipe.getRecipeID())) {
-                                    intent.putExtra("canMake", true);
-                                    startActivity(intent);
-                                    return;
-                                }
+                viewModel.fetchRecipesbyIngredAvail(sortedRecipeList -> {
+                    Recipe currRecipe = null;
+                    for (Recipe recipe : selectedRecipeMap.values()) {
+                        currRecipe = recipe;
+                        break;
+                    }
+                    Intent intent = new Intent(RecipeActivity.this, RecipeDetailActivity.class);
+                    intent.putExtra("recipeID", currRecipe.getRecipeID());
+                    intent.putExtra("recipeName", currRecipe.getRecipeName());
+                    for (Map<SpannableString, Recipe> entry : sortedRecipeList) {
+                        for (Recipe recipe : entry.values()) {
+                            if (recipe.getRecipeID().equals(currRecipe.getRecipeID())) {
+                                intent.putExtra("canMake", true);
+                                startActivity(intent);
+                                return;
                             }
                         }
-                        startActivity(intent);
                     }
+                    startActivity(intent);
                 });
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        submitRecipe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String recipeName = ValueExtractor.extract(recipeNameEditText).toLowerCase();
-                String ingredientList = ValueExtractor.extract(ingredientListEditText);
-                if (!InputValidator.isValidInputWithSpacesBetween(recipeName)) {
-                    Toast.makeText(RecipeActivity.this,
-                            "Please input a name for your recipe!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!InputValidator.isValidInputWithSpacesBetween(ingredientList)) {
-                    Toast.makeText(RecipeActivity.this, "Please input the ingredient list "
-                                    + "for your recipe!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                HashMap<String, Integer> ingredientsMap = parseIngredientList(ingredientList);
-                if (ingredientsMap != null) {
-                    recipeNameEditText.setText("");
-                    ingredientListEditText.setText("");
-                    Toast.makeText(RecipeActivity.this, "Recipe  " + recipeName
-                            + "  submitted successfully!", Toast.LENGTH_SHORT).show();
-                    viewModel.storeRecipe(recipeName, ingredientsMap);
-                    sortBasedOnSwitch();
-                }
+        submitRecipe.setOnClickListener(v -> {
+            String recipeName = ValueExtractor.extract(recipeNameEditText).toLowerCase();
+            String ingredientList = ValueExtractor.extract(ingredientListEditText);
+            if (!InputValidator.isValidInputWithSpacesBetween(recipeName)) {
+                Toast.makeText(RecipeActivity.this,
+                        "Please input a name for your recipe!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!InputValidator.isValidInputWithSpacesBetween(ingredientList)) {
+                Toast.makeText(RecipeActivity.this, "Please input the ingredient list "
+                        + "for your recipe!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            HashMap<String, Integer> ingredientsMap = parseIngredientList(ingredientList);
+            if (ingredientsMap != null) {
+                recipeNameEditText.setText("");
+                ingredientListEditText.setText("");
+                Toast.makeText(RecipeActivity.this, "Recipe  " + recipeName
+                        + "  submitted successfully!", Toast.LENGTH_SHORT).show();
+                viewModel.storeRecipe(recipeName, ingredientsMap);
+                sortBasedOnSwitch();
             }
         });
-        parentLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Hide keyboard
-                hideKeyboard();
-                return false;
-            }
+        parentLayout.setOnTouchListener((v, event) -> {
+            // Hide keyboard
+            hideKeyboard();
+            return false;
         });
     }
     private void hideKeyboard() {

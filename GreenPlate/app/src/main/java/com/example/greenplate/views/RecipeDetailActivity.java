@@ -2,7 +2,6 @@ package com.example.greenplate.views;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -88,79 +87,56 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
         });
 
-        toRecipeScreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RecipeDetailActivity.this,
-                        RecipeActivity.class);
-                startActivity(intent);
-            }
+        toRecipeScreen.setOnClickListener(v ->  {
+            Intent intent = new Intent(RecipeDetailActivity.this,
+                    RecipeActivity.class);
+            startActivity(intent);
         });
-        toCookOrShop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                recipeViewModel.getRecipeDetails(recipeID,
-                        new RecipeActivityViewModel.RecipeDetailsListener() {
-                            @Override
-                            public void onRecipeDetailsReceived(Recipe recipe) {
-                                Map<String, Integer> ingredients = recipe.getIngredients();
-                                IngredientsActivityViewModel ingredientsVM =
-                                        IngredientsActivityViewModel.getInstance();
-                                if (canMake) {
-                                    ingredientsVM.getCaloriesForRecipe(ingredients, new
-                                            IngredientsActivityViewModel.CaloriesListener() {
-                                        @Override
-                                        public void onCaloriesReceived(int calories) {
-                                            MealActivityViewModel mealVM =
-                                                    MealActivityViewModel.getInstance();
-                                            mealVM.storeMeal(recipe.getRecipeName(),
-                                                    String.valueOf(calories));
-                                            ingredientsVM.decreaseIngredQuantByRecipe(ingredients);
-                                        }
-                                    });
-                                } else {
-                                    ShoppingListActivityViewModel shoppingVM =
-                                            ShoppingListActivityViewModel.getInstance();
-                                    for (String ingredient : ingredients.keySet()) {
-                                        ingredientsVM.getIngredTree(new IngredientsActivityViewModel
-                                                .IngredientTreeMapListener() {
-                                            @Override
-                                            public void onIngredTreeReceive(Map<String,
-                                                    Ingredient> ingredientMap) {
-                                                Ingredient pantryIngredient =
-                                                        ingredientMap.get(ingredient);
-                                                int quantity = ingredients.get(ingredient);
-                                                if (pantryIngredient != null
-                                                    && pantryIngredient.getQuantity() < quantity) {
-                                                    quantity -= pantryIngredient.getQuantity();
-                                                }
-                                                shoppingVM.storeShoppingListItem(ingredient,
-                                                        quantity);
-                                            }
-                                        });
+        toCookOrShop.setOnClickListener(v ->  {
+            recipeViewModel.getRecipeDetails(recipeID,
+                    new RecipeActivityViewModel.RecipeDetailsListener() {
+                    @Override
+                    public void onRecipeDetailsReceived(Recipe recipe) {
+                        Map<String, Integer> ingredients = recipe.getIngredients();
+                        IngredientsActivityViewModel ingredientsVM =
+                                IngredientsActivityViewModel.getInstance();
+                        if (canMake) {
+                            ingredientsVM.getCaloriesForRecipe(ingredients, calories ->  {
+                                MealActivityViewModel mealVM = MealActivityViewModel.getInstance();
+                                mealVM.storeMeal(recipe.getRecipeName(), String.valueOf(calories));
+                                ingredientsVM.decreaseIngredQuantByRecipe(ingredients);
+                            });
+                        } else {
+                            ShoppingListActivityViewModel shoppingVM =
+                                    ShoppingListActivityViewModel.getInstance();
+                            for (String ingredient : ingredients.keySet()) {
+                                ingredientsVM.getIngredTree(ingredientMap -> {
+                                    Ingredient pantryIngredient = ingredientMap.get(ingredient);
+                                    int quantity = ingredients.get(ingredient);
+                                    if (pantryIngredient != null
+                                            && pantryIngredient.getQuantity() < quantity) {
+                                        quantity -= pantryIngredient.getQuantity();
                                     }
-                                }
+                                    shoppingVM.storeShoppingListItem(ingredient, quantity);
+                                });
                             }
-                            @Override
-                            public void onRecipeDetailsError(String errorMessage) {
-                            }
-                        });
-                Intent intent = new Intent(RecipeDetailActivity.this,
-                        RecipeActivity.class);
-                startActivity(intent);
-                String message = canMake ? " was cooked!" : " ingredients added to shopping list!";
-                Toast.makeText(RecipeDetailActivity.this,
-                        title.getText() + message, Toast.LENGTH_SHORT).show();
-            }
+                        }
+                    }
+                    @Override
+                    public void onRecipeDetailsError(String errorMessage) {
+                    }
+                });
+            Intent intent = new Intent(RecipeDetailActivity.this, RecipeActivity.class);
+            startActivity(intent);
+            String message = canMake ? " was cooked!" : " ingredients added to shopping list!";
+            Toast.makeText(RecipeDetailActivity.this,
+                    title.getText() + message, Toast.LENGTH_SHORT).show();
 
         });
-        parentLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Hide keyboard
-                hideKeyboard();
-                return false;
-            }
+        parentLayout.setOnTouchListener((v, event) -> {
+            // Hide keyboard
+            hideKeyboard();
+            return false;
         });
     }
     private void hideKeyboard() {

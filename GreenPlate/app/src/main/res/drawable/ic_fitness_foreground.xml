@@ -1,6 +1,6 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="90dp"
-    android:height="80dp"
+    android:width="60dp"
+    android:height="50dp"
     android:viewportWidth="24"
     android:viewportHeight="24"
     android:tint="#000000">
@@ -10,31 +10,33 @@
         android:translateY="5.04">
         <path
             android:pathData="M6,12 L18,12"
-            android:strokeWidth="2"
+            android:strokeWidth="3"
             android:strokeColor="@android:color/white"/>
+
         <path
             android:pathData="M18,4 V20"
-            android:strokeWidth="2"
+            android:strokeWidth="3"
             android:strokeColor="@android:color/white"/>
         <path
-            android:pathData="M20.25,7 V16"
-            android:strokeWidth="1.5"
+            android:pathData="M21.25,7 V16"
+            android:strokeWidth="2.5"
             android:strokeColor="@android:color/white"/>
         <path
-            android:pathData="M22,10 V13"
-            android:strokeWidth="1"
+            android:pathData="M24,10 V13"
+            android:strokeWidth="2.5"
             android:strokeColor="@android:color/white"/>
+
         <path
             android:pathData="M6,4 V20"
-            android:strokeWidth="2"
+            android:strokeWidth="3"
             android:strokeColor="@android:color/white"/>
         <path
-            android:pathData="M3.75,7 V16"
-            android:strokeWidth="1.5"
+            android:pathData="M2.75,7 V16"
+            android:strokeWidth="2.5"
             android:strokeColor="@android:color/white"/>
         <path
-            android:pathData="M2,10 V13"
-            android:strokeWidth="1"
+            android:pathData="M0,10 V13"
+            android:strokeWidth="2.5"
             android:strokeColor="@android:color/white"/>
     </group>
 </vector>

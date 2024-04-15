@@ -6,6 +6,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +57,44 @@ public class IngredientsActivity extends AppCompatActivity {
         button.setOnClickListener(v -> startActivity(intent));
     }
 
+    private void createScrollable(Map<String, Integer> ingredientsMap) {
+        LinearLayout scrollableLayout = findViewById(R.id.linearIngred);
+        scrollableLayout.removeAllViews();
+
+        for (Map.Entry<String, Integer> entry : ingredientsMap.entrySet()) {
+            String ingredientName = entry.getKey();
+            Integer quantity = entry.getValue();
+
+            LinearLayout ingredientLayout = new LinearLayout(IngredientsActivity.this);
+            ingredientLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            ));
+            ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+            TextView ingredientNameTextView = buildTextView(3, ingredientName);
+            TextView quantityTextView = buildTextView(2, String.valueOf(quantity));
+
+            ingredientLayout.addView(ingredientNameTextView);
+            ingredientLayout.addView(quantityTextView);
+
+            scrollableLayout.addView(ingredientLayout);
+        }
+    }
+
+    private TextView buildTextView(int weight, String text) {
+        TextView textView = new TextView(IngredientsActivity.this);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                weight
+        );
+        textView.setLayoutParams(layoutParams);
+        textView.setTextSize(22);
+        textView.setText(text);
+        return textView;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) { // DO NOT MODIFY
         super.onCreate(savedInstanceState);
@@ -73,10 +112,13 @@ public class IngredientsActivity extends AppCompatActivity {
         Button decreaseQuantity = findViewById(R.id.btn_decrease_quantity);
         Spinner ingredientNameSpinner = findViewById(R.id.ingredientNameSpinner);
         Spinner quantitiesSpinner = findViewById(R.id.quantitySpinner);
+
         ingredientsViewModel = IngredientsActivityViewModel.getInstance();
         ingredientsViewModel.getIngredTree(ingredientMap ->
                 updateTreeMapAndSpinners(ingredientMap, ingredientNameSpinner, quantitiesSpinner));
         makeQuantitySpinner(quantitiesSpinner);
+
+        ingredientsViewModel.getIngredQuanKVP(ingredientsMap -> createScrollable(ingredientsMap));
 
         Intent intentHome = new Intent(IngredientsActivity.this, HomeActivity.class);
         makeNavigationBar(toHomeButton, intentHome);
@@ -112,6 +154,8 @@ public class IngredientsActivity extends AppCompatActivity {
                     ingredientMap -> {
                     updateTreeMapAndSpinners(ingredientMap, ingredientNameSpinner,
                             quantitiesSpinner);
+                        ingredientsViewModel.getIngredQuanKVP(ingredientsMap
+                                -> createScrollable(ingredientsMap));
                     Toast.makeText(IngredientsActivity.this, "Quantity of " + ingredientName
                             + " increased by " + quantity + "!", Toast.LENGTH_SHORT).show();
                 });
@@ -138,10 +182,15 @@ public class IngredientsActivity extends AppCompatActivity {
                 return;
             }
             ingredientsViewModel.decreaseIngrQuanTree(ingredientName, Integer.parseInt(quantity),
-                    ingredientMap ->
-                    updateTreeMapAndSpinners(ingredientMap, ingredientNameSpinner,
-                            quantitiesSpinner), IngredientsActivity.this);
-
+                    ingredientMap -> {
+                        updateTreeMapAndSpinners(ingredientMap,
+                                ingredientNameSpinner, quantitiesSpinner);
+                        ingredientsViewModel.getIngredQuanKVP(ingredientsMap -> {
+                            createScrollable(ingredientsMap);
+                        });
+                    },
+                    IngredientsActivity.this
+            );
         });
         ingredientNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

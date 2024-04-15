@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.CheckBox;
 
+import com.example.greenplate.ValueExtractor;
 import com.example.greenplate.viewmodels.ShoppingListActivityViewModel;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -73,11 +74,22 @@ public class ShoppingActivity extends AppCompatActivity {
             minusButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int currentQuantity = Integer.parseInt(quantityTextView.getText().toString());
-                    if (currentQuantity > 0) {
+                    int currentQuantity = Integer.parseInt(ValueExtractor.extract(quantityTextView));
+                    if (currentQuantity > 1) {
                         currentQuantity--;
                         quantityTextView.setText(String.valueOf(currentQuantity));
+                        shoppingListActivityViewModel.storeShoppingListItem(ValueExtractor.extract(ingredientNameTextView), -1);
+                    } else {
+                        shoppingListActivityViewModel.removeShoppingListItem(ValueExtractor.extract(ingredientNameTextView));
                     }
+                    shoppingListActivityViewModel.fetchShoppingListItems(new ShoppingListActivityViewModel.ShoppingItemsListener() {
+                        @Override
+                        public void onShoppingItemsReceived(Map<String, Integer> existingItems) {
+                            populateShoppingList(existingItems, scrollable);
+                            Intent intent = new Intent(ShoppingActivity.this, ShoppingActivity.class);
+                            startActivity(intent);
+                        }
+                    });
                 }
             });
 
@@ -88,9 +100,18 @@ public class ShoppingActivity extends AppCompatActivity {
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int currentQuantity = Integer.parseInt(quantityTextView.getText().toString());
+                    int currentQuantity = Integer.parseInt(ValueExtractor.extract(quantityTextView));
                     currentQuantity++;
                     quantityTextView.setText(String.valueOf(currentQuantity));
+                    shoppingListActivityViewModel.storeShoppingListItem(ValueExtractor.extract(ingredientNameTextView), 1);
+                    shoppingListActivityViewModel.fetchShoppingListItems(new ShoppingListActivityViewModel.ShoppingItemsListener() {
+                        @Override
+                        public void onShoppingItemsReceived(Map<String, Integer> existingItems) {
+                            populateShoppingList(existingItems, scrollable);
+                            Intent intent = new Intent(ShoppingActivity.this, ShoppingActivity.class);
+                            startActivity(intent);
+                        }
+                    });
                 }
             });
 
@@ -143,20 +164,20 @@ public class ShoppingActivity extends AppCompatActivity {
         buyItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<String> toRemove = new ArrayList<>();
+                ArrayList<String> toBuy = new ArrayList<>();
                 int childCount = scrollable.getChildCount();
                 for (int i = 0; i < childCount; i++) {
                     View view = scrollable.getChildAt(i);
                     if (view instanceof LinearLayout) {
                         LinearLayout ingredientLayout = (LinearLayout) view;
-                        CheckBox checkBox = (CheckBox) ingredientLayout.getChildAt(2);
+                        CheckBox checkBox = (CheckBox) ingredientLayout.getChildAt(4);
                         if (checkBox.isChecked()) {
                             String ingredientName = ((TextView) ingredientLayout.getChildAt(0)).getText().toString();
-                            toRemove.add(ingredientName);
-                            shoppingListActivityViewModel.removeShoppingListItem(ingredientName);
+                            toBuy.add(ingredientName);
                         }
                     }
                 }
+                shoppingListActivityViewModel.buyItems(toBuy);
                 shoppingListActivityViewModel.fetchShoppingListItems(new ShoppingListActivityViewModel.ShoppingItemsListener() {
                     @Override
                     public void onShoppingItemsReceived(Map<String, Integer> existingItems) {

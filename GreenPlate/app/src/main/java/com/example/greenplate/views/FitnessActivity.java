@@ -95,6 +95,9 @@ public class FitnessActivity extends AppCompatActivity {
         saveActivityButton.setOnClickListener(v -> {
             String time = ValueExtractor.extract(timerTextView);
             System.out.println(time);
+            if (!InputValidator.isValidTime(time)) {
+                return;
+            }
             String[] brokenDownTime = time.split(":");
             int[] times = new int[3];
             for (int i = 0; i < brokenDownTime.length; i++) {
@@ -113,6 +116,7 @@ public class FitnessActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
             stepsEditText.setText("");
             timerTextView.setText(String.format("%02d:%02d:%02d", 0, 0, 0));
+            seconds = 0;
         });
 
         saveStepsButton.setOnClickListener(v -> {

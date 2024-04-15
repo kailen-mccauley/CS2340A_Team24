@@ -66,8 +66,11 @@ public class ShoppingListActivityViewModel {
                 });
         }
     }
+    public interface ShoppingItemsListener {
+        void onShoppingItemsReceived(Map<String, Integer> shoppingListItems);
+    }
 
-    public void storeShoppingListItem(String ingredientName, int quantity) {
+    public void storeShoppingListItem(String ingredientName, int quantity, StoreItemListener listener) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String uid = currentUser.getUid();
@@ -83,57 +86,84 @@ public class ShoppingListActivityViewModel {
                                     isDuplicate = true;
                                     id = snapshot.getKey();
                                     int currQuantity = snapshot.getValue(ShoppingItem.class).getQuantity();
-                                    mDatabase.child("shoppinglist").child(id).child("quantity").setValue(quantity + currQuantity);
+                                    mDatabase.child("shoppinglist").child(id).child("quantity").setValue(quantity + currQuantity)
+                                            .addOnCompleteListener(task -> {
+                                                if (task.isSuccessful()) {
+                                                    // Notify listener when item is successfully stored
+                                                    listener.onShoppingItemStored();
+                                                } else {
+                                                    // Handle failure if needed
+                                                }
+                                            });
                                     break;
                                 }
                             }
                             if (!isDuplicate) {
                                 id = mDatabase.child("shoppinglist").push().getKey();
                                 ShoppingItem item = new ShoppingItem(ingredientName, quantity, uid);
-                                mDatabase.child("shoppinglist").child(id).setValue(item);
+                                mDatabase.child("shoppinglist").child(id).setValue(item)
+                                        .addOnCompleteListener(task -> {
+                                            if (task.isSuccessful()) {
+                                                // Notify listener when item is successfully stored
+                                                listener.onShoppingItemStored();
+                                            } else {
+                                            }
+                                        });
                             }
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
                         }
                     });
         }
     }
 
-    public void removeShoppingListItem(String ingredientName) {
+    public interface StoreItemListener {
+        void onShoppingItemStored();
+    }
+
+    public void removeShoppingListItem(String ingredientName, RemoveItemListener listener) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String uid = currentUser.getUid();
             mDatabase.child("shoppinglist").orderByChild("userId").equalTo(uid)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                            String name = snapshot.getValue(ShoppingItem.class).getIngredientName();
-                            if (name != null && name.equals(ingredientName.toLowerCase())) {
-                                String id = snapshot.getKey();
-                                mDatabase.child("shoppinglist").child(id).removeValue();
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                                String name = snapshot.getValue(ShoppingItem.class).getIngredientName();
+                                if (name != null && name.equals(ingredientName.toLowerCase())) {
+                                    String id = snapshot.getKey();
+                                    mDatabase.child("shoppinglist").child(id).removeValue()
+                                            .addOnCompleteListener(task -> {
+                                                if (task.isSuccessful()) {
+                                                    // Notify listener when item is successfully removed
+                                                    listener.onShoppingItemRemoved();
+                                                } else {
+                                                    // Handle failure if needed
+                                                }
+                                            });
+                                    break; // No need to continue looping
+                                }
                             }
                         }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            // Handle cancellation if needed
+                        }
+                    });
         }
     }
-    
-    public interface ShoppingItemsListener {
-        void onShoppingItemsReceived(Map<String, Integer> shoppingListItems);
+
+    public interface RemoveItemListener {
+        void onShoppingItemRemoved();
     }
 
      /* TODO4: Buy items
      * - Take in a list of items by name
      * - Remove each item from shopping list and add to pantry
      */
-     public void buyItems(List<String> itemNames) {
+     public void buyItems(List<String> itemNames, BuyItemsListener listener) {
          FirebaseUser currentUser = mAuth.getCurrentUser();
          if (currentUser != null) {
              String uid = currentUser.getUid();
@@ -180,19 +210,21 @@ public class ShoppingListActivityViewModel {
 
                                                  @Override
                                                  public void onCancelled(@NonNull DatabaseError error) {
-
                                                  }
                                              });
                                  }
                              }
+                             listener.onShoppingItemsBought();
                          }
 
                          @Override
                          public void onCancelled(@NonNull DatabaseError error) {
-
                          }
                      });
          }
      }
+    public interface BuyItemsListener {
+        void onShoppingItemsBought();
+    }
 
 }

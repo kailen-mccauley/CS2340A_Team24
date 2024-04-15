@@ -45,20 +45,26 @@ public class ShoppingActivity extends AppCompatActivity {
 
         for (Map.Entry<String, Integer> entry : items.entrySet()) {
             String ingredient = entry.getKey();
-            int quancheck = entry.getValue();
-            String quantity = String.valueOf(quancheck);
+            int quantityCheck = entry.getValue();
+            String quantity = String.valueOf(quantityCheck);
             LinearLayout ingredientLayout = new LinearLayout(ShoppingActivity.this);
-            ingredientLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            ingredientLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT));
             ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
             TextView ingredientNameTextView = buildTextView(3, ingredient);
 
             TextView quantityTextView = buildTextView(1, quantity);
             CheckBox checkBox = new CheckBox(ShoppingActivity.this);
-            checkBox.setLayoutParams(new LinearLayout.LayoutParams(2, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-            checkBox.setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.magenta)));
+            checkBox.setLayoutParams(new LinearLayout.LayoutParams(2,
+                    LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+            checkBox.setButtonTintList(ColorStateList.valueOf(
+                    getResources().getColor(R.color.magenta)));
 
             ImageButton minusButton = new ImageButton(ShoppingActivity.this);
-            minusButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+            minusButton.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT, 1));
             minusButton.setImageResource(R.drawable.ic_minus_icon);
             minusButton.setBackgroundColor(Color.TRANSPARENT);
             minusButton.setOnClickListener(v ->  {
@@ -66,31 +72,33 @@ public class ShoppingActivity extends AppCompatActivity {
                 if (currentQuantity > 1) {
                     currentQuantity--;
                     quantityTextView.setText(String.valueOf(currentQuantity));
-                    shoppingListActivityViewModel.storeShoppingListItem(ValueExtractor.extract(ingredientNameTextView), -1);
+                    shoppingListActivityViewModel.storeShoppingListItem(
+                            ValueExtractor.extract(ingredientNameTextView), -1, () ->
+                            shoppingListActivityViewModel.fetchShoppingListItems(existingItems ->
+                                populateShoppingList(existingItems, scrollable)));
                 } else {
-                    shoppingListActivityViewModel.removeShoppingListItem(ValueExtractor.extract(ingredientNameTextView));
+                    shoppingListActivityViewModel.removeShoppingListItem(
+                            ValueExtractor.extract(ingredientNameTextView), () ->
+                            shoppingListActivityViewModel.fetchShoppingListItems(existingItems ->
+                                populateShoppingList(existingItems, scrollable)));
                 }
-                shoppingListActivityViewModel.fetchShoppingListItems(existingItems -> {
-                    populateShoppingList(existingItems, scrollable);
-                    Intent intent = new Intent(ShoppingActivity.this, ShoppingActivity.class);
-                    startActivity(intent);
-                });
+
             });
 
             ImageButton addButton = new ImageButton(ShoppingActivity.this);
-            addButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+            addButton.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT, 1));
             addButton.setImageResource(R.drawable.ic_add_icon);
             addButton.setBackgroundColor(Color.TRANSPARENT);
             addButton.setOnClickListener(v ->  {
                 int currentQuantity = Integer.parseInt(ValueExtractor.extract(quantityTextView));
                 currentQuantity++;
                 quantityTextView.setText(String.valueOf(currentQuantity));
-                shoppingListActivityViewModel.storeShoppingListItem(ValueExtractor.extract(ingredientNameTextView), 1);
-                shoppingListActivityViewModel.fetchShoppingListItems(existingItems -> {
-                    populateShoppingList(existingItems, scrollable);
-                    Intent intent = new Intent(ShoppingActivity.this, ShoppingActivity.class);
-                    startActivity(intent);
-                });
+                shoppingListActivityViewModel.storeShoppingListItem(
+                        ValueExtractor.extract(ingredientNameTextView), 1, () ->
+                        shoppingListActivityViewModel.fetchShoppingListItems(existingItems ->
+                            populateShoppingList(existingItems, scrollable)));
             });
 
             ingredientLayout.addView(ingredientNameTextView);
@@ -144,17 +152,15 @@ public class ShoppingActivity extends AppCompatActivity {
                     LinearLayout ingredientLayout = (LinearLayout) view;
                     CheckBox checkBox = (CheckBox) ingredientLayout.getChildAt(4);
                     if (checkBox.isChecked()) {
-                        String ingredientName = ((TextView) ingredientLayout.getChildAt(0)).getText().toString();
+                        String ingredientName = ValueExtractor.extract(
+                                (TextView) ingredientLayout.getChildAt(0));
                         toBuy.add(ingredientName);
                     }
                 }
             }
-            shoppingListActivityViewModel.buyItems(toBuy);
-            shoppingListActivityViewModel.fetchShoppingListItems(existingItems -> {
-                populateShoppingList(existingItems, scrollable);
-                Intent intent = new Intent(ShoppingActivity.this, ShoppingActivity.class);
-                startActivity(intent);
-            });
+            shoppingListActivityViewModel.buyItems(toBuy, () ->
+                shoppingListActivityViewModel.fetchShoppingListItems(existingItems ->
+                    populateShoppingList(existingItems, scrollable)));
         });
     }
 }

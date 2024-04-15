@@ -31,12 +31,7 @@ public class ShoppingActivity extends AppCompatActivity {
     private Bundle extras;
 
     private void makeNavigationBar(ImageButton button, Intent intent) {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(intent);
-            }
-        });
+        button.setOnClickListener(v -> startActivity(intent));
     }
 
     private TextView buildTextView(int weight, String text) {
@@ -71,48 +66,36 @@ public class ShoppingActivity extends AppCompatActivity {
             minusButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
             minusButton.setImageResource(R.drawable.ic_minus_icon);
             minusButton.setBackgroundColor(Color.TRANSPARENT);
-            minusButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int currentQuantity = Integer.parseInt(ValueExtractor.extract(quantityTextView));
-                    if (currentQuantity > 1) {
-                        currentQuantity--;
-                        quantityTextView.setText(String.valueOf(currentQuantity));
-                        shoppingListActivityViewModel.storeShoppingListItem(ValueExtractor.extract(ingredientNameTextView), -1);
-                    } else {
-                        shoppingListActivityViewModel.removeShoppingListItem(ValueExtractor.extract(ingredientNameTextView));
-                    }
-                    shoppingListActivityViewModel.fetchShoppingListItems(new ShoppingListActivityViewModel.ShoppingItemsListener() {
-                        @Override
-                        public void onShoppingItemsReceived(Map<String, Integer> existingItems) {
-                            populateShoppingList(existingItems, scrollable);
-                            Intent intent = new Intent(ShoppingActivity.this, ShoppingActivity.class);
-                            startActivity(intent);
-                        }
-                    });
+            minusButton.setOnClickListener(v ->  {
+                int currentQuantity = Integer.parseInt(ValueExtractor.extract(quantityTextView));
+                if (currentQuantity > 1) {
+                    currentQuantity--;
+                    quantityTextView.setText(String.valueOf(currentQuantity));
+                    shoppingListActivityViewModel.storeShoppingListItem(ValueExtractor.extract(ingredientNameTextView), -1);
+                } else {
+                    shoppingListActivityViewModel.removeShoppingListItem(ValueExtractor.extract(ingredientNameTextView));
                 }
+                shoppingListActivityViewModel.fetchShoppingListItems(existingItems -> {
+                    populateShoppingList(existingItems, scrollable);
+                    Intent intent = new Intent(ShoppingActivity.this, ShoppingActivity.class);
+                    startActivity(intent);
+                });
             });
 
             ImageButton addButton = new ImageButton(ShoppingActivity.this);
             addButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
             addButton.setImageResource(R.drawable.ic_add_icon);
             addButton.setBackgroundColor(Color.TRANSPARENT);
-            addButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int currentQuantity = Integer.parseInt(ValueExtractor.extract(quantityTextView));
-                    currentQuantity++;
-                    quantityTextView.setText(String.valueOf(currentQuantity));
-                    shoppingListActivityViewModel.storeShoppingListItem(ValueExtractor.extract(ingredientNameTextView), 1);
-                    shoppingListActivityViewModel.fetchShoppingListItems(new ShoppingListActivityViewModel.ShoppingItemsListener() {
-                        @Override
-                        public void onShoppingItemsReceived(Map<String, Integer> existingItems) {
-                            populateShoppingList(existingItems, scrollable);
-                            Intent intent = new Intent(ShoppingActivity.this, ShoppingActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-                }
+            addButton.setOnClickListener(v ->  {
+                int currentQuantity = Integer.parseInt(ValueExtractor.extract(quantityTextView));
+                currentQuantity++;
+                quantityTextView.setText(String.valueOf(currentQuantity));
+                shoppingListActivityViewModel.storeShoppingListItem(ValueExtractor.extract(ingredientNameTextView), 1);
+                shoppingListActivityViewModel.fetchShoppingListItems(existingItems -> {
+                    populateShoppingList(existingItems, scrollable);
+                    Intent intent = new Intent(ShoppingActivity.this, ShoppingActivity.class);
+                    startActivity(intent);
+                });
             });
 
             ingredientLayout.addView(ingredientNameTextView);
@@ -154,39 +137,29 @@ public class ShoppingActivity extends AppCompatActivity {
         Intent intentFitness = new Intent(ShoppingActivity.this, FitnessActivity.class);
         makeNavigationBar(toFitnessButton, intentFitness);
 
-        shoppingListActivityViewModel.fetchShoppingListItems(new ShoppingListActivityViewModel.ShoppingItemsListener() {
-            @Override
-            public void onShoppingItemsReceived(Map<String, Integer> existingItems) {
-                populateShoppingList(existingItems, scrollable);
-            }
-        });
+        shoppingListActivityViewModel.fetchShoppingListItems(existingItems ->
+                populateShoppingList(existingItems, scrollable));
 
-        buyItems.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ArrayList<String> toBuy = new ArrayList<>();
-                int childCount = scrollable.getChildCount();
-                for (int i = 0; i < childCount; i++) {
-                    View view = scrollable.getChildAt(i);
-                    if (view instanceof LinearLayout) {
-                        LinearLayout ingredientLayout = (LinearLayout) view;
-                        CheckBox checkBox = (CheckBox) ingredientLayout.getChildAt(4);
-                        if (checkBox.isChecked()) {
-                            String ingredientName = ((TextView) ingredientLayout.getChildAt(0)).getText().toString();
-                            toBuy.add(ingredientName);
-                        }
+        buyItems.setOnClickListener(v ->  {
+            ArrayList<String> toBuy = new ArrayList<>();
+            int childCount = scrollable.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                View view = scrollable.getChildAt(i);
+                if (view instanceof LinearLayout) {
+                    LinearLayout ingredientLayout = (LinearLayout) view;
+                    CheckBox checkBox = (CheckBox) ingredientLayout.getChildAt(4);
+                    if (checkBox.isChecked()) {
+                        String ingredientName = ((TextView) ingredientLayout.getChildAt(0)).getText().toString();
+                        toBuy.add(ingredientName);
                     }
                 }
-                shoppingListActivityViewModel.buyItems(toBuy);
-                shoppingListActivityViewModel.fetchShoppingListItems(new ShoppingListActivityViewModel.ShoppingItemsListener() {
-                    @Override
-                    public void onShoppingItemsReceived(Map<String, Integer> existingItems) {
-                        populateShoppingList(existingItems, scrollable);
-                        Intent intent = new Intent(ShoppingActivity.this, ShoppingActivity.class);
-                        startActivity(intent);
-                    }
-                });
             }
+            shoppingListActivityViewModel.buyItems(toBuy);
+            shoppingListActivityViewModel.fetchShoppingListItems(existingItems -> {
+                populateShoppingList(existingItems, scrollable);
+                Intent intent = new Intent(ShoppingActivity.this, ShoppingActivity.class);
+                startActivity(intent);
+            });
         });
     }
 }

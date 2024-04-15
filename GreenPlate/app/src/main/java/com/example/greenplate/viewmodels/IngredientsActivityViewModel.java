@@ -137,12 +137,36 @@ public class IngredientsActivityViewModel {
                             }
 
                             listener.onIngredTreeReceive(ingredientsTreeMap);
-
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
 
+                        }
+                    });
+        }
+    }
+
+    public void getIngredQuanKVP(IngredientDataListener listener) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        Map<String, Integer> ingredientsTreeMap = new TreeMap<>();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+            mDatabase.child("pantry").orderByChild("userId").equalTo(uid)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                                Ingredient ingredient = snapshot.getValue(Ingredient.class);
+                                ingredientsTreeMap.put(ingredient.getIngredientName(),
+                                        ingredient.getQuantity());
+                            }
+
+                            listener.onIngredQuanKVPReceive(ingredientsTreeMap);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
                         }
                     });
         }
@@ -261,8 +285,10 @@ public class IngredientsActivityViewModel {
                             int totalCalories = 0;
                             for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                                 Ingredient ingredient = snapshot.getValue(Ingredient.class);
-                                if (ingredient != null && ingredients.containsKey(ingredient.getIngredientName())) {
-                                    totalCalories += (ingredient.getCalories() * ingredients.get(ingredient.getIngredientName()));
+                                if (ingredient != null && ingredients.containsKey(ingredient
+                                        .getIngredientName())) {
+                                    totalCalories += (ingredient.getCalories() * ingredients
+                                            .get(ingredient.getIngredientName()));
                                 }
                             }
                             listener.onCaloriesReceived(totalCalories);
@@ -286,9 +312,11 @@ public class IngredientsActivityViewModel {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 Ingredient ingredient = snapshot.getValue(Ingredient.class);
-                                if (ingredient != null && ingredients.containsKey(ingredient.getIngredientName())) {
+                                if (ingredient != null && ingredients.containsKey(ingredient
+                                        .getIngredientName())) {
                                     String ingredientId = snapshot.getKey();
-                                    int inputQuality =  ingredient.getQuantity() - ingredients.get(ingredient.getIngredientName());
+                                    int inputQuality =  ingredient.getQuantity() - ingredients
+                                            .get(ingredient.getIngredientName());
 
                                     if (inputQuality > 0) {
                                         mDatabase.child("pantry").child(ingredientId)
@@ -316,6 +344,10 @@ public class IngredientsActivityViewModel {
         void onIngredientsReceived(ArrayList<Ingredient> sortedIngredients);
 
     }
+    public interface IngredientDataListener {
+        void onIngredQuanKVPReceive(Map<String, Integer> ingredientMap);
+    }
+
     public interface IngredientTreeMapListener {
         void onIngredTreeReceive(Map<String, Ingredient> ingredientMap);
     }

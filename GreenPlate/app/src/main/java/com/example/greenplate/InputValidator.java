@@ -43,7 +43,7 @@ public class InputValidator {
         return false;
     }
     public static boolean isValidTime(String timerOutput) {
-        return timerOutput.equals("00:00:00");
+        return !timerOutput.equals("00:00:00");
     }
 
 }

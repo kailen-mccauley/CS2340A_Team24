@@ -95,28 +95,15 @@ public class FitnessActivity extends AppCompatActivity {
         saveActivityButton.setOnClickListener(v -> {
             String time = ValueExtractor.extract(timerTextView);
             System.out.println(time);
-            if (!InputValidator.isValidTime(time)) {
+            if (!InputValidator.isValidTime(time) || stopwatchRunning) {
                 return;
             }
-            String[] brokenDownTime = time.split(":");
-            int[] times = new int[3];
-            for (int i = 0; i < brokenDownTime.length; i++) {
-                times[i] = Integer.parseInt(brokenDownTime[i]);
-                System.out.println(times[i]);
-            }
-            ArrayList<Integer> timesList = new ArrayList<>();
-            for (int i = 0; i < brokenDownTime.length; i++) {
-                timesList.add(Integer.parseInt(brokenDownTime[i]));
-                System.out.println(timesList.get(i));
-            }
-            System.out.println(timesList);
             fitnessVM.storeActivity(time);
             Toast.makeText(FitnessActivity.this,
                     "Activity logged!",
                     Toast.LENGTH_SHORT).show();
-            stepsEditText.setText("");
-            timerTextView.setText(String.format("%02d:%02d:%02d", 0, 0, 0));
             seconds = 0;
+            timerTextView.setText(String.format("%02d:%02d:%02d", 0, 0, 0));
         });
 
         saveStepsButton.setOnClickListener(v -> {

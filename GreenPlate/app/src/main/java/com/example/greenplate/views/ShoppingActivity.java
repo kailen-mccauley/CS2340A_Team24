@@ -143,17 +143,17 @@ public class ShoppingActivity extends AppCompatActivity {
         buyItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<String> toRemove = new ArrayList<>();
+                ArrayList<String> toBuy = new ArrayList<>();
                 int childCount = scrollable.getChildCount();
                 for (int i = 0; i < childCount; i++) {
                     View view = scrollable.getChildAt(i);
                     if (view instanceof LinearLayout) {
                         LinearLayout ingredientLayout = (LinearLayout) view;
-                        CheckBox checkBox = (CheckBox) ingredientLayout.getChildAt(2);
+                        CheckBox checkBox = (CheckBox) ingredientLayout.getChildAt(4);
                         if (checkBox.isChecked()) {
                             String ingredientName = ((TextView) ingredientLayout.getChildAt(0)).getText().toString();
-                            toRemove.add(ingredientName);
-                            shoppingListActivityViewModel.removeShoppingListItem(ingredientName);
+                            toBuy.add(ingredientName);
+                            shoppingListActivityViewModel.buyItems(toBuy);
                         }
                     }
                 }

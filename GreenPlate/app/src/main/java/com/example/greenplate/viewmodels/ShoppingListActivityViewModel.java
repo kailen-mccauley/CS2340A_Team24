@@ -1,12 +1,10 @@
 package com.example.greenplate.viewmodels;
-import android.provider.ContactsContract;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 
 import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.models.ShoppingItem;
-import com.example.greenplate.views.ShoppingActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -15,7 +13,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -67,7 +64,8 @@ public class ShoppingListActivityViewModel {
         }
     }
 
-    public void storeShoppingListItem(String ingredientName, int quantity) {
+    public void storeShoppingListItem(String ingredientName, int quantity,
+                                      StoreItemListener listener) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String uid = currentUser.getUid();
@@ -76,123 +74,145 @@ public class ShoppingListActivityViewModel {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             boolean isDuplicate = false;
-                            String id = null;
+                            String id;
                             for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                                String name = snapshot.getValue(ShoppingItem.class).getIngredientName();
+                                String name =
+                                        snapshot.getValue(ShoppingItem.class).getIngredientName();
                                 if (name != null && name.equals(ingredientName.toLowerCase())) {
                                     isDuplicate = true;
                                     id = snapshot.getKey();
-                                    int currQuantity = snapshot.getValue(ShoppingItem.class).getQuantity();
-                                    mDatabase.child("shoppinglist").child(id).child("quantity").setValue(quantity + currQuantity);
+                                    int currQuantity =
+                                            snapshot.getValue(ShoppingItem.class).getQuantity();
+                                    mDatabase.child("shoppinglist").child(id)
+                                            .child("quantity")
+                                            .setValue(quantity + currQuantity)
+                                            .addOnCompleteListener(task -> {
+                                                if (task.isSuccessful()) {
+                                                    listener.onShoppingItemStored();
+                                                }
+                                            });
                                     break;
                                 }
                             }
                             if (!isDuplicate) {
                                 id = mDatabase.child("shoppinglist").push().getKey();
                                 ShoppingItem item = new ShoppingItem(ingredientName, quantity, uid);
-                                mDatabase.child("shoppinglist").child(id).setValue(item);
+                                mDatabase.child("shoppinglist").child(id).setValue(item)
+                                        .addOnCompleteListener(task -> {
+                                            if (task.isSuccessful()) {
+                                                listener.onShoppingItemStored();
+                                            }
+                                        });
                             }
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
                         }
                     });
         }
     }
 
-    public void removeShoppingListItem(String ingredientName) {
+    public void removeShoppingListItem(String ingredientName, RemoveItemListener listener) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String uid = currentUser.getUid();
             mDatabase.child("shoppinglist").orderByChild("userId").equalTo(uid)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                            String name = snapshot.getValue(ShoppingItem.class).getIngredientName();
-                            if (name != null && name.equals(ingredientName.toLowerCase())) {
-                                String id = snapshot.getKey();
-                                mDatabase.child("shoppinglist").child(id).removeValue();
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                                String name =
+                                        snapshot.getValue(ShoppingItem.class).getIngredientName();
+                                if (name != null && name.equals(ingredientName.toLowerCase())) {
+                                    String id = snapshot.getKey();
+                                    mDatabase.child("shoppinglist").child(id).removeValue()
+                                            .addOnCompleteListener(task -> {
+                                                if (task.isSuccessful()) {
+                                                    listener.onShoppingItemRemoved();
+                                                }
+                                            });
+                                    break;
+                                }
                             }
                         }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
         }
     }
-    
+
+    public void buyItems(List<String> itemNames, BuyItemsListener listener) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+            mDatabase.child("shoppinglist").orderByChild("userId").equalTo(uid)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                ShoppingItem item = snapshot.getValue(ShoppingItem.class);
+                                if (item != null && itemNames.contains(item.getIngredientName())) {
+                                    snapshot.getRef().removeValue();
+
+                                    mDatabase.child("pantry").orderByChild("ingredientName")
+                                            .equalTo(item.getIngredientName())
+                                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    boolean ingredientExists = false;
+                                                    String pantryItemName = null;
+                                                    for (DataSnapshot pantryItemSnapshot : snapshot.getChildren()) {
+                                                        Ingredient pantryItem = pantryItemSnapshot.getValue(Ingredient.class);
+                                                        if (pantryItem != null && pantryItem.getUserId().equals(uid)) {
+                                                            ingredientExists = true;
+                                                            pantryItemName = pantryItemSnapshot.getKey();
+                                                            int newQuantity = pantryItem.getQuantity() + item.getQuantity();
+                                                            mDatabase.child("pantry").child(pantryItemName).child("quantity").setValue(newQuantity);
+                                                            break;
+                                                        }
+                                                    }
+
+                                                    if (!ingredientExists) {
+                                                        String newPantryItemId = mDatabase.child("pantry").push().getKey();
+                                                        if (newPantryItemId != null) {
+                                                            Ingredient pantryItem = new Ingredient(
+                                                                    item.getIngredientName(),
+                                                                    0,
+                                                                    item.getQuantity(),
+                                                                    uid
+                                                            );
+                                                            mDatabase.child("pantry").child(newPantryItemId).setValue(pantryItem);
+                                                        }
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+                                                }
+                                            });
+                                }
+                            }
+                            listener.onShoppingItemsBought();
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+        }
+    }
+
     public interface ShoppingItemsListener {
         void onShoppingItemsReceived(Map<String, Integer> shoppingListItems);
     }
-
-     /* TODO4: Buy items
-     * - Take in a list of items by name
-     * - Remove each item from shopping list and add to pantry
-     */
-     public void buyItems(List<String> itemNames) {
-         FirebaseUser currentUser = mAuth.getCurrentUser();
-         if (currentUser != null) {
-             String uid = currentUser.getUid();
-             mDatabase.child("shoppinglist").orderByChild("userId").equalTo(uid)
-                     .addListenerForSingleValueEvent(new ValueEventListener() {
-                         @Override
-                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                 ShoppingItem item = snapshot.getValue(ShoppingItem.class);
-                                 if (item != null && itemNames.contains(item.getIngredientName())) {
-                                     snapshot.getRef().removeValue();
-
-                                     mDatabase.child("pantry").orderByChild("ingredientName")
-                                             .equalTo(item.getIngredientName())
-                                             .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                 @Override
-                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                     boolean ingredientExists = false;
-                                                     String pantryItemName = null;
-                                                     for (DataSnapshot pantryItemSnapshot : snapshot.getChildren()) {
-                                                         Ingredient pantryItem = pantryItemSnapshot.getValue(Ingredient.class);
-                                                         if (pantryItem != null && pantryItem.getUserId().equals(uid)) {
-                                                             ingredientExists = true;
-                                                             pantryItemName = pantryItemSnapshot.getKey();
-                                                             int newQuantity = pantryItem.getQuantity() + item.getQuantity();
-                                                             mDatabase.child("pantry").child(pantryItemName).child("quantity").setValue(newQuantity);
-                                                             break;
-                                                         }
-                                                     }
-
-                                                     if (!ingredientExists) {
-                                                         String newPantryItemId = mDatabase.child("pantry").push().getKey();
-                                                         if (newPantryItemId != null) {
-                                                             Ingredient pantryItem = new Ingredient(
-                                                                     item.getIngredientName(),
-                                                                     0,
-                                                                     item.getQuantity(),
-                                                                     uid
-                                                             );
-                                                             mDatabase.child("pantry").child(newPantryItemId).setValue(pantryItem);
-                                                         }
-                                                     }
-                                                 }
-
-                                                 @Override
-                                                 public void onCancelled(@NonNull DatabaseError error) {
-
-                                                 }
-                                             });
-                                 }
-                             }
-                         }
-
-                         @Override
-                         public void onCancelled(@NonNull DatabaseError error) {
-
-                         }
-                     });
-         }
-     }
+    public interface StoreItemListener {
+        void onShoppingItemStored();
+    }
+    public interface RemoveItemListener {
+        void onShoppingItemRemoved();
+    }
+    public interface BuyItemsListener {
+        void onShoppingItemsBought();
+    }
 
 }

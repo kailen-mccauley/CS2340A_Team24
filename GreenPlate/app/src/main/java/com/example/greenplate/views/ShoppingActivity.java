@@ -74,9 +74,19 @@ public class ShoppingActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     int currentQuantity = Integer.parseInt(quantityTextView.getText().toString());
-                    if (currentQuantity > 0) {
+                    if (currentQuantity > 1) {
                         currentQuantity--;
                         quantityTextView.setText(String.valueOf(currentQuantity));
+                    } else {
+                        shoppingListActivityViewModel.removeShoppingListItem(ingredientNameTextView.getText().toString());
+                        shoppingListActivityViewModel.fetchShoppingListItems(new ShoppingListActivityViewModel.ShoppingItemsListener() {
+                            @Override
+                            public void onShoppingItemsReceived(Map<String, Integer> existingItems) {
+                                populateShoppingList(existingItems, scrollable);
+                                Intent intent = new Intent(ShoppingActivity.this, ShoppingActivity.class);
+                                startActivity(intent);
+                            }
+                        });
                     }
                 }
             });

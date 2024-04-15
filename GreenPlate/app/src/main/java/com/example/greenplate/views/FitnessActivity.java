@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.greenplate.FitnessActivityObserver;
 import com.example.greenplate.InputValidator;
 import com.example.greenplate.R;
 import com.example.greenplate.ValueExtractor;
@@ -20,7 +21,7 @@ import com.example.greenplate.viewmodels.FitnessActivityViewModel;
 import java.util.ArrayList;
 
 
-public class FitnessActivity extends AppCompatActivity {
+public class FitnessActivity extends AppCompatActivity  implements FitnessActivityObserver {
     private TextView activityGoalTextView;
     private TextView timerTextView;
     private Button startStopButton;
@@ -63,6 +64,7 @@ public class FitnessActivity extends AppCompatActivity {
         makeNavigationBar(toIngredientButton, intentIngredient);
 
         fitnessVM = FitnessActivityViewModel.getInstance();
+        fitnessVM.addObserver(this);
 
         activityGoalTextView = findViewById(R.id.activityGoalTextView);
         timerTextView = findViewById(R.id.timerTextView);
@@ -102,8 +104,7 @@ public class FitnessActivity extends AppCompatActivity {
             Toast.makeText(FitnessActivity.this,
                     "Activity logged!",
                     Toast.LENGTH_SHORT).show();
-            seconds = 0;
-            timerTextView.setText(String.format("%02d:%02d:%02d", 0, 0, 0));
+
         });
 
         saveStepsButton.setOnClickListener(v -> {
@@ -119,7 +120,7 @@ public class FitnessActivity extends AppCompatActivity {
                 Toast.makeText(FitnessActivity.this,
                         "Steps tracked!",
                         Toast.LENGTH_SHORT).show();
-                stepsEditText.setText("");
+
             }
         });
     }
@@ -143,6 +144,17 @@ public class FitnessActivity extends AppCompatActivity {
         int minutes = (totalSecs % 3600) / 60;
         int secs = totalSecs % 60;
         return String.format("%02d:%02d:%02d", hours, minutes, secs);
+    }
+
+    @Override
+    public void updateTimerUI() {
+        seconds = 0;
+        timerTextView.setText(String.format("%02d:%02d:%02d", 0, 0, 0));
+    }
+
+    @Override
+    public void updateStepsUI() {
+        stepsEditText.setText("");
     }
 }
 

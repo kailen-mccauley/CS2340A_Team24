@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.greenplate.FitnessActivityObserver;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +23,7 @@ public class FitnessActivityViewModel {
     private static volatile FitnessActivityViewModel instance;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private ArrayList<FitnessActivityObserver> observers = new ArrayList<>();
 
     private FitnessActivityViewModel() {
         // Initialize Firebase components
@@ -54,6 +56,7 @@ public class FitnessActivityViewModel {
                     "Activity successfully stored."))
                     .addOnFailureListener(e -> Log.d("storeActivity",
                             "Failed to store Activity.", e));
+            notifyTimerObservers();
         } else {
             Log.d("storeRecipe", "No authenticated user found.");
         }
@@ -77,6 +80,7 @@ public class FitnessActivityViewModel {
                                         "Steps successfully stored."))
                                 .addOnFailureListener(e -> Log.d("storeSteps",
                                         "Failed to store Steps.", e));
+                        notifyStepsObservers();
                     } else {
                         mDatabase.child("users").child(uid).child("fitness").child(currentDate)
                                 .child("Steps").setValue(steps).addOnSuccessListener(aVoid -> Log.d("storeSteps",
@@ -162,6 +166,24 @@ public class FitnessActivityViewModel {
                     });
         }
     }
+    public void addObserver(FitnessActivityObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(FitnessActivityObserver observer) {
+        observers.remove(observer);
+    }
+
+    public void notifyTimerObservers() {
+        for (FitnessActivityObserver observer : observers) {
+            observer.updateTimerUI();
+        }
+    }
+    public void notifyStepsObservers() {
+        for (FitnessActivityObserver observer : observers) {
+            observer.updateStepsUI();
+        }
+    }
 
     public interface DailyActivityCallback {
         void onDailyActivityRecieved(long DailyActivity);
@@ -174,6 +196,5 @@ public class FitnessActivityViewModel {
 //            //do something
 //        }
 //    });
-
 
 }

@@ -1,36 +1,34 @@
 package com.example.greenplate.viewmodels;
 
-import static android.content.ContentValues.TAG;
-
-import android.util.Log;
-import android.widget.Toast;
-import androidx.annotation.NonNull;
-import com.example.greenplate.views.CreateAccountActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.FirebaseAuth;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import android.content.SharedPreferences;
+import android.content.Context;
 
 public class HomeViewModel {
 
     private static volatile HomeViewModel instance;
-    private FirebaseAuth mAuth;
-    private MutableLiveData<Boolean> createSuccess = new MutableLiveData<>(false);
-    private HomeViewModel() {
-        this.mAuth = FirebaseAuth.getInstance();
+    private SharedPreferences sharedPreferences;
+
+    private HomeViewModel(Context context) {
+        sharedPreferences = context.getSharedPreferences("FitnessPrefs", Context.MODE_PRIVATE);
     }
-    public static HomeViewModel getInstance() {
+
+    public static HomeViewModel getInstance(Context context) {
         if (instance == null) {
-            synchronized (PersonalActivityViewModel.class) {
+            synchronized (HomeViewModel.class) {
                 if (instance == null) {
-                    instance = new HomeViewModel();
+                    instance = new HomeViewModel(context);
                 }
             }
         }
         return instance;
     }
 
+    public int getFitnessStreak() {
+        return sharedPreferences.getInt("streak", 0);
+    }
+
+    public void incrementFitnessStreak() {
+        int currentStreak = getFitnessStreak();
+        sharedPreferences.edit().putInt("streak", currentStreak + 1).apply();
+    }
 }

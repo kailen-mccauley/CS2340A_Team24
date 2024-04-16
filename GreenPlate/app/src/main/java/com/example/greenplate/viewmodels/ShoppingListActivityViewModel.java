@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.example.greenplate.ShoppingValidator;
 
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class ShoppingListActivityViewModel {
     public void fetchShoppingListItems(ShoppingItemsListener listener) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         Map<String, Integer> items = new HashMap<>();
-        if (currentUser != null) {
+        if (ShoppingValidator.isValidUser(currentUser)) {
             String uid = currentUser.getUid();
             mDatabase.child("shoppinglist").orderByChild("userId").equalTo(uid)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -67,7 +68,7 @@ public class ShoppingListActivityViewModel {
     public void storeShoppingListItem(String ingredientName, int quantity,
                                       StoreItemListener listener) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
+        if (ShoppingValidator.isValidUser(currentUser) && ShoppingValidator.isValidQuantity(quantity)) {
             String uid = currentUser.getUid();
             mDatabase.child("shoppinglist").orderByChild("userId").equalTo(uid)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -114,7 +115,7 @@ public class ShoppingListActivityViewModel {
 
     public void removeShoppingListItem(String ingredientName, RemoveItemListener listener) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
+        if (ShoppingValidator.isValidUser(currentUser) && ShoppingValidator.isValidIngredient(ingredientName)) {
             String uid = currentUser.getUid();
             mDatabase.child("shoppinglist").orderByChild("userId").equalTo(uid)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -144,7 +145,7 @@ public class ShoppingListActivityViewModel {
 
     public void buyItems(List<String> itemNames, BuyItemsListener listener) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
+        if (ShoppingValidator.isValidUser(currentUser) && ShoppingValidator.isValidBuyItemsList(itemNames)) {
             String uid = currentUser.getUid();
             mDatabase.child("shoppinglist").orderByChild("userId").equalTo(uid)
                     .addListenerForSingleValueEvent(new ValueEventListener() {

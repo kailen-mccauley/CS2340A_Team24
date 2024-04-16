@@ -122,8 +122,8 @@
                 android:layout_height="50dp"
                 android:background="@color/magenta"
                 android:src="@drawable/ic_shopping_foreground"
-                android:tint="@color/White"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                app:tint="@color/White" />
 
         </RelativeLayout>
 

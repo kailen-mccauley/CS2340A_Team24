@@ -239,7 +239,7 @@
                 android:layout_centerHorizontal="true"
                 android:background="@color/Olivine"
                 android:src="@drawable/ic_fitness_foreground"
-                android:tint="@color/White"/>
+                app:tint="@color/White" />
 
         </RelativeLayout>
 

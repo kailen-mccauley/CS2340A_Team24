@@ -266,8 +266,8 @@
                 android:layout_height="50dp"
                 android:background="@color/dimGray"
                 android:src="@drawable/ic_ingredient_foreground"
-                android:tint="@color/White"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                app:tint="@color/White" />
 
         </RelativeLayout>
 

@@ -25,42 +25,173 @@ android:background="@color/alabaster">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/trackerNumber"
+    <LinearLayout
+        android:id="@+id/timerLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Streak Count: 0"
-        android:textAlignment="center"
-        android:textColor="@color/aero"
-        android:textSize="30sp"
+        android:orientation="vertical"
         android:layout_marginTop="50dp"
+        android:gravity="center_horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/homeTitle"
+        android:layout_marginRight="180dp" >
 
-    <Button
-        android:id="@+id/stepButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/aero"
-        android:text="Steps"
-        android:textSize="28dp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trackerNumber" />
+        <TextView
+            android:id="@+id/timeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time:"
+            android:textAlignment="center"
+            android:textColor="@color/aero"
+            android:textSize="30sp" />
 
-    <Button
-        android:id="@+id/timeButton"
+        <TextView
+            android:id="@+id/timeField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="@color/aero"
+            android:textSize="30sp"
+            android:layout_marginTop="10dp" />
+
+        <Button
+            android:id="@+id/timeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/aero"
+            android:text="Load"
+            android:textSize="28dp"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/activityLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/aero"
-        android:text="Time"
-        android:textSize="28dp"
+        android:orientation="vertical"
         android:layout_marginTop="50dp"
+        android:gravity="center_horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stepButton" />
+        app:layout_constraintTop_toBottomOf="@+id/homeTitle"
+        android:layout_marginLeft="180dp" >
+
+        <TextView
+            android:id="@+id/activityTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Activity:"
+            android:textAlignment="center"
+            android:textColor="@color/aero"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/activityField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="@color/aero"
+            android:textSize="30sp"
+            android:layout_marginTop="10dp" />
+
+        <Button
+            android:id="@+id/activityButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/aero"
+            android:text="Load"
+            android:textSize="28dp"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/stepsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="300dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeTitle"
+        android:layout_marginRight="180dp" >
+
+        <TextView
+            android:id="@+id/stepsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Steps:"
+            android:textAlignment="center"
+            android:textColor="@color/aero"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/stepsField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="@color/aero"
+            android:textSize="30sp"
+            android:layout_marginTop="10dp" />
+
+        <Button
+            android:id="@+id/stepsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/aero"
+            android:text="Load"
+            android:textSize="28dp"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/streakLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="300dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeTitle"
+        android:layout_marginLeft="180dp" >
+
+        <TextView
+            android:id="@+id/streakTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Streak:"
+            android:textAlignment="center"
+            android:textColor="@color/aero"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/streakField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="@color/aero"
+            android:textSize="30sp"
+            android:layout_marginTop="10dp" />
+
+        <Button
+            android:id="@+id/streakButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/aero"
+            android:text="Load"
+            android:textSize="28dp"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -89,8 +220,8 @@ android:background="@color/alabaster">
                 android:layout_height="50dp"
                 android:background="@color/AirforceBlue"
                 android:src="@drawable/ic_home_foreground"
-                android:tint="@color/White"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                app:tint="@color/white" />
 
         </RelativeLayout>
 

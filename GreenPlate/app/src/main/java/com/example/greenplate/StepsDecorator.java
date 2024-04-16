@@ -23,7 +23,6 @@ import java.util.Locale;
 
 public class StepsDecorator extends HomeScreenDecorator {
     private Context context;
-    private SharedPreferences sharedPreferences;
     private String userUid;
 
     public StepsDecorator(HomeScreenElement decoratedElement, Context context, String userUid) {

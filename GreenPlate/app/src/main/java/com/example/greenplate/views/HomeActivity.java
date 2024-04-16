@@ -51,6 +51,8 @@ public class HomeActivity extends AppCompatActivity {
 
         Button loadStreak = findViewById(R.id.streakButton);
         Button loadSteps = findViewById(R.id.stepsButton);
+        Button loadTime = findViewById(R.id.timeButton);
+        Button loadActivity = findViewById(R.id.activityButton);
 
 
         Intent intentMeal = new Intent(HomeActivity.this, MealActivity.class);
@@ -82,6 +84,26 @@ public class HomeActivity extends AppCompatActivity {
                 String userUid = user.getUid();
                 HomeScreenElement baseElement = new BasicHomeScreenElement(this);
                 HomeScreenElement decoratedElement = new StepsDecorator(baseElement, this, userUid);
+                decoratedElement.display();
+            }
+        });
+
+        loadTime.setOnClickListener(v -> {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                String userUid = user.getUid();
+                HomeScreenElement baseElement = new BasicHomeScreenElement(this);
+                HomeScreenElement decoratedElement = new TimeDecorator(baseElement, this);
+                decoratedElement.display();
+            }
+        });
+
+        loadActivity.setOnClickListener(v -> {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                String userUid = user.getUid();
+                HomeScreenElement baseElement = new BasicHomeScreenElement(this);
+                HomeScreenElement decoratedElement = new ActivityDecorator(baseElement, this, userUid);
                 decoratedElement.display();
             }
         });

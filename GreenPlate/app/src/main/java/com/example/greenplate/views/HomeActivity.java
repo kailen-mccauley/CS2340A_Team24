@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.content.Context;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
 import com.example.greenplate.FitnessActivityObserver;
 import com.example.greenplate.FitnessActivityObserver;
 
@@ -27,6 +29,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private HomeViewModel viewModel;
 
+
+
     private void makeNavigationBar(ImageButton button, Intent intent) {
         button.setOnClickListener(v -> startActivity(intent));
     }
@@ -37,13 +41,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         viewModel = HomeViewModel.getInstance(this.getApplicationContext());
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            String userUid = user.getUid();
-            HomeScreenElement baseElement = new BasicHomeScreenElement(this);
-            HomeScreenElement decoratedElement = new FitnessDecorator(baseElement, this, userUid);
-            decoratedElement.display();
-        }
 
         ImageButton toMealButton = findViewById(R.id.btn_meal);
         ImageButton toRecipeButton = findViewById(R.id.btn_recipe);
@@ -51,6 +48,8 @@ public class HomeActivity extends AppCompatActivity {
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
         ImageButton toFitnessButton = findViewById(R.id.btn_fitness);
+
+        Button loadStreak = findViewById(R.id.streakButton);
 
 
         Intent intentMeal = new Intent(HomeActivity.this, MealActivity.class);
@@ -65,6 +64,16 @@ public class HomeActivity extends AppCompatActivity {
         makeNavigationBar(toIngredientButton, intentIngredient);
         Intent intentFitness = new Intent(HomeActivity.this, FitnessActivity.class);
         makeNavigationBar(toFitnessButton, intentFitness);
+
+        loadStreak.setOnClickListener(v -> {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                String userUid = user.getUid();
+                HomeScreenElement baseElement = new BasicHomeScreenElement(this);
+                HomeScreenElement decoratedElement = new FitnessDecorator(baseElement, this, userUid);
+                decoratedElement.display();
+            }
+        });
 
     }
 }

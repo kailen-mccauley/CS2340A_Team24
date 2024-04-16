@@ -13,7 +13,7 @@ import android.content.SharedPreferences;
 import android.content.Context;
 import android.widget.LinearLayout;
 import com.example.greenplate.FitnessActivityObserver;
-import com.example.greenplate.FitnessActivityObserver;  // Ensure this import statement is correct
+import com.example.greenplate.FitnessActivityObserver;
 
 
 import com.example.greenplate.R;

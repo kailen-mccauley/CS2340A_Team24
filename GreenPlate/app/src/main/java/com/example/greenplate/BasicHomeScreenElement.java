@@ -20,12 +20,10 @@ public class BasicHomeScreenElement implements HomeScreenElement {
         textView.setText("Welcome to Your Home Screen!");
         layout.addView(textView);
 
-        // This method should actually add this view to the home activity's layout.
-        // You will need to ensure this layout is added to your activity's view hierarchy.
         addViewToHomeScreen(layout);
     }
 
     private void addViewToHomeScreen(LinearLayout layout) {
-        // Code to add this layout to the HomeActivity's content view
+        // this is what i used to add layout to the homeactivity but honeslty might exist a better way to do it
     }
 }

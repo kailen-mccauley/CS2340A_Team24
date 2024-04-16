@@ -13,6 +13,7 @@ android:background="@color/alabaster">
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/homeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
@@ -23,6 +24,33 @@ android:background="@color/alabaster">
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/trackerNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Streak Count: 0"
+        android:textAlignment="center"
+        android:textColor="@color/aero"
+        android:textSize="30sp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeTitle" />
+
+    <Button
+        android:id="@+id/completeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Met!"
+        android:textAlignment="center"
+        android:backgroundTint="@color/aero"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trackerNumber" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -14,13 +14,15 @@ import android.app.Activity;
 public class FitnessDecorator extends HomeScreenDecorator {
     private Context context;
     private SharedPreferences sharedPreferences;
+    private String userUid;
 
-
-    public FitnessDecorator(HomeScreenElement decoratedElement, Context context) {
+    public FitnessDecorator(HomeScreenElement decoratedElement, Context context, String userUid) {
         super(decoratedElement);
         this.context = context;
-        sharedPreferences = context.getSharedPreferences("FitnessPrefs", Context.MODE_PRIVATE);
+        this.userUid = userUid;
+        this.sharedPreferences = context.getSharedPreferences("FitnessPrefs_" + userUid, Context.MODE_PRIVATE);
     }
+
 
     public void display() {
         // Add fitness streak counter component to the home screen before displaying the decorated element

@@ -17,6 +17,9 @@ import com.example.greenplate.FitnessActivityObserver;
 
 
 import com.example.greenplate.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 
@@ -34,9 +37,13 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         viewModel = HomeViewModel.getInstance(this.getApplicationContext());
 
-        HomeScreenElement baseElement = new BasicHomeScreenElement(this);
-        HomeScreenElement decoratedElement = new FitnessDecorator(baseElement, this);
-        decoratedElement.display();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String userUid = user.getUid();
+            HomeScreenElement baseElement = new BasicHomeScreenElement(this);
+            HomeScreenElement decoratedElement = new FitnessDecorator(baseElement, this, userUid);
+            decoratedElement.display();
+        }
 
         ImageButton toMealButton = findViewById(R.id.btn_meal);
         ImageButton toRecipeButton = findViewById(R.id.btn_recipe);
@@ -67,11 +74,17 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void refreshStreakDisplay() {
-        TextView streakView = findViewById(R.id.trackerNumber);
-        if (streakView != null) {
-            SharedPreferences prefs = getSharedPreferences("FitnessPrefs", Context.MODE_PRIVATE);
-            int currentStreak = prefs.getInt("streak", 0);
-            streakView.setText("Current Streak: " + currentStreak);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String userId = user.getUid();
+            Log.d("mehditest0", "refreshing streak for user: " + userId); // debug mehdi
+            TextView streakView = findViewById(R.id.trackerNumber);
+            if (streakView != null) {
+                SharedPreferences prefs = getSharedPreferences("FitnessPrefs_" + userId, Context.MODE_PRIVATE);
+                int currentStreak = prefs.getInt("streak", 0);
+                Log.d("mehditest1", "current streak from prefs: " + currentStreak); // debug mehdi
+                streakView.setText(String.valueOf(currentStreak));
+            }
         }
     }
 }

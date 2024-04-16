@@ -11,6 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Context;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.*;
+import android.util.Log;
+import java.text.SimpleDateFormat;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.FitnessActivityObserver;
@@ -21,6 +27,10 @@ import com.example.greenplate.ValueExtractor;
 import com.example.greenplate.viewmodels.FitnessActivityViewModel;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 
 public class FitnessActivity extends AppCompatActivity  implements FitnessActivityObserver {
@@ -97,23 +107,61 @@ public class FitnessActivity extends AppCompatActivity  implements FitnessActivi
         });
 
         saveActivityButton.setOnClickListener(v -> {
-            Toast.makeText(FitnessActivity.this, "Mehdi Test", Toast.LENGTH_SHORT).show();
-            SharedPreferences prefs = getSharedPreferences("FitnessPrefs", Context.MODE_PRIVATE);
-            int currentStreak = prefs.getInt("streak", 0);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("streak", currentStreak + 1);
-            editor.apply();
-            Toast.makeText(FitnessActivity.this, "Streak Updated!", Toast.LENGTH_SHORT).show();
-            String time = ValueExtractor.extract(timerTextView);
-            System.out.println(time);
-            if (!InputValidator.isValidTime(time) || stopwatchRunning) {
-                return;
-            }
-            fitnessVM.storeActivity(time);
-            Toast.makeText(FitnessActivity.this,
-                    "Activity logged!",
-                    Toast.LENGTH_SHORT).show();
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                String userId = user.getUid();
+                DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("fitness");
+                String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
+                String time = ValueExtractor.extract(timerTextView);
+                if (!InputValidator.isValidTime(time) || stopwatchRunning) {
+                    Toast.makeText(FitnessActivity.this, "Please enter a valid time or stop the stopwatch.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                fitnessVM.storeActivity(time);
+
+                firebaseRef.child(today).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (!dataSnapshot.hasChild("streakUpdated")) {
+                            String yesterday = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000));
+                            firebaseRef.child(yesterday).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    SharedPreferences prefs = getSharedPreferences("FitnessPrefs_" + userId, Context.MODE_PRIVATE);
+                                    int currentStreak = prefs.getInt("streak", 0);
+
+                                    if (dataSnapshot.exists()) {
+                                        currentStreak++;
+                                    } else {
+                                        currentStreak = 1;
+                                    }
+
+                                    SharedPreferences.Editor editor = prefs.edit();
+                                    editor.putInt("streak", currentStreak);
+                                    editor.apply();
+
+                                    firebaseRef.child(today).child("streakUpdated").setValue(true);
+                                    firebaseRef.child("streak").setValue(currentStreak);
+
+                                    Toast.makeText(FitnessActivity.this, "Streak updated to: " + currentStreak, Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+            } else {
+                Toast.makeText(FitnessActivity.this, "No authenticated user found.", Toast.LENGTH_SHORT).show();
+            }
         });
 
         saveStepsButton.setOnClickListener(v -> {

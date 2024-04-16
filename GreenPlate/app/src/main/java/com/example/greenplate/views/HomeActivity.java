@@ -2,6 +2,7 @@ package com.example.greenplate.views;
 import com.example.greenplate.viewmodels.HomeViewModel;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.util.Log;
 
@@ -30,6 +31,8 @@ public class HomeActivity extends AppCompatActivity {
         ImageButton toShoppingButton = findViewById(R.id.btn_shopping);
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
 
+        Button metGoal = findViewById(R.id.completeButton);
+
         Intent intentMeal = new Intent(HomeActivity.this, MealActivity.class);
         makeNavigationBar(toMealButton, intentMeal);
         Intent intentRecipe = new Intent(HomeActivity.this, RecipeActivity.class);
@@ -41,6 +44,8 @@ public class HomeActivity extends AppCompatActivity {
         Intent intentIngredient = new Intent(HomeActivity.this, IngredientsActivity.class);
         makeNavigationBar(toIngredientButton, intentIngredient);
         Intent intentFitness = new Intent(HomeActivity.this, FitnessActivity.class);
+
+        // metGoal.setOnClickListener(); Look at implementation in other screens for buttons if you get lost
 
         logFitnessStreak();
     }

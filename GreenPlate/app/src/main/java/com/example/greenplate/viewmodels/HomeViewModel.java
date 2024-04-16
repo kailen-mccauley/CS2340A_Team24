@@ -22,13 +22,4 @@ public class HomeViewModel {
         }
         return instance;
     }
-
-    public int getFitnessStreak() {
-        return sharedPreferences.getInt("streak", 0);
-    }
-
-    public void incrementFitnessStreak() {
-        int currentStreak = getFitnessStreak();
-        sharedPreferences.edit().putInt("streak", currentStreak + 1).apply();
-    }
 }

@@ -1,6 +1,7 @@
 package com.example.greenplate.views;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Button;
@@ -8,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Context;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -95,6 +97,13 @@ public class FitnessActivity extends AppCompatActivity  implements FitnessActivi
         });
 
         saveActivityButton.setOnClickListener(v -> {
+            Toast.makeText(FitnessActivity.this, "Mehdi Test", Toast.LENGTH_SHORT).show();
+            SharedPreferences prefs = getSharedPreferences("FitnessPrefs", Context.MODE_PRIVATE);
+            int currentStreak = prefs.getInt("streak", 0);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("streak", currentStreak + 1);
+            editor.apply();
+            Toast.makeText(FitnessActivity.this, "Streak Updated!", Toast.LENGTH_SHORT).show();
             String time = ValueExtractor.extract(timerTextView);
             System.out.println(time);
             if (!InputValidator.isValidTime(time) || stopwatchRunning) {

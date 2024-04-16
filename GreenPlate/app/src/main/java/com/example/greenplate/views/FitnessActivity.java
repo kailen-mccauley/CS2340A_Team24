@@ -120,6 +120,9 @@ public class FitnessActivity extends AppCompatActivity  implements FitnessActivi
                 }
 
                 fitnessVM.storeActivity(time);
+                Toast.makeText(FitnessActivity.this,
+                        "Activity added!",
+                        Toast.LENGTH_SHORT).show();
 
                 firebaseRef.child(today).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

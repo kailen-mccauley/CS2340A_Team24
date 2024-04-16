@@ -50,6 +50,7 @@ public class HomeActivity extends AppCompatActivity {
         ImageButton toFitnessButton = findViewById(R.id.btn_fitness);
 
         Button loadStreak = findViewById(R.id.streakButton);
+        Button loadSteps = findViewById(R.id.stepsButton);
 
 
         Intent intentMeal = new Intent(HomeActivity.this, MealActivity.class);
@@ -71,6 +72,16 @@ public class HomeActivity extends AppCompatActivity {
                 String userUid = user.getUid();
                 HomeScreenElement baseElement = new BasicHomeScreenElement(this);
                 HomeScreenElement decoratedElement = new FitnessDecorator(baseElement, this, userUid);
+                decoratedElement.display();
+            }
+        });
+
+        loadSteps.setOnClickListener(v -> {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                String userUid = user.getUid();
+                HomeScreenElement baseElement = new BasicHomeScreenElement(this);
+                HomeScreenElement decoratedElement = new StepsDecorator(baseElement, this, userUid);
                 decoratedElement.display();
             }
         });

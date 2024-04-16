@@ -7,10 +7,14 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Log;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import android.app.Activity;
 
 public class FitnessDecorator extends HomeScreenDecorator {
     private Context context;
     private SharedPreferences sharedPreferences;
+
 
     public FitnessDecorator(HomeScreenElement decoratedElement, Context context) {
         super(decoratedElement);
@@ -18,7 +22,6 @@ public class FitnessDecorator extends HomeScreenDecorator {
         sharedPreferences = context.getSharedPreferences("FitnessPrefs", Context.MODE_PRIVATE);
     }
 
-    @Override
     public void display() {
         // Add fitness streak counter component to the home screen before displaying the decorated element
         // should have a button users can click to indicate that they have met their fitness for the day
@@ -27,35 +30,29 @@ public class FitnessDecorator extends HomeScreenDecorator {
         // fitnessDisplay();
         // Call the display method of the decorated element
         super.display();
+        fitnessDisplay(); // i call the display of fitness decorator
     }
 
     private void fitnessDisplay() {
-        LinearLayout layout = new LinearLayout(context);
-        layout.setOrientation(LinearLayout.VERTICAL);
-
-        TextView streakView = new TextView(context);
+        TextView streakView = ((Activity) context).findViewById(R.id.trackerNumber);
+        if (streakView == null) {
+            streakView = new TextView(context);
+            streakView.setId(R.id.trackerNumber);
+            LinearLayout layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            layout.addView(streakView);
+            addViewToHomeScreen(layout);
+        }
         int currentStreak = sharedPreferences.getInt("streak", 0);
         streakView.setText("Current Streak: " + currentStreak);
-        layout.addView(streakView);
-
-        Button fitnessButton = new Button(context);
-        fitnessButton.setText("Log Fitness");
-        fitnessButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int newStreak = currentStreak + 1;
-                sharedPreferences.edit().putInt("streak", newStreak).apply();
-                streakView.setText("Current Streak: " + newStreak);
-                Toast.makeText(context, "Fitness logged!", Toast.LENGTH_SHORT).show();
-            }
-        });
-        layout.addView(fitnessButton);
-
-        addViewToHomeScreen(layout);
     }
 
     private void addViewToHomeScreen(LinearLayout layout) {
-        // this is where i need UI to test but not sure how
-        // implementation should work tho
+        ConstraintLayout placeholder = ((Activity) context).findViewById(R.id.main_content);
+        if (placeholder != null) {
+            placeholder.addView(layout);
+        } else {
+            Log.e("FitnessDecorator", "Placeholder layout not found");
+        }
     }
 }

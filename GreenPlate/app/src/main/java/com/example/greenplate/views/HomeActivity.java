@@ -67,24 +67,4 @@ public class HomeActivity extends AppCompatActivity {
         makeNavigationBar(toFitnessButton, intentFitness);
 
     }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        refreshStreakDisplay();
-    }
-
-    private void refreshStreakDisplay() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            String userId = user.getUid();
-            Log.d("mehditest0", "refreshing streak for user: " + userId); // debug mehdi
-            TextView streakView = findViewById(R.id.trackerNumber);
-            if (streakView != null) {
-                SharedPreferences prefs = getSharedPreferences("FitnessPrefs_" + userId, Context.MODE_PRIVATE);
-                int currentStreak = prefs.getInt("streak", 0);
-                Log.d("mehditest1", "current streak from prefs: " + currentStreak); // debug mehdi
-                streakView.setText(String.valueOf(currentStreak));
-            }
-        }
-    }
 }

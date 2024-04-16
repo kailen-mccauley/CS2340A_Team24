@@ -36,17 +36,17 @@ public class FitnessDecorator extends HomeScreenDecorator {
     }
 
     private void fitnessDisplay() {
-        TextView streakView = ((Activity) context).findViewById(R.id.trackerNumber);
+        TextView streakView = ((Activity) context).findViewById(R.id.streakField);
         if (streakView == null) {
             streakView = new TextView(context);
-            streakView.setId(R.id.trackerNumber);
+            streakView.setId(R.id.streakField);
             LinearLayout layout = new LinearLayout(context);
             layout.setOrientation(LinearLayout.VERTICAL);
             layout.addView(streakView);
             addViewToHomeScreen(layout);
         }
         int currentStreak = sharedPreferences.getInt("streak", 0);
-        streakView.setText("Current Streak: " + currentStreak);
+        streakView.setText(String.valueOf(currentStreak));
     }
 
     private void addViewToHomeScreen(LinearLayout layout) {

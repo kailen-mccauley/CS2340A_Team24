@@ -10,10 +10,11 @@ public class ShoppingItem {
         // Default constructor required for Firebase
     }
 
-    public ShoppingItem(String ingredientName, int quantity, String userId) {
+    public ShoppingItem(String ingredientName, int quantity, String userId, int calories) {
         this.ingredientName = ingredientName;
         this.userId = userId;
         this.quantity = quantity;
+        this.calories = calories;
     }
 
     public String getIngredientName() {
@@ -24,5 +25,8 @@ public class ShoppingItem {
     }
     public int getQuantity() {
         return quantity;
+    }
+    public int getCalories() {
+        return calories;
     }
 }

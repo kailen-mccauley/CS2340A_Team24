@@ -72,6 +72,10 @@
             android:name=".views.FitnessActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".views.ManualShoppingForm"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

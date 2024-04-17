@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cadetGray"
-    android:id="@+id/activity_input_ingredients">
+    android:id="@+id/activity_recipe_details">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header_title"
         android:layout_width="match_parent"

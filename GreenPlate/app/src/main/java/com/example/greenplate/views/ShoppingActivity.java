@@ -122,6 +122,7 @@ public class ShoppingActivity extends AppCompatActivity {
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
         ImageButton toFitnessButton = findViewById(R.id.btn_fitness);
         Button buyItems = findViewById(R.id.btn_buy_items);
+        Button toManualForm = findViewById(R.id.btn_add_ingredient);
 
         LinearLayout scrollable = findViewById(R.id.scrollLay);
 
@@ -142,6 +143,12 @@ public class ShoppingActivity extends AppCompatActivity {
 
         shoppingListActivityViewModel.fetchShoppingListItems(existingItems ->
                 populateShoppingList(existingItems, scrollable));
+
+        toManualForm.setOnClickListener(v -> {
+            Intent intent = new Intent(ShoppingActivity.this,
+                    ManualShoppingForm.class);
+            startActivity(intent);
+        });
 
         buyItems.setOnClickListener(v ->  {
             ArrayList<String> toBuy = new ArrayList<>();

@@ -47,7 +47,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_display);
         Button toRecipeScreen = findViewById(R.id.btn_to_recipe_screen);
         Button toCookOrShop = findViewById(R.id.btn_to_cook_or_shop);
-        RelativeLayout parentLayout = findViewById(R.id.activity_input_ingredients);
+        RelativeLayout parentLayout = findViewById(R.id.activity_recipe_details);
         title = findViewById(R.id.recipeDetailsTextView);
         recipeViewModel = RecipeActivityViewModel.getInstance();
         if (InputValidator.isValidRecipeDetailIntent(getIntent())) {

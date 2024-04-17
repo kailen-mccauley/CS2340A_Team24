@@ -65,7 +65,7 @@ public class ShoppingListActivityViewModel {
         }
     }
 
-    public void storeShoppingListItem(String ingredientName, int quantity,
+    public void storeShoppingListItem(String ingredientName, int quantity, int calories,
                                       StoreItemListener listener) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
@@ -97,7 +97,7 @@ public class ShoppingListActivityViewModel {
                             }
                             if (!isDuplicate) {
                                 id = mDatabase.child("shoppinglist").push().getKey();
-                                ShoppingItem item = new ShoppingItem(ingredientName, quantity, uid);
+                                ShoppingItem item = new ShoppingItem(ingredientName, quantity, uid, calories);
                                 mDatabase.child("shoppinglist").child(id).setValue(item)
                                         .addOnCompleteListener(task -> {
                                             if (task.isSuccessful()) {

@@ -5,6 +5,7 @@ public class ShoppingItem {
     private String ingredientName;
 
     private int quantity;
+    private int calories;
 
     public ShoppingItem() {
         // Default constructor required for Firebase

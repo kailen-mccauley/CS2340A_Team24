@@ -65,7 +65,7 @@ public class ShoppingListActivityViewModel {
         }
     }
 
-    public void storeShoppingListItem(String ingredientName, int quantity,
+    public void storeShoppingListItem(String ingredientName, int quantity, int calories,
                                       StoreItemListener listener) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
@@ -97,7 +97,7 @@ public class ShoppingListActivityViewModel {
                             }
                             if (!isDuplicate) {
                                 id = mDatabase.child("shoppinglist").push().getKey();
-                                ShoppingItem item = new ShoppingItem(ingredientName, quantity, uid);
+                                ShoppingItem item = new ShoppingItem(ingredientName, quantity, uid, calories);
                                 mDatabase.child("shoppinglist").child(id).setValue(item)
                                         .addOnCompleteListener(task -> {
                                             if (task.isSuccessful()) {
@@ -221,6 +221,74 @@ public class ShoppingListActivityViewModel {
                         }
                     });
         }
+    }
+
+        public void getCaloriesFromPantry(String ingredientName, CaloriePantryListener listener) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+            mDatabase.child("pantry").orderByChild("userId").equalTo(uid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        boolean found = false;
+                        for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                            String name = snapshot.getValue(Ingredient.class).getIngredientName();
+                            if (name != null && name.equals(ingredientName.toLowerCase())) {
+                                int calories = snapshot.getValue(Ingredient.class).getCalories();
+                                listener.onCalorieResult(calories);
+                                found = true;
+                                break;
+                            }
+                            if (!found) {
+                                listener.onCalorieResult(-1);
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+        }
+    }
+
+    public void getCaloriesFromShoppingList(String ingredientName, CalorieShoppingListener listener) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+            mDatabase.child("shoppinglist").orderByChild("userId").equalTo(uid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        boolean found = false;
+                        for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                            String name = snapshot.getValue(ShoppingItem.class).getIngredientName();
+                            if (name != null && name.equals(ingredientName.toLowerCase())) {
+                                int calories = snapshot.getValue(ShoppingItem.class).getCalories();
+                                listener.onCalorieResult(calories);
+                                found = true;
+                                break;
+                            }
+                            if (!found) {
+                                listener.onCalorieResult(-1);
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+        }
+    }
+
+    public interface CaloriePantryListener {
+        void onCalorieResult(int calories);
+    }
+
+    public interface CalorieShoppingListener {
+        void onCalorieResult(int calories);
     }
 
     public interface ShoppingItemsListener {

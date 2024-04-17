@@ -16,7 +16,8 @@ public class ShoppingValidator {
     }
 
     public static boolean isValidIngredient(String ingredient) {
-        boolean result = ingredient != null && !ingredient.equals("") && ingredient.equals(ingredient.trim());
+        boolean result = ingredient != null && !ingredient.equals("")
+                && ingredient.equals(ingredient.trim());
         if (!result) {
             return false;
         }

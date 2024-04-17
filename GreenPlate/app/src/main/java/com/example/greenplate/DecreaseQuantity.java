@@ -1,13 +1,8 @@
 package com.example.greenplate;
 
-import android.provider.ContactsContract;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 
-import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.models.ShoppingItem;
-import com.example.greenplate.views.ShoppingActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

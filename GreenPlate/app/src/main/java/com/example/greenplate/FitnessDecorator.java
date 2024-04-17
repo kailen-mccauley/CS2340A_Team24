@@ -2,11 +2,8 @@ package com.example.greenplate;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.util.Log;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.Activity;
@@ -20,17 +17,20 @@ public class FitnessDecorator extends HomeScreenDecorator {
         super(decoratedElement);
         this.context = context;
         this.userUid = userUid;
-        this.sharedPreferences = context.getSharedPreferences("FitnessPrefs_" + userUid, Context.MODE_PRIVATE);
+        this.sharedPreferences = context.getSharedPreferences("FitnessPrefs_"
+                + userUid, Context.MODE_PRIVATE);
     }
 
 
     public void display() {
-        // Add fitness streak counter component to the home screen before displaying the decorated element
-        // should have a button users can click to indicate that they have met their fitness for the day
-                //and add to the streak
-        // For example:
-        // fitnessDisplay();
-        // Call the display method of the decorated element
+        /* Add fitness streak counter component to the home screen before
+         displaying the decorated element
+         should have a button users can click to indicate that they have
+         met their fitness for the day and add to the streak
+         For example:
+         fitnessDisplay();
+         Call the display method of the decorated element
+        */
         super.display();
         fitnessDisplay(); // i call the display of fitness decorator
     }

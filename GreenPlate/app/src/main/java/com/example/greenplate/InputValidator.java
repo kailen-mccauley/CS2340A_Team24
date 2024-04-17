@@ -1,6 +1,5 @@
 package com.example.greenplate;
 import android.content.Intent;
-import android.util.Log;
 
 public class InputValidator {
     public static boolean isValidInput(String input) {

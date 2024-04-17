@@ -18,6 +18,7 @@ import com.example.greenplate.viewmodels.ShoppingListActivityViewModel;
 public class ManualShoppingForm extends AppCompatActivity {
 
     private EditText ingredientTitle;
+    private EditText calSection;
     private EditText quantityNum;
     private ShoppingListActivityViewModel shoppingListActivityViewModel;
 
@@ -34,10 +35,10 @@ public class ManualShoppingForm extends AppCompatActivity {
         RelativeLayout parentLayout = findViewById(R.id.activity_manual_shopping);
 
         ingredientTitle = findViewById(R.id.nameSpace);
+        calSection = findViewById(R.id.calSection);
         quantityNum = findViewById(R.id.quantityNumber);
 
         shoppingListActivityViewModel = ShoppingListActivityViewModel.getInstance();
-
 
         toShoppingScreen.setOnClickListener(v ->  {
             Intent intent = new Intent(ManualShoppingForm.this,
@@ -47,11 +48,18 @@ public class ManualShoppingForm extends AppCompatActivity {
 
         btnSubmit.setOnClickListener(v ->  {
             String ingredientName = ingredientTitle.getText().toString();
-
             String quantity = quantityNum.getText().toString();
+            String calories = calSection.getText().toString();
+
             if (!InputValidator.isValidInputWithSpacesBetween(ingredientName)) {
                 Toast.makeText(ManualShoppingForm.this,
                         "Please enter a valid ingredient name!",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!InputValidator.isValidInputWithInteger(calories)) {
+                Toast.makeText(ManualShoppingForm.this,
+                        "Please enter a valid integer value for calories!",
                         Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -62,11 +70,13 @@ public class ManualShoppingForm extends AppCompatActivity {
                 return;
             }
 
-            int inputQuantity = Integer.parseInt(quantity);
+            int recordCalories = Integer.parseInt(calories);
+            int recordQuantity = Integer.parseInt(quantity);
 
-            shoppingListActivityViewModel.storeShoppingListItem(ingredientName, inputQuantity,
+            shoppingListActivityViewModel.storeShoppingListItem(ingredientName, recordQuantity,
                     () -> { });
             ingredientTitle.setText("");
+            calSection.setText("");
             quantityNum.setText("");
             hideKeyboard();
         });

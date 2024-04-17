@@ -60,32 +60,32 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
         recipeViewModel.getRecipeDetails(recipeID, new
                 RecipeActivityViewModel.RecipeDetailsListener() {
-                    @Override
-                    public void onRecipeDetailsReceived(Recipe recipe) {
-                        LinearLayout scrollable = findViewById(R.id.scrollableLay);
-                        for (Map.Entry<String, Integer> entry : recipe.
-                                getIngredients().entrySet()) {
-                            String ingredientName = entry.getKey();
-                            String quantity = entry.getValue().toString();
-                            LinearLayout ingredientLayout
-                                    = new LinearLayout(RecipeDetailActivity.this);
-                            ingredientLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.MATCH_PARENT,
-                                    LinearLayout.LayoutParams.WRAP_CONTENT
-                            ));
-                            ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
-                            TextView ingredientNameTextView = buildTextView(3, ingredientName);
-                            TextView quantityTextView = buildTextView(2, quantity);
-                            ingredientLayout.addView(ingredientNameTextView);
-                            ingredientLayout.addView(quantityTextView);
+                @Override
+                public void onRecipeDetailsReceived(Recipe recipe) {
+                    LinearLayout scrollable = findViewById(R.id.scrollableLay);
+                    for (Map.Entry<String, Integer> entry : recipe.
+                            getIngredients().entrySet()) {
+                        String ingredientName = entry.getKey();
+                        String quantity = entry.getValue().toString();
+                        LinearLayout ingredientLayout
+                                = new LinearLayout(RecipeDetailActivity.this);
+                        ingredientLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT
+                        ));
+                        ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
+                        TextView ingredientNameTextView = buildTextView(3, ingredientName);
+                        TextView quantityTextView = buildTextView(2, quantity);
+                        ingredientLayout.addView(ingredientNameTextView);
+                        ingredientLayout.addView(quantityTextView);
 
-                            scrollable.addView(ingredientLayout);
-                        }
+                        scrollable.addView(ingredientLayout);
                     }
-                    @Override
-                    public void onRecipeDetailsError(String errorMessage) {
-                    }
-                });
+                }
+                @Override
+                public void onRecipeDetailsError(String errorMessage) {
+                }
+        });
 
         toRecipeScreen.setOnClickListener(v ->  {
             Intent intent = new Intent(RecipeDetailActivity.this,
@@ -119,7 +119,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                                 && pantryIngredient.getQuantity() < quantity) {
                                             quantity -= pantryIngredient.getQuantity();
                                         }
-                                        shoppingVM.storeShoppingListItem(ingredient, quantity, () -> {});
+                                        shoppingVM.storeShoppingListItem(ingredient,
+                                                quantity, () -> { });
                                     });
                                 }
                             }

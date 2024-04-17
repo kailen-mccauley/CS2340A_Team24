@@ -7,7 +7,6 @@ import android.util.Log;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.Activity;
 
-import com.example.greenplate.HomeScreenElement;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,9 +59,9 @@ public class ActivityDecorator extends HomeScreenDecorator {
                     String activityTime = activitySnapshot.getValue(String.class);
                     try {
                         Date activityDuration = timeFormat.parse(activityTime);
-                        totalTimeInSeconds += (activityDuration.getHours() * 3600) +
-                                (activityDuration.getMinutes() * 60) +
-                                activityDuration.getSeconds();
+                        totalTimeInSeconds += (activityDuration.getHours() * 3600)
+                                + (activityDuration.getMinutes() * 60)
+                                + activityDuration.getSeconds();
                     } catch (ParseException e) {
                         Log.e("TimeDecorator", "Failed to parse activity time", e);
                     }
@@ -72,7 +71,8 @@ public class ActivityDecorator extends HomeScreenDecorator {
                 int minutes = (int) (totalTimeInSeconds % 3600) / 60;
                 int seconds = (int) totalTimeInSeconds % 60;
 
-                String totalTimeFormatted = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
+                String totalTimeFormatted = String.format(Locale.getDefault(),
+                        "%02d:%02d:%02d", hours, minutes, seconds);
                 finalTimeView.setText(String.valueOf(totalTimeFormatted));
             }
 

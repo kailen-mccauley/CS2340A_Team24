@@ -4,26 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.util.Log;
-import android.widget.TextView;
 import com.example.greenplate.*;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.SharedPreferences;
-import android.content.Context;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import com.example.greenplate.FitnessActivityObserver;
-import com.example.greenplate.FitnessActivityObserver;
-
 
 import com.example.greenplate.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -73,7 +60,8 @@ public class HomeActivity extends AppCompatActivity {
             if (user != null) {
                 String userUid = user.getUid();
                 HomeScreenElement baseElement = new BasicHomeScreenElement(this);
-                HomeScreenElement decoratedElement = new FitnessDecorator(baseElement, this, userUid);
+                HomeScreenElement decoratedElement
+                        = new FitnessDecorator(baseElement, this, userUid);
                 decoratedElement.display();
             }
         });
@@ -103,7 +91,8 @@ public class HomeActivity extends AppCompatActivity {
             if (user != null) {
                 String userUid = user.getUid();
                 HomeScreenElement baseElement = new BasicHomeScreenElement(this);
-                HomeScreenElement decoratedElement = new ActivityDecorator(baseElement, this, userUid);
+                HomeScreenElement decoratedElement
+                        = new ActivityDecorator(baseElement, this, userUid);
                 decoratedElement.display();
             }
         });

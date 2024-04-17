@@ -1,6 +1,4 @@
 package com.example.greenplate.viewmodels;
-import android.content.SharedPreferences;
-
 
 import android.util.Log;
 
@@ -54,7 +52,8 @@ public class FitnessActivityViewModel {
             SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
             String currentTime = timeFormat.format(Calendar.getInstance().getTime());
             mDatabase.child("users").child(uid).child("fitness").child(currentDate)
-                    .child("Activity").child(currentTime).setValue(activityTime).addOnSuccessListener(aVoid -> Log.d("storeActivity",
+                    .child("Activity").child(currentTime).setValue(activityTime)
+                    .addOnSuccessListener(aVoid -> Log.d("storeActivity",
                     "Activity successfully stored."))
                     .addOnFailureListener(e -> Log.d("storeActivity",
                             "Failed to store Activity.", e));
@@ -78,14 +77,17 @@ public class FitnessActivityViewModel {
                         int stepsCount = snapshot.getValue(Integer.class);
                         int updatedsteps = stepsCount + steps;
                         mDatabase.child("users").child(uid).child("fitness").child(currentDate)
-                                .child("Steps").setValue(updatedsteps).addOnSuccessListener(aVoid -> Log.d("storeSteps",
+                                .child("Steps").setValue(updatedsteps)
+                                .addOnSuccessListener(aVoid -> Log.d("storeSteps",
                                         "Steps successfully stored."))
                                 .addOnFailureListener(e -> Log.d("storeSteps",
                                         "Failed to store Steps.", e));
                         notifyStepsObservers();
                     } else {
-                        mDatabase.child("users").child(uid).child("fitness").child(currentDate)
-                                .child("Steps").setValue(steps).addOnSuccessListener(aVoid -> Log.d("storeSteps",
+                        mDatabase.child("users").child(uid).child("fitness")
+                                .child(currentDate)
+                                .child("Steps").setValue(steps)
+                                .addOnSuccessListener(aVoid -> Log.d("storeSteps",
                                         "Steps successfully stored."))
                                 .addOnFailureListener(e -> Log.d("storeSteps",
                                         "Failed to store Steps.", e));
@@ -108,35 +110,13 @@ public class FitnessActivityViewModel {
                 .addListenerForSingleValueEvent(listener);
     }
 
-//    public void getActivityforDate(String userId, String date, ValueEventListener listener) {
-//        mDatabase.child("users").child(userId).child("fitness")
-//                .child(date).child("Activity")
-//                .addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        long totalActivityTimeMinutes = 0;
-//                        for (DataSnapshot activitySnapshot : snapshot.getChildren()) {
-//                            String durationString = activitySnapshot.getValue(String.class);
-//                            long durationMinutes = parseDurationStringToMinutes(durationString);
-//                            totalActivityTimeMinutes += durationMinutes;
-//                        }
-//                        DataSnapshot resultSnapshot = new DataSnapshot(null, snapshot.getRef(), totalActivityTimeMinutes);
-//                        listener.onDataChange(resultSnapshot);
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//                        //if yk yk
-//                    }
-//                });
-//    }
-
     private long parseDurationStringToMinutes(String durationString) {
         String[] parts = durationString.split(":");
         long hours = Long.parseLong(parts[0]);
         long minutes = Long.parseLong(parts[1]);
         long seconds = Long.parseLong(parts[2]);
-        return hours * 60 + minutes + (seconds > 0 ? 1 : 0); // rounds up if there are remaining seconds
+        return hours * 60 + minutes + (seconds > 0 ? 1 : 0);
+        // rounds up if there are remaining seconds
     }
 
     public void getActivityforDate(DailyActivityCallback callback) {
@@ -188,15 +168,15 @@ public class FitnessActivityViewModel {
     }
 
     public interface DailyActivityCallback {
-        void onDailyActivityRecieved(long DailyActivity);
+        void onDailyActivityRecieved(long dailyActivity);
     }
 
     //to use:
-//    viewModel.getActivityforDate(new FitnessActivityViewModel.DailyActivityCallback() {
-//        @Override
-//        public void onDailyActivityRecieved(long DailyActivity) {
-//            //do something
-//        }
-//    });
+    //    viewModel.getActivityforDate(new FitnessActivityViewModel.DailyActivityCallback() {
+    //        @Override
+    //        public void onDailyActivityRecieved(long DailyActivity) {
+    //            //do something
+    //        }
+    //    });
 
 }

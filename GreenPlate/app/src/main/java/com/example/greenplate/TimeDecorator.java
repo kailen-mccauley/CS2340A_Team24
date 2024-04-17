@@ -3,7 +3,6 @@ package com.example.greenplate;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -35,7 +34,8 @@ public class TimeDecorator extends HomeScreenDecorator {
             addViewToHomeScreen(layout);
         }
 
-        String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        String currentTime = new SimpleDateFormat("HH:mm:ss",
+                Locale.getDefault()).format(new Date());
         timeView.setText(currentTime);
     }
 

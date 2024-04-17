@@ -1,12 +1,8 @@
 package com.example.greenplate;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.util.Log;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.Activity;

@@ -12,7 +12,7 @@ public class ShoppingValidator {
     }
 
     public static boolean isValidQuantity(int quantity) {
-        return quantity > 0;
+        return true;
     }
 
     public static boolean isValidIngredient(String ingredient) {

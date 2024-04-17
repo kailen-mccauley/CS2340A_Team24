@@ -73,7 +73,7 @@ public class ShoppingActivity extends AppCompatActivity {
                     currentQuantity--;
                     quantityTextView.setText(String.valueOf(currentQuantity));
                     shoppingListActivityViewModel.storeShoppingListItem(
-                            ValueExtractor.extract(ingredientNameTextView), -1, () ->
+                            ValueExtractor.extract(ingredientNameTextView), -1, 5, () ->
                             shoppingListActivityViewModel.fetchShoppingListItems(existingItems ->
                                 populateShoppingList(existingItems, scrollable)));
                 } else {
@@ -96,7 +96,7 @@ public class ShoppingActivity extends AppCompatActivity {
                 currentQuantity++;
                 quantityTextView.setText(String.valueOf(currentQuantity));
                 shoppingListActivityViewModel.storeShoppingListItem(
-                        ValueExtractor.extract(ingredientNameTextView), 1, () ->
+                        ValueExtractor.extract(ingredientNameTextView), 1, 5, () ->
                         shoppingListActivityViewModel.fetchShoppingListItems(existingItems ->
                             populateShoppingList(existingItems, scrollable)));
             });

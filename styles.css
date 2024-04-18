@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0ead2
+    background-color: #f0ead2;
 }
 
 header {
@@ -26,21 +26,33 @@ h2 {
 
 .image-gallery {
     display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-    max-width: 50%; 
-    max-height: 50%; 
-    width: auto; 
-    height: auto;
-}
-
-.image-gallery img {
-    width: 30%;
-}
-
-video {
+    overflow: hidden;
     width: 100%;
-    max-width: 600px;
+}
+
+.image-container {
+    flex: 0 0 auto;
+    text-align: center;
+    width: 100%;
+    display: none;
+}
+
+.image-container.active {
     display: block;
-    margin: 0 auto;
+}
+
+.image-container img {
+    max-width: 100%;
+}
+
+.controls {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.controls button {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
 }

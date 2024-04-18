@@ -28,9 +28,23 @@
             <h2>User Interface</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
             <div class="image-gallery">
-                <img src="login_screen_UI.jpg" alt="Image 1">
-                <img src="recipe_screen_UI.jpg" alt="Image 2">
-                <img src="fitness_screen_UI.jpg" alt="Image 3">
+                <div class="image-container active">
+                    <img src="login_screen_UI.jpg" alt="Login Screen">
+                    <p>The login screen provides users two fields to enter their username and password before clicking the login button to enter the application.</p>
+                </div>
+                <div class="image-container">
+                    <img src="recipe_screen_UI.jpg" alt="Recipe Screen">
+                    <p>Recipe Screen</p>
+                </div>
+                <div class="image-container">
+                    <img src="fitness_screen_UI.jpg" alt="Fitness Screen">
+                    <p>Fitness Screen</p>
+                </div>
+                <!-- Add more image-container divs as needed -->
+            </div>
+            <div class="controls">
+                <button class="prev" onclick="scrollImage(-1)">❮</button>
+                <button class="next" onclick="scrollImage(1)">❯</button>
             </div>
         </section>
         <section id="functionality">
@@ -50,5 +64,6 @@
             <h4>Website contributors: Kailen Todd McCauley, Cesar Lopez, Cassandra Riquelme</h2>
         </section>
     </main>
+    <script src="scrollScript.js"></script>
 </body>
 </html>

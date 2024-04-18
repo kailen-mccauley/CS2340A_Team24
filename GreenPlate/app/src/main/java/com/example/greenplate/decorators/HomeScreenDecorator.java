@@ -1,7 +1,5 @@
 package com.example.greenplate.decorators;
 
-import com.example.greenplate.HomeScreenElement;
-
 public abstract class HomeScreenDecorator implements HomeScreenElement {
     protected HomeScreenElement decoratedElement;
 

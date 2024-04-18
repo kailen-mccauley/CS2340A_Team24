@@ -2,13 +2,13 @@ package com.example.greenplate.views;
 import com.example.greenplate.decorators.ActivityDecorator;
 import com.example.greenplate.decorators.BasicHomeScreenElement;
 import com.example.greenplate.decorators.FitnessDecorator;
+import com.example.greenplate.decorators.HomeScreenElement;
 import com.example.greenplate.decorators.TimeDecorator;
 import com.example.greenplate.viewmodels.HomeViewModel;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
-import com.example.greenplate.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 

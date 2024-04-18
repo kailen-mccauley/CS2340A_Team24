@@ -7,7 +7,6 @@ import android.util.Log;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.Activity;
 
-import com.example.greenplate.HomeScreenElement;
 import com.example.greenplate.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

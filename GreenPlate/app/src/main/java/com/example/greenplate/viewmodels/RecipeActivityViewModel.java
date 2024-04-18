@@ -1,7 +1,7 @@
 package com.example.greenplate.viewmodels;
 
-import com.example.greenplate.RecipeAlphabeticalSorter;
-import com.example.greenplate.SortRecipe;
+import com.example.greenplate.sorters.RecipeAlphabeticalSorter;
+import com.example.greenplate.sorters.SortRecipe;
 import com.example.greenplate.models.Recipe;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -11,7 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.example.greenplate.RecipeUserHasIngredientsSorter;
+import com.example.greenplate.sorters.RecipeUserHasIngredientsSorter;
 
 import android.text.SpannableString;
 import android.util.Log;

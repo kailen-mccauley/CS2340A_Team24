@@ -1,4 +1,4 @@
-package com.example.greenplate;
+package com.example.greenplate.utilites;
 import android.content.Intent;
 
 public class InputValidator {

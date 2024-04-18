@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.CheckBox;
 
-import com.example.greenplate.ValueExtractor;
+import com.example.greenplate.utilites.ValueExtractor;
 import com.example.greenplate.viewmodels.ShoppingListActivityViewModel;
 
 import androidx.appcompat.app.AppCompatActivity;

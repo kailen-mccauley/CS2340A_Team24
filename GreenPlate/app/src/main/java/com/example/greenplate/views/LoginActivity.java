@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.greenplate.InputValidator;
+import com.example.greenplate.utilites.InputValidator;
 import com.example.greenplate.viewmodels.LoginViewModel;
 import com.example.greenplate.R;
 import com.google.firebase.auth.FirebaseAuth;

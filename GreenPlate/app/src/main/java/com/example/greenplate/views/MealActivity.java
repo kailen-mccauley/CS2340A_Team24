@@ -1,6 +1,6 @@
 package com.example.greenplate.views;
 
-import com.example.greenplate.ValueExtractor;
+import com.example.greenplate.utilites.ValueExtractor;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.greenplate.InputValidator;
+import com.example.greenplate.utilites.InputValidator;
 import com.example.greenplate.R;
 import com.example.greenplate.viewmodels.MealActivityViewModel;
 import com.example.greenplate.viewmodels.PersonalActivityViewModel;

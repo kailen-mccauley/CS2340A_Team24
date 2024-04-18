@@ -3,28 +3,23 @@ body {
     margin: 0;
     padding: 0;
     background-color: #4CAF50;
+}
+
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
 }
 
-header {
-    background-color: #dda15e;
-    color: white;
-    text-align: center;
-    padding: 20px 0;
-    width: 100%;
-}
-
 main {
     padding: 20px;
-    max-width: 800px; 
+    max-width: 800px; /* Adjust max-width as needed */
+    width: 100%; /* Ensure main takes full width */
 }
 
 section {
     margin-bottom: 40px;
-    width: 100%;
 }
 
 h2 {

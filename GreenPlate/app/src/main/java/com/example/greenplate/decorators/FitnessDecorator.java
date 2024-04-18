@@ -95,7 +95,8 @@ public class FitnessDecorator extends HomeScreenDecorator {
                 addViewToHomeScreen(layout);
             }
 
-            String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+            String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                    .format(new Date());
             DatabaseReference stepsRef = FirebaseDatabase.getInstance().getReference("users")
                     .child(userUid).child("fitness").child(today).child("Steps");
 

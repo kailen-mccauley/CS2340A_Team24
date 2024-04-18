@@ -75,7 +75,8 @@ public class HomeActivity extends AppCompatActivity {
             if (user != null) {
                 String userUid = user.getUid();
                 HomeScreenElement baseElement = new BasicHomeScreenElement(this);
-                HomeScreenElement decoratedElement = new FitnessDecorator.StepsDecorator(baseElement, this, userUid);
+                HomeScreenElement decoratedElement = new FitnessDecorator.StepsDecorator(
+                        baseElement, this, userUid);
                 decoratedElement.display();
             }
         });

@@ -2,10 +2,11 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #4CAF50;
 }
 
 header {
-    background-color: #4CAF50;
+    background-color: #dda15e;
     color: white;
     text-align: center;
     padding: 20px 0;
@@ -20,7 +21,7 @@ section {
 }
 
 h2 {
-    color: #4CAF50;
+    color: #fefae0;
 }
 
 .image-gallery {

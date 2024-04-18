@@ -73,7 +73,8 @@ public class ManualShoppingForm extends AppCompatActivity {
             int recordCalories = Integer.parseInt(calories);
             int recordQuantity = Integer.parseInt(quantity);
 
-            shoppingListActivityViewModel.storeShoppingListItem(ingredientName, recordQuantity, recordCalories,
+            shoppingListActivityViewModel.storeShoppingListItem(ingredientName,
+                    recordQuantity, recordCalories,
                     () -> { });
             ingredientTitle.setText("");
             calSection.setText("");

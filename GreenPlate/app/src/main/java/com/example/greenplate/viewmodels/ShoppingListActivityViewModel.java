@@ -97,7 +97,8 @@ public class ShoppingListActivityViewModel {
                             }
                             if (!isDuplicate) {
                                 id = mDatabase.child("shoppinglist").push().getKey();
-                                ShoppingItem item = new ShoppingItem(ingredientName, quantity, uid, calories);
+                                ShoppingItem item = new ShoppingItem(ingredientName,
+                                        quantity, uid, calories);
                                 mDatabase.child("shoppinglist").child(id).setValue(item)
                                         .addOnCompleteListener(task -> {
                                             if (task.isSuccessful()) {
@@ -189,10 +190,18 @@ public class ShoppingListActivityViewModel {
                                                         }
 
                                                         if (!ingredientExists) {
-                                                            String newPantryItemId = mDatabase.child("pantry").push().getKey();
+                                                            String newPantryItemId
+                                                                    = mDatabase.child("pantry")
+                                                                    .push().getKey();
                                                             if (newPantryItemId != null) {
-                                                                Ingredient pantryItem = new Ingredient(item.getIngredientName(), item.getCalories(), item.getQuantity(), uid);
-                                                                mDatabase.child("pantry").child(newPantryItemId).setValue(pantryItem);
+                                                                Ingredient pantryItem = new
+                                                                        Ingredient(item
+                                                                        .getIngredientName(),
+                                                                        item.getCalories(),
+                                                                        item.getQuantity(), uid);
+                                                                mDatabase.child("pantry")
+                                                                        .child(newPantryItemId)
+                                                                        .setValue(pantryItem);
                                                             }
                                                         }
                                                     }
@@ -223,24 +232,33 @@ public class ShoppingListActivityViewModel {
                             mDatabase.child("shoppinglist").orderByChild("userId").equalTo(uid)
                                     .addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
-                                        public void onDataChange(@NonNull DataSnapshot shoppingSnapshot) {
+                                        public void onDataChange(
+                                                @NonNull DataSnapshot shoppingSnapshot) {
                                             boolean found = false;
                                             int calories = 0;
 
-                                            for (DataSnapshot snapshot: pantrySnapshot.getChildren()) {
-                                                String name = snapshot.getValue(Ingredient.class).getIngredientName();
-                                                if (name != null && name.equals(ingredientName.toLowerCase())) {
-                                                    calories = snapshot.getValue(Ingredient.class).getCalories();
+                                            for (DataSnapshot snapshot: pantrySnapshot
+                                                    .getChildren()) {
+                                                String name = snapshot.getValue(Ingredient.class)
+                                                        .getIngredientName();
+                                                if (name != null && name.equals(ingredientName
+                                                        .toLowerCase())) {
+                                                    calories = snapshot.getValue(Ingredient.class)
+                                                            .getCalories();
                                                     listener.onCalorieResult(calories);
                                                     found = true;
                                                     break;
                                                 }
                                             }
                                             if (!found) {
-                                                for (DataSnapshot snapshot: shoppingSnapshot.getChildren()) {
-                                                    String name = snapshot.getValue(ShoppingItem.class).getIngredientName();
-                                                    if (name != null && name.equals(ingredientName.toLowerCase())) {
-                                                        calories = snapshot.getValue(ShoppingItem.class).getCalories();
+                                                for (DataSnapshot snapshot
+                                                        : shoppingSnapshot.getChildren()) {
+                                                    String name = snapshot.getValue(ShoppingItem
+                                                                    .class).getIngredientName();
+                                                    if (name != null && name.equals(ingredientName
+                                                            .toLowerCase())) {
+                                                        calories = snapshot.getValue(ShoppingItem
+                                                                        .class).getCalories();
                                                         listener.onCalorieResult(calories);
                                                         found = true;
                                                         break;
@@ -248,12 +266,13 @@ public class ShoppingListActivityViewModel {
                                                 }
                                             }
                                             if (!found) {
-                                                listener.onCalorieResult((int) (Math.random() * 11) + 20); // Not found in either pantry or shopping list
+                                                listener.onCalorieResult((int)
+                                                        (Math.random() * 11) + 20);
                                             }
                                         }
                                         @Override
-                                        public void onCancelled(@NonNull DatabaseError shoppingError) {
-                                            // Handle error
+                                        public void onCancelled(@NonNull
+                                                                DatabaseError shoppingError) {
                                         }
                                     });
                         }

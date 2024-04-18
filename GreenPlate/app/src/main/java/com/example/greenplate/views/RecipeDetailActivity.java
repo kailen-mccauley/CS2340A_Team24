@@ -2,7 +2,6 @@ package com.example.greenplate.views;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -120,16 +119,17 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                                 && pantryIngredient.getQuantity() < quantity) {
                                             quantity -= pantryIngredient.getQuantity();
                                         }
-                                        final int[] cal = new int[]{(int) (Math.random() * 11) + 20};
+                                        final int[] cal = new
+                                                int[]{(int) (Math.random() * 11) + 20};
                                         int finalQuantity = quantity;
-                                        shoppingVM.getCalories(ingredient, new ShoppingListActivityViewModel.CalorieListener() {
+                                        shoppingVM.getCalories(ingredient, new
+                                                ShoppingListActivityViewModel.CalorieListener() {
                                             @Override
                                             public void onCalorieResult(Integer calories) {
                                                 if (calories != null) {
                                                     cal[0] = calories;
                                                     shoppingVM.storeShoppingListItem(ingredient,
                                                             finalQuantity, cal[0], () -> { });
-                                                    Log.d("RecipeDetail", "Ingredient calories: " + cal[0]);
                                                 }
                                             }
                                         });

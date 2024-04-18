@@ -25,16 +25,17 @@ h2 {
 }
 
 .image-gallery {
-    display: flex;
-    overflow: hidden;
-    width: 100%;
+    display: flex; /* Use flexbox */
+    flex-wrap: nowrap; /* Prevent wrapping to next line */
+    overflow-x: auto; /* Enable horizontal scrolling if needed */
 }
 
 .image-container {
-    flex: 0 0 auto;
+    flex: 0 0 auto; /* Allow containers to shrink or grow as needed */
     text-align: center;
-    width: 100%;
-    display: none;
+    width: auto; /* Allow containers to expand based on content */
+    display: flex; /* Use flexbox for images within the container */
+    flex-direction: row; /* Arrange images horizontally */
 }
 
 .image-container.active {
@@ -42,8 +43,8 @@ h2 {
 }
 
 .image-container img {
-    width: 50%;
-    height: 50%;
+    max-width: 100%; /* Ensure images don't exceed container width */
+    height: auto; /* Maintain aspect ratio */
 }
 
 .controls {

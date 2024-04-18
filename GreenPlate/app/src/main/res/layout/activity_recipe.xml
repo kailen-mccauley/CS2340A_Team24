@@ -31,6 +31,7 @@
         android:id="@+id/recipesAndSortingBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:orientation="vertical"
         android:layout_below="@id/recipeHeader"
         android:paddingBottom="15dp"
@@ -107,6 +108,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginBottom="40dp"
         android:layout_above="@id/bottom_navigation"
         android:paddingBottom="15dp"
         android:gravity="center">
@@ -124,12 +126,14 @@
             android:id="@+id/recipeNameEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:hint="Enter recipe name"
             android:textAlignment="center" />
         <EditText
             android:id="@+id/recipeIngredientsEditText"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:hint="Enter ingredients list (E.g.: peas : 10, corn: 13)"
             android:textAlignment="center" />
         <Button
@@ -137,6 +141,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="20dp"
             android:layout_marginHorizontal="5dp"
             android:backgroundTint="@color/dimGray"
             android:text="Submit Recipe"

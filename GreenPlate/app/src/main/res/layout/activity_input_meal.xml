@@ -32,6 +32,7 @@
         android:id="@+id/inputMealBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:layout_below="@id/header_title"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
@@ -188,6 +189,7 @@
         android:id="@+id/choseVisualizationBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
         android:layout_above="@id/bottom_navigation"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal">

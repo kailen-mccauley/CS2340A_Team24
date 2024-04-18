@@ -1,8 +1,10 @@
-package com.example.greenplate;
+package com.example.greenplate.decorators;
 
 import android.content.Context;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.greenplate.HomeScreenElement;
 
 public class BasicHomeScreenElement implements HomeScreenElement {
     private Context context;

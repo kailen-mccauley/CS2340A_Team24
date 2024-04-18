@@ -1,28 +1,22 @@
 package com.example.greenplate.views;
+import com.example.greenplate.decorators.ActivityDecorator;
+import com.example.greenplate.decorators.BasicHomeScreenElement;
+import com.example.greenplate.decorators.FitnessDecorator;
+import com.example.greenplate.decorators.HomeScreenElement;
+import com.example.greenplate.decorators.StepsDecorator;
+import com.example.greenplate.decorators.TimeDecorator;
 import com.example.greenplate.viewmodels.HomeViewModel;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.util.Log;
-import android.widget.TextView;
-import com.example.greenplate.*;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.SharedPreferences;
-import android.content.Context;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import com.example.greenplate.FitnessActivityObserver;
-import com.example.greenplate.FitnessActivityObserver;
 
 
 import com.example.greenplate.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 
 public class HomeActivity extends AppCompatActivity {

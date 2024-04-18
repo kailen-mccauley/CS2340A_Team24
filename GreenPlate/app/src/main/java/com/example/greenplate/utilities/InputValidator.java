@@ -1,4 +1,4 @@
-package com.example.greenplate;
+package com.example.greenplate.utilities;
 import android.content.Intent;
 import android.util.Log;
 

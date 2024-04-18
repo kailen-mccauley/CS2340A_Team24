@@ -2,8 +2,8 @@ package com.example.greenplate;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
-import com.example.greenplate.ShoppingValidator;
-import com.google.firebase.auth.FirebaseUser;
+import com.example.greenplate.utilities.ShoppingValidator;
+
 import java.util.List;
 import java.util.ArrayList;
 import org.junit.Test;

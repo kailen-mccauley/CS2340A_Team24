@@ -1,4 +1,4 @@
-package com.example.greenplate;
+package com.example.greenplate.decorators;
 
 import android.content.Context;
 import android.widget.LinearLayout;

@@ -12,9 +12,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.greenplate.InputValidator;
+import com.example.greenplate.utilities.InputValidator;
 import com.example.greenplate.R;
-import com.example.greenplate.ValueExtractor;
+import com.example.greenplate.utilities.ValueExtractor;
 import com.example.greenplate.viewmodels.PersonalActivityViewModel;
 
 public class PersonalActivity extends AppCompatActivity {

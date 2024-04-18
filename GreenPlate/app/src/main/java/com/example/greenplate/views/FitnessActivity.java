@@ -14,23 +14,20 @@ import android.content.Context;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
-import android.util.Log;
+
 import java.text.SimpleDateFormat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.FitnessActivityObserver;
-import com.example.greenplate.InputValidator;
+import com.example.greenplate.utilities.InputValidator;
 import com.example.greenplate.R;
-import com.example.greenplate.ValueExtractor;
+import com.example.greenplate.utilities.ValueExtractor;
 
 import com.example.greenplate.viewmodels.FitnessActivityViewModel;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 
 public class FitnessActivity extends AppCompatActivity  implements FitnessActivityObserver {

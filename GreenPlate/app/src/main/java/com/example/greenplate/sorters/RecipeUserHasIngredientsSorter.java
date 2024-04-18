@@ -1,6 +1,7 @@
-package com.example.greenplate;
+package com.example.greenplate.sorters;
 
 import com.example.greenplate.models.Recipe;
+import com.example.greenplate.sorters.SortRecipe;
 import com.example.greenplate.viewmodels.RecipeActivityViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

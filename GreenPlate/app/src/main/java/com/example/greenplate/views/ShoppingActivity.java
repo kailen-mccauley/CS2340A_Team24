@@ -72,6 +72,7 @@ public class ShoppingActivity extends AppCompatActivity {
                 if (currentQuantity > 1) {
                     currentQuantity--;
                     quantityTextView.setText(String.valueOf(currentQuantity));
+                    // shoppingListActivityViewModel.getCaloriesFromPantry();
                     shoppingListActivityViewModel.storeShoppingListItem(
                             ValueExtractor.extract(ingredientNameTextView), -1, 5, () ->
                             shoppingListActivityViewModel.fetchShoppingListItems(existingItems ->

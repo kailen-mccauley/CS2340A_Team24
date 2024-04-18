@@ -119,8 +119,20 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                                 && pantryIngredient.getQuantity() < quantity) {
                                             quantity -= pantryIngredient.getQuantity();
                                         }
-                                        shoppingVM.storeShoppingListItem(ingredient,
-                                                quantity, 4, () -> { });
+                                        final int[] cal = new
+                                                int[]{(int) (Math.random() * 11) + 20};
+                                        int finalQuantity = quantity;
+                                        shoppingVM.getCalories(ingredient, new
+                                                ShoppingListActivityViewModel.CalorieListener() {
+                                            @Override
+                                            public void onCalorieResult(Integer calories) {
+                                                if (calories != null) {
+                                                    cal[0] = calories;
+                                                    shoppingVM.storeShoppingListItem(ingredient,
+                                                            finalQuantity, cal[0], () -> { });
+                                                }
+                                            }
+                                        });
                                     });
                                 }
                             }

@@ -2,6 +2,7 @@ package com.example.greenplate.views;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -118,20 +119,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                         if (pantryIngredient != null
                                                 && pantryIngredient.getQuantity() < quantity) {
                                             quantity -= pantryIngredient.getQuantity();
+                                            Log.d("RecipeDetailActivity", "Quantity modified "+ quantity);
                                         }
-                                        final int[] cal = new
-                                                int[]{(int) (Math.random() * 11) + 20};
                                         int finalQuantity = quantity;
-                                        shoppingVM.getCalories(ingredient, new
-                                                ShoppingListActivityViewModel.CalorieListener() {
-                                            @Override
-                                            public void onCalorieResult(Integer calories) {
-                                                if (calories != null) {
-                                                    cal[0] = calories;
-                                                    shoppingVM.storeShoppingListItem(ingredient,
-                                                            finalQuantity, cal[0], () -> { });
-                                                }
-                                            }
+                                        shoppingVM.getCalories(ingredient, calories -> {
+                                            shoppingVM.storeShoppingListItem(ingredient,
+                                                    finalQuantity, calories, () -> { });
+                                            Log.d("RecipeDetailActivity", "Quantity modified "+ finalQuantity);
                                         });
                                     });
                                 }

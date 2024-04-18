@@ -84,7 +84,6 @@ public class HomeActivity extends AppCompatActivity {
         loadTime.setOnClickListener(v -> {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if (user != null) {
-                String userUid = user.getUid();
                 HomeScreenElement baseElement = new BasicHomeScreenElement(this);
                 HomeScreenElement decoratedElement = new TimeDecorator(baseElement, this);
                 decoratedElement.display();

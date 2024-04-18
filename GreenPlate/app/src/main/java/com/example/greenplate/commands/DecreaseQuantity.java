@@ -1,4 +1,4 @@
-package com.example.greenplate;
+package com.example.greenplate.commands;
 
 import androidx.annotation.NonNull;
 

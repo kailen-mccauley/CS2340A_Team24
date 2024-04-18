@@ -1,4 +1,4 @@
-package com.example.greenplate;
+package com.example.greenplate.sorters;
 
 import com.example.greenplate.viewmodels.RecipeActivityViewModel;
 

@@ -1,4 +1,4 @@
-package com.example.greenplate;
+package com.example.greenplate.decorators;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,6 +6,9 @@ import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.example.greenplate.R;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;

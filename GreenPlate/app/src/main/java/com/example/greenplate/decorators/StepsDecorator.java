@@ -1,4 +1,5 @@
-package com.example.greenplate;
+
+package com.example.greenplate.decorators;
 
 import android.content.Context;
 import android.widget.LinearLayout;
@@ -7,6 +8,7 @@ import android.util.Log;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.Activity;
 
+import com.example.greenplate.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

@@ -1,4 +1,4 @@
-package com.example.greenplate;
+package com.example.greenplate.utilites;
 
 import android.widget.EditText;
 import android.widget.TextView;

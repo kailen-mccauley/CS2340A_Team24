@@ -1,4 +1,4 @@
-package com.example.greenplate;
+package com.example.greenplate.viewmodels;
 
 import com.google.firebase.auth.FirebaseUser;
 

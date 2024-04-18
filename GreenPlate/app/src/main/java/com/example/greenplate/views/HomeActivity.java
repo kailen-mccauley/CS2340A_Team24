@@ -8,6 +8,7 @@ import com.example.greenplate.viewmodels.HomeViewModel;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,10 +41,10 @@ public class HomeActivity extends AppCompatActivity {
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
         ImageButton toFitnessButton = findViewById(R.id.btn_fitness);
 
-        Button loadStreak = findViewById(R.id.streakButton);
-        Button loadSteps = findViewById(R.id.stepsButton);
-        Button loadTime = findViewById(R.id.timeButton);
-        Button loadActivity = findViewById(R.id.activityButton);
+        CheckBox loadStreak = findViewById(R.id.streakButton);
+        CheckBox loadSteps = findViewById(R.id.stepsButton);
+        CheckBox loadTime = findViewById(R.id.timeButton);
+        CheckBox loadActivity = findViewById(R.id.activButton);
 
 
         Intent intentMeal = new Intent(HomeActivity.this, MealActivity.class);

@@ -109,7 +109,6 @@ public class IngredientsActivity extends AppCompatActivity {
         ImageButton toFitnessButton = findViewById(R.id.btn_fitness);
 
         Button toIngredientsForm = findViewById(R.id.btn_to_ingredients_form);
-        TextView currQuantity = findViewById(R.id.currQuantityTextView);
         Button increaseQuantity = findViewById(R.id.btn_increase_quantity);
         Button decreaseQuantity = findViewById(R.id.btn_decrease_quantity);
         Spinner ingredientNameSpinner = findViewById(R.id.ingredientNameSpinner);
@@ -154,13 +153,13 @@ public class IngredientsActivity extends AppCompatActivity {
             }
             ingredientsViewModel.updateIngredQuanTree(ingredientName, Integer.parseInt(quantity),
                     ingredientMap -> {
-                    updateTreeMapAndSpinners(ingredientMap, ingredientNameSpinner,
-                            quantitiesSpinner);
+                        updateTreeMapAndSpinners(ingredientMap, ingredientNameSpinner,
+                                quantitiesSpinner);
                         ingredientsViewModel.getIngredQuanKVP(ingredientsMap
                                 -> createScrollable(ingredientsMap));
-                    Toast.makeText(IngredientsActivity.this, "Quantity of " + ingredientName
-                            + " increased by " + quantity + "!", Toast.LENGTH_SHORT).show();
-                });
+                        Toast.makeText(IngredientsActivity.this, "Quantity of " + ingredientName
+                                + " increased by " + quantity + "!", Toast.LENGTH_SHORT).show();
+                    });
         });
         decreaseQuantity.setOnClickListener(v ->  {
             String ingredientName = ValueExtractor.extract(ingredientNameSpinner);
@@ -193,22 +192,6 @@ public class IngredientsActivity extends AppCompatActivity {
                     },
                     IngredientsActivity.this
             );
-        });
-        ingredientNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView,
-                                       View selectedItemView, int position, long id) {
-                String selectedRecipe = parentView.getItemAtPosition(position).toString();
-                if (InputValidator.isValidSpinnerItem(selectedRecipe)) {
-                    int quantity = ingredientsTreeMap.get(selectedRecipe).getQuantity();
-                    currQuantity.setText(String.valueOf(quantity));
-                } else {
-                    currQuantity.setText("");
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-            }
         });
     }
 }

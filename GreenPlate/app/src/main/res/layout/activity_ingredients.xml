@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
@@ -94,9 +94,8 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-black"
-            android:paddingBottom="10dp"
             android:text="Change Ingredient Quantity"
             android:textAlignment="center"
             android:textColor="@color/mintCream"
@@ -105,245 +104,216 @@
             app:layout_constraintStart_toStartOf="@+id/titleIngredScreen"
             app:layout_constraintTop_toBottomOf="@+id/ingredScroll" />
 
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_above="@id/bottom_navigation"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+            <LinearLayout
+                android:id="@+id/inputIngredientBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/ingredientNameSpinner"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:textAlignment="center" />
+
+                <Spinner
+                    android:id="@+id/quantitySpinner"
+                    android:layout_width="190dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/changeQuantityBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_increase_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="5dp"
+                    android:backgroundTint="@color/darkGreen"
+                    android:text="Increase Quantity"
+                    android:textSize="15sp" />
+
+                <Button
+                    android:id="@+id/btn_decrease_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="5dp"
+                    android:backgroundTint="@color/darkGreen"
+                    android:text="Decrease Quantity"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_to_ingredients_form"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="5dp"
+                android:backgroundTint="@color/darkGreen"
+                android:text="Ingredients Form"
+                android:textSize="22sp" />
+        </LinearLayout>
+
+        <!-- Bottom navigation bar -->
+        <LinearLayout
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/darker_gray"
+            android:backgroundTint="@color/dimGray"
+            android:orientation="horizontal"
+            android:padding="3dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <!-- Column 1 -->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/btn_home"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/dimGray"
+                    android:src="@drawable/ic_home_foreground" />
+
+            </RelativeLayout>
+
+            <!-- Column 2 -->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/btn_personal"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/dimGray"
+                    android:src="@drawable/personal_info_foreground" />
+
+            </RelativeLayout>
+
+            <!-- Column 3 -->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/btn_shopping"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/dimGray"
+                    android:src="@drawable/ic_shopping_foreground" />
+
+            </RelativeLayout>
+
+            <!-- Column 4 -->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/btn_recipe"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/dimGray"
+                    android:src="@drawable/recipe_foreground" />
+
+            </RelativeLayout>
+
+            <!-- Column 5 -->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/btn_ingredients"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/dimGray"
+                    android:src="@drawable/ic_ingredient_foreground"
+                    app:tint="@color/White" />
+
+            </RelativeLayout>
+
+            <!-- Column 6 -->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/btn_meal"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/dimGray"
+                    android:src="@drawable/ic_meal_foreground" />
+
+            </RelativeLayout>
+
+            <!-- Column 7 -->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/btn_fitness"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/dimGray"
+                    android:src="@drawable/ic_fitness_foreground" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <LinearLayout
-        android:id="@+id/container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/main_content"
-        android:layout_centerHorizontal="true"
-        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/inputIngredientBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <Spinner
-                android:id="@+id/ingredientNameSpinner"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"/>
-
-            <Spinner
-                android:id="@+id/quantitySpinner"
-                android:layout_width="190dp"
-                android:layout_height="match_parent"
-                android:textAlignment="center"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/currentQuantityBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Current quantity: "
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:gravity="center"/>
-            <TextView
-                android:id="@+id/currQuantityTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="N/A"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:layout_marginBottom="20dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/changeQuantityBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
-
-            <Button
-                android:id="@+id/btn_increase_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="5dp"
-                android:backgroundTint="@color/darkGreen"
-                android:text="Increase Quantity"
-                android:textSize="15sp" />
-
-            <Button
-                android:id="@+id/btn_decrease_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="5dp"
-                android:backgroundTint="@color/darkGreen"
-                android:text="Decrease Quantity"
-                android:textSize="15sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ingredientFormBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_above="@id/bottom_navigation"
-        android:layout_centerHorizontal="true"
-        android:paddingBottom="15dp">
-
-        <Button
-            android:id="@+id/btn_to_ingredients_form"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="5dp"
-            android:backgroundTint="@color/darkGreen"
-            android:text="Ingredients Form"
-            android:textSize="22sp" />
-    </LinearLayout>
-
-
-    <!-- Bottom navigation bar -->
-    <LinearLayout
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/darker_gray"
-        android:orientation="horizontal"
-        android:padding="3dp"
-        android:backgroundTint="@color/dimGray"
-        xmlns:android="http://schemas.android.com/apk/res/android">
-
-        <!-- Column 1 -->
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.75"
-            android:gravity="center">
-
-            <ImageButton
-                android:id="@+id/btn_home"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@color/dimGray"
-                android:src="@drawable/ic_home_foreground"
-                android:layout_centerHorizontal="true" />
-
-        </RelativeLayout>
-
-        <!-- Column 2 -->
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.75"
-            android:gravity="center">
-
-            <ImageButton
-                android:id="@+id/btn_personal"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@color/dimGray"
-                android:src="@drawable/personal_info_foreground"
-                android:layout_centerHorizontal="true" />
-
-        </RelativeLayout>
-
-        <!-- Column 3 -->
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.75"
-            android:gravity="center">
-
-            <ImageButton
-                android:id="@+id/btn_shopping"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@color/dimGray"
-                android:src="@drawable/ic_shopping_foreground"
-                android:layout_centerHorizontal="true" />
-
-        </RelativeLayout>
-
-        <!-- Column 4 -->
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.75"
-            android:gravity="center">
-
-            <ImageButton
-                android:id="@+id/btn_recipe"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@color/dimGray"
-                android:src="@drawable/recipe_foreground"
-                android:layout_centerHorizontal="true" />
-
-        </RelativeLayout>
-
-        <!-- Column 5 -->
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.75"
-            android:gravity="center">
-
-            <ImageButton
-                android:id="@+id/btn_ingredients"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@color/dimGray"
-                android:src="@drawable/ic_ingredient_foreground"
-                android:layout_centerHorizontal="true"
-                app:tint="@color/White" />
-
-        </RelativeLayout>
-
-        <!-- Column 6 -->
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.75"
-            android:gravity="center">
-
-            <ImageButton
-                android:id="@+id/btn_meal"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@color/dimGray"
-                android:src="@drawable/ic_meal_foreground"
-                android:layout_centerHorizontal="true" />
-
-        </RelativeLayout>
-
-        <!-- Column 7 -->
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.75"
-            android:gravity="center">
-
-            <ImageButton
-                android:id="@+id/btn_fitness"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@color/dimGray"
-                android:src="@drawable/ic_fitness_foreground"
-                android:layout_centerHorizontal="true" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
 
 </RelativeLayout>

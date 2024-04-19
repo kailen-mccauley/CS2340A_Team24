@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -66,7 +67,11 @@ public class TimeDecorator extends HomeScreenDecorator {
                     e.printStackTrace();
                 }
                 seconds++;
-                timerHandler.post(() -> timeView.setText(formatTime(seconds)));
+                timerHandler.post(() -> {
+                    if (timeView.getVisibility() == View.VISIBLE) {
+                        timeView.setText(formatTime(seconds));
+                    }
+                });
             }
         }).start();
     }

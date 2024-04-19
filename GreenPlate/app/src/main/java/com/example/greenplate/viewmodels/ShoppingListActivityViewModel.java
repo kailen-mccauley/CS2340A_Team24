@@ -266,7 +266,7 @@ public class ShoppingListActivityViewModel {
                                             }
                                             if (!found) {
                                                 listener.onCalorieResult((int)
-                                                        (Math.random() * 11) + 20);
+                                                        (Math.random() * 46) + 5);
                                             }
                                         }
                                         @Override

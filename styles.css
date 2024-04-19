@@ -23,10 +23,6 @@ section {
 h2 {
     color: #4CAF50;
 }
-video {
-    width: 50%;
-    height: auto;
-}
 
 .image-gallery {
     display: flex; /* Use flexbox */

@@ -188,7 +188,7 @@ public class FitnessActivity extends AppCompatActivity  implements FitnessActivi
                 Toast.makeText(FitnessActivity.this,
                         "Steps tracked!",
                         Toast.LENGTH_SHORT).show();
-
+                stepsEditText.setText("");
             }
         });
     }

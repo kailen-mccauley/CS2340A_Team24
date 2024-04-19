@@ -23,9 +23,7 @@ section {
 h2 {
     color: #4CAF50;
 }
-video {
-    width: 300px;
-}
+
 .image-gallery {
     display: flex; /* Use flexbox */
     flex-wrap: nowrap; /* Prevent wrapping to next line */

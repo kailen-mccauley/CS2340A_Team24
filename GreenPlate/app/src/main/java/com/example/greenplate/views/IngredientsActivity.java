@@ -1,6 +1,7 @@
 package com.example.greenplate.views;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -90,6 +91,7 @@ public class IngredientsActivity extends AppCompatActivity {
                 weight
         );
         textView.setLayoutParams(layoutParams);
+        textView.setGravity(Gravity.CENTER);
         textView.setTextSize(22);
         textView.setText(text);
         return textView;

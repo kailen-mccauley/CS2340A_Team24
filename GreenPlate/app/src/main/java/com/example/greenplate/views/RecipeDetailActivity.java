@@ -2,6 +2,7 @@ package com.example.greenplate.views;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -35,6 +36,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 = new LinearLayout.LayoutParams(0,
                 LinearLayout.LayoutParams.WRAP_CONTENT, weight);
         textView.setLayoutParams(ingredientNameParams);
+        textView.setGravity(Gravity.CENTER);
         textView.setText(text);
         textView.setTextSize(22);
         textView.setTextColor(getResources().getColor(R.color.pennBlue));
@@ -115,24 +117,22 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                     ingredientsVM.getIngredTree(ingredientMap -> {
                                         Ingredient pantryIngredient = ingredientMap.get(ingredient);
                                         int quantity = ingredients.get(ingredient);
-                                        if (pantryIngredient != null
-                                                && pantryIngredient.getQuantity() < quantity) {
-                                            quantity -= pantryIngredient.getQuantity();
-                                        }
-                                        final int[] cal = new
-                                                int[]{(int) (Math.random() * 11) + 20};
-                                        int finalQuantity = quantity;
-                                        shoppingVM.getCalories(ingredient, new
-                                                ShoppingListActivityViewModel.CalorieListener() {
-                                            @Override
-                                            public void onCalorieResult(Integer calories) {
-                                                if (calories != null) {
-                                                    cal[0] = calories;
+                                        if (pantryIngredient != null) {
+                                            if (pantryIngredient.getQuantity() < quantity) {
+                                                quantity -= pantryIngredient.getQuantity();
+                                                int finalQuantity = quantity;
+                                                shoppingVM.getCalories(ingredient, calories -> {
                                                     shoppingVM.storeShoppingListItem(ingredient,
-                                                            finalQuantity, cal[0], () -> { });
-                                                }
+                                                            finalQuantity, calories, () -> { });
+                                                });
                                             }
-                                        });
+                                        } else {
+                                            int finalQuantity = quantity;
+                                            shoppingVM.getCalories(ingredient, calories -> {
+                                                shoppingVM.storeShoppingListItem(ingredient,
+                                                        finalQuantity, calories, () -> { });
+                                            });
+                                        }
                                     });
                                 }
                             }

@@ -7,8 +7,11 @@ import com.example.greenplate.decorators.TimeDecorator;
 import com.example.greenplate.viewmodels.HomeViewModel;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         viewModel = HomeViewModel.getInstance(this.getApplicationContext());
 
+        Button toLogoutButton = findViewById(R.id.logoutButton);
 
         ImageButton toMealButton = findViewById(R.id.btn_meal);
         ImageButton toRecipeButton = findViewById(R.id.btn_recipe);
@@ -40,11 +44,15 @@ public class HomeActivity extends AppCompatActivity {
         ImageButton toPersonalButton = findViewById(R.id.btn_personal);
         ImageButton toFitnessButton = findViewById(R.id.btn_fitness);
 
-        Button loadStreak = findViewById(R.id.streakButton);
-        Button loadSteps = findViewById(R.id.stepsButton);
-        Button loadTime = findViewById(R.id.timeButton);
-        Button loadActivity = findViewById(R.id.activityButton);
+        CheckBox loadStreak = findViewById(R.id.streakButton);
+        CheckBox loadSteps = findViewById(R.id.stepsButton);
+        CheckBox loadTime = findViewById(R.id.timeButton);
+        CheckBox loadActivity = findViewById(R.id.activButton);
 
+        TextView timeSnip = findViewById(R.id.timeField);
+        TextView activitySnip = findViewById(R.id.activityField);
+        TextView stepsSnip = findViewById(R.id.stepsField);
+        TextView streakSnip = findViewById(R.id.streakField);
 
         Intent intentMeal = new Intent(HomeActivity.this, MealActivity.class);
         makeNavigationBar(toMealButton, intentMeal);
@@ -59,47 +67,66 @@ public class HomeActivity extends AppCompatActivity {
         Intent intentFitness = new Intent(HomeActivity.this, FitnessActivity.class);
         makeNavigationBar(toFitnessButton, intentFitness);
 
-        loadStreak.setOnClickListener(v -> {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if (user != null) {
-                String userUid = user.getUid();
-                HomeScreenElement baseElement = new BasicHomeScreenElement(this);
-                HomeScreenElement decoratedElement
-                        = new FitnessDecorator(baseElement, this, userUid);
+        loadStreak.setOnCheckedChangeListener(((buttonView, isChecked) -> {
+            if (isChecked) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) {
+                    String userUid = user.getUid();
+                    HomeScreenElement baseElement = new BasicHomeScreenElement(this);
+                    HomeScreenElement decoratedElement
+                            = new FitnessDecorator(baseElement, this, userUid);
+                    decoratedElement.display();
+                }
+            } else {
+                streakSnip.setText("");
+            }
+        }));
+
+        loadSteps.setOnCheckedChangeListener(((buttonView, isChecked) -> {
+            if (isChecked) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) {
+                    String userUid = user.getUid();
+                    HomeScreenElement baseElement = new BasicHomeScreenElement(this);
+                    HomeScreenElement decoratedElement = new FitnessDecorator.StepsDecorator(
+                            baseElement, this, userUid);
+                    decoratedElement.display();
+                }
+            } else {
+                stepsSnip.setText("");
+            }
+        }));
+
+        loadTime.setOnCheckedChangeListener(((buttonView, isChecked) -> {
+            HomeScreenElement baseElement = new BasicHomeScreenElement(this);
+            HomeScreenElement decoratedElement = new TimeDecorator(baseElement, this);
+            if (isChecked) {
+                timeSnip.setVisibility(View.VISIBLE);
                 decoratedElement.display();
+            } else {
+                decoratedElement.display();
+                timeSnip.setVisibility(View.INVISIBLE);
+            }
+        }));
+
+        loadActivity.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) {
+                    String userUid = user.getUid();
+                    HomeScreenElement baseElement = new BasicHomeScreenElement(this);
+                    HomeScreenElement decoratedElement
+                            = new ActivityDecorator(baseElement, this, userUid);
+                    decoratedElement.display();
+                }
+            } else {
+                activitySnip.setText("");
             }
         });
 
-        loadSteps.setOnClickListener(v -> {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if (user != null) {
-                String userUid = user.getUid();
-                HomeScreenElement baseElement = new BasicHomeScreenElement(this);
-                HomeScreenElement decoratedElement = new FitnessDecorator.StepsDecorator(
-                        baseElement, this, userUid);
-                decoratedElement.display();
-            }
-        });
-
-        loadTime.setOnClickListener(v -> {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if (user != null) {
-                String userUid = user.getUid();
-                HomeScreenElement baseElement = new BasicHomeScreenElement(this);
-                HomeScreenElement decoratedElement = new TimeDecorator(baseElement, this);
-                decoratedElement.display();
-            }
-        });
-
-        loadActivity.setOnClickListener(v -> {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if (user != null) {
-                String userUid = user.getUid();
-                HomeScreenElement baseElement = new BasicHomeScreenElement(this);
-                HomeScreenElement decoratedElement
-                        = new ActivityDecorator(baseElement, this, userUid);
-                decoratedElement.display();
-            }
+        toLogoutButton.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(intent);
         });
 
     }

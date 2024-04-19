@@ -125,9 +125,6 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         toLogoutButton.setOnClickListener(v -> {
-//            viewModel.logout(() -> {
-//
-//            });
             Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(intent);
         });

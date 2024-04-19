@@ -1,15 +1,8 @@
 package com.example.greenplate.viewmodels;
 
-import static android.content.ContentValues.TAG;
-
-import android.util.Log;
-import android.widget.Toast;
-
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import androidx.lifecycle.MutableLiveData;
 import com.example.greenplate.views.LoginActivity;
 import com.google.android.gms.tasks.Task;
 

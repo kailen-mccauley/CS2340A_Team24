@@ -17,7 +17,6 @@ import com.example.greenplate.viewmodels.LoginViewModel;
 import com.example.greenplate.R;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -50,18 +49,20 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
                 return;
             }
-            viewModel.login(email, password, LoginActivity.this, new LoginViewModel.LoginListener() {
-                @Override
-                public void onLoginComplete() {
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                }
+            viewModel.login(email, password, LoginActivity.this,
+                    new LoginViewModel.LoginListener() {
+                    @Override
+                    public void onLoginComplete() {
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                    }
 
-                @Override
-                public void onLoginFailed(Task<AuthResult> task) {
-                    Toast.makeText(LoginActivity.this, "Authentication failed." + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onLoginFailed(Task<AuthResult> task) {
+                        Toast.makeText(LoginActivity.this, "Authentication failed."
+                                + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
 
         });

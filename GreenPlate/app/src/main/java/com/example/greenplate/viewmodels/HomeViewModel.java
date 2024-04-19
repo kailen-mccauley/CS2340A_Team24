@@ -5,8 +5,6 @@ import android.content.Context;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.Map;
-
 
 public class HomeViewModel {
 

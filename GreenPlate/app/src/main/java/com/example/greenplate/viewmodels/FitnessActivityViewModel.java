@@ -109,44 +109,6 @@ public class FitnessActivityViewModel {
                 .addListenerForSingleValueEvent(listener);
     }
 
-    private long parseDurationStringToMinutes(String durationString) {
-        String[] parts = durationString.split(":");
-        long hours = Long.parseLong(parts[0]);
-        long minutes = Long.parseLong(parts[1]);
-        long seconds = Long.parseLong(parts[2]);
-        return hours * 60 + minutes + (seconds > 0 ? 1 : 0);
-        // rounds up if there are remaining seconds
-    }
-
-    public void getActivityforDate(DailyActivityCallback callback) {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            String uid = currentUser.getUid();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            String currentDate = dateFormat.format(Calendar.getInstance().getTime());
-
-
-            mDatabase.child("users").child(uid).child("fitness")
-                    .child(currentDate).child("Activity")
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            long totalActivityTimeMinutes = 0;
-                            for (DataSnapshot activitySnapshot : snapshot.getChildren()) {
-                                String durationString = activitySnapshot.getValue(String.class);
-                                long durationMinutes = parseDurationStringToMinutes(durationString);
-                                totalActivityTimeMinutes += durationMinutes;
-                            }
-                            callback.onDailyActivityRecieved(totalActivityTimeMinutes);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            //if yk yk
-                        }
-                    });
-        }
-    }
     public void addObserver(FitnessActivityObserver observer) {
         observers.add(observer);
     }
@@ -165,17 +127,5 @@ public class FitnessActivityViewModel {
             observer.updateStepsUI();
         }
     }
-
-    public interface DailyActivityCallback {
-        void onDailyActivityRecieved(long dailyActivity);
-    }
-
-    //to use:
-    //    viewModel.getActivityforDate(new FitnessActivityViewModel.DailyActivityCallback() {
-    //        @Override
-    //        public void onDailyActivityRecieved(long DailyActivity) {
-    //            //do something
-    //        }
-    //    });
 
 }

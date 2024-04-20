@@ -52,20 +52,17 @@ public class CreateAccountViewModel {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign up success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             setCreateSuccess(true);
 
                         } else {
-                            // If sign up fails, display a message to the user.
                             setCreateSuccess(false);
                             Log.w(TAG, "createUserWithEmail:failure",
                                     task.getException());
                             Toast.makeText(createAccountActivity,
                                     "Authentication failed." + task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
-                            //updateUI(null);
                         }
                     }
                 });

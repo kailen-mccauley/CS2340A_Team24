@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.greenplate.utilites.InputFormatter;
 import com.example.greenplate.utilites.InputValidator;
 import com.example.greenplate.R;
 import com.example.greenplate.models.Ingredient;
@@ -64,7 +65,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
             LinearLayout scrollable = findViewById(R.id.scrollableLay);
             for (Map.Entry<String, Integer> entry : recipe.
                     getIngredients().entrySet()) {
-                String ingredientName = entry.getKey();
+                String ingredientName = InputFormatter.capitalize(entry.getKey());
                 String quantity = entry.getValue().toString();
                 LinearLayout ingredientLayout
                         = new LinearLayout(RecipeDetailActivity.this);

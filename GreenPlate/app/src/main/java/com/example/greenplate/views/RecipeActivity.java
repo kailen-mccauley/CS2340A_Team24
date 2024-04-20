@@ -23,6 +23,7 @@ import java.util.HashMap;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.greenplate.utilites.InputFormatter;
 import com.example.greenplate.utilites.InputValidator;
 import com.example.greenplate.R;
 import com.example.greenplate.utilites.ValueExtractor;
@@ -45,6 +46,9 @@ public class RecipeActivity extends AppCompatActivity {
         // Update the spinners with the new TreeMap data
         ArrayList<SpannableString> recipeNames = new ArrayList<>();
         for (Map<SpannableString, Recipe> recipeMap : recipesList) {
+            for (SpannableString spannableString : recipeMap.keySet()) {
+                recipeMap.put(InputFormatter.capitalize(spannableString), recipeMap.remove(spannableString));
+            }
             recipeNames.addAll(recipeMap.keySet());
         }
         ArrayAdapter<SpannableString> ingredientsAdapter
@@ -144,7 +148,7 @@ public class RecipeActivity extends AppCompatActivity {
                     }
                     Intent intent = new Intent(RecipeActivity.this, RecipeDetailActivity.class);
                     intent.putExtra("recipeID", currRecipe.getRecipeID());
-                    intent.putExtra("recipeName", currRecipe.getRecipeName());
+                    intent.putExtra("recipeName", InputFormatter.capitalize(currRecipe.getRecipeName()));
                     for (Map<SpannableString, Recipe> entry : sortedRecipeList) {
                         for (Recipe recipe : entry.values()) {
                             if (recipe.getRecipeID().equals(currRecipe.getRecipeID())) {

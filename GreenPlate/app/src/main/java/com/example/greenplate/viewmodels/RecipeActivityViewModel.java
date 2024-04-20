@@ -48,7 +48,8 @@ public class RecipeActivityViewModel {
         return instance;
     }
 
-    public void getRecipeDetails(String recipeID, RecipeDetailsListener listener) {
+    public void getRecipeDetails(String recipeID, RecipeDetailsReceivedListener receivedListener,
+                                 RecipeDetailsFailedListener failedListener) {
         DatabaseReference recipeRef = mDatabase.child("cookbook").child(recipeID);
         recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -58,15 +59,15 @@ public class RecipeActivityViewModel {
                     Map<String, Integer> ingredientsMap = dataSnapshot.child("ingredients")
                             .getValue(new GenericTypeIndicator<Map<String, Integer>>() { });
                     Recipe recipe = new Recipe(recipeName, ingredientsMap, recipeID);
-                    listener.onRecipeDetailsReceived(recipe);
+                    receivedListener.onRecipeDetailsReceived(recipe);
                 } else {
-                    listener.onRecipeDetailsError("Recipe not found");
+                    failedListener.onRecipeDetailsError("Recipe not found");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                listener.onRecipeDetailsError("Error fetching recipe details: "
+                failedListener.onRecipeDetailsError("Error fetching recipe details: "
                         + error.getMessage());
             }
         });
@@ -109,8 +110,10 @@ public class RecipeActivityViewModel {
         recipeSorter.sortRecipes(listener);
     }
 
-    public interface RecipeDetailsListener {
+    public interface RecipeDetailsReceivedListener {
         void onRecipeDetailsReceived(Recipe recipe);
+    }
+    public interface RecipeDetailsFailedListener {
         void onRecipeDetailsError(String errorMessage);
     }
     public interface RecipeListListener {

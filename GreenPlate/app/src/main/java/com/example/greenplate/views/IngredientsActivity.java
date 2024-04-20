@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.greenplate.utilites.InputFormatter;
 import com.example.greenplate.utilites.InputValidator;
 import com.example.greenplate.R;
 import com.example.greenplate.utilites.ValueExtractor;
@@ -31,7 +32,10 @@ public class IngredientsActivity extends AppCompatActivity {
                                           Spinner ingredientNameSpinner,
                                           Spinner quantitiesSpinner) {
         ingredientsTreeMap = new TreeMap<>(ingredientMap);
-        ArrayList<String> ingredientNames = new ArrayList<>(ingredientsTreeMap.keySet());
+        ArrayList<String> ingredientNames = new ArrayList<>();
+        for (String str : ingredientsTreeMap.keySet()) {
+            ingredientNames.add(InputFormatter.capitalize(str));
+        }
         ArrayAdapter<String> ingredientsAdapter = new ArrayAdapter<>(IngredientsActivity.this,
                 R.layout.spinner_item_layout_ingredients, ingredientNames);
         ingredientsAdapter.insert("Select ingredient", 0);
@@ -61,7 +65,7 @@ public class IngredientsActivity extends AppCompatActivity {
         scrollableLayout.removeAllViews();
 
         for (Map.Entry<String, Integer> entry : ingredientsMap.entrySet()) {
-            String ingredientName = entry.getKey();
+            String ingredientName = InputFormatter.capitalize(entry.getKey());
             Integer quantity = entry.getValue();
 
             LinearLayout ingredientLayout = new LinearLayout(IngredientsActivity.this);
@@ -137,7 +141,7 @@ public class IngredientsActivity extends AppCompatActivity {
             startActivity(intent);
         });
         increaseQuantity.setOnClickListener(v -> {
-            String ingredientName = ValueExtractor.extract(ingredientNameSpinner);
+            String ingredientName = InputFormatter.lowercase(ValueExtractor.extract(ingredientNameSpinner));
             String quantity = ValueExtractor.extract(quantitiesSpinner);
             if (!InputValidator.isValidSpinnerItem(ingredientName)) {
                 Toast.makeText(IngredientsActivity.this, "Please select a ingredient "
@@ -160,7 +164,7 @@ public class IngredientsActivity extends AppCompatActivity {
                     });
         });
         decreaseQuantity.setOnClickListener(v ->  {
-            String ingredientName = ValueExtractor.extract(ingredientNameSpinner);
+            String ingredientName = InputFormatter.lowercase(ValueExtractor.extract(ingredientNameSpinner));
             String quantity = ValueExtractor.extract(quantitiesSpinner);
             if (!InputValidator.isValidSpinnerItem(ingredientName)) {
                 Toast.makeText(IngredientsActivity.this, "Please select a ingredient "

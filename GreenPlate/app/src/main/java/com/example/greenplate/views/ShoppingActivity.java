@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.CheckBox;
 
+import com.example.greenplate.utilites.InputFormatter;
 import com.example.greenplate.utilites.ValueExtractor;
 import com.example.greenplate.viewmodels.ShoppingListActivityViewModel;
 
@@ -44,7 +45,7 @@ public class ShoppingActivity extends AppCompatActivity {
         scrollable.removeAllViews();
 
         for (Map.Entry<String, Integer> entry : items.entrySet()) {
-            String ingredient = entry.getKey();
+            String ingredient = InputFormatter.capitalize(entry.getKey());
             int quantityCheck = entry.getValue();
             String quantity = String.valueOf(quantityCheck);
             LinearLayout ingredientLayout = new LinearLayout(ShoppingActivity.this);
@@ -162,7 +163,7 @@ public class ShoppingActivity extends AppCompatActivity {
                     if (checkBox.isChecked()) {
                         String ingredientName = ValueExtractor.extract(
                                 (TextView) ingredientLayout.getChildAt(0));
-                        toBuy.add(ingredientName);
+                        toBuy.add(InputFormatter.lowercase(ingredientName));
                     }
                 }
             }

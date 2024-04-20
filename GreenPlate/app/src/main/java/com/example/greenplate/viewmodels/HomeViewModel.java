@@ -27,11 +27,4 @@ public class HomeViewModel {
         }
         return instance;
     }
-    public void logout(LogoutListener listener) {
-        mAuth.signOut();
-        listener.onLogoutComplete();
-    }
-    public interface LogoutListener {
-        void onLogoutComplete();
-    }
 }

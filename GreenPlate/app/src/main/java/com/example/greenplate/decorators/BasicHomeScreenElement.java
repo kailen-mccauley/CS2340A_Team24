@@ -24,7 +24,6 @@ public class BasicHomeScreenElement implements HomeScreenElement {
     }
 
     private void addViewToHomeScreen(LinearLayout layout) {
-        // this is what i used to add layout to the homeactivity
-        // but honeslty might exist a better way to do it
+        // default AddViewToHomeScreen method
     }
 }

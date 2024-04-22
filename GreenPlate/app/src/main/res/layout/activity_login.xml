@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/Olivine"
+    android:background="@color/olivine"
     android:id="@+id/activity_login">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:text="Welcome Back"
         android:textAlignment="center"
-        android:textColor="@color/alabaster"
+        android:textColor="@color/beige"
         android:textSize="50sp"
         android:layout_marginBottom="5dp"
         />
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/darkBrown"
             android:text="Sign Up"
-            android:textColor="@color/lightGray"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

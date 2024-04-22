@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/Olivine"
+    android:background="@color/olivine"
     android:id="@+id/activity_create_account">
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_height="70dp"
         android:text="Create Account"
         android:textAlignment="center"
-        android:textColor="@color/alabaster"
+        android:textColor="@color/beige"
         android:textSize="50sp" />
     <EditText
         android:id="@+id/newUsernameEditText"
@@ -22,10 +22,10 @@
         android:layout_height="50dp"
         android:hint="Email"
         android:textColorHint="@color/forestGreen"
-        android:textColor="@color/mint"
+        android:textColor="@color/forestGreen"
         android:drawableLeft="@drawable/person_foreground"
         android:drawableTint="@color/forestGreen"
-        android:background="@color/lightGray"
+        android:background="@color/beige"
         android:layout_marginBottom="5dp"/>
     <EditText
         android:id="@+id/newPasswordEditText"
@@ -36,7 +36,7 @@
         android:textColor="@color/forestGreen"
         android:drawableLeft="@drawable/lock_foreground"
         android:drawableTint="@color/forestGreen"
-        android:background="@color/lightGray"
+        android:background="@color/beige"
         android:layout_marginBottom="5dp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout

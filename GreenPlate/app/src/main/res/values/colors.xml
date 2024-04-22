@@ -1,50 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="teal">#207282</color>
-    <color name="aero">#5DB7DE</color>
-    <color name="alabaster">#F1E9DB</color>
-    <color name="dimGray">#716A5C</color>
-    <color name="teaGreen">#D5E2BC</color>
-    <color name="roseQuartz">#A6979C</color>
-    <color name="thistle">#D3C0D2</color>
-    <color name="frenchGray">#C9C5CB</color>
-    <color name="lilac">#B48EAE</color>
-    <color name="pistachio">#93C48B</color>
-    <color name="mintCream">#F1F7EE</color>
-    <color name="cadetGray">#82A6B1</color>
-    <color name="walnutBrown">#726953</color>
-    <color name="pennBlue">#17255A</color>
-    <color name="champagne">#F5E2C8</color>
-    <color name="coralPink">#D88373</color>
-    <color name="melon">#E9B9AF</color>
-    <color name="lightGray">#edf6f9</color>
-    <color name="teal2">#006d77</color>
-    <color name="mint">#83c5be</color>
-    <color name="darkMint">#3EA99E</color>
-    <color name="darkPowderBlue">#FF3E55A9</color>
-    <color name="dustBunny">#FF929998</color>
-    <color name="orangeSorbet">#C97267</color>
-    <color name="lightBrown">#D3B683</color>
-    <color name="tanBrown">#B5651D</color>
-    <color name="darkGreen">#4CAF50</color>
-    <color name="stormySky">#5B97A9</color>
-    <color name="magenta">#8F293B</color>
-    <color name="softPink">#FAEBE7</color>
-    <color name="pink">#EAADBB</color>
-    <color name="lightYellow">#F9EDDD</color>
-    <color name="EnglishViolet">#514663</color>
-    <color name="UltraViolet">#4D5382</color>
-    <color name="AirforceBlue">#658E9C</color>
-    <color name="Citron">#CACF85</color>
-    <color name="Olivine">#8CBA80</color>
-    <color name="White">#FFFFFF</color>
-
-
+    <color name="white">#FFFFFF</color>
     <color name="beige">#f0ead2</color>
     <color name="pastelGreen">#dde5b6</color>
-    <color name="leafGreen">#adc178</color>
+    <color name="olivine">#8CBA80</color>
     <color name="brown">#a98467</color>
     <color name="darkBrown">#6c584c</color>
     <color name="forestGreen">#648B43</color>

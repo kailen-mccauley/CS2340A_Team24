@@ -64,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
-            android:backgroundTint="@color/Olivine"
+            android:backgroundTint="@color/olivine"
             android:text="Submit"
             android:textSize="22sp" />
     </LinearLayout>
@@ -288,7 +288,7 @@
         android:background="@android:color/darker_gray"
         android:orientation="horizontal"
         android:padding="3dp"
-        android:backgroundTint="@color/Olivine"
+        android:backgroundTint="@color/olivine"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <!-- Column 1 -->
@@ -302,7 +302,7 @@
                 android:id="@+id/btn_home"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/Olivine"
+                android:background="@color/olivine"
                 android:src="@drawable/ic_home_foreground"
                 app:tint="@color/darkBrown" />
 
@@ -319,7 +319,7 @@
                 android:id="@+id/btn_personal"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/Olivine"
+                android:background="@color/olivine"
                 android:src="@drawable/personal_info_foreground"
                 app:tint="@color/darkBrown"/>
 
@@ -336,7 +336,7 @@
                 android:id="@+id/btn_shopping"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/Olivine"
+                android:background="@color/olivine"
                 android:src="@drawable/ic_shopping_foreground"
                 app:tint="@color/darkBrown" />
 
@@ -353,7 +353,7 @@
                 android:id="@+id/btn_recipe"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/Olivine"
+                android:background="@color/olivine"
                 android:src="@drawable/recipe_foreground"
                 app:tint="@color/darkBrown" />
 
@@ -370,7 +370,7 @@
                 android:id="@+id/btn_ingredients"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/Olivine"
+                android:background="@color/olivine"
                 android:src="@drawable/ic_ingredient_foreground"
                 app:tint="@color/darkBrown" />
 
@@ -387,10 +387,10 @@
                 android:id="@+id/btn_meal"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/Olivine"
+                android:background="@color/olivine"
                 android:src="@drawable/ic_meal_foreground"
                 android:layout_centerHorizontal="true"
-                app:tint="@color/White" />
+                app:tint="@color/white" />
 
         </RelativeLayout>
 
@@ -405,7 +405,7 @@
                 android:id="@+id/btn_fitness"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/Olivine"
+                android:background="@color/olivine"
                 android:src="@drawable/ic_fitness_foreground"
                 app:tint="@color/darkBrown" />
 

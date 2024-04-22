@@ -3,6 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textSize="20sp"
-    android:textColor="@color/lightGray"
+    android:textColor="@color/white"
     android:textAlignment="center"
-    android:background="@color/Olivine"/>
+    android:background="@color/olivine"/>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/softPink">
+    android:background="@color/beige">
 
     <!-- Header layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +20,7 @@
             android:fontFamily="sans-serif-black"
             android:text="Shopping List Screen"
             android:textAlignment="center"
-            android:textColor="@color/pink"
+            android:textColor="@color/forestGreen"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
                 android:fontFamily="sans-serif-black"
                 android:text="Ingredients"
                 android:textAlignment="center"
-                android:textColor="@color/pink"
+                android:textColor="@color/forestGreen"
                 android:textSize="22sp"
                 android:layout_marginRight="20dp"/>
             <TextView
@@ -54,7 +54,7 @@
                 android:fontFamily="sans-serif-black"
                 android:text="Quantity"
                 android:textAlignment="center"
-                android:textColor="@color/pink"
+                android:textColor="@color/forestGreen"
                 android:textSize="22sp" />
             <TextView
                 android:id="@+id/checkColumn"
@@ -63,7 +63,7 @@
                 android:fontFamily="sans-serif-black"
                 android:text="Buy?"
                 android:textAlignment="center"
-                android:textColor="@color/pink"
+                android:textColor="@color/forestGreen"
                 android:textSize="22sp"
                 android:layout_marginLeft="20dp"/>
         </LinearLayout>
@@ -106,7 +106,7 @@
                 android:id="@+id/btn_buy_items"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/magenta"
+                android:backgroundTint="@color/brown"
                 android:text="Buy Items"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -118,7 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
-                android:backgroundTint="@color/magenta"
+                android:backgroundTint="@color/brown"
                 android:text="Add Ingredient"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -133,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@android:color/darker_gray"
-            android:backgroundTint="@color/magenta"
+            android:backgroundTint="@color/Olivine"
             android:orientation="horizontal"
             android:padding="3dp"
             app:layout_constraintBottom_toBottomOf="parent">
@@ -150,8 +150,9 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@color/magenta"
-                    android:src="@drawable/ic_home_foreground" />
+                    android:background="@color/Olivine"
+                    android:src="@drawable/ic_home_foreground"
+                    app:tint="@color/darkBrown" />
 
             </RelativeLayout>
 
@@ -167,8 +168,9 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@color/magenta"
-                    android:src="@drawable/personal_info_foreground" />
+                    android:background="@color/Olivine"
+                    android:src="@drawable/personal_info_foreground"
+                    app:tint="@color/darkBrown" />
 
             </RelativeLayout>
 
@@ -184,7 +186,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@color/magenta"
+                    android:background="@color/Olivine"
                     android:src="@drawable/ic_shopping_foreground"
                     app:tint="@color/White" />
 
@@ -202,8 +204,9 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@color/magenta"
-                    android:src="@drawable/recipe_foreground" />
+                    android:background="@color/Olivine"
+                    android:src="@drawable/recipe_foreground"
+                    app:tint="@color/darkBrown" />
 
             </RelativeLayout>
 
@@ -219,8 +222,9 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@color/magenta"
-                    android:src="@drawable/ic_ingredient_foreground" />
+                    android:background="@color/Olivine"
+                    android:src="@drawable/ic_ingredient_foreground"
+                    app:tint="@color/darkBrown"/>
 
             </RelativeLayout>
 
@@ -236,8 +240,9 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@color/magenta"
-                    android:src="@drawable/ic_meal_foreground" />
+                    android:background="@color/Olivine"
+                    android:src="@drawable/ic_meal_foreground"
+                    app:tint="@color/darkBrown"/>
 
             </RelativeLayout>
 
@@ -253,8 +258,9 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@color/magenta"
-                    android:src="@drawable/ic_fitness_foreground" />
+                    android:background="@color/Olivine"
+                    android:src="@drawable/ic_fitness_foreground"
+                    app:tint="@color/darkBrown"/>
 
             </RelativeLayout>
 

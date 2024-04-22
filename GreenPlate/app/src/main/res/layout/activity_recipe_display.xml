@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cadetGray"
+    android:background="@color/beige"
     android:id="@+id/activity_recipe_details">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header_title"
@@ -20,7 +20,7 @@
             android:fontFamily="sans-serif-black"
             android:text="Recipe Details"
             android:textAlignment="center"
-            android:textColor="@color/mintCream"
+            android:textColor="@color/forestGreen"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
@@ -44,7 +44,7 @@
                 android:fontFamily="sans-serif-black"
                 android:text="Ingredients"
                 android:textAlignment="center"
-                android:textColor="@color/mintCream"
+                android:textColor="@color/forestGreen"
                 android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
@@ -59,7 +59,7 @@
                 android:fontFamily="sans-serif-black"
                 android:text="Quantity"
                 android:textAlignment="center"
-                android:textColor="@color/mintCream"
+                android:textColor="@color/forestGreen"
                 android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
@@ -117,14 +117,14 @@
                 android:id="@+id/btn_to_recipe_screen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/darkPowderBlue"
+                android:backgroundTint="@color/brown"
                 android:text="Return"
                 android:textSize="22sp" />
             <Button
                 android:id="@+id/btn_to_cook_or_shop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/darkPowderBlue"
+                android:backgroundTint="@color/brown"
                 android:text="Cook"
                 android:layout_marginLeft="50dp"
                 android:textSize="22sp" />

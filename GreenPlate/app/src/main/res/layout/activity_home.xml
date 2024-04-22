@@ -3,7 +3,7 @@
 xmlns:app="http://schemas.android.com/apk/res-auto"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:background="@color/alabaster">
+android:background="@color/beige">
 
 <!-- Header layout -->
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +20,7 @@ android:background="@color/alabaster">
         android:fontFamily="sans-serif-black"
         android:text="Home Page"
         android:textAlignment="center"
-        android:textColor="@color/AirforceBlue"
+        android:textColor="@color/forestGreen"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@ android:background="@color/alabaster">
             android:layout_height="wrap_content"
             android:text="Time:"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/darkBrown"
             android:textSize="30sp" />
 
         <TextView
@@ -53,7 +53,7 @@ android:background="@color/alabaster">
             android:layout_height="wrap_content"
             android:text=""
             android:textAlignment="center"
-            android:textColor="@color/aero"
+            android:textColor="@color/forestGreen"
             android:textSize="30sp"
             android:layout_marginTop="10dp" />
 
@@ -77,7 +77,7 @@ android:background="@color/alabaster">
             android:layout_height="wrap_content"
             android:text="Activity:"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/darkBrown"
             android:textSize="30sp" />
 
         <TextView
@@ -86,7 +86,7 @@ android:background="@color/alabaster">
             android:layout_height="wrap_content"
             android:text=""
             android:textAlignment="center"
-            android:textColor="@color/aero"
+            android:textColor="@color/forestGreen"
             android:textSize="30sp"
             android:layout_marginTop="10dp" />
 
@@ -110,7 +110,7 @@ android:background="@color/alabaster">
             android:layout_height="wrap_content"
             android:text="Steps:"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/darkBrown"
             android:textSize="30sp" />
 
         <TextView
@@ -119,7 +119,7 @@ android:background="@color/alabaster">
             android:layout_height="wrap_content"
             android:text=""
             android:textAlignment="center"
-            android:textColor="@color/aero"
+            android:textColor="@color/forestGreen"
             android:textSize="30sp"
             android:layout_marginTop="10dp" />
 
@@ -143,7 +143,7 @@ android:background="@color/alabaster">
             android:layout_height="wrap_content"
             android:text="Streak:"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/darkBrown"
             android:textSize="30sp" />
 
         <TextView
@@ -152,7 +152,7 @@ android:background="@color/alabaster">
             android:layout_height="wrap_content"
             android:text=""
             android:textAlignment="center"
-            android:textColor="@color/aero"
+            android:textColor="@color/forestGreen"
             android:textSize="30sp"
             android:layout_marginTop="10dp" />
 
@@ -186,13 +186,13 @@ android:background="@color/alabaster">
                 android:layout_gravity="center_horizontal"
                 android:text="Time"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/darkBrown"
                 android:textSize="15sp" />
             <CheckBox
                 android:id="@+id/timeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/black" />
+                android:buttonTint="@color/darkBrown" />
 
         </LinearLayout>
 
@@ -214,13 +214,13 @@ android:background="@color/alabaster">
                 android:layout_gravity="center_horizontal"
                 android:text="Activity"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/darkBrown"
                 android:textSize="15sp" />
             <CheckBox
                 android:id="@+id/activButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/black" />
+                android:buttonTint="@color/darkBrown" />
 
         </LinearLayout>
 
@@ -242,13 +242,13 @@ android:background="@color/alabaster">
                 android:layout_gravity="center_horizontal"
                 android:text="Steps"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/darkBrown"
                 android:textSize="15sp" />
             <CheckBox
                 android:id="@+id/stepsButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/black" />
+                android:buttonTint="@color/darkBrown" />
 
         </LinearLayout>
 
@@ -270,13 +270,13 @@ android:background="@color/alabaster">
                 android:layout_gravity="center_horizontal"
                 android:text="Streak"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/darkBrown"
                 android:textSize="15sp" />
             <CheckBox
                 android:id="@+id/streakButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/black" />
+                android:buttonTint="@color/darkBrown" />
 
         </LinearLayout>
 
@@ -287,9 +287,10 @@ android:background="@color/alabaster">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="65dp"
-        android:backgroundTint="@color/AirforceBlue"
+        android:backgroundTint="@color/brown"
         android:textSize="20dp"
         android:text="Logout"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bottomCheckBoxes" >
@@ -307,7 +308,7 @@ android:background="@color/alabaster">
         android:background="@android:color/darker_gray"
         android:orientation="horizontal"
         android:padding="3dp"
-        android:backgroundTint="@color/AirforceBlue"
+        android:backgroundTint="@color/Olivine"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <!-- Column 1 -->
@@ -321,9 +322,8 @@ android:background="@color/alabaster">
                 android:id="@+id/btn_home"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/AirforceBlue"
+                android:background="@color/Olivine"
                 android:src="@drawable/ic_home_foreground"
-                android:layout_centerHorizontal="true"
                 app:tint="@color/white" />
 
         </RelativeLayout>
@@ -339,9 +339,9 @@ android:background="@color/alabaster">
                 android:id="@+id/btn_personal"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/AirforceBlue"
+                android:background="@color/Olivine"
                 android:src="@drawable/personal_info_foreground"
-                android:layout_centerHorizontal="true" />
+                app:tint="@color/darkBrown" />
 
         </RelativeLayout>
 
@@ -356,9 +356,9 @@ android:background="@color/alabaster">
                 android:id="@+id/btn_shopping"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/AirforceBlue"
+                android:background="@color/Olivine"
                 android:src="@drawable/ic_shopping_foreground"
-                android:layout_centerHorizontal="true" />
+                app:tint="@color/darkBrown"/>
 
         </RelativeLayout>
 
@@ -373,9 +373,9 @@ android:background="@color/alabaster">
                 android:id="@+id/btn_recipe"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/AirforceBlue"
+                android:background="@color/Olivine"
                 android:src="@drawable/recipe_foreground"
-                android:layout_centerHorizontal="true" />
+                app:tint="@color/darkBrown"/>
 
         </RelativeLayout>
 
@@ -390,9 +390,9 @@ android:background="@color/alabaster">
                 android:id="@+id/btn_ingredients"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/AirforceBlue"
+                android:background="@color/Olivine"
                 android:src="@drawable/ic_ingredient_foreground"
-                android:layout_centerHorizontal="true" />
+                app:tint="@color/darkBrown"/>
 
         </RelativeLayout>
 
@@ -407,9 +407,9 @@ android:background="@color/alabaster">
                 android:id="@+id/btn_meal"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/AirforceBlue"
+                android:background="@color/Olivine"
                 android:src="@drawable/ic_meal_foreground"
-                android:layout_centerHorizontal="true" />
+                app:tint="@color/darkBrown"/>
 
         </RelativeLayout>
 
@@ -424,9 +424,9 @@ android:background="@color/alabaster">
                 android:id="@+id/btn_fitness"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/AirforceBlue"
+                android:background="@color/Olivine"
                 android:src="@drawable/ic_fitness_foreground"
-                android:layout_centerHorizontal="true" />
+                app:tint="@color/darkBrown"/>
 
         </RelativeLayout>
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/champagne"
+    android:background="@color/Olivine"
     android:id="@+id/activity_create_account">
 
     <TextView
@@ -14,16 +14,17 @@
         android:layout_height="70dp"
         android:text="Create Account"
         android:textAlignment="center"
-        android:textColor="@color/teal2"
+        android:textColor="@color/alabaster"
         android:textSize="50sp" />
     <EditText
         android:id="@+id/newUsernameEditText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Email"
-        android:textColorHint="@color/mint"
+        android:textColorHint="@color/forestGreen"
         android:textColor="@color/mint"
         android:drawableLeft="@drawable/person_foreground"
+        android:drawableTint="@color/forestGreen"
         android:background="@color/lightGray"
         android:layout_marginBottom="5dp"/>
     <EditText
@@ -31,9 +32,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Password"
-        android:textColorHint="@color/mint"
-        android:textColor="@color/mint"
+        android:textColorHint="@color/forestGreen"
+        android:textColor="@color/forestGreen"
         android:drawableLeft="@drawable/lock_foreground"
+        android:drawableTint="@color/forestGreen"
         android:background="@color/lightGray"
         android:layout_marginBottom="5dp"/>
 
@@ -51,13 +53,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:text="Create Account"
-            android:backgroundTint="@color/mint"/>
+            android:backgroundTint="@color/brown"/>
 
         <Button
             android:id="@+id/btn_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/champagne"
+            android:backgroundTint="@color/darkBrown"
             android:text="Return to Login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

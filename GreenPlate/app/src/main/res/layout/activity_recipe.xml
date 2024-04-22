@@ -4,7 +4,7 @@
     android:id="@+id/activity_recipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cadetGray">
+    android:background="@color/beige">
 
     <!-- Header layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +20,7 @@
             android:fontFamily="sans-serif-black"
             android:text="Recipe\nScreen"
             android:textAlignment="center"
-            android:textColor="@color/mintCream"
+            android:textColor="@color/forestGreen"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,8 +51,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="5dp"
-                android:backgroundTint="@color/darkGreen"
                 android:text="Current Recipes"
+                android:textColor="@color/forestGreen"
                 android:textAlignment="center"
                 android:textSize="22sp" />
             <Spinner
@@ -80,8 +80,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="5dp"
-                android:backgroundTint="@color/darkGreen"
                 android:text="Alphabetical\nOrder"
+                android:textColor="@color/darkBrown"
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
@@ -96,8 +96,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="5dp"
-                android:backgroundTint="@color/darkGreen"
                 android:text="Ingredients\nAvailable"
+                android:textColor="@color/darkBrown"
                 android:textAlignment="center"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -116,18 +116,19 @@
             android:id="@+id/newRecipeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
             android:paddingBottom="10dp"
             android:text="Add New Recipe"
             android:textAlignment="center"
-            android:textColor="@color/mintCream"
-            android:textSize="25sp" />
+            android:textColor="@color/forestGreen"
+            android:textSize="22sp" />
         <EditText
             android:id="@+id/recipeNameEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:hint="Enter recipe name"
+            android:textColorHint="@color/darkBrown"
+            android:textColor="@color/darkBrown"
             android:textAlignment="center" />
         <EditText
             android:id="@+id/recipeIngredientsEditText"
@@ -135,6 +136,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="Enter ingredients list (E.g.: peas : 10, corn: 13)"
+            android:textColorHint="@color/darkBrown"
+            android:textColor="@color/darkBrown"
             android:textAlignment="center" />
         <Button
             android:id="@+id/btn_submit_recipe"
@@ -143,7 +146,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:layout_marginHorizontal="5dp"
-            android:backgroundTint="@color/dimGray"
+            android:backgroundTint="@color/brown"
             android:text="Submit Recipe"
             android:textSize="15sp"/>
     </LinearLayout>
@@ -159,7 +162,7 @@
         android:background="@android:color/darker_gray"
         android:orientation="horizontal"
         android:padding="3dp"
-        android:backgroundTint="@color/dimGray"
+        android:backgroundTint="@color/Olivine"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <!-- Column 1 -->
@@ -173,9 +176,9 @@
                 android:id="@+id/btn_home"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/dimGray"
+                android:background="@color/Olivine"
                 android:src="@drawable/ic_home_foreground"
-                android:layout_centerHorizontal="true" />
+                app:tint="@color/darkBrown" />
 
         </RelativeLayout>
 
@@ -190,9 +193,9 @@
                 android:id="@+id/btn_personal"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/dimGray"
+                android:background="@color/Olivine"
                 android:src="@drawable/personal_info_foreground"
-                android:layout_centerHorizontal="true" />
+                app:tint="@color/darkBrown" />
 
         </RelativeLayout>
 
@@ -207,9 +210,9 @@
                 android:id="@+id/btn_shopping"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/dimGray"
+                android:background="@color/Olivine"
                 android:src="@drawable/ic_shopping_foreground"
-                android:layout_centerHorizontal="true" />
+                app:tint="@color/darkBrown" />
 
         </RelativeLayout>
 
@@ -224,9 +227,8 @@
                 android:id="@+id/btn_recipe"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/dimGray"
+                android:background="@color/Olivine"
                 android:src="@drawable/recipe_foreground"
-                android:layout_centerHorizontal="true"
                 app:tint="@color/White" />
 
         </RelativeLayout>
@@ -242,9 +244,9 @@
                 android:id="@+id/btn_ingredients"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/dimGray"
+                android:background="@color/Olivine"
                 android:src="@drawable/ic_ingredient_foreground"
-                android:layout_centerHorizontal="true" />
+                app:tint="@color/darkBrown" />
 
         </RelativeLayout>
 
@@ -259,9 +261,9 @@
                 android:id="@+id/btn_meal"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/dimGray"
+                android:background="@color/Olivine"
                 android:src="@drawable/ic_meal_foreground"
-                android:layout_centerHorizontal="true" />
+                app:tint="@color/darkBrown"/>
 
         </RelativeLayout>
 
@@ -276,9 +278,9 @@
                 android:id="@+id/btn_fitness"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/dimGray"
+                android:background="@color/Olivine"
                 android:src="@drawable/ic_fitness_foreground"
-                android:layout_centerHorizontal="true" />
+                app:tint="@color/darkBrown" />
 
         </RelativeLayout>
 

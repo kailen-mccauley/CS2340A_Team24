@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.CheckBox;
 
+import androidx.core.content.ContextCompat;
+
 import com.example.greenplate.utilites.InputFormatter;
 import com.example.greenplate.utilites.ValueExtractor;
 import com.example.greenplate.viewmodels.ShoppingListActivityViewModel;
@@ -37,7 +39,7 @@ public class ShoppingActivity extends AppCompatActivity {
         textView.setLayoutParams(ingredientNameParams);
         textView.setText(text);
         textView.setTextSize(22);
-        textView.setTextColor(getResources().getColor(R.color.magenta));
+        textView.setTextColor(ContextCompat.getColor(this, R.color.darkBrown));
         return textView;
     }
 
@@ -60,7 +62,7 @@ public class ShoppingActivity extends AppCompatActivity {
             checkBox.setLayoutParams(new LinearLayout.LayoutParams(2,
                     LinearLayout.LayoutParams.WRAP_CONTENT, 1));
             checkBox.setButtonTintList(ColorStateList.valueOf(
-                    getResources().getColor(R.color.magenta)));
+                    ContextCompat.getColor(this, R.color.darkBrown)));
 
             ImageButton minusButton = new ImageButton(ShoppingActivity.this);
             minusButton.setLayoutParams(new LinearLayout.LayoutParams(

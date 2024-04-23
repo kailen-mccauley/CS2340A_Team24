@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pistachio">
+    android:background="@color/olivine">
 
     <ImageView
         android:id="@+id/green_plate_logo"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="serif"
         android:text="Green Plate"
-        android:textColor="@color/pistachio"
+        android:textColor="@color/olivine"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/green_plate_logo"
         app:layout_constraintEnd_toEndOf="parent"

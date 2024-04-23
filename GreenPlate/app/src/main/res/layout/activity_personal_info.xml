@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightBrown"
+    android:background="@color/beige"
     android:id="@+id/activity_personal_info">
 
     <!-- Header layout -->
@@ -20,7 +20,7 @@
             android:fontFamily="sans-serif-black"
             android:text="Personal Info\nScreen"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/forestGreen"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,8 +40,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:hint="Height (cm)"
-                android:textColorHint="@color/white"
-                android:textColor="@color/white"
+                android:textColorHint="@color/darkBrown"
+                android:textColor="@color/darkBrown"
                 android:layout_marginHorizontal="5dp"
                 android:inputType="number"/>
             <EditText
@@ -51,8 +51,8 @@
                 android:layout_marginTop="20dp"
                 android:textSize="20sp"
                 android:hint="Weight (kg)"
-                android:textColorHint="@color/white"
-                android:textColor="@color/white"
+                android:textColorHint="@color/darkBrown"
+                android:textColor="@color/darkBrown"
                 android:layout_marginHorizontal="5dp"
                 android:inputType="number"/>
             <EditText
@@ -62,8 +62,8 @@
                 android:layout_marginTop="20dp"
                 android:textSize="20sp"
                 android:hint="Gender (M/F)"
-                android:textColorHint="@color/white"
-                android:textColor="@color/white"
+                android:textColorHint="@color/darkBrown"
+                android:textColor="@color/darkBrown"
                 android:layout_marginHorizontal="0dp"/>
             <Button
                 android:id="@+id/btn_submit_personal_info"
@@ -73,7 +73,7 @@
                 android:textSize="20sp"
                 android:text="Submit"
                 android:layout_marginHorizontal="5dp"
-                android:backgroundTint="@color/tanBrown"/>
+                android:backgroundTint="@color/brown"/>
         </LinearLayout>
 
 
@@ -89,7 +89,7 @@
         android:background="@android:color/darker_gray"
         android:orientation="horizontal"
         android:padding="3dp"
-        android:backgroundTint="@color/tanBrown"
+        android:backgroundTint="@color/olivine"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <!-- Column 1 -->
@@ -103,9 +103,9 @@
                 android:id="@+id/btn_home"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/tanBrown"
+                android:background="@color/olivine"
                 android:src="@drawable/ic_home_foreground"
-                android:layout_centerHorizontal="true" />
+                app:tint="@color/darkBrown"/>
 
         </RelativeLayout>
 
@@ -120,10 +120,9 @@
                 android:id="@+id/btn_personal"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/tanBrown"
+                android:background="@color/olivine"
                 android:src="@drawable/personal_info_foreground"
-                android:layout_centerHorizontal="true"
-                app:tint="@color/White" />
+                app:tint="@color/white" />
 
         </RelativeLayout>
 
@@ -138,9 +137,9 @@
                 android:id="@+id/btn_shopping"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/tanBrown"
+                android:background="@color/olivine"
                 android:src="@drawable/ic_shopping_foreground"
-                android:layout_centerHorizontal="true" />
+                app:tint="@color/darkBrown"/>
 
         </RelativeLayout>
 
@@ -155,9 +154,9 @@
                 android:id="@+id/btn_recipe"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/tanBrown"
+                android:background="@color/olivine"
                 android:src="@drawable/recipe_foreground"
-                android:layout_centerHorizontal="true" />
+                app:tint="@color/darkBrown"/>
 
         </RelativeLayout>
 
@@ -172,9 +171,9 @@
                 android:id="@+id/btn_ingredients"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/tanBrown"
+                android:background="@color/olivine"
                 android:src="@drawable/ic_ingredient_foreground"
-                android:layout_centerHorizontal="true" />
+                app:tint="@color/darkBrown"/>
 
         </RelativeLayout>
 
@@ -189,9 +188,9 @@
                 android:id="@+id/btn_meal"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/tanBrown"
+                android:background="@color/olivine"
                 android:src="@drawable/ic_meal_foreground"
-                android:layout_centerHorizontal="true" />
+                app:tint="@color/darkBrown"/>
 
         </RelativeLayout>
 
@@ -206,9 +205,9 @@
                 android:id="@+id/btn_fitness"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/tanBrown"
+                android:background="@color/olivine"
                 android:src="@drawable/ic_fitness_foreground"
-                android:layout_centerHorizontal="true" />
+                app:tint="@color/darkBrown"/>
 
         </RelativeLayout>
 

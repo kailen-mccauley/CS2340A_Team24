@@ -12,12 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.greenplate.utilites.InputFormatter;
 import com.example.greenplate.utilites.InputValidator;
 import com.example.greenplate.R;
 import com.example.greenplate.models.Ingredient;
-import com.example.greenplate.models.Recipe;
 import com.example.greenplate.viewmodels.IngredientsActivityViewModel;
 import com.example.greenplate.viewmodels.MealActivityViewModel;
 import com.example.greenplate.viewmodels.RecipeActivityViewModel;
@@ -40,7 +40,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         textView.setGravity(Gravity.CENTER);
         textView.setText(text);
         textView.setTextSize(22);
-        textView.setTextColor(getResources().getColor(R.color.pennBlue));
+        textView.setTextColor(ContextCompat.getColor(this, R.color.darkBrown));
         return textView;
     }
     @Override
@@ -111,17 +111,15 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                 if (pantryIngredient.getQuantity() < quantity) {
                                     quantity -= pantryIngredient.getQuantity();
                                     int finalQuantity = quantity;
-                                    shoppingVM.getCalories(ingredient, calories -> {
+                                    shoppingVM.getCalories(ingredient, calories ->
                                         shoppingVM.storeShoppingListItem(ingredient,
-                                                finalQuantity, calories, () -> { });
-                                    });
+                                                finalQuantity, calories, () -> { }));
                                 }
                             } else {
                                 int finalQuantity = quantity;
-                                shoppingVM.getCalories(ingredient, calories -> {
+                                shoppingVM.getCalories(ingredient, calories ->
                                     shoppingVM.storeShoppingListItem(ingredient,
-                                            finalQuantity, calories, () -> { });
-                                });
+                                            finalQuantity, calories, () -> { }));
                             }
                         });
                     }

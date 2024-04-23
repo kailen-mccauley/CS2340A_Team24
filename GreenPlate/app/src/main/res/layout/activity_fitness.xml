@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/AirforceBlue">
+    android:background="@color/beige">
 
     <TextView
         android:id="@+id/textView7"
@@ -13,7 +13,7 @@
         android:fontFamily="sans-serif-black"
         android:text="Fitness Page"
         android:textAlignment="center"
-        android:textColor="@color/alabaster"
+        android:textColor="@color/forestGreen"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Activity goal: 0"
-            android:textSize="25sp" />
+            android:textSize="25sp"
+            android:textColor="@color/darkBrown"/>
 
         <TextView
             android:id="@+id/timerTextView"
@@ -44,14 +45,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="00:00:00"
-            android:textSize="36sp" />
+            android:textSize="36sp"
+            android:textColor="@color/darkBrown"/>
 
         <Button
             android:id="@+id/startStopButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:backgroundTint="@color/Olivine"
+            android:backgroundTint="@color/olivine"
             android:text="Start" />
 
         <Button
@@ -59,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:backgroundTint="@color/Olivine"
+            android:backgroundTint="@color/olivine"
             android:text="Save activity" />
 
 
@@ -85,7 +87,8 @@
             android:layout_height="wrap_content"
             android:text="Step tracker"
             android:textAlignment="center"
-            android:textSize="30dp" />
+            android:textSize="30dp"
+            android:textColor="@color/darkBrown"/>
 
         <EditText
             android:id="@+id/stepsEditText"
@@ -93,6 +96,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="Enter daily steps"
+            android:textColorHint="@color/darkBrown"
+            android:textColor="@color/darkBrown"
             android:inputType="number" />
 
 
@@ -102,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:textAlignment="center"
-            android:backgroundTint="@color/Olivine"
+            android:backgroundTint="@color/olivine"
             android:text="Save Steps" />
 
     </LinearLayout>
@@ -114,7 +119,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@android:color/darker_gray"
-        android:backgroundTint="@color/Olivine"
+        android:backgroundTint="@color/olivine"
         android:orientation="horizontal"
         android:padding="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -133,8 +138,9 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
-                android:background="@color/Olivine"
-                android:src="@drawable/ic_home_foreground" />
+                android:background="@color/olivine"
+                android:src="@drawable/ic_home_foreground"
+                app:tint="@color/darkBrown"/>
 
         </RelativeLayout>
 
@@ -150,8 +156,9 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
-                android:background="@color/Olivine"
-                android:src="@drawable/personal_info_foreground" />
+                android:background="@color/olivine"
+                android:src="@drawable/personal_info_foreground"
+                app:tint="@color/darkBrown"/>
 
         </RelativeLayout>
 
@@ -167,8 +174,9 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
-                android:background="@color/Olivine"
-                android:src="@drawable/ic_shopping_foreground" />
+                android:background="@color/olivine"
+                android:src="@drawable/ic_shopping_foreground"
+                app:tint="@color/darkBrown"/>
 
         </RelativeLayout>
 
@@ -184,8 +192,9 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
-                android:background="@color/Olivine"
-                android:src="@drawable/recipe_foreground" />
+                android:background="@color/olivine"
+                android:src="@drawable/recipe_foreground"
+                app:tint="@color/darkBrown"/>
 
         </RelativeLayout>
 
@@ -201,8 +210,9 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
-                android:background="@color/Olivine"
-                android:src="@drawable/ic_ingredient_foreground" />
+                android:background="@color/olivine"
+                android:src="@drawable/ic_ingredient_foreground"
+                app:tint="@color/darkBrown"/>
 
         </RelativeLayout>
 
@@ -218,8 +228,9 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
-                android:background="@color/Olivine"
-                android:src="@drawable/ic_meal_foreground" />
+                android:background="@color/olivine"
+                android:src="@drawable/ic_meal_foreground"
+                app:tint="@color/darkBrown"/>
 
         </RelativeLayout>
 
@@ -235,9 +246,9 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
-                android:background="@color/Olivine"
+                android:background="@color/olivine"
                 android:src="@drawable/ic_fitness_foreground"
-                app:tint="@color/White" />
+                app:tint="@color/white"/>
 
         </RelativeLayout>
 

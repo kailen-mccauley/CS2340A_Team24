@@ -31,21 +31,24 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/ingredientFormTextView"
             android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingredientFormTextView">
+            app:layout_constraintTop_toTopOf="@+id/ingredientFormTextView">
 
             <EditText
                 android:id="@+id/ingredientNameEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginBottom="25dp"
                 android:hint="Ingredient Name"
-                android:textColorHint="@color/black"
-                android:textSize="22sp"
+                android:inputType="text"
+                android:maxWidth="175dp"
                 android:textAlignment="center"
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="25dp"/>
+                android:textColorHint="@color/darkBrown"
+                android:textSize="22sp" />
 
             <EditText
                 android:id="@+id/caloriesEditText"
@@ -53,25 +56,28 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="5dp"
-                android:hint="Calories per serving"
-                android:textColorHint="@color/black"
-                android:textSize="22sp"
-                android:textAlignment="center"
                 android:layout_marginBottom="25dp"
-                android:inputType="number"/>
+                android:hint="Calories per serving"
+                android:inputType="number"
+                android:maxWidth="205dp"
+                android:textAlignment="center"
+                android:textColorHint="@color/darkBrown"
+                android:textSize="22sp" />
+
             <EditText
                 android:id="@+id/quantityEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="5dp"
-                android:hint="Quantity"
-                android:textColorHint="@color/black"
-                android:textSize="22sp"
-                android:textAlignment="center"
                 android:layout_marginBottom="25dp"
+                android:hint="Quantity"
                 android:inputType="number"
-                />
+                android:maxWidth="90dp"
+                android:textAlignment="center"
+                android:textColorHint="@color/darkBrown"
+                android:textSize="22sp" />
+
 
             <Button
                 android:id="@+id/btn_submit_ingredient"

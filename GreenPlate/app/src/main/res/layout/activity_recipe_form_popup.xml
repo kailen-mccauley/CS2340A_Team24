@@ -39,6 +39,7 @@
             <EditText
                 android:id="@+id/recipeNameEditText"
                 android:layout_width="wrap_content"
+                android:maxWidth="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="25dp"
@@ -46,18 +47,21 @@
                 android:textAlignment="center"
                 android:textColorHint="@color/darkBrown"
                 android:textColor="@color/darkBrown"
-                android:textSize="22sp" />
+                android:textSize="22sp"
+                android:inputType="text"/>
 
             <EditText
                 android:id="@+id/recipeIngredientsEditText"
                 android:layout_width="wrap_content"
+                android:maxWidth="200dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="Enter ingredients list\n Example: peas : 10, corn: 13"
+                android:layout_gravity="center"
+                android:layout_marginBottom="25dp"
+                android:hint="Enter ingredients list\n Ex: peas : 10, corn: 13"
+                android:textAlignment="center"
                 android:textColorHint="@color/darkBrown"
                 android:textColor="@color/darkBrown"
-                android:textAlignment="center" />
-
+                android:inputType="text"/>
 
             <Button
                 android:id="@+id/btn_submit_recipe"

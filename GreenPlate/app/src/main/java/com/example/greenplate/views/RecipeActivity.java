@@ -23,6 +23,7 @@ import java.util.HashMap;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.greenplate.observers.RecipeFormObserver;
 import com.example.greenplate.utilites.InputFormatter;
 import com.example.greenplate.utilites.InputValidator;
 import com.example.greenplate.R;
@@ -32,7 +33,7 @@ import com.example.greenplate.viewmodels.RecipeActivityViewModel;
 
 import java.util.ArrayList;
 
-public class RecipeActivity extends AppCompatActivity {
+public class RecipeActivity extends AppCompatActivity implements RecipeFormObserver {
     private RecipeActivityViewModel viewModel;
     private EditText recipeNameEditText;
     private EditText ingredientListEditText;
@@ -110,10 +111,10 @@ public class RecipeActivity extends AppCompatActivity {
 
         sortSwitch = findViewById(R.id.sortingSwitch);
         recipesSpinner = findViewById(R.id.recipesSpinner);
-        recipeNameEditText = findViewById(R.id.recipeNameEditText);
-        ingredientListEditText = findViewById(R.id.recipeIngredientsEditText);
-        Button submitRecipe = findViewById(R.id.btn_submit_recipe);
+        Button popupButton = findViewById(R.id.btn_popup);
+
         viewModel = RecipeActivityViewModel.getInstance();
+        viewModel.addObserver(this);
         viewModel.getRecipeList(recipes -> {
             updateArrayListAndSpinners(recipes);
             sortBasedOnSwitch();
@@ -165,34 +166,19 @@ public class RecipeActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        submitRecipe.setOnClickListener(v -> {
-            String recipeName = ValueExtractor.extract(recipeNameEditText).toLowerCase();
-            String ingredientList = ValueExtractor.extract(ingredientListEditText);
-            if (!InputValidator.isValidInputWithSpacesBetween(recipeName)) {
-                Toast.makeText(RecipeActivity.this,
-                        "Please input a name for your recipe!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (!InputValidator.isValidInputWithSpacesBetween(ingredientList)) {
-                Toast.makeText(RecipeActivity.this, "Please input the ingredient list "
-                        + "for your recipe!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            HashMap<String, Integer> ingredientsMap = parseIngredientList(ingredientList);
-            if (ingredientsMap != null) {
-                recipeNameEditText.setText("");
-                ingredientListEditText.setText("");
-                Toast.makeText(RecipeActivity.this, "Recipe  " + recipeName
-                        + "  submitted successfully!", Toast.LENGTH_SHORT).show();
-                viewModel.storeRecipe(recipeName, ingredientsMap);
-                sortBasedOnSwitch();
-            }
+
+        popupButton.setOnClickListener(v -> {
+            showAddRecipePopup();
         });
         parentLayout.setOnTouchListener((v, event) -> {
             // Hide keyboard
             hideKeyboard();
             return false;
         });
+    }
+    private void showAddRecipePopup() {
+        RecipeFormPopupActivity dialog = new RecipeFormPopupActivity();
+        dialog.show(getSupportFragmentManager(), "RecipePopupDialogFragment");
     }
     private void hideKeyboard() {
         View view = this.getCurrentFocus();
@@ -230,6 +216,10 @@ public class RecipeActivity extends AppCompatActivity {
             }
         }
         return ingredientsMap;
+    }
+    @Override
+    public void updateRecipeScrollable() {
+        sortBasedOnSwitch();
     }
 
 }

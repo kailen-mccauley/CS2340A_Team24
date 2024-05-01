@@ -9,9 +9,11 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.greenplate.observers.ShoppingFormObserver;
 import com.example.greenplate.utilites.InputFormatter;
 import com.example.greenplate.utilites.ValueExtractor;
 import com.example.greenplate.viewmodels.ShoppingListActivityViewModel;
@@ -23,9 +25,10 @@ import com.example.greenplate.R;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class ShoppingActivity extends AppCompatActivity {
+public class ShoppingActivity extends AppCompatActivity implements ShoppingFormObserver {
 
-    private ShoppingListActivityViewModel shoppingListActivityViewModel;
+    private ShoppingListActivityViewModel viewModel;
+    private LinearLayout scrollable;
     private Bundle extras;
 
     private void makeNavigationBar(ImageButton button, Intent intent) {
@@ -76,15 +79,14 @@ public class ShoppingActivity extends AppCompatActivity {
                     currentQuantity--;
                     quantityTextView.setText(String.valueOf(currentQuantity));
                     // shoppingListActivityViewModel.getCaloriesFromPantry();
-                    shoppingListActivityViewModel.storeShoppingListItem(
-                            ValueExtractor.extract(ingredientNameTextView), -1, 5, () ->
-                            shoppingListActivityViewModel.fetchShoppingListItems(existingItems ->
-                                populateShoppingList(existingItems, scrollable)));
+                    viewModel.storeShoppingListItem(
+                            ValueExtractor.extract(ingredientNameTextView).toLowerCase(),
+                            -1, 5,
+                            this::updateShoppingScrollable);
                 } else {
-                    shoppingListActivityViewModel.removeShoppingListItem(
-                            ValueExtractor.extract(ingredientNameTextView), () ->
-                            shoppingListActivityViewModel.fetchShoppingListItems(existingItems ->
-                                populateShoppingList(existingItems, scrollable)));
+                    viewModel.removeShoppingListItem(
+                            ValueExtractor.extract(ingredientNameTextView),
+                            this::updateShoppingScrollable);
                 }
 
             });
@@ -99,10 +101,10 @@ public class ShoppingActivity extends AppCompatActivity {
                 int currentQuantity = Integer.parseInt(ValueExtractor.extract(quantityTextView));
                 currentQuantity++;
                 quantityTextView.setText(String.valueOf(currentQuantity));
-                shoppingListActivityViewModel.storeShoppingListItem(
-                        ValueExtractor.extract(ingredientNameTextView), 1, 5, () ->
-                        shoppingListActivityViewModel.fetchShoppingListItems(existingItems ->
-                            populateShoppingList(existingItems, scrollable)));
+                viewModel.storeShoppingListItem(
+                        ValueExtractor.extract(ingredientNameTextView).toLowerCase(),
+                        1, 5,
+                        this::updateShoppingScrollable);
             });
 
             ingredientLayout.addView(ingredientNameTextView);
@@ -128,9 +130,11 @@ public class ShoppingActivity extends AppCompatActivity {
         Button buyItems = findViewById(R.id.btn_buy_items);
         Button toManualForm = findViewById(R.id.btn_add_ingredient);
 
-        LinearLayout scrollable = findViewById(R.id.scrollLay);
+        scrollable = findViewById(R.id.scrollLay);
 
-        shoppingListActivityViewModel = ShoppingListActivityViewModel.getInstance();
+        viewModel = ShoppingListActivityViewModel.getInstance();
+        viewModel.addObserver(this);
+
 
         Intent intentHome = new Intent(ShoppingActivity.this, HomeActivity.class);
         makeNavigationBar(toHomeButton, intentHome);
@@ -145,14 +149,9 @@ public class ShoppingActivity extends AppCompatActivity {
         Intent intentFitness = new Intent(ShoppingActivity.this, FitnessActivity.class);
         makeNavigationBar(toFitnessButton, intentFitness);
 
-        shoppingListActivityViewModel.fetchShoppingListItems(existingItems ->
-                populateShoppingList(existingItems, scrollable));
+        updateShoppingScrollable();
 
-        toManualForm.setOnClickListener(v -> {
-            Intent intent = new Intent(ShoppingActivity.this,
-                    ManualShoppingForm.class);
-            startActivity(intent);
-        });
+        toManualForm.setOnClickListener(v -> showAddShoppingIngredientPopup());
 
         buyItems.setOnClickListener(v ->  {
             ArrayList<String> toBuy = new ArrayList<>();
@@ -169,9 +168,23 @@ public class ShoppingActivity extends AppCompatActivity {
                     }
                 }
             }
-            shoppingListActivityViewModel.buyItems(toBuy, () ->
-                shoppingListActivityViewModel.fetchShoppingListItems(existingItems ->
-                    populateShoppingList(existingItems, scrollable)));
+            if (toBuy.size() == 0) {
+                Toast.makeText(ShoppingActivity.this, "No items selected!",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            viewModel.buyItems(toBuy, this::updateShoppingScrollable);
+            Toast.makeText(ShoppingActivity.this, "Items purchased!",
+                    Toast.LENGTH_SHORT).show();
         });
+    }
+    private void showAddShoppingIngredientPopup() {
+        ShoppingFormPopupActivity dialog = new ShoppingFormPopupActivity();
+        dialog.show(getSupportFragmentManager(), "RecipePopupDialogFragment");
+    }
+    @Override
+    public void updateShoppingScrollable() {
+        viewModel.fetchShoppingListItems(existingItems ->
+                populateShoppingList(existingItems, scrollable));
     }
 }

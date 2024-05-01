@@ -102,24 +102,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
+
             <Button
-                android:id="@+id/btn_buy_items"
+                android:id="@+id/btn_add_ingredient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="25dp"
                 android:backgroundTint="@color/brown"
-                android:text="Buy Items"
+                android:text="Add Ingredient"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
-                android:id="@+id/btn_add_ingredient"
+                android:id="@+id/btn_buy_items"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
                 android:backgroundTint="@color/brown"
-                android:text="Add Ingredient"
+                android:text="Buy Items"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

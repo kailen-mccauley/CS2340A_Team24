@@ -73,7 +73,7 @@
             android:exported="true">
         </activity>
         <activity
-            android:name=".views.ManualShoppingForm"
+            android:name=".views.ShoppingFormPopupActivity"
             android:exported="true">
         </activity>
     </application>

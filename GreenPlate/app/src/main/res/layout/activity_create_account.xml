@@ -20,16 +20,20 @@
         android:id="@+id/newUsernameEditText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:maxWidth="200dp"
         android:hint="Email"
         android:textColorHint="@color/forestGreen"
         android:textColor="@color/forestGreen"
         android:drawableLeft="@drawable/person_foreground"
         android:drawableTint="@color/forestGreen"
         android:background="@color/beige"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginBottom="5dp"
+        android:inputType="textEmailAddress"/>
     <EditText
         android:id="@+id/newPasswordEditText"
         android:layout_width="match_parent"
+        android:maxWidth="200dp"
+
         android:layout_height="50dp"
         android:hint="Password"
         android:textColorHint="@color/forestGreen"
@@ -37,7 +41,8 @@
         android:drawableLeft="@drawable/lock_foreground"
         android:drawableTint="@color/forestGreen"
         android:background="@color/beige"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginBottom="5dp"
+        android:inputType="textPassword"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

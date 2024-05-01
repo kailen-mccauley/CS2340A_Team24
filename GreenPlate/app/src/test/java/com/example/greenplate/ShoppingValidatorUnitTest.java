@@ -2,7 +2,7 @@ package com.example.greenplate;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
-import com.example.greenplate.viewmodels.ShoppingValidator;
+import com.example.greenplate.utilites.ShoppingValidator;
 
 import java.util.List;
 import java.util.ArrayList;

@@ -1,5 +1,7 @@
 package com.example.greenplate.viewmodels;
 
+import com.example.greenplate.observers.FitnessActivityObserver;
+import com.example.greenplate.observers.RecipeFormObserver;
 import com.example.greenplate.sorters.RecipeAlphabeticalSorter;
 import com.example.greenplate.sorters.SortRecipe;
 import com.example.greenplate.models.Recipe;
@@ -29,6 +31,8 @@ public class RecipeActivityViewModel {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private SortRecipe recipeSorter;
+    private ArrayList<RecipeFormObserver> observers = new ArrayList<>();
+
     private RecipeActivityViewModel() {
         // Initialize Firebase components
         mAuth = FirebaseAuth.getInstance();
@@ -93,6 +97,7 @@ public class RecipeActivityViewModel {
                                 "Recipe successfully stored."))
                         .addOnFailureListener(e -> Log.d("storeRecipe",
                                 "Failed to store recipe.", e));
+                notifyNewRecipeObservers();
             }
         } else {
             Log.d("storeRecipe", "No authenticated user found.");
@@ -121,5 +126,18 @@ public class RecipeActivityViewModel {
     }
     public interface IngredientCheckListener {
         void onIngredientCheckResult(boolean hasIngredients);
+    }
+    public void addObserver(RecipeFormObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(RecipeFormObserver observer) {
+        observers.remove(observer);
+    }
+
+    public void notifyNewRecipeObservers() {
+        for (RecipeFormObserver observer : observers) {
+            observer.updateRecipeScrollable();
+        }
     }
 }

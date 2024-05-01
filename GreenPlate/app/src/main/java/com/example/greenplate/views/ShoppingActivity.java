@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
@@ -167,7 +168,14 @@ public class ShoppingActivity extends AppCompatActivity implements ShoppingFormO
                     }
                 }
             }
+            if (toBuy.size() == 0) {
+                Toast.makeText(ShoppingActivity.this, "No items selected!",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
             viewModel.buyItems(toBuy, this::updateShoppingScrollable);
+            Toast.makeText(ShoppingActivity.this, "Items purchased!",
+                    Toast.LENGTH_SHORT).show();
         });
     }
     private void showAddShoppingIngredientPopup() {

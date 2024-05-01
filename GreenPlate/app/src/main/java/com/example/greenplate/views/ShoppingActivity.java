@@ -12,7 +12,6 @@ import android.widget.CheckBox;
 
 import androidx.core.content.ContextCompat;
 
-import com.example.greenplate.observers.RecipeFormObserver;
 import com.example.greenplate.observers.ShoppingFormObserver;
 import com.example.greenplate.utilites.InputFormatter;
 import com.example.greenplate.utilites.ValueExtractor;
@@ -80,7 +79,8 @@ public class ShoppingActivity extends AppCompatActivity implements ShoppingFormO
                     quantityTextView.setText(String.valueOf(currentQuantity));
                     // shoppingListActivityViewModel.getCaloriesFromPantry();
                     viewModel.storeShoppingListItem(
-                            ValueExtractor.extract(ingredientNameTextView), -1, 5,
+                            ValueExtractor.extract(ingredientNameTextView).toLowerCase(),
+                            -1, 5,
                             this::updateShoppingScrollable);
                 } else {
                     viewModel.removeShoppingListItem(
@@ -101,7 +101,8 @@ public class ShoppingActivity extends AppCompatActivity implements ShoppingFormO
                 currentQuantity++;
                 quantityTextView.setText(String.valueOf(currentQuantity));
                 viewModel.storeShoppingListItem(
-                        ValueExtractor.extract(ingredientNameTextView), 1, 5,
+                        ValueExtractor.extract(ingredientNameTextView).toLowerCase(),
+                        1, 5,
                         this::updateShoppingScrollable);
             });
 
@@ -170,7 +171,7 @@ public class ShoppingActivity extends AppCompatActivity implements ShoppingFormO
         });
     }
     private void showAddShoppingIngredientPopup() {
-        ManualShoppingForm dialog = new ManualShoppingForm();
+        ShoppingFormPopupActivity dialog = new ShoppingFormPopupActivity();
         dialog.show(getSupportFragmentManager(), "RecipePopupDialogFragment");
     }
     @Override

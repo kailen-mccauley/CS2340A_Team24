@@ -1,6 +1,5 @@
 package com.example.greenplate.views;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +12,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.greenplate.utilites.InputValidator;
 import com.example.greenplate.R;
+import com.example.greenplate.utilites.ValueExtractor;
 import com.example.greenplate.viewmodels.ShoppingListActivityViewModel;
 
-public class ManualShoppingForm extends DialogFragment {
+public class ShoppingFormPopupActivity extends DialogFragment {
 
     private EditText ingredientTitle;
     private EditText calSection;
@@ -48,9 +47,9 @@ public class ManualShoppingForm extends DialogFragment {
         shoppingListActivityViewModel = ShoppingListActivityViewModel.getInstance();
 
         btnSubmit.setOnClickListener(v ->  {
-            String ingredientName = ingredientTitle.getText().toString();
-            String quantity = quantityNum.getText().toString();
-            String calories = calSection.getText().toString();
+            String ingredientName = ValueExtractor.extract(ingredientTitle).toLowerCase();
+            String quantity = ValueExtractor.extract(quantityNum);
+            String calories = ValueExtractor.extract(calSection);
 
             if (!InputValidator.isValidInputWithSpacesBetween(ingredientName)) {
                 Toast.makeText(requireContext(),

@@ -68,7 +68,7 @@
         <ScrollView
             android:id="@+id/ingredScroll"
             android:layout_width="wrap_content"
-            android:layout_height="240dp"
+            android:layout_height="550dp"
             android:layout_marginTop="20dp"
             android:layout_below="@+id/titleIngredScreen"
             android:layout_centerInParent="@+id/main_content"
@@ -90,92 +90,7 @@
             </LinearLayout>
         </ScrollView>
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-black"
-            android:text="Change Ingredient Quantity"
-            android:textAlignment="center"
-            android:textColor="@color/forestGreen"
-            android:textSize="25sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/titleIngredScreen"
-            app:layout_constraintTop_toBottomOf="@+id/ingredScroll" />
 
-        <LinearLayout
-            android:id="@+id/container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_above="@id/bottom_navigation"
-            android:layout_centerHorizontal="true"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2">
-
-            <LinearLayout
-                android:id="@+id/inputIngredientBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
-
-                <Spinner
-                    android:id="@+id/ingredientNameSpinner"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:textAlignment="center" />
-
-                <Spinner
-                    android:id="@+id/quantitySpinner"
-                    android:layout_width="190dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="20dp"
-                    android:textAlignment="center" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/changeQuantityBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_increase_quantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="5dp"
-                    android:backgroundTint="@color/brown"
-                    android:text="Increase Quantity"
-                    android:textSize="15sp" />
-
-                <Button
-                    android:id="@+id/btn_decrease_quantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="5dp"
-                    android:backgroundTint="@color/brown"
-                    android:text="Decrease Quantity"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/btn_to_ingredients_form"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="5dp"
-                android:backgroundTint="@color/darkBrown"
-                android:text="Ingredients Form"
-                android:textSize="22sp" />
-        </LinearLayout>
 
         <!-- Bottom navigation bar -->
         <LinearLayout

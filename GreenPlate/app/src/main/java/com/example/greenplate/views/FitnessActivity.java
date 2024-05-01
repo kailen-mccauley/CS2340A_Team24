@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.greenplate.viewmodels.FitnessActivityObserver;
+import com.example.greenplate.observers.FitnessActivityObserver;
 import com.example.greenplate.utilites.InputValidator;
 import com.example.greenplate.R;
 import com.example.greenplate.utilites.ValueExtractor;

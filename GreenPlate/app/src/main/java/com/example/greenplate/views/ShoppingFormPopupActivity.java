@@ -1,6 +1,7 @@
 package com.example.greenplate.views;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,18 @@ public class ShoppingFormPopupActivity extends DialogFragment {
     private EditText calSection;
     private EditText quantityNum;
     private ShoppingListActivityViewModel shoppingListActivityViewModel;
+    private void resizePopup(View view, RelativeLayout parentLayout) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        requireActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels;
+
+        // Calculate the desired width for the dialog (e.g., 80% of the screen width)
+        int dialogWidth = (int) (screenWidth * 0.8);
+
+        ViewGroup.LayoutParams layoutParams = parentLayout.getLayoutParams();
+        layoutParams.width = dialogWidth;
+        parentLayout.setLayoutParams(layoutParams);
+    }
 
     @Nullable
     @Override
@@ -36,6 +49,7 @@ public class ShoppingFormPopupActivity extends DialogFragment {
         // DO NOT MODIFY
         super.onCreate(savedInstanceState);
         RelativeLayout parentLayout = view.findViewById(R.id.activity_manual_shopping);
+        resizePopup(view, parentLayout);
 
         Button toShoppingScreen = view.findViewById(R.id.btn_return_shopping_screen);
         Button btnSubmit = view.findViewById(R.id.btn_submit_manual);

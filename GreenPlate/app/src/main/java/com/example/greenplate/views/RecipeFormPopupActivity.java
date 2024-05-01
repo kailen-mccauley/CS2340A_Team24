@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.*;
 import androidx.fragment.app.DialogFragment;
 
+import android.util.DisplayMetrics;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -23,6 +24,19 @@ public class RecipeFormPopupActivity extends DialogFragment {
     private RecipeActivityViewModel viewModel;
     private EditText recipeNameEditText;
     private EditText ingredientListEditText;
+
+    private void resizePopup(View view, RelativeLayout parentLayout) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        requireActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels;
+
+        // Calculate the desired width for the dialog (e.g., 80% of the screen width)
+        int dialogWidth = (int) (screenWidth * 0.8);
+
+        ViewGroup.LayoutParams layoutParams = parentLayout.getLayoutParams();
+        layoutParams.width = dialogWidth;
+        parentLayout.setLayoutParams(layoutParams);
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,6 +46,8 @@ public class RecipeFormPopupActivity extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         RelativeLayout parentLayout = view.findViewById(R.id.activity_recipe_form_popup);
+        resizePopup(view, parentLayout);
+
         Button submitRecipe = view.findViewById(R.id.btn_submit_recipe);
         Button closeButton = view.findViewById(R.id.btn_close_recipe_form);
         recipeNameEditText = view.findViewById(R.id.recipeNameEditText);

@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 
 import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.models.ShoppingItem;
+import com.example.greenplate.observers.ShoppingFormObserver;
+import com.example.greenplate.utilites.ShoppingValidator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -13,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -21,6 +24,7 @@ public class ShoppingListActivityViewModel {
     private static volatile ShoppingListActivityViewModel instance;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private ArrayList<ShoppingFormObserver> observers = new ArrayList<>();
 
     private ShoppingListActivityViewModel() {
         // Initialize Firebase components
@@ -89,6 +93,7 @@ public class ShoppingListActivityViewModel {
                                             .addOnCompleteListener(task -> {
                                                 if (task.isSuccessful()) {
                                                     listener.onShoppingItemStored();
+                                                    notifyNewRecipeObservers();
                                                 }
                                             });
                                     break;
@@ -102,6 +107,7 @@ public class ShoppingListActivityViewModel {
                                         .addOnCompleteListener(task -> {
                                             if (task.isSuccessful()) {
                                                 listener.onShoppingItemStored();
+                                                notifyNewRecipeObservers();
                                             }
                                         });
                             }
@@ -297,6 +303,19 @@ public class ShoppingListActivityViewModel {
     }
     public interface BuyItemsListener {
         void onShoppingItemsBought();
+    }
+    public void addObserver(ShoppingFormObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(ShoppingFormObserver observer) {
+        observers.remove(observer);
+    }
+
+    public void notifyNewRecipeObservers() {
+        for (ShoppingFormObserver observer : observers) {
+            observer.updateShoppingScrollable();
+        }
     }
 
 }

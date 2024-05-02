@@ -1,19 +1,26 @@
 package com.example.greenplate.models;
 
+import java.time.Duration;
+
 public class User {
 
     private String userGender;
     private String userWeight;
     private String userHeight;
     private int calorieGoal;
+    private int stepGoal;
+    private int workoutGoalInMinutes;
 
     public User() { }
 
-    public User(String userHeight, String userWeight, String userGender, int calorieGoal) {
+    public User(String userHeight, String userWeight, String userGender,
+                int calorieGoal, int stepGoal, int workoutGoal) {
         this.setUserGender(userGender);
         this.setUserWeight(userWeight);
         this.setUserHeight(userHeight);
         this.setCalorieGoal(calorieGoal);
+        this.setStepGoal(stepGoal);
+        this.setWorkoutGoalInMinutes(workoutGoal);
     }
 
 
@@ -47,5 +54,17 @@ public class User {
 
     public void setCalorieGoal(int calorieGoal) {
         this.calorieGoal = calorieGoal;
+    }
+    public int getStepGoal() {
+        return stepGoal;
+    }
+    public void setStepGoal(int stepGoal) {
+        this.stepGoal = stepGoal;
+    }
+    public int getWorkoutGoalInMinutes() {
+        return workoutGoalInMinutes;
+    }
+    public void setWorkoutGoalInMinutes(int workoutGoal) {
+        this.workoutGoalInMinutes = workoutGoal;
     }
 }

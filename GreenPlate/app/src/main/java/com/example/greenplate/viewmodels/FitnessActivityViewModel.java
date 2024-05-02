@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.observers.FitnessActivityObserver;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -14,9 +15,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Map;
 
 public class FitnessActivityViewModel {
 
@@ -108,6 +111,69 @@ public class FitnessActivityViewModel {
         mDatabase.child("users").child(userId)
                 .child("fitness").child(date).child("Steps")
                 .addListenerForSingleValueEvent(listener);
+    }
+
+    public void getDailySteps(StepsListener listener) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            String currentDate = dateFormat.format(Calendar.getInstance().getTime());
+            mDatabase.child("users").child(uid)
+                    .child("fitness").child(currentDate).child("Steps")
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                int stepsCount = dataSnapshot.getValue(Integer.class);
+                                listener.onStepsReceived(stepsCount);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+        }
+    }
+    public interface StepsListener {
+        void onStepsReceived(int steps);
+    }
+
+    public void getDailyActivity(ActivityListener listener) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            String currentDate = dateFormat.format(Calendar.getInstance().getTime());
+            mDatabase.child("users").child(uid)
+                    .child("fitness").child(currentDate).child("Activity")
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                Duration totalWorkoutTime = Duration.ZERO;
+                                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                                    String activityTime = snapshot.getValue(String.class);
+                                    String[] parts = activityTime.split(":");
+                                    long hours = Long.parseLong(parts[0]);
+                                    long minutes = Long.parseLong(parts[1]);
+                                    long seconds = Long.parseLong(parts[2]);
+                                    Duration singleWorkoutTime = Duration.ofHours(hours).plusMinutes(minutes).plusSeconds(seconds);
+                                    totalWorkoutTime = totalWorkoutTime.plus(singleWorkoutTime);
+                                }
+                                listener.onActivityReceived(totalWorkoutTime);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+        }
+    }
+    public interface ActivityListener {
+        void onActivityReceived(Duration totalWorkoutTime);
     }
 
     public void addObserver(FitnessActivityObserver observer) {

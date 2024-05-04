@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="@color/beige">
-
-<!-- Header layout -->
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/main_content"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/beige">
 
     <TextView
         android:id="@+id/homeTitle"
@@ -26,278 +19,210 @@ android:background="@color/beige">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/timerLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fitnessRingsAndCheckBoxes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="70dp"
-        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/logoutButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeTitle"
-        android:layout_marginRight="180dp" >
-
-        <TextView
-            android:id="@+id/timeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Time:"
-            android:textAlignment="center"
-            android:textColor="@color/darkBrown"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/timeField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textAlignment="center"
-            android:textColor="@color/forestGreen"
-            android:textSize="30sp"
-            android:layout_marginTop="10dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/activityLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="70dp"
-        android:gravity="center_horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeTitle"
-        android:layout_marginLeft="180dp" >
-
-        <TextView
-            android:id="@+id/activityTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Activity:"
-            android:textAlignment="center"
-            android:textColor="@color/darkBrown"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/activityField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textAlignment="center"
-            android:textColor="@color/forestGreen"
-            android:textSize="30sp"
-            android:layout_marginTop="10dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/stepsLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="240dp"
-        android:gravity="center_horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeTitle"
-        android:layout_marginRight="180dp" >
-
-        <TextView
-            android:id="@+id/stepsTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Steps:"
-            android:textAlignment="center"
-            android:textColor="@color/darkBrown"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/stepsField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textAlignment="center"
-            android:textColor="@color/forestGreen"
-            android:textSize="30sp"
-            android:layout_marginTop="10dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/streakLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="240dp"
-        android:gravity="center_horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeTitle"
-        android:layout_marginLeft="180dp" >
-
-        <TextView
-            android:id="@+id/streakTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Streak:"
-            android:textAlignment="center"
-            android:textColor="@color/darkBrown"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/streakField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textAlignment="center"
-            android:textColor="@color/forestGreen"
-            android:textSize="30sp"
-            android:layout_marginTop="10dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/bottomCheckBoxes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:layout_marginTop="390dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeTitle">
+        app:layout_constraintTop_toTopOf="@+id/homeTitle">
 
         <LinearLayout
-            android:id="@+id/checktimeLayout"
+            android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/homeTitle">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/timeTit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Time"
-                android:textAlignment="center"
-                android:textColor="@color/darkBrown"
-                android:textSize="15sp" />
-            <CheckBox
-                android:id="@+id/timeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/darkBrown" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/checkactivityLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="35dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/homeTitle">
-
-            <TextView
-                android:id="@+id/activityTit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Activity"
-                android:textAlignment="center"
-                android:textColor="@color/darkBrown"
-                android:textSize="15sp" />
-            <CheckBox
-                android:id="@+id/activButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/darkBrown" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/checkstepsLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="35dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/homeTitle">
-
-            <TextView
-                android:id="@+id/stepsTit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:text="Steps"
-                android:textAlignment="center"
-                android:textColor="@color/darkBrown"
-                android:textSize="15sp" />
-            <CheckBox
-                android:id="@+id/stepsButton"
+                android:textColor="@color/seaFoam"
+                android:textSize="20dp" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/darkBrown" />
+                android:text="Fitness"
+                android:textColor="@color/neonPink"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Calories"
+                android:textColor="@color/cyan"
+                android:textSize="20dp" />
 
         </LinearLayout>
 
+        <ProgressBar
+            android:id="@+id/calorie_goal_progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@drawable/circle_shape"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            android:progressTint="@color/cyan"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/fitness_goal_progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:background="@drawable/circle_shape"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            android:progressTint="@color/neonPink"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/steps_goal_progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:background="@drawable/circle_shape"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            android:progressTint="@color/seaFoam"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <LinearLayout
-            android:id="@+id/checkstreakLayout"
+            android:id="@+id/bottomCheckBoxes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="35dp"
-            android:orientation="vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/homeTitle">
+            app:layout_constraintTop_toBottomOf="@+id/steps_goal_progress_bar">
 
-            <TextView
-                android:id="@+id/streakTit"
+
+            <LinearLayout
+                android:id="@+id/checkStepsLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Streak"
-                android:textAlignment="center"
-                android:textColor="@color/darkBrown"
-                android:textSize="15sp" />
-            <CheckBox
-                android:id="@+id/streakButton"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/homeTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/stepsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Steps"
+                    android:textAlignment="center"
+                    android:textColor="@color/darkBrown"
+                    android:textSize="15sp" />
+
+                <CheckBox
+                    android:id="@+id/stepsCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/darkBrown" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/checkFitnessLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/darkBrown" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="35dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/homeTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
+                <TextView
+                    android:id="@+id/fitnessTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Fitness"
+                    android:textAlignment="center"
+                    android:textColor="@color/darkBrown"
+                    android:textSize="15sp" />
+
+                <CheckBox
+                    android:id="@+id/fitnessCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/darkBrown" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/checkCaloriesLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="35dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/homeTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/caloriesTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Calories"
+                    android:textAlignment="center"
+                    android:textColor="@color/darkBrown"
+                    android:textSize="15sp" />
+
+                <CheckBox
+                    android:id="@+id/caloriesCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/darkBrown" />
+
+            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="65dp"
         android:backgroundTint="@color/brown"
-        android:textSize="20dp"
         android:text="Logout"
         android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottomCheckBoxes" >
-
-    </Button>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <!-- Bottom navigation bar -->
     <LinearLayout
@@ -306,10 +231,12 @@ android:background="@color/beige">
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@android:color/darker_gray"
+        android:backgroundTint="@color/olivine"
         android:orientation="horizontal"
         android:padding="3dp"
-        android:backgroundTint="@color/olivine"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <!-- Column 1 -->
         <RelativeLayout
@@ -358,7 +285,7 @@ android:background="@color/beige">
                 android:layout_height="50dp"
                 android:background="@color/olivine"
                 android:src="@drawable/ic_shopping_foreground"
-                app:tint="@color/darkBrown"/>
+                app:tint="@color/darkBrown" />
 
         </RelativeLayout>
 
@@ -375,7 +302,7 @@ android:background="@color/beige">
                 android:layout_height="50dp"
                 android:background="@color/olivine"
                 android:src="@drawable/recipe_foreground"
-                app:tint="@color/darkBrown"/>
+                app:tint="@color/darkBrown" />
 
         </RelativeLayout>
 
@@ -392,7 +319,7 @@ android:background="@color/beige">
                 android:layout_height="50dp"
                 android:background="@color/olivine"
                 android:src="@drawable/ic_ingredient_foreground"
-                app:tint="@color/darkBrown"/>
+                app:tint="@color/darkBrown" />
 
         </RelativeLayout>
 
@@ -409,7 +336,7 @@ android:background="@color/beige">
                 android:layout_height="50dp"
                 android:background="@color/olivine"
                 android:src="@drawable/ic_meal_foreground"
-                app:tint="@color/darkBrown"/>
+                app:tint="@color/darkBrown" />
 
         </RelativeLayout>
 
@@ -426,10 +353,10 @@ android:background="@color/beige">
                 android:layout_height="50dp"
                 android:background="@color/olivine"
                 android:src="@drawable/ic_fitness_foreground"
-                app:tint="@color/darkBrown"/>
+                app:tint="@color/darkBrown" />
 
         </RelativeLayout>
 
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

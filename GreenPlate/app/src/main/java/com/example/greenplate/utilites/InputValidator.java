@@ -1,6 +1,8 @@
 package com.example.greenplate.utilites;
 import android.content.Intent;
 
+import com.example.greenplate.models.User;
+
 public class InputValidator {
     public static boolean isValidInput(String input) {
         return input != null && !input.contains(" ") && !input.isEmpty();
@@ -44,6 +46,16 @@ public class InputValidator {
     public static boolean isValidTime(String timerOutput) {
         return !timerOutput.equals("00:00:00");
     }
+
+    public static boolean isValidUserInfo(User user) {
+        return user.getUserGender() != null
+                && user.getUserWeight() != null
+                && user.getUserHeight() != null
+                && user.getCalorieGoal() != 0
+                && user.getStepGoal() != 0
+                && user.getWorkoutGoalInMinutes() != 0;
+    }
+
 
 }
 

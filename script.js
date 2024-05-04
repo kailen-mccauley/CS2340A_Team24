@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     var colorButton = document.getElementById("colorButton");
     var mainSections = document.querySelectorAll("main > section");
+    var sprintParagraphs = document.querySelectorAll('details > p');
     var textColor = '#000000';
     var backgroundColor = '#f0ead2';
     var white = '#ffffff';
@@ -24,6 +25,9 @@ document.addEventListener("DOMContentLoaded", function() {
       }
       mainSections.forEach(function(section) {
         section.style.color = textColor;
+      });
+      sprintParagraphs.forEach(function(sprintParagraphs) {
+        sprintParagraphs.style.color = textColor;
       });
       document.body.style.backgroundColor = backgroundColor;
     }

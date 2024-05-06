@@ -118,4 +118,20 @@ details p {
     padding-left: 20px;
     margin-bottom: 30px;
     text-indent: 50px;
+    overflow-y: auto; /* Add vertical scrollbar for overflow */
+    max-height: 175px;
+}
+
+#functionality {
+    width: calc(30% - 5px); /* Set the width of each section to 50% of the container minus some margin */
+    float: left;
+}
+
+#sprint-details {
+    width: calc(70% - 5px); /* Set the width of each section to 50% of the container minus some margin */
+    float: right;
+}
+
+#conclusion {
+    clear: both; /* Clear the float after the sprint details section */
 }

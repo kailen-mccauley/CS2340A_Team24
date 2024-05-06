@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
   var mainText = document.querySelectorAll("main section p, main section h4, main section details p");
+  var detailElements = document.querySelectorAll('details');
   var summaryElements = document.querySelectorAll("summary");
   var summaryColor = '#f0f0f0';
   var textColor = '#000000';
@@ -10,6 +11,18 @@ document.addEventListener("DOMContentLoaded", function() {
   var darkModeBackgroundColor = '#262423';
   var lightBoxColor = '#f0f0f0';
   var grayBoxColor = '#A9A9A9';
+
+  detailElements.forEach(function(detail) {
+    detail.addEventListener('toggle', function(event) {
+        if (detail.open) {
+            document.querySelectorAll('details').forEach(function(otherDetail) {
+                if (otherDetail !== detail && otherDetail.open) {
+                    otherDetail.open = false;
+                }
+            });
+        }
+    });
+  });
 
   function changeBackgroundColor() {
     var darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');

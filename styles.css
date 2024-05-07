@@ -94,6 +94,7 @@ h2 {
     margin-top: 10px;
 } 
 
+/* General content layout inside expandable section */
 details {
     margin-bottom: 20px;
     text-align: center;
@@ -103,26 +104,27 @@ details {
 summary {
     cursor: pointer;
     font-weight: bold;
-    padding: 30px 20px; /* Adjust padding to make the header thicker */
-    background-color: #f0f0f0; /* Background color of the header */
-    border: 1px solid #ccc; /* Border around the header */
+    padding: 30px 20px; /* Padding to make header thicker */
+    background-color: #f0f0f0; /* Background color of header */
+    border: 1px solid #ccc; /* Border around header */
     border-radius: 10px; /* Rounded corners */
     text-align: center;
     margin-bottom: 30px;
-    margin-right: 750px; /* CHANGE*/
+    margin-right: 750px; /* CHANGE?? */
     width: 80%;
 }
 
-/* Content inside expandable section */
+/* Actual content inside expandable section */
 details p {
     width: 80%;
     padding-left: 20px;
     margin-bottom: 30px;
-    text-indent: 50px;
-    overflow-y: auto; /* Add vertical scrollbar for overflow */
-    max-height: 140px;
+    text-indent: 50px; /* Indent the first line of each paragraph */
+    overflow-y: auto; /* Takes care of overflow, converting to scrollable */
+    max-height: 140px; /* Mnimizes the height used by scrollable */
 }
 
+/* Functionality/Challenges & Reflection layout */
 .colu-layout {
     display: flex;
     flex-direction: row;
@@ -141,5 +143,38 @@ details p {
 }
 
 #conclusion {
-    clear: both; /* Clear the float after the sprint details section */
+    clear: both;
+}
+
+/* Horizontal line styles */
+.line {
+    border-top: 1px solid #4CAF50; /* Adjust line color */
+    margin: 0;
+}
+
+/* Navigation styles */
+#navigation-bar nav {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#navigation-bar nav ul {
+    align-items: center;
+    list-style-type: none;
+    padding: 0;
+}
+
+#navigation-bar nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+#navigation-bar nav ul li a {
+    text-decoration: none;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+#navigation-bar nav ul li a:hover {
+    color: #2E8B57; /* Change color on hover */
 }

@@ -99,7 +99,7 @@ details {
     text-align: center;
 }
 
-/* Style for the summary (header) of the expandable section */
+/* Header of the expandable section */
 summary {
     cursor: pointer;
     font-weight: bold;
@@ -109,26 +109,34 @@ summary {
     border-radius: 10px; /* Rounded corners */
     text-align: center;
     margin-bottom: 30px;
-    width: 200px;
+    margin-right: 750px; /* CHANGE*/
+    width: 80%;
 }
 
-/* Style for the content inside the expandable section */
+/* Content inside expandable section */
 details p {
-    margin: 0;
+    width: 80%;
     padding-left: 20px;
     margin-bottom: 30px;
     text-indent: 50px;
     overflow-y: auto; /* Add vertical scrollbar for overflow */
-    max-height: 175px;
+    max-height: 140px;
 }
 
-#functionality {
-    width: calc(30% - 5px); /* Set the width of each section to 50% of the container minus some margin */
+.colu-layout {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+}
+
+.functionality {
+    width: 50vw;
     float: left;
+    margin-right: 35px;
 }
 
-#sprint-details {
-    width: calc(70% - 5px); /* Set the width of each section to 50% of the container minus some margin */
+.sprint-details {
+    max-width: 70vw;
     float: right;
 }
 

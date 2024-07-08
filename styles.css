@@ -107,8 +107,8 @@ summary {
 
 /* Actual content inside expandable section */
 details p {
-    overflow-y: auto; /* Takes care of overflow, converting to scrollable */
-    max-height: 140px; /* Mnimizes the height used by scrollable */
+    overflow-y: auto;
+    max-height: 140px;
 }
 
 .colu-layout {
@@ -185,30 +185,37 @@ details p {
 }
 .old-new-text-container {
     display: flex;           /* Enables flexbox layout */
-    width: 440px;
+    justify-items: center;
     margin: auto ;
 }
 .old-design-text {
     height: 35px;
-    margin-left: 10px;
-    margin-right: 10px;
     margin: auto;
+    /* width: 228px; */
+
 }
 .new-design-text {
     height: 35px;
-    margin-left: 10px;
-    margin-right: 10px;
     margin: auto;
+}
+.old-design-text p {
+    text-align: center 
+}
+
+.new-design-text p {
+    text-align: center 
 }
 .slideshow {
     position: relative;
     max-width: 50%;
     margin: 0 auto;
     overflow: hidden;
+    justify-content: center;
 }
 
 .slides {
     display: flex;
+    justify-content: center;
 }
 .slide {
     margin-left: 10px;

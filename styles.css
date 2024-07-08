@@ -91,11 +91,6 @@ h2 {
 .diagram-image-container .diagram-image.active {
     display: block;
 }
-.button-container {
-    display: flex;
-    justify-content: center; 
-    margin-top: 10px;
-} 
 
 
 /* Header of the expandable section */
@@ -190,7 +185,8 @@ details p {
 }
 .old-new-text-container {
     display: flex;           /* Enables flexbox layout */
-    justify-content: space-evenly; /* Centers the items horizontally */
+    width: 440px;
+    margin: auto ;
 }
 .old-design-text {
     height: 35px;
@@ -217,11 +213,12 @@ details p {
 .slide {
     margin-left: 10px;
     margin-right: 10px;
+    justify-content: center; /* Centers the item horizontally */
 }
 
 .slide img {
-    width: 100%;
-    height: auto;
+    width: 200px;
+    height: 400px;
 }
 
 .button-container {

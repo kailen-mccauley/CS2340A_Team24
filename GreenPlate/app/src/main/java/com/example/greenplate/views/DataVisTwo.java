@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -90,6 +91,9 @@ public class DataVisTwo extends AppCompatActivity {
 
                             Line series1 = cartesian.line(series1Mapping);
                             series1.name("Goal");
+                            int lineColor = ContextCompat.getColor(DataVisTwo.this, R.color.darkOlivine);
+                            String lineColorHex = String.format("#%06X", (0xFFFFFF & lineColor));
+                            series1.color(lineColorHex);
                             series1.hovered().markers().enabled(true);
                             series1.hovered().markers().type(MarkerType.CIRCLE).size(4d);
                             series1.tooltip().position("right").anchor(Anchor.LEFT_CENTER)
@@ -98,12 +102,17 @@ public class DataVisTwo extends AppCompatActivity {
 
                             Marker series2 = cartesian.marker(series2Mapping);
                             series2.name("Monthly");
+                            int markerColor = ContextCompat.getColor(DataVisTwo.this, R.color.olivine);
+                            String markerColorHex = String.format("#%06X", (0xFFFFFF & markerColor));
+                            series2.color(markerColorHex);
                             series2.hovered().markers().enabled(true);
                             series2.hovered().markers().type(MarkerType.CIRCLE).size(4d);
                             series2.tooltip().position("right").anchor(Anchor.LEFT_CENTER)
                                     .offsetX(5d)
                                     .offsetY(5d);
-
+                            int backgroundColor = ContextCompat.getColor(DataVisTwo.this, R.color.beige);
+                            String backgroundColorHex = String.format("#%06X", (0xFFFFFF & backgroundColor));
+                            cartesian.background().fill(backgroundColorHex);
                             cartesian.legend().enabled(true);
                             cartesian.legend().fontSize(13d);
                             cartesian.legend().padding(0d, 0d, 10d, 0d);

@@ -1,5 +1,6 @@
 package com.example.greenplate.views;
 
+
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,10 +19,12 @@ import com.anychart.enums.TooltipPositionMode;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.greenplate.R;
 import com.example.greenplate.viewmodels.MealActivityViewModel;
 import com.example.greenplate.viewmodels.PersonalActivityViewModel;
+import com.example.greenplate.R.color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +68,13 @@ public class DataVisOne extends AppCompatActivity {
                                         .offsetX(0d)
                                         .offsetY(5d)
                                             .format("{%Value}{groupsSeparator: }");
-
+                                    int barColor = ContextCompat.getColor(DataVisOne.this, R.color.olivine);
+                                    String barColorHex = String.format("#%06X", (0xFFFFFF & barColor));
+                                    column.fill(barColorHex);
+                                    column.stroke(barColorHex);
+                                    int backgroundColor = ContextCompat.getColor(DataVisOne.this, R.color.beige);
+                                    String backgroundColorHex = String.format("#%06X", (0xFFFFFF & backgroundColor));
+                                    cartesian.background().fill(backgroundColorHex);
                                     cartesian.animation(true);
                                     cartesian.title("Today Vs Goal");
 
